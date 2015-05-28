@@ -1,0 +1,116 @@
+﻿.page-header.navbar {
+    .page-logo {
+        width: 400px;
+
+        a {
+            color: #ffffff;
+            font-weight: 100;
+            font-size: 20px;
+            padding-top: 9px;
+            display: block;
+        }
+    }
+}
+
+body.page-boxed {
+    background: #fff !important;
+    border: none !important;
+    width: 1100px !important;
+    margin: 0 auto !important;
+
+    .page-container {
+        border: none;
+    }
+}
+
+.field-validation-error {
+    font-size: smaller;
+    color: #a94442;
+    font-weight: bold;
+}
+
+.modal-dialog {
+    z-index: 11000;
+}
+
+.page-heading {
+    margin-bottom: 10px;
+}
+
+.tab-content {
+    margin-top: 20px;
+}
+
+.padding-right-0 {
+    padding-right: 0px;
+}
+
+.padding-left-0 {
+    padding-left: 0px;
+}
+
+.padding-left-5 {
+    padding-left: 5px;
+}
+
+
+.no-margin {
+    margin: 0px;
+}
+
+.margin-left-10 {
+    margin-left: 10px;
+}
+
+.margin-right-10 {
+    margin-right: 10px;
+}
+
+.margin-right-5 {
+    margin-right: 5px;
+}
+
+.margin-top-15 {
+    margin-top: 15px;
+}
+
+.margin-top-30 {
+    margin-top: 30px;
+}
+
+.remove {
+    margin-top: 28px;
+}
+
+.form-section-heading hr {
+    margin-top: 5px;
+}
+
+.alert {
+    border-radius: 0px;
+}
+
+.validation-summary-valid {
+    display: none;
+}
+
+.hover {
+    cursor: pointer;
+}
+
+label {
+    font-weight: 600;
+}
+
+.page-header.navbar .top-menu .navbar-nav > li.dropdown-user .dropdown-toggle .username {
+    color: #ffffff !important;
+}
+
+.chart{
+width:100%;
+height:400px;
+}
+
+.grid{
+display:none;
+}

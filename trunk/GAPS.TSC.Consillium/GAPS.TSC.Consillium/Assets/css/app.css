@@ -1,0 +1,220 @@
+.page-header.navbar .page-logo {
+    width: 400px;
+}
+
+    .page-header.navbar .page-logo a {
+        color: #ffffff;
+        font-weight: 100;
+        font-size: 20px;
+        padding-top: 9px;
+        display: block;
+    }
+
+body.page-boxed {
+    background: #fff !important;
+    border: none !important;
+    width: 1100px !important;
+    margin: 0 auto !important;
+}
+
+    body.page-boxed .page-container {
+        border: none;
+    }
+
+.field-validation-error {
+    font-size: smaller;
+    color: #a94442;
+    font-weight: bold;
+}
+
+.modal-dialog {
+    z-index: 11000;
+}
+
+.modal-body {
+    max-height: 400px;
+    overflow-y: scroll;
+}
+
+.page-heading {
+    margin-bottom: 10px;
+}
+
+.tab-content {
+    margin-top: 20px;
+}
+
+.padding-right-0 {
+    padding-right: 0px;
+}
+
+.padding-left-0 {
+    padding-left: 0px;
+}
+
+.padding-left-10 {
+    padding-left: 10px;
+}
+
+.no-margin {
+    margin: 0px;
+}
+
+.margin-left-10 {
+    margin-left: 10px;
+}
+
+.margin-right-10 {
+    margin-right: 10px;
+}
+
+.margin-right-5 {
+    margin-right: 5px;
+}
+
+.margin-top-15 {
+    margin-top: 15px;
+}
+
+.margin-top-25 {
+    margin-top: 25px;
+}
+
+.margin-top-30 {
+    margin-top: 30px;
+}
+
+.remove {
+    margin-top: 28px;
+}
+
+.margin-top-0 {
+    margin-top: 0px;
+}
+
+.form-section-heading hr {
+    margin-top: 5px;
+}
+
+.alert {
+    border-radius: 0px;
+}
+
+.validation-summary-valid {
+    display: none;
+}
+
+.hover {
+    cursor: pointer;
+}
+
+label {
+    font-weight: 600;
+}
+
+.page-header.navbar .top-menu .navbar-nav > li.dropdown-user .dropdown-toggle .username {
+    color: #ffffff !important;
+}
+
+.progress-bar-orange {
+    background-color: orangered;
+}
+
+.progress-bar-darkolivegreen {
+    background-color: darkolivegreen;
+}
+
+.progress-bar-darkgreen {
+    background-color: darkgreen;
+}
+
+.progress-bar-cornflowerblue {
+    background-color: cornflowerblue;
+}
+
+.progress-bar-brown {
+    background-color: brown;
+}
+
+.progress-bar-darkcyan {
+    background-color: darkcyan;
+}
+
+.progress-bar-crimson {
+    background-color: crimson;
+}
+
+.grid {
+    display: none;
+}
+
+.parent {
+    padding: 0% 0;
+}
+
+.child {
+    padding: 30% 0;
+}
+
+.download-align {
+    padding-top: 20px;
+}
+
+.page-sidebar-menu > li > a > i {
+    color: #428bca !important;
+}
+
+.page-header.navbar .top-menu .navbar-nav > li.dropdown-user .dropdown-toggle > i {
+    color: #1982DA;
+}
+
+ul#Id-3 li a {
+    padding-left: 41px;
+}
+
+ul#Id-1 li a {
+    padding-left: 41px;
+}
+
+ul#Id li a {
+    padding-left: 41px;
+}
+
+.page-login-bg {
+    margin-top: 0px;
+    padding: 0px;
+    background-color: #347cb9;
+    min-height: 100%;
+    width: 100%;
+    margin-top: 50px;
+}
+
+.jumbotron {
+    border: 1px solid #ccc;
+    background-color: #FCFAFA;
+}
+
+.page-title {
+    font-size: 25px;
+    font-weight: 500;
+}
+
+.row-Approved {
+    background-color: #D1F7D1;
+}
+
+.row-Rejected {
+    background-color: #F7D8DA;
+}
+
+.row-Pending {
+    background-color: #FDFDCF;
+}
+
+.red-color {
+    color: red;
+}
+
+.green-color {
+    color: green;
+}
