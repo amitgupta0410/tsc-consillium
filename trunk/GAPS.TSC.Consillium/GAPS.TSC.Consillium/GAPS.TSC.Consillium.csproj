@@ -291,9 +291,9 @@
     <Content Include="Views\Shared\_PartialMessage.cshtml" />
     <Content Include="Views\Shared\_PartialScripts.cshtml" />
     <Content Include="Views\Shared\_PartialSideMenu.cshtml" />
-    <Content Include="Views\Shared\_Styles.cshtml" />
     <Content Include="Views\LogIn\Index.cshtml" />
     <Content Include="Views\RequestExpertEN\Index.cshtml" />
+    <Content Include="Views\Shared\_Styles.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
