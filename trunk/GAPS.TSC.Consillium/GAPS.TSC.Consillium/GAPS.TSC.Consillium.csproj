@@ -159,10 +159,23 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\AddMembersToTeamController.cs" />
+    <Compile Include="Controllers\AddNewLeadController.cs" />
+    <Compile Include="Controllers\AddPlController.cs" />
+    <Compile Include="Controllers\CallsDashboardController.cs" />
+    <Compile Include="Controllers\ExpertProfileViewController.cs" />
+    <Compile Include="Controllers\ExpertRequisitionDashboardController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LogInController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\PaidCallDetailsController.cs" />
+    <Compile Include="Controllers\PaymentsController.cs" />
+    <Compile Include="Controllers\ProjectPageTemplateController.cs" />
+    <Compile Include="Controllers\ReportsController.cs" />
     <Compile Include="Controllers\RequestExpertEnController.cs" />
+    <Compile Include="Controllers\RequestExpertManualController.cs" />
+    <Compile Include="Controllers\ViewAllExpertController.cs" />
+    <Compile Include="Controllers\ViewAllLeadsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -287,13 +300,26 @@
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Shared\_Scripts.cshtml" />
     <Content Include="Views\Shared\_Layout1.cshtml" />
-    <Content Include="Views\Shared\_PartialHeader.cshtml" />
     <Content Include="Views\Shared\_PartialMessage.cshtml" />
     <Content Include="Views\Shared\_PartialScripts.cshtml" />
-    <Content Include="Views\Shared\_PartialSideMenu.cshtml" />
     <Content Include="Views\LogIn\Index.cshtml" />
     <Content Include="Views\RequestExpertEN\Index.cshtml" />
     <Content Include="Views\Shared\_Styles.cshtml" />
+    <Content Include="Views\Shared\_PartialHeader.cshtml" />
+    <Content Include="Views\Shared\_PartialSideMenu.cshtml" />
+    <Content Include="Views\RequestExpertManual\Index.cshtml" />
+    <Content Include="Views\ViewAllLeads\Index.cshtml" />
+    <Content Include="Views\ViewAllExpert\Index.cshtml" />
+    <Content Include="Views\AddPl\Index.cshtml" />
+    <Content Include="Views\AddMembersToTeam\Index.cshtml" />
+    <Content Include="Views\Reports\Index.cshtml" />
+    <Content Include="Views\ExpertRequisitionDashboard\Index.cshtml" />
+    <Content Include="Views\Payments\Index.cshtml" />
+    <Content Include="Views\AddNewLead\Index.cshtml" />
+    <Content Include="Views\PaidCallDetails\Index.cshtml" />
+    <Content Include="Views\CallsDashboard\Index.cshtml" />
+    <Content Include="Views\ProjectPageTemplate\Index.cshtml" />
+    <Content Include="Views\ExpertProfileView\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

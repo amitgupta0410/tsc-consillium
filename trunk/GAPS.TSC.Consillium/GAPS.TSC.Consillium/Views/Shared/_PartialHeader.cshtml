@@ -1,0 +1,36 @@
+﻿
+<div class="page-header navbar navbar-fixed-top">
+    <div class="page-header-inner">
+        <!-- BEGIN LOGO -->
+        <div class="page-logo">
+            <a href="/">
+                Consillium
+            </a>
+
+        </div>
+
+        @*        @if (Request.IsAuthenticated) {*@
+        <div class="top-menu">
+            <ul class="nav navbar-nav pull-right">
+                <li class="dropdown dropdown-user">
+                <li>
+
+                    @*<a href="javascript:document.getElementById('logoutForm').submit()" style="background-color: transparent; color: #fff;">
+                            @using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm" })) {
+                                @Html.AntiForgeryToken()
+                                <span><i class="fa fa-key"></i> Log Out</span>
+                            }
+                        </a>*@
+
+                </li>
+                </li>
+
+            </ul>
+        </div>
+        @*        }*@
+    </div>
+    <!-- END HEADER INNER -->
+</div>
+
+<div class="clearfix">
+</div>
