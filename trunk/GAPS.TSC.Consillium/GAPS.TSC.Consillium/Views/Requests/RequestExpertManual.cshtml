@@ -1,45 +1,39 @@
 ﻿
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "RequestExpertManual";
 }
 
 <div class="row">
     <div class="col-md-12">
         <h3 class="page-title">
-            Request Expert (For EN Projects)
+            Request Expert (For Manual)
         </h3>
     </div>
 </div>
-<hr/>
+<hr />
 
 <div class="row">
     <div class="col-md-12">
         <div class="col-md-4">
             <div class="form-group">
                 <label><b>Client</b></label><br>
-                <select class="form-control">
-                    <option>Option1</option>
-                    <option>Option2</option>
-                </select>
-            </div>  
+                <input class="form-control" id="Client" name="Client" type="text" value="">
+            </div>
         </div>
         <div class="col-md-4">
             <div class="form-group">
                 <label><b>Title Of Project</b></label>
-                <select class="form-control">
-                    <option>Option1</option>
-                    <option>Option2</option>
-                </select>
+                <input class="form-control" id="TitleOfProject" name="TitleOfProject" type="text" value="">
             </div>
         </div>
         <div class="col-md-4">
             <div class="form-group">
                 <label><b>Description</b></label>
-                <input class="form-control" id="Description" type="text" value="Filled By Requester" disabled>
+                <input class="form-control" id="Description" name="Description" type="text" value="">
             </div>
         </div>
         <div class="clearfix"></div>
-        
+
         <div class="col-md-4">
             <div class="form-group">
                 <label><b>Industry</b></label><br>
@@ -52,17 +46,20 @@
         <div class="col-md-4">
             <div class="form-group">
                 <label><b>Bd Lead</b></label>
-                <input class="form-control" id="BdLead" name="BdLead" type="text" value="Auto Populated" disabled>
+                <input class="form-control" id="BdLead" name="BdLead" type="text" value="">
             </div>
         </div>
         <div class="col-md-4">
             <div class="form-group">
                 <label><b>Project Lead</b></label>
-                <input class="form-control" id="ProjectLead" name="ProjectLead" type="text" value="">
+                <select class="form-control">
+                    <option>Option1</option>
+                    <option>Option2</option>
+                </select>
             </div>
         </div>
         <div class="clearfix"></div>
-        
+
         <div class="col-md-4">
             <div class="form-group">
                 <label><b>Comments</b></label><br>
@@ -94,7 +91,7 @@
             </div>
         </div>
         <div class="clearfix"></div>
-        
+
         <div class="col-md-3">
             <div class="form-group">
                 <label><b>Cost Borne By</b></label><br>
@@ -118,13 +115,6 @@
                 <input class="form-control" id="Client%" name="Client%" type="text" value="">
             </div>
         </div>
-        @*<div class="col-md-2">
-            <div class="form-group">
-                <label><b>Upload Scoping Document</b></label>
-                <input class="form-control" id="UploadScopingDocument" name="UploadScopingDocument" type="text" value="">
-            </div>
-        </div>*@
-        @*  *@
         <div class="col-md-3">
             <div class="row">
                 <div class="col-md-9">
@@ -147,7 +137,11 @@
         <div class="col-md-3">
             <div class="form-group">
                 <label><b>Unit</b></label><br>
-                <input class="form-control" id="Unit" name="Unit" type="text" value="Auto Populated" disabled>
+                <select class="form-control">
+                    <option>Value1</option>
+                    <option>Value2</option>
+                    <option>Value3</option>
+                </select>
             </div>
         </div>
         <div class="col-md-3">

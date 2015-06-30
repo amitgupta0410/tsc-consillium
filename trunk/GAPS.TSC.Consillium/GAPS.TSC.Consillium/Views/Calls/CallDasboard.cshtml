@@ -1,97 +1,71 @@
-﻿@{
-    ViewBag.Title = "Index";
+﻿
+@{
+    ViewBag.Title = "CallDasboard";
 }
 
 <div class="row">
     <div class="col-md-12">
         <h3 class="page-title">
-            Expert Requisition Dashboard
+            Calls Dashboard
         </h3>
     </div>
 </div>
 <hr />
-<div class="row">
-    <div class="col-md-12">
-        <div class="col-md-4">
-            <div class="form-group">
-                <label><b>Project Lead</b></label><br>
-                <select class="form-control">
-                    <option>Option1</option>
-                    <option>Option2</option>
-                </select>
+<div class="well">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label><b>Client</b></label>
+                    <select class="form-control">
+                        <option>Mr X</option>
+                        <option>Mr Y</option>
+                    </select>
+                </div>
             </div>
-        </div>
-        <div class="col-md-4">
-            <div class="form-group">
-                <label><b>Status</b></label>
-                <select class="form-control">
-                    <option>Option1</option>
-                    <option>Option2</option>
-                </select>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label><b>Date</b></label>
+                    <input type="text" class="form-control daterange" id="Date" placeholder="2/3 /2015">
+                </div>
             </div>
-        </div>
-        <div class="col-md-4">
-            <div class="form-group">
-                <label><b>Assigned To</b></label>
-                <select class="form-control">
-                    <option>Option1</option>
-                    <option>Option2</option>
-                </select>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label><b>Project</b></label>
+                    <select class="form-control">
+                        <option>XYZ</option>
+                        <option>YXZ</option>
+                    </select>
+                </div>
             </div>
-        </div>
-        <div class="clearfix"></div>
-
-        <div class="col-md-3">
-            <div class="form-group">
-                <label><b>Client</b></label>
-                <select class="form-control">
-                    <option>Option1</option>
-                    <option>Option2</option>
-                </select>
-            </div>
-        </div>
-
-        <div class="col-md-3">
-            <div class="form-group">
-                <label><b>Search</b></label>
-                <input class="form-control" id="Search" name="Search" type="text" value="">
-            </div>
-        </div>
-
-        <div class="col-md-3">
-            <div class="form-group">
-                <label><b>Date</b></label>
-                <input class="form-control daterange" id="Date" name="Date" type="text" value="">
-            </div>
-        </div>
-       
-        <div class="col-md-2">
-            <div class="form-group">
-                <div style="padding-top: 9px"></div>
-                <br />
-                <input type="submit" class="btn btn-primary" value="Go" />
+            <div class="col-md-3">
+                <div class="form-group">
+                    <div style="padding-top: 9px"></div><br />
+                    <input type="submit" class="btn btn-primary btn-sm" value="Filter" style="width:128px;" />
+                </div>
             </div>
         </div>
     </div>
 </div>
-<br />
 <div class="row">
     <div class="col-md-12">
         <div class="table-responsive table-bordered">
             <table class="table">
                 <tbody>
                     <tr>
-                        <th><label>Project Name</label></th>
-                        <th><label>Client</label></th>
-                        <th><label>Project Lead</label></th>
-                        <th><label>Status</label></th>
-                        <th><label>Calls</label></th>
-                        <th><label>Assigned To</label></th>
-                        <th><label>Request Date</label></th>
-                        <th><label>Start Date</label></th>
-                        <th><label>End Date</label></th>
+                        <th><label>S.No.</label></th>
+                        <th><label>Expert Name</label></th>
+                        <th><label>Nature Of Interview</label></th>
+                        <th><label>Interview Date</label></th>
+                        <th><label>Call Duration</label></th>
+                        <th><label>Honorarium per Hour</label></th>
+                        <th><label>Payment Mode</label></th>
+                        <th><label>Cost Corne By</label></th>
+                        <th><label>Call Facilitated By</label></th>
+                        <th><label>Payment Details</label></th>
                     </tr>
                     <tr class="">
+                        <td>1</td>
                         <td>Abc</td>
                         <td>Dragos Hornoiu</td>
                         <td>TSC Romania</td>
@@ -103,6 +77,7 @@
                         <td>22-Mar-2015</td>
                     </tr>
                     <tr class="info">
+                        <td>2</td>
                         <td>Abc</td>
                         <td>Dragos Hornoiu</td>
                         <td>TSC Romania</td>
@@ -114,6 +89,7 @@
                         <td>22-Mar-2015</td>
                     </tr>
                     <tr class="success">
+                        <td>3</td>
                         <td>Abc</td>
                         <td>Dragos Hornoiu</td>
                         <td>TSC Romania</td>
@@ -125,6 +101,7 @@
                         <td>22-Mar-2015</td>
                     </tr>
                     <tr class="warning">
+                        <td>4</td>
                         <td>Abc</td>
                         <td>Dragos Hornoiu</td>
                         <td>TSC Romania</td>
@@ -136,6 +113,7 @@
                         <td>22-Mar-2015</td>
                     </tr>
                     <tr class="danger">
+                        <td>5</td>
                         <td>Abc</td>
                         <td>Dragos Hornoiu</td>
                         <td>TSC Romania</td>
@@ -149,7 +127,19 @@
                 </tbody>
             </table>
         </div>
+        <br />
+        <div class="clearfix"></div>
+        <div class="col-md-6">
+            <div class="col-md-3">
+                <div class="form-group">
+                    <input type="submit" class="btn btn-primary btn-sm" value="Export To Excel" />
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <input type="submit" class="btn btn-primary btn-sm" value="Save" style="width:128px;" />
+                </div>
+            </div>
+        </div>
     </div>
 </div>
-
-
