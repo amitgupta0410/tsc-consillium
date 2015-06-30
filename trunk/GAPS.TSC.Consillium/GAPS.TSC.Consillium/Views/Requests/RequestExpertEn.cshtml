@@ -118,22 +118,15 @@
                 <input class="form-control" id="Client%" name="Client%" type="text" value="">
             </div>
         </div>
-        @*<div class="col-md-2">
-                <div class="form-group">
-                    <label><b>Upload Scoping Document</b></label>
-                    <input class="form-control" id="UploadScopingDocument" name="UploadScopingDocument" type="text" value="">
-                </div>
-            </div>*@
-        @*  *@
         <div class="col-md-3">
             <div class="row">
                 <div class="col-md-9">
                     <div class="form-group">
                         <label>Upload Scoping Document*</label>
-                        <input class="form-control" data-val="true" data-val-required="Please upload a file." id="File" name="File" type="file" value="">
+                        <input class="form-control" data-val="true" data-val-required="Please upload a file." id="ScopingFile" name="ScopingFile" type="file" value="">
                     </div>
                 </div>
-                @*  *@
+               
                 <div class="col-md-1">
                     <div class="form-group">
                         <div style="padding-top: 9px"></div>
@@ -144,6 +137,12 @@
             </div>
         </div>
         <div class="clearfix"></div>
+        <div class="col-md-3">
+            <div class="form-group">
+                <label>Upload Approval Document*</label>
+                <input class="form-control" data-val="true" data-val-required="Please upload a file." id="ApprovalFile" name="ApprovalFile" type="file" value="">
+            </div>
+        </div>
         <div class="col-md-3">
             <div class="form-group">
                 <label><b>Unit</b></label><br>
@@ -157,6 +156,7 @@
                 <input type="submit" value="Send Request" class="btn btn-primary">
             </div>
         </div>
+       
     </div>
 </div>
 

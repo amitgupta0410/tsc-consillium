@@ -28,9 +28,8 @@ namespace GAPS.TSC.Consillium.Controllers
 
             return View();
         }
-        public ActionResult Profile()
+        public ActionResult ProfileView()
         {
-
             return View();
         }
         public ActionResult AddPls()

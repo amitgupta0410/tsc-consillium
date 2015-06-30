@@ -306,7 +306,7 @@
     <Content Include="Views\Employees\AddNewLead.cshtml" />
     <Content Include="Views\Employees\LeadsDashboard.cshtml" />
     <Content Include="Views\Employees\ExpertsDasboard.cshtml" />
-    <Content Include="Views\Employees\Profile.cshtml" />
+    <Content Include="Views\Employees\ProfileView.cshtml" />
     <Content Include="Views\Employees\AddPls.cshtml" />
     <Content Include="Views\Employees\AddMembers.cshtml" />
     <Content Include="Views\Requests\RequestExpertEn.cshtml" />
