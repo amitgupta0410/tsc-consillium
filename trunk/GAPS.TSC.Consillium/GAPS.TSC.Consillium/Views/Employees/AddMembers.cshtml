@@ -1,4 +1,4 @@
-﻿
+﻿@model GAPS.TSC.Consillium.Models.AddMembersToTeam
 @{
     ViewBag.Title = "AddMembers";
 }
@@ -16,35 +16,47 @@
 
 <div class="row">
     <div class="col-md-12">
-        @using(@Html.BeginForm("AddMembers","Employees",FormMethod.Post))
+        @using (@Html.BeginForm("AddMembers", "Employees", FormMethod.Post))
         {
-            
+
+            <div class="col-md-8">
+                <div class="form-group">
+                    <div class="col-md-3">
+                        @Html.RadioButtonFor(x => x.TeamMemberType, "Internal")<b>Internal</b>
+                    </div>
+                    <div class="col-md-3">
+                        @Html.RadioButtonFor(x => x.TeamMemberType, "External")<b>External</b>
+                        </div>
+                    </div>
+            </div>
+            <div class="clearfix"></div>
+            <div class="col-md-8">
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label><b>TSE Employee Id</b></label>
+                    </div>
+                   
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        @Html.TextBoxFor(x => x.UserId, new { @class = "form-control ", @Value = "" })
+                    </div>
+                </div>
+                </div>
+            <div class="clearfix"></div>
             <div class="col-md-2">
-            <div class="form-group">
-                @*@Html.RadioButtonFor(x => x.SomeProperty, "a")
-                @Html.RadioButtonFor(x=>x.xyz)*@
-            </div>
-        </div>
-        <div class="col-md-2">
-            <div class="form-group">
-                <label><b>TSE Employee Id</b></label>
-               @*@Html.TextBoxFor(x => x.UserId, new { @class = "form-control ", @Value = @Model.UserId })*@
-            </div>
-        </div>
-        <div class="clearfix"></div>
-        <div class="col-md-2">
-            <div class="form-group">
-                <div class="checkbox">
-                    <label><input type="checkbox" value="">Admin Rights</label>
+                <div class="form-group">
+                    <div class="checkbox">
+                        <label><input type="checkbox" value="">Admin Rights</label>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="clearfix"></div>
-        <div class="col-md-2">
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary">
+            <div class="clearfix"></div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <input type="submit" value="Save" class="btn btn-primary">
+                </div>
             </div>
-        </div>
         }
     </div>
 </div>
