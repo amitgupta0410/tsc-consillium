@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using GAPS.TSC.CONS.Domain;
 using GAPS.TSC.CONS.Domain.ApiModels;
 
 namespace GAPS.TSC.CONSILLIUM.Services
@@ -17,7 +18,8 @@ namespace GAPS.TSC.CONSILLIUM.Services
         IEnumerable<UserModel> GetUserICanApprove(int userId);
         IEnumerable<UserModel> GetUserICanView(int userId);
         IDictionary GetUser();
-        IEnumerable<UserModel> GetAllEtUsers();
+        IEnumerable<TeamMember> GetAllTeamMembers();
+        bool AddTeamMember(TeamMember teamMember);
 
     }
 }

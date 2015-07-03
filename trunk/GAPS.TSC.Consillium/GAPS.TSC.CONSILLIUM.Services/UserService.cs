@@ -4,16 +4,23 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using GAPS.TSC.CONS.Domain;
 using GAPS.TSC.CONS.Domain.ApiModels;
+using GAPS.TSC.CONS.Repositories;
 
 namespace GAPS.TSC.CONSILLIUM.Services
 {
     public class UserService : IUserService
     {
         private const string CacheKey = "Users";
+        private readonly IUnitOfWork _uow;
+        private readonly IMainMastersService _mainMastersService;
 
-
-        public UserService() { }
+        public UserService(IUnitOfWork uow, IMainMastersService mainMastersService)
+        {
+            _uow = uow;
+            _mainMastersService = mainMastersService;
+        }
 
         public IEnumerable<UserModel> GetAllUsers()
         {
@@ -30,9 +37,10 @@ namespace GAPS.TSC.CONSILLIUM.Services
             return new List<UserModel>();
         }
 
-        public IEnumerable<UserModel> GetAllEtUsers()
+        public IEnumerable<TeamMember> GetAllTeamMembers()
         {
-            return GetAllUsers().Where(x => x.DesignationId.HasValue && Designation.EtTeam.Contains(x.DesignationId.Value));
+            var teamMembers = _uow.TeamMembers.Get();
+            return teamMembers;
         }
 
         public IDictionary GetUser()
@@ -44,6 +52,19 @@ namespace GAPS.TSC.CONSILLIUM.Services
                 userDictionary[employee.Id] = employee;
             }
             return userDictionary;
+        }
+        public bool AddTeamMember(TeamMember teamMember)
+        {
+            try
+            {
+                _uow.TeamMembers.Add(teamMember);
+                _uow.Save();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
         }
 
         public UserModel FindById(int id)

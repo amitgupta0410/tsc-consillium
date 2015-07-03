@@ -9,6 +9,7 @@ namespace GAPS.TSC.CONS.Repositories
 {
     public interface IUnitOfWork
     {
+        IRepository<TeamMember> TeamMembers { get; }
         int Save();
         IRepository<Expert> Experts { get; }
         IRepository<ExpertNote> ExpertNotes { get; }
