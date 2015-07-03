@@ -14,5 +14,30 @@ namespace GAPS.TSC.Consillium.Controllers
         {
             return View();
         }
-	}
+        public ActionResult PaidVsFreeInterview()
+        {
+            return View();
+        }
+        public ActionResult Interviews()
+        {
+            return View();
+        }
+        public ActionResult BillingReports()
+        {
+            return View();
+        }
+        public ActionResult ProjectData()
+        {
+            return View();
+        }
+        public ActionResult Productivity()
+        {
+            return View();
+        }
+
+        public ActionResult ParticularExpert()
+        {
+            return View();
+        }
+    }
 }

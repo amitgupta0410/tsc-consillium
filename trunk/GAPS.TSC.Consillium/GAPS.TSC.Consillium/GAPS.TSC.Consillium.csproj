@@ -311,6 +311,12 @@
     <Content Include="Views\Employees\AddMembers.cshtml" />
     <Content Include="Views\Requests\RequestExpertEn.cshtml" />
     <Content Include="Views\Requests\RequestExpertManual.cshtml" />
+    <Content Include="Views\Reports\PaidVsFreeInterview.cshtml" />
+    <Content Include="Views\Reports\Interviews.cshtml" />
+    <Content Include="Views\Reports\BillingReports.cshtml" />
+    <Content Include="Views\Reports\ProjectData.cshtml" />
+    <Content Include="Views\Reports\Productivity.cshtml" />
+    <Content Include="Views\Reports\ParticularExpert.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
