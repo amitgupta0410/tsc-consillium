@@ -11,12 +11,12 @@ namespace GAPS.TSC.Consillium.Models
     {
         public AddMembersToTeam()
         {
-            Employees = new List<Employees>();
+            Employees = new List<TeamMember>();
         }
         public int? UserId { get; set; }
         public string Name { get; set; }
         public TeamMemberType TeamMemberType { get; set; }
         public bool IsActive { get; set; }
-        public IEnumerable<Employees> Employees { get; set; } 
+        public IEnumerable<TeamMember> Employees { get; set; } 
     }
 }

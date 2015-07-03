@@ -11,20 +11,19 @@ namespace GAPS.TSC.CONS.Repositories
     public class UnitOfWork : IUnitOfWork
     {
         private readonly DbContext _context;
+        private readonly IRepository<TeamMember> _teamMembers;
+
        
         public UnitOfWork
             (
-            AppCtx context
-           
+            AppCtx context,
+            IRepository<TeamMember> teamMembers
            )
         {
             _context = context;
-           
+            _teamMembers = teamMembers;
         }
-
-     
-
-
+        public IRepository<TeamMember> TeamMembers { get { return _teamMembers; } }
         public int Save()
         {
 
