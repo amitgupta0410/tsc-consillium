@@ -45,9 +45,6 @@
     <Reference Include="Microsoft.AspNet.Identity.EntityFramework">
       <HintPath>..\packages\Microsoft.AspNet.Identity.EntityFramework.2.2.1\lib\net45\Microsoft.AspNet.Identity.EntityFramework.dll</HintPath>
     </Reference>
-    <Reference Include="SimpleInjector">
-      <HintPath>..\packages\SimpleInjector.2.8.0\lib\net45\SimpleInjector.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
@@ -60,20 +57,26 @@
   <ItemGroup>
     <Compile Include="ApiModels\Employees.cs" />
     <Compile Include="ApiModels\Project.cs" />
-    <Compile Include="ApiModels\ProjectCombineModel.cs" />
     <Compile Include="ApiModels\ProjectStaffing.cs" />
     <Compile Include="ApiModels\ReviewReportModel.cs" />
     <Compile Include="ApiModels\Role.cs" />
     <Compile Include="ApiModels\UserModel.cs" />
     <Compile Include="AppCtx.cs" />
+    <Compile Include="Attachment.cs" />
     <Compile Include="BaseEntity.cs" />
+    <Compile Include="Call.cs" />
     <Compile Include="Enums.cs" />
+    <Compile Include="ExpertNote.cs" />
+    <Compile Include="Migrations\201507031324359_initial.cs" />
+    <Compile Include="Migrations\201507031324359_initial.Designer.cs">
+      <DependentUpon>201507031324359_initial.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PaymentMode.cs" />
+    <Compile Include="WorkExperience.cs" />
+    <Compile Include="Expert.cs" />
+    <Compile Include="ExpertRequest.cs" />
     <Compile Include="IEntity.cs" />
     <Compile Include="ITrackable.cs" />
-    <Compile Include="Migrations\201507030920360_Initial.cs" />
-    <Compile Include="Migrations\201507030920360_Initial.Designer.cs">
-      <DependentUpon>201507030920360_Initial.cs</DependentUpon>
-    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TeamMember.cs" />
@@ -83,8 +86,8 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201507030920360_Initial.resx">
-      <DependentUpon>201507030920360_Initial.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201507031324359_initial.resx">
+      <DependentUpon>201507031324359_initial.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
