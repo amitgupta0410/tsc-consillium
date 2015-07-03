@@ -29,9 +29,7 @@ namespace GAPS.TSC.Consillium
         public void InitializeCache()
         {
             var container = new Container();
-
             SimpleInjectorInitializer.BuildCommonDependencies(container);
-
             container.RegisterSingle(() => new AppCtx());
             container.RegisterSingle<IUnitOfWork, UnitOfWork>();
 
@@ -41,8 +39,6 @@ namespace GAPS.TSC.Consillium
             var userService = container.GetInstance<IUserService>();
             var projectService = container.GetInstance<IProjectService>();
             var clientService = container.GetInstance<IClientService>();
-
-
             userService.GetAllUsers();
             projectService.GetAllMasterProjects();
             projectService.GetAllReviewableProjects();

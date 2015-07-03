@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using GAPS.TSC.CONS.Domain;
 
 namespace GAPS.TSC.Consillium.Controllers
 {
@@ -41,5 +42,12 @@ namespace GAPS.TSC.Consillium.Controllers
         {
             return View();
         }
+
+        [HttpPost]
+        public ActionResult AddMembers(TeamMember model)
+        {
+            return View();
+        }
+
 	}
 }

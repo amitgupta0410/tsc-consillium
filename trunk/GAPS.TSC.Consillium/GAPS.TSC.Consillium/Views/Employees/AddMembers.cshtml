@@ -13,12 +13,22 @@
     </div>
 </div>
 <hr />
+
 <div class="row">
     <div class="col-md-12">
+        @using(@Html.BeginForm("AddMembers","Employees",FormMethod.Post))
+        {
+            
+            <div class="col-md-2">
+            <div class="form-group">
+                @*@Html.RadioButtonFor(x => x.SomeProperty, "a")
+                @Html.RadioButtonFor(x=>x.xyz)*@
+            </div>
+        </div>
         <div class="col-md-2">
             <div class="form-group">
                 <label><b>TSE Employee Id</b></label>
-                <input class="form-control" id="TSEEmployeeId" name="TSEEmployeeId" type="text" value="">
+               @*@Html.TextBoxFor(x => x.UserId, new { @class = "form-control ", @Value = @Model.UserId })*@
             </div>
         </div>
         <div class="clearfix"></div>
@@ -32,12 +42,14 @@
         <div class="clearfix"></div>
         <div class="col-md-2">
             <div class="form-group">
-                <input type="submit" value="Map/save" class="btn btn-primary">
+                <input type="submit" value="Save" class="btn btn-primary">
             </div>
         </div>
+        }
     </div>
 </div>
 <br />
+
 <div class="row">
     <div class="col-md-5">
         <div class="table-responsive table-bordered">
