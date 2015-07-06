@@ -14,6 +14,7 @@ namespace GAPS.TSC.CONS.Services{
         IEnumerable<UnitModel> GetAllUnits();
         IQueryable<UnitModel> FindUnits(Expression<Func<UnitModel, bool>> filter);
         UnitModel FindUnitById(int id);
+        IEnumerable<ClientModel> GetAllClients();
     }
 
     public class MainMastersService : IMainMastersService{
@@ -41,6 +42,17 @@ namespace GAPS.TSC.CONS.Services{
 
         public UnitModel FindUnitById(int id) {
             return GetAllUnits().FirstOrDefault(x => x.Id == id);
+        }
+
+        public IEnumerable<ClientModel> GetAllClients()
+        {
+            var str = RestService.Get<List<ClientModel>>("clients");
+            
+            if (str != null)
+            {
+                return str;
+            }
+            return new List<ClientModel>();
         }
     }
 }

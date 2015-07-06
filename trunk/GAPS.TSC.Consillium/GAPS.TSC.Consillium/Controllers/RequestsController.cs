@@ -16,22 +16,31 @@ namespace GAPS.TSC.Consillium.Controllers
         private readonly IMainMastersService _masterService;
         private readonly IProjectService _projectService;
 
-        //public RequestsController(IUserService userService,IMainMastersService mastersService,IProjectService projectService)
-        //{
-        //    _userService = userService;
-        //    _masterService = mastersService;
-        //    _projectService = projectService;
-        //}
-        //
+      
         // GET: /Requests/
-        public RequestsController(IAttachmentService attachmentService) : base(attachmentService) {}
+        public RequestsController(IAttachmentService attachmentService, IMainMastersService mastersService,
+            IProjectService projectService, IUserService userService) : base(attachmentService)
+        {
+           _userService= userService;
+            _masterService = mastersService;
+            _projectService = projectService;
+        }
 
         public ActionResult RequestExpertEn()
         {
             var model = new RequestExpertEn();
             var projectClients =
                 _projectService.GetAllMasterProjects().Select(x => x.ClientId).Distinct().ToList();
+            model.Clients =
+              _masterService.GetAllClients()
+                  .Where(x => projectClients.Contains(x.Id) && x.IsActive)
+                  .ToDictionary(x => x.Id, x => x.Name);
             return View(model);
+        }
+        [HttpPost]
+        public ActionResult RequestExpertEn(RequestExpertEn model)
+        {
+            return View();
         }
 
 

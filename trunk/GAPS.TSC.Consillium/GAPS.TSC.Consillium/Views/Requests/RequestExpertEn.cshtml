@@ -164,7 +164,7 @@
             $("#ClientId").change(function () {
                 var clientId = $("#ClientId").val();
                 if (clientId != "") {
-                    $.getJSON("/Projects/GetProjects/" + $("#ClientId").val(), function (data) {
+                    $.getJSON("/Requests/GetProjects/" + $("#ClientId").val(), function (data) {
                         var items = "<option value=''>Select Project</option>";
 
 
@@ -185,7 +185,7 @@
 
             $("#ProjectId").change(function () {
                 $("#ProjectLeadId").html("<option value=''>Select Project Lead</option>");
-                $.getJSON("/Projects/GetProjectLeads/" + $("#ProjectId").val(), function (data) {
+                $.getJSON("/Requests/GetProjectLeads/" + $("#ProjectId").val(), function (data) {
                     var items = "<option value=''>Select Project Lead</option>";
                     $.each(data, function (i, item) {
                         if (i == 0) {
