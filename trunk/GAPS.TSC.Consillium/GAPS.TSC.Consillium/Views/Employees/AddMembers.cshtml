@@ -13,6 +13,7 @@
         </h3>
     </div>
 </div>
+@Html.Partial("_PartialMessage")
 <hr />
 
 <div class="row">
@@ -43,11 +44,13 @@
                     <div class="form-group">
                         <table>
                             <tr class="tdUserId" id="tdUserId" >
-                                <td>@Html.TextBoxFor(x => x.UserId, new { @class = "form-control ", @Value = "" })</td>
+                                <td>@Html.TextBoxFor(x => x.UserId, new { @class = "form-control", @Value = "" })</td>
                             </tr>
                             
                             <tr class="tdName" id="tdName">
-                                <td>@Html.TextBoxFor(x => x.Name, new { @class = "form-control ", @Value = "" })</td>
+                                <td>@Html.TextBoxFor(x => x.Name, new { @class = "form-control", @Value = "" })
+                                @Html.ValidationMessageFor(model => model.Name)
+                                </td>
                             </tr>
                         </table>
                        

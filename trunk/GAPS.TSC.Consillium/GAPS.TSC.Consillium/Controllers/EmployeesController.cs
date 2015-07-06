@@ -78,25 +78,21 @@ namespace GAPS.TSC.Consillium.Controllers
                 team = _userService.GetAllTeamMembers().Where(x => x.Name == model.Name);
             }
             if (team.Count() != 0)
-            { 
-                    
-                SetMessage(MessageType.Info, MessageConstant.GetMessage(Messages.ErrorInTimesheet));
+            {
+
+                SetMessage(MessageType.Info, MessageConstant.GetMessage(Messages.Duplicate));
                 return RedirectToAction("AddMembers");
             }
-                teamMember = _userService.GetAllTeamMembers().FirstOrDefault(x => x.Id == model.Id);
-                bool isNew = teamMember == null;
-                teamMember = teamMember ?? new TeamMember();
+             
+                teamMember =  new TeamMember();
                 teamMember.UserId = model.UserId;
                 teamMember.TeamMemberType = model.TeamMemberType;
                 teamMember.Name = model.Name;
                 teamMember.IsActive = true;
-                if (isNew)
-                {
+                
                     _userService.AddTeamMember(teamMember);
-                    SetMessage(MessageType.Success, MessageConstant.GetMessage(Messages.Random));
+                    SetMessage(MessageType.Success, MessageConstant.GetMessage(Messages.RequestSuccess));
                     return RedirectToAction("AddMembers");
-                }
-                return RedirectToAction("AddMembers");
         }
 
 	}

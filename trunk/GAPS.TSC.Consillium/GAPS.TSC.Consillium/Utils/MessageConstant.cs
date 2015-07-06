@@ -42,6 +42,9 @@ namespace GAPS.TSC.Consillium.Utils
                 case Messages.ProjectUpdated:
                     messagetext = "Project has been updated successfully.";
                     break;
+                case Messages.Duplicate:
+                    messagetext = "Duplicate entries not allowed.";
+                    break;
             }
             return messagetext;
         }

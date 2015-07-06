@@ -81,6 +81,7 @@ namespace GAPS.TSC.CONS.Domain
         NotMoreThanEndDate,
         ProjectAdded,
         ProjectUpdated,
+        Duplicate
     }
     public enum ProjectStaffType
     {

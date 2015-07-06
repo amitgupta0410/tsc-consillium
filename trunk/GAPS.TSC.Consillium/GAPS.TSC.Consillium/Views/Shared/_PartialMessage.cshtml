@@ -1,0 +1,14 @@
+﻿@if (TempData.ContainsKey("Message") && !string.IsNullOrEmpty(TempData["Message"].ToString()))
+{
+    var messageType = TempData["MessageType"].ToString().ToLower();
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="alert alert-@messageType">
+                <span>@TempData["Message"]</span>
+            </div>
+        </div>
+    </div>
+}
+
+
