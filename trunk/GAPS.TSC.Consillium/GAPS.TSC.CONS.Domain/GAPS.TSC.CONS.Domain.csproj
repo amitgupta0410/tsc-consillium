@@ -67,6 +67,10 @@
     <Compile Include="Call.cs" />
     <Compile Include="Enums.cs" />
     <Compile Include="ExpertNote.cs" />
+    <Compile Include="Migrations\201507060648530_InitDatabase.cs" />
+    <Compile Include="Migrations\201507060648530_InitDatabase.Designer.cs">
+      <DependentUpon>201507060648530_InitDatabase.cs</DependentUpon>
+    </Compile>
     <Compile Include="PaymentMode.cs" />
     <Compile Include="WorkExperience.cs" />
     <Compile Include="Expert.cs" />
@@ -80,6 +84,11 @@
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201507060648530_InitDatabase.resx">
+      <DependentUpon>201507060648530_InitDatabase.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
