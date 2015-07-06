@@ -9,6 +9,9 @@
     <projectUrl>https://github.com/Antaris/RazorEngine/wiki</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>Simple templating using Razor syntax.</description>
+    <releaseNotes />
+    <copyright />
+    <language />
     <dependencies>
       <dependency id="Microsoft.AspNet.Razor" version="3.0.0" />
     </dependencies>

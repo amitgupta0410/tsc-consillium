@@ -5,65 +5,55 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GAPS.TSC.CONS.Domain
-{
+namespace GAPS.TSC.CONS.Domain {
 
-    public enum TeamMemberType
-    {
+
+    public enum CostSharingType {
+        TSC,
+        Client,
+        Both,
+        ManDayBilling,
+    }
+
+    public enum LeadStatus {
+        New,
+    }
+
+    public enum ExpertType {
+        Strategic,
+        OnProject
+    }
+
+    public enum PaymentStatus {
+        InProgress,
+        OnHold,
+        Paid,
+        Cancelled,
+        WaitingForInvoice
+    }
+
+    public enum CallType {
+        Call,
+        Email,
+        Survey,
+    }
+
+    public enum RequestStatus {
+        NotStarted,
+    }
+
+    public enum ExpertRequestType {
+        En,
+        Manual,
+    }
+
+    public enum TeamMemberType {
         Internal,
         External
     }
-    public enum ActivityType
-    {
-        Editing,
-        Training,
-        Review,
-        Others,
-        Bench
-    }
 
-    public enum ProjectStatus
-    {
-        [Display(Name = "Not Started")]
-        NotStarted,
-        [Display(Name = "In Progress")]
-        InProgress,
-        [Display(Name = "On Hold")]
-        OnHold,
-        [Display(Name = "In Pipeline")]
-        InPipeline,
-        [Display(Name = "Delivered")]
-        Delivered,
-        [Display(Name = "Scrapped")]
-        Scrapped,
-        [Display(Name = "No Communication")]
-        NoCommunication,
-        [Display(Name = "Dismiss Approved")]
-        DismissApproved,
-        [Display(Name = "Dismiss Rejected")]
-        DismissRejected,
-        [Display(Name = "Dismiss Requested")]
-        DismissRequested
-    }
 
-    public enum ReviewStatus
-    {
-        [Display(Name = "Not Started")]
-        NotStarted,
-        [Display(Name = "In Pipeline")]
-        InPipeline,
-        [Display(Name = "In Progress")]
-        InProgress,
-        [Display(Name = "On Hold")]
-        OnHold,
-        [Display(Name = "Review Over")]
-        ReviewOver,
-        [Display(Name = "Scrapped")]
-        Scrapped
-    }
-
-    public enum MessageType
-    {
+    public enum MessageType {
         Success,
         Info,
         Danger
@@ -74,13 +64,6 @@ namespace GAPS.TSC.CONS.Domain
         Random,
         RequestError,
         RequestSuccess,
-        UpdateTimesheet,
-        ErrorInTimesheet,
-        AddTimesheet,
-        DeleteTimesheet,
-        NotMoreThanEndDate,
-        ProjectAdded,
-        ProjectUpdated,
         Duplicate
     }
     public enum ProjectStaffType
@@ -92,4 +75,5 @@ namespace GAPS.TSC.CONS.Domain
         Developer,
         Tester
     }
+
 }
