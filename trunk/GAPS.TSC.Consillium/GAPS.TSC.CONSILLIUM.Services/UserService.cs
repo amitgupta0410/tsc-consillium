@@ -4,7 +4,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using GAPS.TSC.CONS.Domain;
 using GAPS.TSC.CONS.Domain.ApiModels;
+using GAPS.TSC.CONS.Repositories;
 
 namespace GAPS.TSC.CONSILLIUM.Services
 {
@@ -12,8 +14,15 @@ namespace GAPS.TSC.CONSILLIUM.Services
     {
         private const string CacheKey = "Users";
 
+         private readonly IUnitOfWork _uow;
 
-        public UserService() { }
+         public UserService(IUnitOfWork uow)
+        {
+            _uow = uow;
+        }
+
+
+//        public UserService() { }
 
         public IEnumerable<UserModel> GetAllUsers()
         {
@@ -82,5 +91,15 @@ namespace GAPS.TSC.CONSILLIUM.Services
                             x.ReportingManagerId == userId || x.GroupHeadId == userId || x.UnitHeadId == userId ||
                             x.Id == userId);
         }
+
+        public bool AddSpecialProjectLeads(SpecialProjectLeadMap projectLead)
+        {
+            _uow.ProjectLeads.Add(projectLead);
+                _uow.Save();
+                return true;
+            
+        }
+        
+             
     }
 }

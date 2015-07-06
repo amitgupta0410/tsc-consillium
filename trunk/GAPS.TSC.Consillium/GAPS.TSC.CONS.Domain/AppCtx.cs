@@ -10,7 +10,7 @@ namespace GAPS.TSC.CONS.Domain
     public class AppCtx : DbContext
     {
         public AppCtx() : base("AppCtx") { }
-        public DbSet<TeamMember> TeamMembers { get; set; }
+        public DbSet<SpecialProjectLeadMap> ProjectLeads { get; set; }
 
     }
 }

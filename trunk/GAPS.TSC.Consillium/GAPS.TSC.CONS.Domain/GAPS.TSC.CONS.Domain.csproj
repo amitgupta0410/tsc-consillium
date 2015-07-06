@@ -70,22 +70,14 @@
     <Compile Include="Enums.cs" />
     <Compile Include="IEntity.cs" />
     <Compile Include="ITrackable.cs" />
-    <Compile Include="Migrations\201507030920360_Initial.cs" />
-    <Compile Include="Migrations\201507030920360_Initial.Designer.cs">
-      <DependentUpon>201507030920360_Initial.cs</DependentUpon>
-    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SpecialProjectLeadMap.cs" />
     <Compile Include="TeamMember.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Migrations\201507030920360_Initial.resx">
-      <DependentUpon>201507030920360_Initial.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

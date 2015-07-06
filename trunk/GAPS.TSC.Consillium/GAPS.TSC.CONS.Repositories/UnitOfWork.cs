@@ -11,18 +11,22 @@ namespace GAPS.TSC.CONS.Repositories
     public class UnitOfWork : IUnitOfWork
     {
         private readonly DbContext _context;
+        private readonly IRepository<SpecialProjectLeadMap> _projectLeads;
        
         public UnitOfWork
             (
-            AppCtx context
+            AppCtx context,
+           IRepository<SpecialProjectLeadMap> projectLeads
+
            
            )
         {
             _context = context;
+            _projectLeads = projectLeads;
            
         }
 
-     
+        public IRepository<SpecialProjectLeadMap> ProjectLeads { get { return _projectLeads; } }
 
 
         public int Save()

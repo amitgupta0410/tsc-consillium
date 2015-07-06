@@ -4,13 +4,31 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using GAPS.TSC.CONS.Domain;
+using GAPS.TSC.CONS.Domain.ApiModels;
+using GAPS.TSC.Consillium.Models;
+using GAPS.TSC.CONSILLIUM.Services;
 
 namespace GAPS.TSC.Consillium.Controllers
 {
     public class EmployeesController : Controller
     {
-        //
-        // GET: /Employees/
+         private readonly IProjectService _projectService;
+         private readonly IClientService _clientService;
+         private readonly IUserService _userService;
+         private readonly IMainMastersService _mainMastersService;
+      
+        // GET: /Projects/
+
+        public EmployeesController(IProjectService projectService, IClientService clientService, IUserService userService,
+          IMainMastersService mainMastersService )
+            : base() {
+            _projectService = projectService;
+            _clientService = clientService;
+            _userService = userService;
+          
+            _mainMastersService = mainMastersService;
+           
+        }
         public ActionResult Index()
         {
             return View();
@@ -33,11 +51,25 @@ namespace GAPS.TSC.Consillium.Controllers
         {
             return View();
         }
+
         public ActionResult AddPls()
         {
-
-            return View();
+            var model = new AddProjectLeadModel();
+            return View(model);
         }
+
+        [HttpPost]
+        public ActionResult AddPls(AddProjectLeadModel model)
+        {
+            SpecialProjectLeadMap projectLead = new SpecialProjectLeadMap();
+            projectLead.UserId = model.Id;
+            projectLead.IsActive = true;
+            _userService.AddSpecialProjectLeads(projectLead);
+         return View();
+        }
+
+
+
         public ActionResult AddMembers()
         {
             return View();
