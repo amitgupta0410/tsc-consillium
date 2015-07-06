@@ -46,14 +46,34 @@ namespace GAPS.TSC.Consillium.Controllers
 
         public JsonResult GetProjects(int id)
         {
-            var user = _userService.FindById(id);
+           
             var projects = _projectService.GetAllMasterProjects().Where(x => x.ClientId == id);
             return Json(projects.Select(x => new { x.Id, x.Name }), JsonRequestBehavior.AllowGet);
         }
-        public JsonResult GetProjectsBD(int id)
+        public JsonResult GetProjectsBd(int id)
         {
-            var bdLead = _userService.FindById(id);
-            return Json(bdLead, JsonRequestBehavior.AllowGet);
+
+            var bdLeadPersonnel = _masterService.GetAllClients().Where(x => x.Id == id).FirstOrDefault();//_userService.FindById(id);
+            var bdLead = _userService.FindById(bdLeadPersonnel.BdPersonnelId);
+            string name = "";
+            if (bdLead != null)
+                name = bdLead.FullName + ">" + bdLead.Id;
+            return Json(name, JsonRequestBehavior.AllowGet);
+        }
+        public JsonResult GetProjectLeads(int id)
+        {
+            var projectLeads = _projectService.GetProjectLeads(id);
+
+            return Json(projectLeads.Select(x => new { x.EmployeeId, x.FullName }), JsonRequestBehavior.AllowGet);
+        }
+        public JsonResult GetProjectLead(int id)
+        {
+            var projectLead = _projectService.GetProjectLeads(id).Where(x=>x.IsActive).FirstOrDefault();
+            string name = "";
+            if (projectLead != null)
+                name = projectLead.FullName+">"+projectLead.EmployeeId;
+                
+            return Json(name, JsonRequestBehavior.AllowGet);
         }
 
         

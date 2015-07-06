@@ -106,6 +106,8 @@ namespace GAPS.TSC.CONS.Domain.ApiModels
         public string Code { get; set; }
         public string Name { get; set; }
         public bool IsActive { get; set; }
+        public int BdPersonnelId { get; set; }
+
     }
     public class ProjectLeadModel
     {

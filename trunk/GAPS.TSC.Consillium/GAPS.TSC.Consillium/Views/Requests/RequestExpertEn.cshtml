@@ -46,13 +46,15 @@
         <div class="col-md-4">
             <div class="form-group">
                 <label><b>Bd Lead</b></label>
-                @Html.TextBoxFor(x => x.Clients.Values, new { @class = "form-control ", Value =""})
+                @Html.TextBoxFor(x => x.BdLeadId, new { style = "display: none;" })
+                @Html.TextBoxFor(x => x.BdLeadName, new { @class = "form-control ", Value =""})
             </div>
         </div>
         <div class="col-md-4">
             <div class="form-group">
                 <label><b>Project Lead</b></label>
-                <input class="form-control" id="ProjectLead" name="ProjectLead" type="text" value="">
+               @Html.TextBoxFor(x=>x.ProjectLeadId, new { style = "display: none;" })
+               @Html.TextBoxFor(x => x.ProjectLeadName, new { @class = "form-control ", Value = "" })
             </div>
         </div>
         <div class="clearfix"></div>
@@ -107,10 +109,10 @@
         <div class="col-md-3">
             <div class="row">
                 <div class="col-md-9">
-                    <div class="form-group">
+                    @*<div class="form-group">
                         <label>Upload Scoping Document*</label>
                         <input class="form-control" data-val="true" data-val-required="Please upload a file." id="ScopingFile" name="ScopingFile" type="file" value="">
-                    </div>
+                    </div>*@
                 </div>
                
                 <div class="col-md-1">
@@ -124,10 +126,10 @@
         </div>
         <div class="clearfix"></div>
         <div class="col-md-3">
-            <div class="form-group">
+            @*<div class="form-group">
                 <label>Upload Approval Document*</label>
                 <input class="form-control" data-val="true" data-val-required="Please upload a file." id="ApprovalFile" name="ApprovalFile" type="file" value="">
-            </div>
+            </div>*@
         </div>
         <div class="col-md-3">
             <div class="form-group">
@@ -156,12 +158,19 @@
                 if (clientId != "") {
                     $.getJSON("/Requests/GetProjects/" + $("#ClientId").val(), function (data) {
                         var items = "<option value=''>Select Project</option>";
-
-
                         $.each(data, function (i, item) {
                             items += "<option value='" + item.Id + "'>" + item.Name + "</option>";
                         });
                         $("#ProjectId").html(items);
+                    });
+
+                    $.getJSON("/Requests/GetProjectsBd/" + $("#ClientId").val(), function (name) {
+
+                        var bothName = name.split('>');
+                        var bdLeadName = bothName[0].trim();
+                        var bdLeadId = bothName[1].trim();
+                        $("#BdLeadName").val(bdLeadName);
+                        $("#BdLeadId").val(bdLeadId);
                     });
                    
 
@@ -180,7 +189,19 @@
                         if (i == 0) {
                             items += "<option selected='selected' value='" + item.EmployeeId + "'>" + item.FullName + "</option>";
 
-                        } else {
+                            $.getJSON("/Requests/GetProjectLead/" + $("#ProjectId").val(), function (name) {
+                                
+                                var  both = name.split('>');
+                                var projectLeadName = both[0].trim();
+                                var projectLeadId = both[1].trim();
+                                $("#ProjectLeadName").val(projectLeadName);
+                                $("#ProjectLeadId").val(projectLeadId);
+
+                            });
+                        }
+
+
+                        else {
                             items += "<option value='" + item.EmployeeId + "'>" + item.FullName + "</option>";
                         }
                     });

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using GAPS.TSC.CONS.Domain.ApiModels;
 
 namespace GAPS.TSC.CONS.Services
@@ -14,5 +15,7 @@ namespace GAPS.TSC.CONS.Services
         Project FindById(int id);
         int? GetGroupHeadForProject(int projectId);
         int? GetUnitHeadForProject(int projectId);
+        IEnumerable<ProjectLeadModel> GetProjectLeads(int projectId, DateTime? date = null);
+
     }
 }
