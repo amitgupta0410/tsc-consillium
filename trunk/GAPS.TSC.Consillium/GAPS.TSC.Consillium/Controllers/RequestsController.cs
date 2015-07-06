@@ -31,10 +31,7 @@ namespace GAPS.TSC.Consillium.Controllers
             var model = new RequestExpertEn();
             var projectClients =
                 _projectService.GetAllMasterProjects().Select(x => x.ClientId).Distinct().ToList();
-            model.Clients =
-              _masterService.GetAllClients()
-                  .Where(x => projectClients.Contains(x.Id) && x.IsActive)
-                  .ToDictionary(x => x.Id, x => x.Name);
+            model.Clients =_masterService.GetAllClients().Where(x => projectClients.Contains(x.Id) && x.IsActive).ToDictionary(x => x.Id, x => x.Name);
             return View(model);
         }
         [HttpPost]
@@ -46,8 +43,14 @@ namespace GAPS.TSC.Consillium.Controllers
 
         public JsonResult GetProjects(int id)
         {
+            var user = _userService.FindById(id);
             var projects = _projectService.GetAllMasterProjects().Where(x => x.ClientId == id);
             return Json(projects.Select(x => new { x.Id, x.Name }), JsonRequestBehavior.AllowGet);
+        }
+        public JsonResult GetProjectsBD(int id)
+        {
+            var bdLead = _userService.FindById(id);
+            return Json(bdLead, JsonRequestBehavior.AllowGet);
         }
 
         

@@ -48,7 +48,7 @@
         <div class="col-md-4">
             <div class="form-group">
                 <label><b>Bd Lead</b></label>
-                <input class="form-control" id="BdLead" name="BdLead" type="text" value="Auto Populated" disabled>
+                @Html.TextBoxFor(x => x.Clients.Values, new { @class = "form-control ", Value =""})
             </div>
         </div>
         <div class="col-md-4">
@@ -172,13 +172,20 @@
                             items += "<option value='" + item.Id + "'>" + item.Name + "</option>";
                         });
                         $("#ProjectId").html(items);
-                        $("#ProjectLeadId").html("<option value=''>Select Project Lead</option>");
+                    });
+                    $.getJSON("/Requests/GetProjectsBD/" + $("#ClientId").val(), function (data) {
+                        var bdLead = "";
 
+
+                        $.each(data, function (i, bdLead) {
+                            bdLead += "<option value='" + bdLead.Id + "'>" + bdLead.Name + "</option>";
+                        });
+                        $("#Clients_Values").val(bdLead);
                     });
 
                 } else {
                     $("#ProjectId").html("<option value=''>Select Project </option>");
-                    $("#ProjectLeadId").html("<option value=''>Select Project Lead</option>");
+                   
                 }
             });
 
