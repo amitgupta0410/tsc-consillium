@@ -17,9 +17,8 @@ namespace GAPS.TSC.Consillium.Controllers
       
         private readonly IUserService _userService;
 
-        public EmployeesController(IProjectService projectService,IClientService clientService,IUserService userService,IAttachmentService attachmentService) : base(attachmentService) {
-            _projectService = projectService;
-            _clientService = clientService;
+        public EmployeesController(IUserService userService,IAttachmentService attachmentService) : base(attachmentService) {
+         
             _userService = userService;
         }
         //
