@@ -67,9 +67,9 @@
     <Compile Include="Call.cs" />
     <Compile Include="Enums.cs" />
     <Compile Include="ExpertNote.cs" />
-    <Compile Include="Migrations\201507031324359_initial.cs" />
-    <Compile Include="Migrations\201507031324359_initial.Designer.cs">
-      <DependentUpon>201507031324359_initial.cs</DependentUpon>
+    <Compile Include="Migrations\201507060648530_InitDatabase.cs" />
+    <Compile Include="Migrations\201507060648530_InitDatabase.Designer.cs">
+      <DependentUpon>201507060648530_InitDatabase.cs</DependentUpon>
     </Compile>
     <Compile Include="PaymentMode.cs" />
     <Compile Include="WorkExperience.cs" />
@@ -86,8 +86,8 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201507031324359_initial.resx">
-      <DependentUpon>201507031324359_initial.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201507060648530_InitDatabase.resx">
+      <DependentUpon>201507060648530_InitDatabase.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

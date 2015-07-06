@@ -3,7 +3,7 @@ namespace GAPS.TSC.CONS.Domain.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class initial : DbMigration
+    public partial class InitDatabase : DbMigration
     {
         public override void Up()
         {
@@ -105,7 +105,7 @@ namespace GAPS.TSC.CONS.Domain.Migrations
                         DeletedAt = c.DateTime(),
                     })
                 .PrimaryKey(t => t.Id)
-                .ForeignKey("dbo.TeamMembers", t => t.RecruiterId, cascadeDelete: true)
+                .ForeignKey("dbo.TeamMembers", t => t.RecruiterId)
                 .ForeignKey("dbo.Attachments", t => t.ResumeId)
                 .Index(t => t.RecruiterId)
                 .Index(t => t.ResumeId);
@@ -159,11 +159,7 @@ namespace GAPS.TSC.CONS.Domain.Migrations
                         UpdatedAt = c.DateTime(),
                         DeletedAt = c.DateTime(),
                     })
-                .PrimaryKey(t => t.Id)
-                .ForeignKey("dbo.Attachments", t => t.ApprovalDocumentId, cascadeDelete: true)
-                .ForeignKey("dbo.Attachments", t => t.ScopingDocumentId, cascadeDelete: true)
-                .Index(t => t.ScopingDocumentId)
-                .Index(t => t.ApprovalDocumentId);
+                .PrimaryKey(t => t.Id);
             
             CreateTable(
                 "dbo.WorkExperiences",
@@ -219,18 +215,14 @@ namespace GAPS.TSC.CONS.Domain.Migrations
             DropForeignKey("dbo.WorkExperiences", "ExpertId", "dbo.Experts");
             DropForeignKey("dbo.Experts", "ResumeId", "dbo.Attachments");
             DropForeignKey("dbo.Experts", "RecruiterId", "dbo.TeamMembers");
-            DropForeignKey("dbo.ExpertRequests", "ScopingDocumentId", "dbo.Attachments");
             DropForeignKey("dbo.ExpertRequestExperts", "Expert_Id", "dbo.Experts");
             DropForeignKey("dbo.ExpertRequestExperts", "ExpertRequest_Id", "dbo.ExpertRequests");
-            DropForeignKey("dbo.ExpertRequests", "ApprovalDocumentId", "dbo.Attachments");
             DropForeignKey("dbo.ExpertNotes", "TeamMemberId", "dbo.TeamMembers");
             DropForeignKey("dbo.ExpertNotes", "ExpertId", "dbo.Experts");
             DropForeignKey("dbo.Calls", "CallFacilitatedById", "dbo.TeamMembers");
             DropIndex("dbo.ExpertRequestExperts", new[] { "Expert_Id" });
             DropIndex("dbo.ExpertRequestExperts", new[] { "ExpertRequest_Id" });
             DropIndex("dbo.WorkExperiences", new[] { "ExpertId" });
-            DropIndex("dbo.ExpertRequests", new[] { "ApprovalDocumentId" });
-            DropIndex("dbo.ExpertRequests", new[] { "ScopingDocumentId" });
             DropIndex("dbo.ExpertNotes", new[] { "TeamMemberId" });
             DropIndex("dbo.ExpertNotes", new[] { "ExpertId" });
             DropIndex("dbo.Experts", new[] { "ResumeId" });

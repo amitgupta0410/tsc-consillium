@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Data.Entity.ModelConfiguration.Conventions;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,15 +21,15 @@ namespace GAPS.TSC.CONS.Domain
         public DbSet<Attachment> Attachments { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder) {
+      /*      modelBuilder.Conventions.Remove<OneToManyCascadeDeleteConvention>();
+            modelBuilder.Conventions.Remove<ManyToManyCascadeDeleteConvention>();
+*/
+         
+       modelBuilder.Entity<Expert>()
+                .HasRequired(x => x.Recruiter).WithMany().WillCascadeOnDelete(false);
+             base.OnModelCreating(modelBuilder);
 
-//            modelBuilder.Entity<Resume>().HasRequired(x => x.Profile).WithMany(x => x.Resumes).HasForeignKey(x => x.ProfileId).WillCascadeOnDelete(false);
-//            modelBuilder.Entity<OfferDocument>().HasRequired(x => x.Offer).WithMany(x => x.OfferDocuments).HasForeignKey(x => x.OfferId).WillCascadeOnDelete(false);
-            modelBuilder.Entity<Expert>()
-                .HasRequired(x => x.Recruiter).WithMany().HasForeignKey(x=>x.RecruiterId).WillCascadeOnDelete(false);
 
-
-       
-            base.OnModelCreating(modelBuilder);
 
         }
 
