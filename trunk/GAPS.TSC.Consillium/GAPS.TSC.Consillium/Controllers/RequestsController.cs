@@ -32,6 +32,9 @@ namespace GAPS.TSC.Consillium.Controllers
             var projectClients =
                 _projectService.GetAllMasterProjects().Select(x => x.ClientId).Distinct().ToList();
             model.Clients =_masterService.GetAllClients().Where(x => projectClients.Contains(x.Id) && x.IsActive).ToDictionary(x => x.Id, x => x.Name);
+            model.Industry=_masterService.GetAllIndustries().ToDictionary(x => x.Id, x => x.Name);
+            model.Geography = _masterService.GetAllGeographies().ToDictionary(x => x.Id, x => x.Name);
+            model.Currency = _masterService.GetAllCurrencies().ToDictionary(x => x.CurrencyId, x => x.CurrencyName);
             return View(model);
         }
         [HttpPost]
