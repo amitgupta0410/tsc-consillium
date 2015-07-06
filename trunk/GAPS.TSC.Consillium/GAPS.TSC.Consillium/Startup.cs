@@ -1,8 +1,8 @@
 ﻿using System;
+using GAPS.TSC.CONS.DI;
 using GAPS.TSC.CONS.Domain;
 using GAPS.TSC.CONS.Repositories;
-using GAPS.TSC.CONSILLIUM.Services;
-using GAPS.TSC.CONSILLIUM.DI;
+using GAPS.TSC.CONS.Services;
 using Hangfire;
 using Hangfire.Dashboard;
 using Hangfire.SqlServer;
@@ -41,7 +41,6 @@ namespace GAPS.TSC.Consillium
             var clientService = container.GetInstance<IClientService>();
             userService.GetAllUsers();
             projectService.GetAllMasterProjects();
-            projectService.GetAllReviewableProjects();
             clientService.GetAllClients();
         }
 

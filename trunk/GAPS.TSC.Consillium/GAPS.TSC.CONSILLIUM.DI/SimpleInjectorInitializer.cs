@@ -5,19 +5,19 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
-using GAPS.TSC.CONSILLIUM.Services;
+using GAPS.TSC.CONS.Domain;
+using GAPS.TSC.CONS.Repositories;
+using GAPS.TSC.CONS.Services;
+using Microsoft.Exchange.WebServices.Data;
 using Microsoft.Owin;
 using Microsoft.Owin.Security;
 using Owin;
-using SimpleInjector.Extensions;
 using SimpleInjector;
 using SimpleInjector.Advanced;
+using SimpleInjector.Extensions;
 using SimpleInjector.Integration.Web.Mvc;
-using Microsoft.Exchange.WebServices.Data;
-using GAPS.TSC.CONS.Domain;
-using GAPS.TSC.CONS.Repositories;
 
-namespace GAPS.TSC.CONSILLIUM.DI
+namespace GAPS.TSC.CONS.DI
 {
     public static class SimpleInjectorInitializer
     {

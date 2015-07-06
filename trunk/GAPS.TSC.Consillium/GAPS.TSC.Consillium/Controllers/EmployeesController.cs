@@ -4,8 +4,8 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using GAPS.TSC.CONS.Domain;
+using GAPS.TSC.CONS.Services;
 using GAPS.TSC.Consillium.Models;
-using GAPS.TSC.CONSILLIUM.Services;
 using GAPS.TSC.Consillium.Utils;
 
 namespace GAPS.TSC.Consillium.Controllers
@@ -17,8 +17,7 @@ namespace GAPS.TSC.Consillium.Controllers
         private readonly IClientService _clientService;
         private readonly IUserService _userService;
 
-        public EmployeesController(IProjectService projectService,IClientService clientService,IUserService userService)
-        {
+        public EmployeesController(IProjectService projectService,IClientService clientService,IUserService userService,IAttachmentService attachmentService) : base(attachmentService) {
             _projectService = projectService;
             _clientService = clientService;
             _userService = userService;

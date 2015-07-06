@@ -7,7 +7,7 @@
     <ProjectGuid>{E365E76C-D34F-4594-B024-081FEFB337F0}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>GAPS.TSC.CONSILLIUM.Util</RootNamespace>
+    <RootNamespace>GAPS.TSC.CONS.Util</RootNamespace>
     <AssemblyName>GAPS.TSC.CONSILLIUM.Util</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
