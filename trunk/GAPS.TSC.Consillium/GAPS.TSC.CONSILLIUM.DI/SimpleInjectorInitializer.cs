@@ -19,7 +19,7 @@ using SimpleInjector.Integration.Web.Mvc;
 
 namespace GAPS.TSC.CONS.DI
 {
-    public static class SimpleInjectorInitializer
+     public static class SimpleInjectorInitializer
     {
 
         public static Container InitializeWebApp(IAppBuilder app)

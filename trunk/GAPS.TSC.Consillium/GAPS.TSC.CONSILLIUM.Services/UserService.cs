@@ -25,11 +25,7 @@ namespace GAPS.TSC.CONS.Services
         
         }
 
-        public IEnumerable<TeamMember> GetAllTeamMembers()
-        {
-            var teamMembers = _uow.TeamMembers.Get();
-            return teamMembers;
-        }
+   
 
         public IDictionary GetUser()
         {
@@ -40,6 +36,11 @@ namespace GAPS.TSC.CONS.Services
                 userDictionary[employee.Id] = employee;
             }
             return userDictionary;
+        }
+        public IEnumerable<TeamMember> GetAllTeamMembers()
+        {
+            var teamMembers = _uow.TeamMembers.Get();
+            return teamMembers;
         }
         public bool AddTeamMember(TeamMember teamMember)
         {
@@ -53,6 +54,28 @@ namespace GAPS.TSC.CONS.Services
             {
                 return false;
             }
+        }
+
+        public IEnumerable<SpecialProjectLeadMap> GetAllProjectLeads()
+        {
+            var projectLeads = _uow.ProjectLeads.Get();
+            return projectLeads;
+        }
+
+        public bool AddSpecialProjectLeads(SpecialProjectLeadMap projectLead)
+        {
+            try
+            {
+                _uow.ProjectLeads.Add(projectLead);
+                _uow.Save();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                
+                return false;
+            }
+            
         }
 
         public UserModel FindById(int id)
@@ -91,5 +114,9 @@ namespace GAPS.TSC.CONS.Services
                             x.ReportingManagerId == userId || x.GroupHeadId == userId || x.UnitHeadId == userId ||
                             x.Id == userId);
         }
+
+       
+        
+             
     }
 }

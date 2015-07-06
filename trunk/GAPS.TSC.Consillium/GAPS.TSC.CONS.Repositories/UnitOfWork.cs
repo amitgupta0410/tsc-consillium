@@ -17,6 +17,8 @@ namespace GAPS.TSC.CONS.Repositories {
         private readonly IRepository<Call> _calls;
         private readonly IRepository<PaymentMode> _paymentModes;
         private readonly IRepository<WorkExperience> _workExperiences;
+        private readonly IRepository<SpecialProjectLeadMap> _projectLeads; 
+
        
         public UnitOfWork(AppCtx context,
             IRepository<Expert> experts,
@@ -26,7 +28,8 @@ namespace GAPS.TSC.CONS.Repositories {
             IRepository<Attachment> attachments,
             IRepository<Call> calls,
             IRepository<PaymentMode> paymentModes,
-            IRepository<WorkExperience> workExperiences) {
+            IRepository<WorkExperience> workExperiences,
+            IRepository<SpecialProjectLeadMap>projectLeads){
             _context = context;
             _experts = experts;
             _expertNotes = expertNotes;
@@ -36,8 +39,10 @@ namespace GAPS.TSC.CONS.Repositories {
             _calls = calls;
             _paymentModes = paymentModes;
             _workExperiences = workExperiences;
+            _projectLeads = projectLeads;
 
-        }
+    }
+
 
         public IRepository<Expert> Experts { get { return _experts; } }
         public IRepository<ExpertNote> ExpertNotes { get { return _expertNotes; } }
@@ -47,8 +52,7 @@ namespace GAPS.TSC.CONS.Repositories {
         public IRepository<Call> Calls { get { return _calls; } }
         public IRepository<PaymentMode> PaymentModes { get { return _paymentModes; } }
         public IRepository<WorkExperience> WorkExperiences { get { return _workExperiences; } }
-
-
+        public IRepository<SpecialProjectLeadMap> ProjectLeads { get { return _projectLeads; } }
 
 
         public int Save() {

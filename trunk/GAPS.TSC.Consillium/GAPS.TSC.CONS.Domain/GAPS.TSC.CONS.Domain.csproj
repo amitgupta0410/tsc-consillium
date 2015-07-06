@@ -71,6 +71,10 @@
     <Compile Include="Migrations\201507060648530_InitDatabase.Designer.cs">
       <DependentUpon>201507060648530_InitDatabase.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201507060919378_ProjectLead_TABLE.cs" />
+    <Compile Include="Migrations\201507060919378_ProjectLead_TABLE.Designer.cs">
+      <DependentUpon>201507060919378_ProjectLead_TABLE.cs</DependentUpon>
+    </Compile>
     <Compile Include="PaymentMode.cs" />
     <Compile Include="WorkExperience.cs" />
     <Compile Include="Expert.cs" />
@@ -79,6 +83,7 @@
     <Compile Include="ITrackable.cs" />
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SpecialProjectLeadMap.cs" />
     <Compile Include="TeamMember.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -88,6 +93,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201507060648530_InitDatabase.resx">
       <DependentUpon>201507060648530_InitDatabase.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201507060919378_ProjectLead_TABLE.resx">
+      <DependentUpon>201507060919378_ProjectLead_TABLE.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

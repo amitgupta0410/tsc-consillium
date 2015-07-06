@@ -16,6 +16,8 @@ namespace GAPS.TSC.CONS.Services
         IDictionary GetUser();
         IEnumerable<TeamMember> GetAllTeamMembers();
         bool AddTeamMember(TeamMember teamMember);
+        IEnumerable<SpecialProjectLeadMap> GetAllProjectLeads();
+        bool AddSpecialProjectLeads(SpecialProjectLeadMap projectLead);
 
     }
 }
