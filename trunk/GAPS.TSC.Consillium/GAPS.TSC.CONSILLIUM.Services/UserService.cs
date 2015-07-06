@@ -13,16 +13,14 @@ namespace GAPS.TSC.CONSILLIUM.Services
     public class UserService : IUserService
     {
         private const string CacheKey = "Users";
+        private readonly IUnitOfWork _uow;
+        private readonly IMainMastersService _mainMastersService;
 
-         private readonly IUnitOfWork _uow;
-
-         public UserService(IUnitOfWork uow)
+        public UserService(IUnitOfWork uow, IMainMastersService mainMastersService)
         {
             _uow = uow;
+            _mainMastersService = mainMastersService;
         }
-
-
-//        public UserService() { }
 
         public IEnumerable<UserModel> GetAllUsers()
         {
@@ -39,10 +37,7 @@ namespace GAPS.TSC.CONSILLIUM.Services
             return new List<UserModel>();
         }
 
-        public IEnumerable<UserModel> GetAllEtUsers()
-        {
-            return GetAllUsers().Where(x => x.DesignationId.HasValue && Designation.EtTeam.Contains(x.DesignationId.Value));
-        }
+   
 
         public IDictionary GetUser()
         {
@@ -53,6 +48,46 @@ namespace GAPS.TSC.CONSILLIUM.Services
                 userDictionary[employee.Id] = employee;
             }
             return userDictionary;
+        }
+        public IEnumerable<TeamMember> GetAllTeamMembers()
+        {
+            var teamMembers = _uow.TeamMembers.Get();
+            return teamMembers;
+        }
+        public bool AddTeamMember(TeamMember teamMember)
+        {
+            try
+            {
+                _uow.TeamMembers.Add(teamMember);
+                _uow.Save();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+        }
+
+        public IEnumerable<SpecialProjectLeadMap> GetAllProjectLeads()
+        {
+            var projectLeads = _uow.ProjectLeads.Get();
+            return projectLeads;
+        }
+
+        public bool AddSpecialProjectLeads(SpecialProjectLeadMap projectLead)
+        {
+            try
+            {
+                _uow.ProjectLeads.Add(projectLead);
+                _uow.Save();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                
+                return false;
+            }
+            
         }
 
         public UserModel FindById(int id)
@@ -92,13 +127,7 @@ namespace GAPS.TSC.CONSILLIUM.Services
                             x.Id == userId);
         }
 
-        public bool AddSpecialProjectLeads(SpecialProjectLeadMap projectLead)
-        {
-            _uow.ProjectLeads.Add(projectLead);
-                _uow.Save();
-                return true;
-            
-        }
+       
         
              
     }

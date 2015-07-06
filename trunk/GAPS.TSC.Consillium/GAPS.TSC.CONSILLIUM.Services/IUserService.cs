@@ -15,11 +15,13 @@ namespace GAPS.TSC.CONSILLIUM.Services
         UserModel FindById(int id);
         UserModel FindByEmail(string email);
         bool Authenticate(string email, string password, out UserModel user);
-        bool AddSpecialProjectLeads(SpecialProjectLeadMap projectLead);
         IEnumerable<UserModel> GetUserICanApprove(int userId);
         IEnumerable<UserModel> GetUserICanView(int userId);
         IDictionary GetUser();
-        IEnumerable<UserModel> GetAllEtUsers();
+        IEnumerable<TeamMember> GetAllTeamMembers();
+        bool AddTeamMember(TeamMember teamMember);
+        IEnumerable<SpecialProjectLeadMap> GetAllProjectLeads();
+        bool AddSpecialProjectLeads(SpecialProjectLeadMap projectLead);
 
     }
 }

@@ -19,7 +19,7 @@ using GAPS.TSC.CONS.Repositories;
 
 namespace GAPS.TSC.CONSILLIUM.DI
 {
-    public static class SimpleInjectorInitializer
+     public static class SimpleInjectorInitializer
     {
 
         public static Container InitializeWebApp(IAppBuilder app)

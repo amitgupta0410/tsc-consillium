@@ -1,4 +1,5 @@
-﻿@model GAPS.TSC.Consillium.Models.AddMembersToTeam
+﻿@using GAPS.TSC.CONS.Domain
+@model GAPS.TSC.Consillium.Models.AddMembersToTeam
 @{
     ViewBag.Title = "AddMembers";
 }
@@ -12,6 +13,7 @@
         </h3>
     </div>
 </div>
+@Html.Partial("_PartialMessage")
 <hr />
 
 <div class="row">
@@ -22,37 +24,49 @@
             <div class="col-md-8">
                 <div class="form-group">
                     <div class="col-md-3">
-                        @Html.RadioButtonFor(x => x.TeamMemberType, "Internal")<b>Internal</b>
+                        @Html.RadioButtonFor(x => x.TeamMemberType, "Internal", new { id = "Internal" })<b>Internal</b>
                     </div>
                     <div class="col-md-3">
-                        @Html.RadioButtonFor(x => x.TeamMemberType, "External")<b>External</b>
+                        @Html.RadioButtonFor(x => x.TeamMemberType, "External", new { id = "External" })<b>External</b>
                         </div>
                     </div>
             </div>
             <div class="clearfix"></div>
+            <br/>
             <div class="col-md-8">
                 <div class="col-md-3">
                     <div class="form-group">
-                        <label><b>TSE Employee Id</b></label>
+                            <label id ="lblEmployeeId"><b>TSC EmployeeId</b></label>
                     </div>
                    
                 </div>
                 <div class="col-md-3">
                     <div class="form-group">
-                        @Html.TextBoxFor(x => x.UserId, new { @class = "form-control ", @Value = "" })
+                        <table>
+                            <tr class="tdUserId" id="tdUserId" >
+                                <td>@Html.TextBoxFor(x => x.UserId, new { @class = "form-control", @Value = "" })</td>
+                            </tr>
+                            
+                            <tr class="tdName" id="tdName">
+                                <td>@Html.TextBoxFor(x => x.Name, new { @class = "form-control", @Value = "" })
+                                @Html.ValidationMessageFor(model => model.Name)
+                                </td>
+                            </tr>
+                        </table>
+                       
                     </div>
                 </div>
                 </div>
             <div class="clearfix"></div>
-            <div class="col-md-2">
+            @*<div class="col-md-2">
                 <div class="form-group">
                     <div class="checkbox">
                         <label><input type="checkbox" value="">Admin Rights</label>
                     </div>
                 </div>
-            </div>
+            </div>*@
             <div class="clearfix"></div>
-            <div class="col-md-2">
+            <div class="col-md-3">
                 <div class="form-group">
                     <input type="submit" value="Save" class="btn btn-primary">
                 </div>
@@ -70,42 +84,53 @@
                     <tr>
                         <th>TSC Employee Code</th>
                         <th><label>Name</label></th>
-                        <th><label>Admin Rights</label></th>
-                        <th><label>Action</label></th>
+                        <th><label>TeamMemberType</label></th>
+                        <th><label>Status</label></th>
                     </tr>
-                    <tr>
-                        <td>10</td>
-                        <td>John Smith</td>
-                        <td>No</td>
-                        <td><i class="fa fa-trash-o" style="margin-left: 15px;font-size: 20px;"></i></td>
-                    </tr>
-                    <tr>
-                        <td>11</td>
-                        <td>Neha</td>
-                        <td>No</td>
-                        <td><i class="fa fa-trash-o" style="margin-left: 15px;font-size: 20px;"></i></td>
-                    </tr>
-                    <tr>
-                        <td>12</td>
-                        <td>Prashant</td>
-                        <td>Yes</td>
-                        <td><i class="fa fa-trash-o" style="margin-left: 15px;font-size: 20px;"></i></td>
-                    </tr>
-                    <tr>
-                        <td>13</td>
-                        <td>Chayanika</td>
-                        <td>Yes</td>
-                        <td><i class="fa fa-trash-o" style="margin-left: 15px;font-size: 20px;"></i></td>
-                    </tr>
-                    <tr>
-                        <td>14</td>
-                        <td>Ajit</td>
-                        <td>Yes</td>
-                        <td><i class="fa fa-trash-o" style="margin-left: 15px;font-size: 20px;"></i></td>
-                    </tr>
+                    @if (Model.Employees != null)
+                    {
+                        foreach (var member in Model.Employees)
+                         {
+                             <tr>
+                                 <td>@member.UserId</td>
+                                 <td>@member.Name</td>
+                                 <td>@member.TeamMemberType</td>
+                                 <td>@member.IsActive</td>
+                             </tr>
+                         }
+                    }
                 </tbody>
             </table>
         </div>
     </div>
 </div>
+@section scripts
+{
 
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('#Internal').click(function() {
+                if ($(this).is(':checked')) {
+                    var value = $(this).val();
+                    if (value == "Internal") {
+                        $('#lblEmployeeId').text("TSC Employee Id");
+                        $('.tdUserId').show();
+                        $('.tdName').hide();
+                    }
+                }
+            });
+
+            $('#External').click(function() {
+                if ($(this).is(':checked')) {
+                    var value = $(this).val();
+                    if (value == "External") {
+                        $('#lblEmployeeId').text("TSC Employee Name");
+                        $('.tdName').show();
+                        $('.tdUserId').hide();
+                    }
+                }
+            });
+        });
+        $(".tdName").hide();
+    </script>
+}

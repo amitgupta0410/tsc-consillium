@@ -1,8 +1,4 @@
-﻿@using GAPS.TSC.CONS.Domain
-@model GAPS.TSC.Consillium.Models.AddProjectLeadModel
-
-
-
+﻿@model GAPS.TSC.Consillium.Models.AddProjectLeadModel
 @{
     ViewBag.Title = "AddPls";
 }
@@ -14,15 +10,16 @@
         </h3>
     </div>
 </div>
+@Html.Partial("_PartialMessage")
 <hr />
 <div class="row">
     <div class="col-md-12">
-      @using (@Html.BeginForm("AddPls", "Employees", FormMethod.Post))
-      {
+        @using (@Html.BeginForm("AddPls", "Employees", FormMethod.Post))
+        {
             <div class="col-md-4">
                 <div class="form-group">
                     <label><b>PL Employee Id</b></label>
-                    @Html.TextBoxFor(x => x.Id, new { @class = "form-control ", @Value =""})
+                    @Html.TextBoxFor(x => x.Id, new { @class = "form-control ", @Value = "" })
                 </div>
             </div>
             <div class="clearfix"></div>
@@ -47,33 +44,25 @@
                     <tbody>
                         <tr>
                             <th>Emp Id</th>
-                            <th><label>Name</label></th>
-                            <th><label>Department</label></th>
-                            <th><label>Designation</label></th>
+                            <th><label>Status</label></th>
+                            @*<th><label>Department</label></th>
+                                <th><label>Designation</label></th>*@
                             <th></th>
                         </tr>
-@foreach (var projectLead in Model.ProjectLead)
-{
-    <tr>
-        <td>@ProjectLead.Id</td>
-        <td></td>
-        <td>Technology</td>
-        <td>Developer</td>
-        <td><input type="submit" class="btn btn-danger" value="Delete" /></td>
-    </tr>
-    <tr>
-        <td>2</td>
-        <td>Priyanka</td>
-        <td>Technology</td>
-        <td>Developer</td>
-        <td><input type="submit" class="btn btn-danger" value="Delete" /></td>
-    </tr>
-}
-    </tbody >
+                        @if (Model.ProjectLead != null)
+                        {
+                            foreach (var projectLead in Model.ProjectLead)
+                            {
+                                <tr>
+                                    <td>@projectLead.UserId</td>
+                                    <td>@projectLead.IsActive</td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
 
                 </table>
             </div>
         </div>
     </div>
 </div>
-

@@ -45,9 +45,6 @@
     <Reference Include="Microsoft.AspNet.Identity.EntityFramework">
       <HintPath>..\packages\Microsoft.AspNet.Identity.EntityFramework.2.2.1\lib\net45\Microsoft.AspNet.Identity.EntityFramework.dll</HintPath>
     </Reference>
-    <Reference Include="SimpleInjector">
-      <HintPath>..\packages\SimpleInjector.2.8.0\lib\net45\SimpleInjector.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
@@ -60,14 +57,28 @@
   <ItemGroup>
     <Compile Include="ApiModels\Employees.cs" />
     <Compile Include="ApiModels\Project.cs" />
-    <Compile Include="ApiModels\ProjectCombineModel.cs" />
     <Compile Include="ApiModels\ProjectStaffing.cs" />
     <Compile Include="ApiModels\ReviewReportModel.cs" />
     <Compile Include="ApiModels\Role.cs" />
     <Compile Include="ApiModels\UserModel.cs" />
     <Compile Include="AppCtx.cs" />
+    <Compile Include="Attachment.cs" />
     <Compile Include="BaseEntity.cs" />
+    <Compile Include="Call.cs" />
     <Compile Include="Enums.cs" />
+    <Compile Include="ExpertNote.cs" />
+    <Compile Include="Migrations\201507060648530_InitDatabase.cs" />
+    <Compile Include="Migrations\201507060648530_InitDatabase.Designer.cs">
+      <DependentUpon>201507060648530_InitDatabase.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201507060919378_ProjectLead_TABLE.cs" />
+    <Compile Include="Migrations\201507060919378_ProjectLead_TABLE.Designer.cs">
+      <DependentUpon>201507060919378_ProjectLead_TABLE.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PaymentMode.cs" />
+    <Compile Include="WorkExperience.cs" />
+    <Compile Include="Expert.cs" />
+    <Compile Include="ExpertRequest.cs" />
     <Compile Include="IEntity.cs" />
     <Compile Include="ITrackable.cs" />
     <Compile Include="Migrations\Configuration.cs" />
@@ -78,6 +89,14 @@
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201507060648530_InitDatabase.resx">
+      <DependentUpon>201507060648530_InitDatabase.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201507060919378_ProjectLead_TABLE.resx">
+      <DependentUpon>201507060919378_ProjectLead_TABLE.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
