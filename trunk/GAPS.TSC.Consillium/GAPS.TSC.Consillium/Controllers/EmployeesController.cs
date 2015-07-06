@@ -76,9 +76,6 @@ namespace GAPS.TSC.Consillium.Controllers
                 _userService.AddSpecialProjectLeads(projectLeadAdd);
                 SetMessage(MessageType.Success, MessageConstant.GetMessage(Messages.RequestSuccess));
                 return RedirectToAction("AddPls");
-            
-
-           
         }
 
 
@@ -114,7 +111,6 @@ namespace GAPS.TSC.Consillium.Controllers
                 SetMessage(MessageType.Info, MessageConstant.GetMessage(Messages.Duplicate));
                 return RedirectToAction("AddMembers");
             }
-             
                 teamMember =  new TeamMember();
                 teamMember.UserId = model.UserId;
                 teamMember.TeamMemberType = model.TeamMemberType;

@@ -1,4 +1,4 @@
-﻿
+﻿@model GAPS.TSC.Consillium.Models.RequestExpertEn
 @{
     ViewBag.Title = "RequestExpertEn";
 }
@@ -14,22 +14,18 @@
 
 <div class="row">
     <div class="col-md-12">
+        @using (Html.BeginForm("RequestExpertEn", "Requests",FormMethod.Post))
+        { 
         <div class="col-md-4">
             <div class="form-group">
-                <label><b>Client</b></label><br>
-                <select class="form-control">
-                    <option>Option1</option>
-                    <option>Option2</option>
-                </select>
+                @Html.DropDownListFor(x => x.ClientId, new SelectList(Model.Clients, "Key", "Value"), "Select Client", new { @class = "form-control", @data_placeholder = "Choose Status" })
+                @Html.ValidationMessageFor(x => x.ClientId)
             </div>
         </div>
         <div class="col-md-4">
             <div class="form-group">
-                <label><b>Title Of Project</b></label>
-                <select class="form-control">
-                    <option>Option1</option>
-                    <option>Option2</option>
-                </select>
+                @Html.DropDownListFor(x => x.ProjectId, new List<SelectListItem>(), "Select Project", new { @class = "form-control" })
+                @Html.ValidationMessageFor(x => x.ProjectId)
             </div>
         </div>
         <div class="col-md-4">
@@ -156,7 +152,57 @@
                 <input type="submit" value="Send Request" class="btn btn-primary">
             </div>
         </div>
-       
+        }
     </div>
 </div>
 
+@section scripts{
+
+    <script type="text/javascript">
+        $(function () {
+
+            $("#ClientId").change(function () {
+                var clientId = $("#ClientId").val();
+                if (clientId != "") {
+                    $.getJSON("/Projects/GetProjects/" + $("#ClientId").val(), function (data) {
+                        var items = "<option value=''>Select Project</option>";
+
+
+                        $.each(data, function (i, item) {
+                            items += "<option value='" + item.Id + "'>" + item.Name + "</option>";
+                        });
+                        $("#ProjectId").html(items);
+                        $("#ProjectLeadId").html("<option value=''>Select Project Lead</option>");
+
+                    });
+
+                } else {
+                    $("#ProjectId").html("<option value=''>Select Project </option>");
+                    $("#ProjectLeadId").html("<option value=''>Select Project Lead</option>");
+                }
+            });
+
+
+            $("#ProjectId").change(function () {
+                $("#ProjectLeadId").html("<option value=''>Select Project Lead</option>");
+                $.getJSON("/Projects/GetProjectLeads/" + $("#ProjectId").val(), function (data) {
+                    var items = "<option value=''>Select Project Lead</option>";
+                    $.each(data, function (i, item) {
+                        if (i == 0) {
+                            items += "<option selected='selected' value='" + item.EmployeeId + "'>" + item.FullName + "</option>";
+
+                        } else {
+                            items += "<option value='" + item.EmployeeId + "'>" + item.FullName + "</option>";
+                        }
+                    });
+                    $("#ProjectLeadId").html(items);
+                });
+            });
+        });
+
+
+    </script>
+
+
+
+}
