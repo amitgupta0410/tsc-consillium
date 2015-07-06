@@ -2,13 +2,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using GAPS.TSC.CONS.Domain;
 using GAPS.TSC.CONS.Domain.ApiModels;
 using GAPS.TSC.CONS.Repositories;
 
-namespace GAPS.TSC.CONSILLIUM.Services
+namespace GAPS.TSC.CONS.Services
 {
     public class UserService : IUserService
     {
@@ -22,19 +20,9 @@ namespace GAPS.TSC.CONSILLIUM.Services
             _mainMastersService = mainMastersService;
         }
 
-        public IEnumerable<UserModel> GetAllUsers()
-        {
-            if (!CacheHelper.HasKey(CacheKey))
-            {
-                CacheHelper.Add(CacheKey, RestService.Get<List<UserModel>>("employees"));
-            }
-
-            var str = CacheHelper.Get(CacheKey) as List<UserModel>;
-            if (str != null)
-            {
-                return str.Where(x => x.IsActive.HasValue && x.IsActive.Value);
-            }
-            return new List<UserModel>();
+        public IEnumerable<UserModel> GetAllUsers() {
+            return RestService.Get<List<UserModel>>("employees");
+        
         }
 
    
@@ -62,7 +50,7 @@ namespace GAPS.TSC.CONSILLIUM.Services
                 _uow.Save();
                 return true;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return false;
             }

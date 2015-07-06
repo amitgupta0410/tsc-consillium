@@ -7,7 +7,7 @@
     <ProjectGuid>{72EA3383-4EFD-4BAF-BA67-2467CDAB3E54}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>GAPS.TSC.CONSILLIUM.DI</RootNamespace>
+    <RootNamespace>GAPS.TSC.CONS.DI</RootNamespace>
     <AssemblyName>GAPS.TSC.CONSILLIUM.DI</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>

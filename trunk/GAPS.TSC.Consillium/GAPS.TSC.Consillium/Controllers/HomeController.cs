@@ -4,26 +4,19 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using GAPS.TSC.CONS.Domain.ApiModels;
-using GAPS.TSC.CONSILLIUM.Services;
+using GAPS.TSC.CONS.Services;
 using GAPS.TSC.CONS.Domain;
 
 
 
 namespace GAPS.TSC.Consillium.Controllers {
-    public class HomeController : Controller {
-
-        private readonly IProjectService _projectService;
-        private readonly IClientService _clientService;
+    public class HomeController : BaseController {
         private readonly IUserService _userService;
-        private readonly IMainMastersService _mainMastersService;
 
-        public HomeController(IProjectService projectService, IClientService clientService, IUserService userService, IMainMastersService mastersService)
-            : base()
+        public HomeController(IUserService userService,IAttachmentService attachmentService)
+            : base(attachmentService)
         {
-            _projectService = projectService;
-            _clientService = clientService;
             _userService = userService;
-            _mainMastersService = mastersService;
         }
         public ActionResult Index(Employees employees)
         {

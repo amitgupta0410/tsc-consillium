@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Text;
 
-namespace GAPS.TSC.CONSILLIUM.Util.Extenders
+namespace GAPS.TSC.CONS.Util.Extenders
 {
     public static class DecimalExtender
     {

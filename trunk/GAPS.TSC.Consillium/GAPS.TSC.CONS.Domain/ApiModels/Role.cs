@@ -12,13 +12,11 @@ namespace GAPS.TSC.CONS.Domain.ApiModels
     {
         public const string Admin = "Admin";
 
-        public const string EtUser = "EtUser";
-        public const string User = "User";
+        public const string ConsUser = "ConsUser";
+      
 
         public const string ProjectLead = "ProjectLead";
         public const string GroupUnitHead = "GroupUnitHead";
-
-        public const string RequestReview = "RequestReview";
 
     }
 

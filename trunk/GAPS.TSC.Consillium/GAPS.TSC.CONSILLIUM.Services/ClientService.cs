@@ -2,12 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
 using GAPS.TSC.CONS.Domain.ApiModels;
 using GAPS.TSC.CONS.Repositories;
 
-namespace GAPS.TSC.CONSILLIUM.Services
+namespace GAPS.TSC.CONS.Services
 {
     public class ClientService : IClientService
     {

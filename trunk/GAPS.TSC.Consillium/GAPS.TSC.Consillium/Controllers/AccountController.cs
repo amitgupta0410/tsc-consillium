@@ -5,6 +5,7 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using GAPS.TSC.CONS.Services;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
@@ -13,15 +14,15 @@ using GAPS.TSC.Consillium.Models;
 namespace GAPS.TSC.Consillium.Controllers
 {
     [Authorize]
-    public class AccountController : Controller
+    public class AccountController : BaseController
     {
         private ApplicationUserManager _userManager;
 
-        public AccountController()
+        public AccountController(IAttachmentService attachmentService):base(attachmentService)
         {
         }
 
-        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager )
+        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager,IAttachmentService _attachmentService ):base(_attachmentService)
         {
             UserManager = userManager;
             SignInManager = signInManager;

@@ -3,26 +3,29 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using GAPS.TSC.CONS.Services;
 using GAPS.TSC.Consillium.Models;
-using GAPS.TSC.CONSILLIUM.Services;
+//using GAPS.TSC.CONSILLIUM.Services;
 
 namespace GAPS.TSC.Consillium.Controllers
 {
-    public class RequestsController : Controller
+    public class RequestsController : BaseController
     {
 
         private readonly IUserService _userService;
         private readonly IMainMastersService _masterService;
         private readonly IProjectService _projectService;
 
-        public RequestsController(IUserService userService,IMainMastersService mastersService,IProjectService projectService)
-        {
-            _userService = userService;
-            _masterService = mastersService;
-            _projectService = projectService;
-        }
+        //public RequestsController(IUserService userService,IMainMastersService mastersService,IProjectService projectService)
+        //{
+        //    _userService = userService;
+        //    _masterService = mastersService;
+        //    _projectService = projectService;
+        //}
         //
         // GET: /Requests/
+        public RequestsController(IAttachmentService attachmentService) : base(attachmentService) {}
+
         public ActionResult RequestExpertEn()
         {
             var model = new RequestExpertEn();

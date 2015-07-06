@@ -3,6 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using GAPS.TSC.CONS.Services;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
@@ -11,14 +12,10 @@ using GAPS.TSC.Consillium.Models;
 namespace GAPS.TSC.Consillium.Controllers
 {
     [Authorize]
-    public class ManageController : Controller
+    public class ManageController : BaseController
     {
-        public ManageController()
-        {
-        }
-
-        public ManageController(ApplicationUserManager userManager)
-        {
+       
+        public ManageController(ApplicationUserManager userManager,IAttachmentService attachmentService) : base(attachmentService) {
             UserManager = userManager;
         }
 
