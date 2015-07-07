@@ -155,20 +155,20 @@
 @section scripts{
 
     <script type="text/javascript">
-        $(function () {
+        $(function() {
 
-            $("#ClientId").change(function () {
+            $("#ClientId").change(function() {
                 var clientId = $("#ClientId").val();
                 if (clientId != "") {
-                    $.getJSON("/Requests/GetProjects/" + $("#ClientId").val(), function (data) {
+                    $.getJSON("/Requests/GetProjects/" + $("#ClientId").val(), function(data) {
                         var items = "<option value=''>Select Project</option>";
-                        $.each(data, function (i, item) {
+                        $.each(data, function(i, item) {
                             items += "<option value='" + item.Id + "'>" + item.Name + "</option>";
                         });
                         $("#ProjectId").html(items);
                     });
 
-                    $.getJSON("/Requests/GetProjectsBd/" + $("#ClientId").val(), function (name) {
+                    $.getJSON("/Requests/GetProjectsBd/" + $("#ClientId").val(), function(name) {
 
                         var bothName = name.split('>');
                         var bdLeadName = bothName[0].trim();
@@ -176,7 +176,7 @@
                         $("#BdLeadName").val(bdLeadName);
                         $("#BdLeadId").val(bdLeadId);
                     });
-                   
+
 
                 } else {
                     $("#ProjectId").html("<option value=''>Select Project </option>");
@@ -188,8 +188,8 @@
             });
 
 
-            $("#ProjectId").change(function () {
-                $.getJSON("/Requests/GetProjectLead/" + $("#ProjectId").val(), function (name) {
+            $("#ProjectId").change(function() {
+                $.getJSON("/Requests/GetProjectLead/" + $("#ProjectId").val(), function(name) {
 
                     var both = name.split('>');
                     var projectLeadName = both[0].trim();
@@ -198,12 +198,14 @@
                     $("#ProjectLeadId").val(projectLeadId);
 
                 });
-                $.getJSON("/Requests/GetProjectUnit/" + $("#ProjectId").val(), function (name) {
-                    var dropdownvalues = $('#UnitId').val();
+                $.getJSON("/Requests/GetProjectUnit/" + $("#ProjectId").val(), function(name) {
                    
+                    $('#UnitId option')
+                        .filter(function () { return $.trim($(this).text()) == name; })
+                        .attr('selected', true);
                     
                 });
-               
+
             });
         });
 

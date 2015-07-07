@@ -82,8 +82,9 @@ namespace GAPS.TSC.Consillium.Controllers
                 var unit = _masterService.FindUnitById(unitId);
                 if (unit!=null)
                 {
-                     name = unit.Id + ">" + unit.Name;
+                     name = unit.Name;
                 }
+               
             }
 
             return Json(name, JsonRequestBehavior.AllowGet);
