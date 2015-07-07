@@ -1,4 +1,4 @@
-﻿
+﻿@model GAPS.TSC.Consillium.Models.ExpertRequisitionModel
 @{
     ViewBag.Title = "ExpertRequisition";
 }
@@ -13,67 +13,93 @@
 <hr />
 <div class="row">
     <div class="col-md-12">
-        <div class="col-md-4">
-            <div class="form-group">
-                <label><b>Project Lead</b></label><br>
-                <select class="form-control">
-                    <option>Option1</option>
-                    <option>Option2</option>
-                </select>
-            </div>
-        </div>
-        <div class="col-md-4">
-            <div class="form-group">
-                <label><b>Status</b></label>
-                <select class="form-control">
-                    <option>Option1</option>
-                    <option>Option2</option>
-                </select>
-            </div>
-        </div>
-        <div class="col-md-4">
-            <div class="form-group">
-                <label><b>Assigned To</b></label>
-                <select class="form-control">
-                    <option>Option1</option>
-                    <option>Option2</option>
-                </select>
-            </div>
-        </div>
-        <div class="clearfix"></div>
+        @using (@Html.BeginForm("ExpertRequisition", "Projects", FormMethod.Get))
+        {
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label><b>Project Lead</b></label><br>
 
-        <div class="col-md-3">
-            <div class="form-group">
-                <label><b>Client</b></label>
-                <select class="form-control">
-                    <option>Option1</option>
-                    <option>Option2</option>
-                </select>
+                    @*<select class="form-control">
+                            <option>Option1</option>
+                            <option>Option2</option>
+                        </select>*@
+                </div>
             </div>
-        </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label><b>Status</b></label>
+                    @Html.DropDownListFor(x => x.ExpertRequests.RequestStatus, new SelectList(Model.StatusOptions, "Key", "Value"), "All", new { @class = "form-control", @data_placeholder = "Choose Status" })
+                    @*<select class="form-control">
+                            <option>Option1</option>
+                            <option>Option2</option>
+                        </select>*@
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label><b>Assigned To</b></label>
+                    @Html.DropDownListFor(x => x.Assigned, new SelectList(Model.AssignedList, "Key", "Value"), "All", new { @class = "form-control", @data_placeholder = "Choose Assigned to" })
+                    @*<select class="form-control">
+                        @*<select class="form-control">
+                            <option>Option1</option>
+                            <option>Option2</option>
+                        </select>*@
+                </div>
+            </div>
+            <div class="clearfix"></div>
 
-        <div class="col-md-3">
-            <div class="form-group">
-                <label><b>Search</b></label>
-                <input class="form-control" id="Search" name="Search" type="text" value="">
-            </div>
-        </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label><b>Client</b></label>
+                    @Html.DropDownListFor(x => x.ClientId, new SelectList(Model.ClientList, "Key", "Value"), "All", new { @class = "form-control" })
 
-        <div class="col-md-3">
-            <div class="form-group">
-                <label><b>Date</b></label>
-                <input class="form-control daterange" id="Date" name="Date" type="text" value="">
-            </div>
-        </div>
 
-        <div class="col-md-2">
-            <div class="form-group">
-                <div style="padding-top: 9px"></div>
-                <br />
-                <input type="submit" class="btn btn-primary" value="Go" />
+                    @*<select class="form-control">
+                            <option>Option1</option>
+                            <option>Option2</option>
+                        </select>*@
+                </div>
             </div>
+
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label><b>Search</b></label>
+                    <input class="form-control" id="Search" name="Search" type="text" value="">
+                </div>
+            </div>
+
+    <div class="col-md-3">
+        <div class="form-group">
+            <label>From</label>
+            @Html.TextBoxFor(x => x.ExpertRequests.StartDate, new { @class = "form-control date", Value = Model.ExpertRequests.StartDate.ToString() })
         </div>
     </div>
+    <div class="col-md-3">
+        <div class="form-group">
+            <label>TO</label>
+
+            @Html.TextBoxFor(x => x.ExpertRequests.EndDate, new { @class = "form-control date", Value = Model.ExpertRequests.EndDate.ToString() })
+        </div>
+    </div>
+
+
+@*            <div class="col-md-3">*@
+@*                <div class="form-group">*@
+@*                    <label><b>Date</b></label>*@
+@*                    <input class="form-control daterange" id="Date" name="Date" type="text" value="">*@
+@*                </div>*@
+@*            </div>*@
+
+            <div class="col-md-2">
+                <div class="form-group">
+                    <div style="padding-top: 9px"></div>
+                    <br />
+                    <input type="submit" class="btn btn-primary" value="Go" />
+                </div>
+            </div>
+        }
+    </div>
+
 </div>
 <br />
 <div class="row">
