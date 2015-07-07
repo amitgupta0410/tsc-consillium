@@ -77,14 +77,13 @@ namespace GAPS.TSC.Consillium.Controllers
         public JsonResult GetProjectUnit(int id)
         {
             var project = _projectService.GetAllMasterProjects().FirstOrDefault(x => x.Id == id);
-            if (project != null)
-            {
-                int unitId = project.UnitId ?? default(int);
-                var unit = _masterService.FindUnitById(unitId);
-                
-                return Json(unit,JsonRequestBehavior.AllowGet);
+            if (project == null) {
+                return Json(null, JsonRequestBehavior.AllowGet);
             }
-            return Json(null, JsonRequestBehavior.AllowGet);
+            int unitId = project.UnitId ?? default(int);
+            var unit = _masterService.FindUnitById(unitId);
+                
+            return Json(unit,JsonRequestBehavior.AllowGet);
         }
         
 
