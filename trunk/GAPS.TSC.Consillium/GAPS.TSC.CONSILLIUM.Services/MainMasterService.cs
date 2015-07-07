@@ -19,6 +19,7 @@ namespace GAPS.TSC.CONS.Services{
         IEnumerable<GeographyModel> GetAllGeographies();
         IEnumerable<Industry> GetAllIndustries();
         IEnumerable<CurrencyModel> GetAllCurrencies();
+        IEnumerable<CountryModel> GetAllCountries();
     }
 
     public class MainMastersService : IMainMastersService{
@@ -71,5 +72,10 @@ namespace GAPS.TSC.CONS.Services{
         {
             return RestService.Get<List<CurrencyModel>>("masters/currencies");
         }
+
+        public IEnumerable<CountryModel> GetAllCountries()
+        {
+            return RestService.Get<List<CountryModel>>("masters/countries");
+        } 
     }
 }

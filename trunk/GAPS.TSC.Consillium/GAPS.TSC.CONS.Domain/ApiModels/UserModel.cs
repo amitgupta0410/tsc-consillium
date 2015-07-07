@@ -4,10 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GAPS.TSC.CONS.Domain.ApiModels
-{
-    public class UserModel
-    {
+namespace GAPS.TSC.CONS.Domain.ApiModels {
+    public class UserModel {
         public int Id { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
@@ -30,15 +28,13 @@ namespace GAPS.TSC.CONS.Domain.ApiModels
         public string FullName { get { return string.Format("{0} {1}", FirstName, LastName); } }
         public int? DesignationId { get; set; }
     }
-    public class GroupModel
-    {
+    public class GroupModel {
         public string Name { get; set; }
         public bool? IsActive { get; set; }
         public int Id { get; set; }
         public int GroupHeadId { get; set; }
     }
-    public class UnitModel
-    {
+    public class UnitModel {
         public string Name { get; set; }
         public bool? IsActive { get; set; }
         public int Id { get; set; }
@@ -47,24 +43,27 @@ namespace GAPS.TSC.CONS.Domain.ApiModels
         public string Code { get; set; }
     }
 
-    public class CurrencyModel
-    {
-         public int   CurrencyId { get; set; }
-         public string  CurrencyName { get; set; }
-         public string CurrencyCode { get; set; }
-         public int    SequenceNo { get; set; }
-         public bool IsActive { get; set; }
+    public class CurrencyModel {
+        public int CurrencyId { get; set; }
+        public string CurrencyName { get; set; }
+        public string CurrencyCode { get; set; }
+        public int SequenceNo { get; set; }
+        public bool IsActive { get; set; }
     }
 
-    public class GeographyModel
-    {
+    public class GeographyModel {
         public int Id { get; set; }
         public string Name { get; set; }
         public int SequenceNo { get; set; }
         public bool IsActive { get; set; }
     }
-    public class Industry
-    {
+    public class Industry {
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public bool IsActive { get; set; }
+    }
+
+    public class CountryModel {
         public int Id { get; set; }
         public string Name { get; set; }
         public bool IsActive { get; set; }
