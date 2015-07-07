@@ -117,13 +117,7 @@
                         @*<input class="form-control" data-val="true" data-val-required="Please upload a file." id="ScopingFile" name="ScopingFile" type="file" value="">*@
                     </div>
                 </div>               
-                @*<div class="col-md-1">
-                    <div class="form-group">
-                        <div style="padding-top: 9px"></div>
-                        <br>
-                        <input type="submit" value="Upload" class="btn btn-primary">
-                    </div>
-                </div>*@
+               
             </div>
         </div>
         <div class="clearfix"></div>
@@ -138,7 +132,7 @@
             <div class="form-group">
                 <label><b>Unit</b></label><br>
                 @Html.DropDownListFor(x => x.UnitId, new SelectList(Model.Units, "Key", "Value"), "Select Unit", new { @class = "form-control", @data_placeholder = "Choose Unit" })
-                @*@Html.ValidationMessageFor(x => x.UnitId)*@
+                @Html.ValidationMessageFor(x => x.UnitId)
             </div>
         </div>
         <div class="col-md-2">
@@ -169,8 +163,10 @@
                     });
 
                     $.getJSON("/Requests/GetProjectsBd/" + $("#ClientId").val(), function(bdLead) {
-                        $("#BdLeadName").val(bdLead.FullName);
-                        $("#BdLeadId").val(bdLead.Id);
+                        if (bdLead != null) {
+                            $("#BdLeadName").val(bdLead.FullName);
+                            $("#BdLeadId").val(bdLead.Id);
+                        }
                     });
 
 

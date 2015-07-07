@@ -44,7 +44,7 @@ namespace GAPS.TSC.Consillium.Controllers
         [HttpPost]
         public ActionResult RequestExpertEn(RequestExpertEn model)
         {
-            var csvFile = Request.Files["ApprovalDocumentFile"];
+           var approveFile= UploadAndSave("ApprovalDocumentFile");
             return View();
         }
 
