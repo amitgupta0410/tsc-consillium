@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using GAPS.TSC.CONS.Domain;
 using GAPS.TSC.CONS.Services;
+using GAPS.TSC.CONS.Util;
 using GAPS.TSC.Consillium.Models;
 //using GAPS.TSC.CONSILLIUM.Services;
 
@@ -32,39 +34,35 @@ namespace GAPS.TSC.Consillium.Controllers
             var projectClients =
                 _projectService.GetAllMasterProjects().Select(x => x.ClientId).Distinct().ToList();
             model.Clients =_masterService.GetAllClients().Where(x => projectClients.Contains(x.Id) && x.IsActive).ToDictionary(x => x.Id, x => x.Name);
+            model.Units = _masterService.GetAllUnits().ToDictionary(x => x.Id, x => x.Name);
             model.Industry=_masterService.GetAllIndustries().ToDictionary(x => x.Id, x => x.Name);
             model.Geography = _masterService.GetAllGeographies().ToDictionary(x => x.Id, x => x.Name);
             model.Currency = _masterService.GetAllCurrencies().ToDictionary(x => x.CurrencyId, x => x.CurrencyName);
+            model.CostSharingOptions = EnumHelper.GetEnumLabels(typeof(CostSharingType));
             return View(model);
         }
         [HttpPost]
         public ActionResult RequestExpertEn(RequestExpertEn model)
         {
+            var csvFile = Request.Files["ApprovalDocumentFile"];
             return View();
         }
 
 
         public JsonResult GetProjects(int id)
         {
-           
             var projects = _projectService.GetAllMasterProjects().Where(x => x.ClientId == id);
             return Json(projects.Select(x => new { x.Id, x.Name }), JsonRequestBehavior.AllowGet);
         }
         public JsonResult GetProjectsBd(int id)
         {
 
-            var bdLeadPersonnel = _masterService.GetAllClients().Where(x => x.Id == id).FirstOrDefault();//_userService.FindById(id);
+            var bdLeadPersonnel = _masterService.GetAllClients().Where(x => x.Id == id).FirstOrDefault();
             var bdLead = _userService.FindById(bdLeadPersonnel.BdPersonnelId);
             string name = "";
             if (bdLead != null)
                 name = bdLead.FullName + ">" + bdLead.Id;
             return Json(name, JsonRequestBehavior.AllowGet);
-        }
-        public JsonResult GetProjectLeads(int id)
-        {
-            var projectLeads = _projectService.GetProjectLeads(id);
-
-            return Json(projectLeads.Select(x => new { x.EmployeeId, x.FullName }), JsonRequestBehavior.AllowGet);
         }
         public JsonResult GetProjectLead(int id)
         {
@@ -72,10 +70,19 @@ namespace GAPS.TSC.Consillium.Controllers
             string name = "";
             if (projectLead != null)
                 name = projectLead.FullName+">"+projectLead.EmployeeId;
-                
             return Json(name, JsonRequestBehavior.AllowGet);
         }
-
+        public JsonResult GetProjectUnit(int id)
+        {
+            var project = _projectService.GetAllMasterProjects().Where(x => x.Id == id).FirstOrDefault();
+            if (project != null)
+            {
+                int unitId = project.UnitId ?? default(int);
+                var unit = _masterService.FindUnitById(unitId);
+            }
+            var name = "";
+            return Json(name, JsonRequestBehavior.AllowGet);
+        }
         
 
         public ActionResult RequestExpertManual()
