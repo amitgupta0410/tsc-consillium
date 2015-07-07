@@ -198,10 +198,10 @@
                     $("#ProjectLeadId").val(projectLeadId);
 
                 });
-                $.getJSON("/Requests/GetProjectUnit/" + $("#ProjectId").val(), function(name) {
+                $.getJSON("/Requests/GetProjectUnit/" + $("#ProjectId").val(), function(unit) {
                    
                     $('#UnitId option')
-                        .filter(function () { return $.trim($(this).text()) == name; })
+                        .filter(function () { return $.trim($(this).val()) == unit.id; })
                         .attr('selected', true);
                     
                 });

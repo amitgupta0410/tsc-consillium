@@ -57,8 +57,8 @@ namespace GAPS.TSC.Consillium.Controllers
         public JsonResult GetProjectsBd(int id)
         {
 
-            var bdLeadPersonnel = _masterService.GetAllClients().Where(x => x.Id == id).FirstOrDefault();
-            var bdLead = _userService.FindById(bdLeadPersonnel.BdPersonnelId);
+            var client = _masterService.GetAllClients().FirstOrDefault(x => x.Id == id);
+            var bdLead = _userService.FindById(client.BdPersonnelId);
             string name = "";
             if (bdLead != null)
                 name = bdLead.FullName + ">" + bdLead.Id;
@@ -66,7 +66,7 @@ namespace GAPS.TSC.Consillium.Controllers
         }
         public JsonResult GetProjectLead(int id)
         {
-            var projectLead = _projectService.GetProjectLeads(id).Where(x=>x.IsActive).FirstOrDefault();
+            var projectLead = _projectService.GetProjectLeads(id).FirstOrDefault(x => x.IsActive);
             string name = "";
             if (projectLead != null)
                 name = projectLead.FullName+">"+projectLead.EmployeeId;
@@ -74,20 +74,17 @@ namespace GAPS.TSC.Consillium.Controllers
         }
         public JsonResult GetProjectUnit(int id)
         {
-            var project = _projectService.GetAllMasterProjects().Where(x => x.Id == id).FirstOrDefault();
-            string name = "Select Unit";
+            var project = _projectService.GetAllMasterProjects().FirstOrDefault(x => x.Id == id);
+           
             if (project != null)
             {
                 int unitId = project.UnitId ?? default(int);
                 var unit = _masterService.FindUnitById(unitId);
-                if (unit!=null)
-                {
-                     name = unit.Name;
-                }
-               
+                return Json(unit);
+
             }
 
-            return Json(name, JsonRequestBehavior.AllowGet);
+            return Json(null, JsonRequestBehavior.AllowGet);
         }
         
 
