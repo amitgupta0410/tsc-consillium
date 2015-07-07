@@ -4,10 +4,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.UI.WebControls;
 using GAPS.TSC.CONS.Domain;
 using GAPS.TSC.CONS.Services;
 using GAPS.TSC.Consillium.Models;
 using GAPS.TSC.Consillium.Utils;
+using GAPS.TSC.CONS.Util;
 
 namespace GAPS.TSC.Consillium.Controllers
 {
@@ -16,10 +18,12 @@ namespace GAPS.TSC.Consillium.Controllers
 
       
         private readonly IUserService _userService;
+        private readonly IMainMastersService _mainMastersService;
 
-        public EmployeesController(IUserService userService,IAttachmentService attachmentService) : base(attachmentService) {
+        public EmployeesController(IUserService userService,IAttachmentService attachmentService , IMainMastersService mainMastersService) : base(attachmentService) {
             
             _userService = userService;
+            _mainMastersService = mainMastersService;
         }
         //
         // GET: /Employees/
@@ -30,7 +34,12 @@ namespace GAPS.TSC.Consillium.Controllers
 
         public ActionResult AddNewLead()
         {
-            return View();
+            var model = new AddLeadModel();
+            model.CountryOptions = _mainMastersService.GetAllCountries().ToDictionary(x => x.Id, x => x.Name);
+            model.CurrencyOptions = _mainMastersService.GetAllCurrencies().ToDictionary(x => x.CurrencyId, x => x.CurrencyName);
+            model.RecruiterOptions = _userService.GetAllTeamMembers().ToDictionary(x => x.Id, x => x.Name);
+            model.TitleOptions = EnumHelper.GetEnumLabels(typeof (TitleOptions));
+            return View(model);
         }
         public ActionResult LeadsDashboard()
         {

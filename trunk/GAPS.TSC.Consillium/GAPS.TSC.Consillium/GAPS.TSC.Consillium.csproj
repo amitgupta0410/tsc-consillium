@@ -207,6 +207,7 @@
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\AddLeadModel.cs" />
     <Compile Include="Models\AddMembersToTeam.cs" />
     <Compile Include="Models\ExpertRequisitionModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />

@@ -75,6 +75,10 @@
     <Compile Include="Migrations\201507060919378_ProjectLead_TABLE.Designer.cs">
       <DependentUpon>201507060919378_ProjectLead_TABLE.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201507070833248_pending.cs" />
+    <Compile Include="Migrations\201507070833248_pending.Designer.cs">
+      <DependentUpon>201507070833248_pending.cs</DependentUpon>
+    </Compile>
     <Compile Include="PaymentMode.cs" />
     <Compile Include="WorkExperience.cs" />
     <Compile Include="Expert.cs" />
@@ -96,6 +100,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201507060919378_ProjectLead_TABLE.resx">
       <DependentUpon>201507060919378_ProjectLead_TABLE.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201507070833248_pending.resx">
+      <DependentUpon>201507070833248_pending.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
