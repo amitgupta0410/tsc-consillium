@@ -12,8 +12,9 @@ namespace GAPS.TSC.CONS.Services{
             return Cache[key] != null;
         }
 
-        public static void Add(string key, object data) {
-            Cache.Add(new CacheItem(key, data), new CacheItemPolicy {});
+        public static void Add(string key, object toReturn) {
+            if(toReturn!=null)
+            Cache.Add(new CacheItem(key, toReturn), new CacheItemPolicy {});
         }
 
         public static object Get(string key) {

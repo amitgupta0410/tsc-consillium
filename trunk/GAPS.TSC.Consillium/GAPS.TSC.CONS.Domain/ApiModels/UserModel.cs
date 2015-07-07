@@ -37,8 +37,6 @@ namespace GAPS.TSC.CONS.Domain.ApiModels
         public int Id { get; set; }
         public int GroupHeadId { get; set; }
     }
-
-
     public class UnitModel
     {
         public string Name { get; set; }
@@ -47,5 +45,28 @@ namespace GAPS.TSC.CONS.Domain.ApiModels
         public int GroupId { get; set; }
         public int UnitHeadId { get; set; }
         public string Code { get; set; }
+    }
+
+    public class CurrencyModel
+    {
+         public int   CurrencyId { get; set; }
+         public string  CurrencyName { get; set; }
+         public string CurrencyCode { get; set; }
+         public int    SequenceNo { get; set; }
+         public bool IsActive { get; set; }
+    }
+
+    public class GeographyModel
+    {
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public int SequenceNo { get; set; }
+        public bool IsActive { get; set; }
+    }
+    public class Industry
+    {
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public bool IsActive { get; set; }
     }
 }

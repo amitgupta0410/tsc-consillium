@@ -14,6 +14,11 @@ namespace GAPS.TSC.CONS.Services{
         IEnumerable<UnitModel> GetAllUnits();
         IQueryable<UnitModel> FindUnits(Expression<Func<UnitModel, bool>> filter);
         UnitModel FindUnitById(int id);
+        IEnumerable<ClientModel> GetAllClients();
+
+        IEnumerable<GeographyModel> GetAllGeographies();
+        IEnumerable<Industry> GetAllIndustries();
+        IEnumerable<CurrencyModel> GetAllCurrencies();
     }
 
     public class MainMastersService : IMainMastersService{
@@ -41,6 +46,30 @@ namespace GAPS.TSC.CONS.Services{
 
         public UnitModel FindUnitById(int id) {
             return GetAllUnits().FirstOrDefault(x => x.Id == id);
+        }
+
+        public IEnumerable<ClientModel> GetAllClients()
+        {
+            var str = RestService.Get<List<ClientModel>>("clients");
+            
+            if (str != null)
+            {
+                return str;
+            }
+            return new List<ClientModel>();
+        }
+
+        public IEnumerable<GeographyModel> GetAllGeographies()
+        {
+            return RestService.Get<List<GeographyModel>>("masters/geographies");
+        }
+        public IEnumerable<Industry>GetAllIndustries()
+        {
+            return RestService.Get<List<Industry>>("masters/ClientIndustries");
+        }
+        public IEnumerable<CurrencyModel> GetAllCurrencies()
+        {
+            return RestService.Get<List<CurrencyModel>>("masters/currencies");
         }
     }
 }

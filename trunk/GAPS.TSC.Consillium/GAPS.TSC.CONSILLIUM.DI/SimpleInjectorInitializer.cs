@@ -50,7 +50,7 @@ namespace GAPS.TSC.CONS.DI
             container.Register<IUserService, UserService>();
             container.Register<IClientService, ClientService>();           
                 
-            container.Register<IMainMastersService, MainMastersService>();
+            container.Register<IMainMastersService, MainMastersService>();          
 
             container.Register<IAttachmentService, AttachmentService>();   
             container.Register<IExpertService, ExpertService>();   

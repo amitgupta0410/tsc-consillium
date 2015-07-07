@@ -1,4 +1,4 @@
-﻿
+﻿@model GAPS.TSC.Consillium.Models.RequestExpertEn
 @{
     ViewBag.Title = "RequestExpertEn";
 }
@@ -14,22 +14,18 @@
 
 <div class="row">
     <div class="col-md-12">
+        @using (Html.BeginForm("RequestExpertEn", "Requests",FormMethod.Post))
+        { 
         <div class="col-md-4">
             <div class="form-group">
-                <label><b>Client</b></label><br>
-                <select class="form-control">
-                    <option>Option1</option>
-                    <option>Option2</option>
-                </select>
+                @Html.DropDownListFor(x => x.ClientId, new SelectList(Model.Clients, "Key", "Value"), "Select Client", new { @class = "form-control", @data_placeholder = "Choose Status" })
+                @Html.ValidationMessageFor(x => x.ClientId)
             </div>
         </div>
         <div class="col-md-4">
             <div class="form-group">
-                <label><b>Title Of Project</b></label>
-                <select class="form-control">
-                    <option>Option1</option>
-                    <option>Option2</option>
-                </select>
+                @Html.DropDownListFor(x => x.ProjectId, new List<SelectListItem>(), "Select Project", new { @class = "form-control" })
+                @Html.ValidationMessageFor(x => x.ProjectId)
             </div>
         </div>
         <div class="col-md-4">
@@ -43,22 +39,22 @@
         <div class="col-md-4">
             <div class="form-group">
                 <label><b>Industry</b></label><br>
-                <select class="form-control">
-                    <option>Option1</option>
-                    <option>Option2</option>
-                </select>
+                @Html.DropDownListFor(x => x.IndustryId, new SelectList(Model.Industry, "Key", "Value"), "Select Industry", new { @class = "form-control", @data_placeholder = "Choose Status" })
+                @Html.ValidationMessageFor(x => x.IndustryId)
             </div>
         </div>
         <div class="col-md-4">
             <div class="form-group">
                 <label><b>Bd Lead</b></label>
-                <input class="form-control" id="BdLead" name="BdLead" type="text" value="Auto Populated" disabled>
+                @Html.TextBoxFor(x => x.BdLeadId, new { style = "display: none;" })
+                @Html.TextBoxFor(x => x.BdLeadName, new { @class = "form-control ", Value =""})
             </div>
         </div>
         <div class="col-md-4">
             <div class="form-group">
                 <label><b>Project Lead</b></label>
-                <input class="form-control" id="ProjectLead" name="ProjectLead" type="text" value="">
+               @Html.TextBoxFor(x=>x.ProjectLeadId, new { style = "display: none;" })
+               @Html.TextBoxFor(x => x.ProjectLeadName, new { @class = "form-control ", Value = "" })
             </div>
         </div>
         <div class="clearfix"></div>
@@ -72,10 +68,8 @@
         <div class="col-md-4">
             <div class="form-group">
                 <label><b>Geography</b></label>
-                <select class="form-control">
-                    <option>Option1</option>
-                    <option>Option2</option>
-                </select>
+                @Html.DropDownListFor(x => x.GeographyId, new SelectList(Model.Geography, "Key", "Value"), "Select Geography", new { @class = "form-control", @data_placeholder = "Choose Status" })
+                @Html.ValidationMessageFor(x => x.GeographyId)
             </div>
         </div>
         <div class="col-md-2">
@@ -88,9 +82,8 @@
             <div class="form-group">
                 <div style="padding-top: 7px"></div>
                 <br>
-                <select class="form-control">
-                    <option>USD</option>
-                </select>
+@Html.DropDownListFor(x => x.CurrencyId, new SelectList(Model.Currency, "Key", "Value"), "Select Currency", new { @class = "form-control", @data_placeholder = "Choose Status" })
+@Html.ValidationMessageFor(x => x.CurrencyId)
             </div>
         </div>
         <div class="clearfix"></div>
@@ -98,12 +91,7 @@
         <div class="col-md-3">
             <div class="form-group">
                 <label><b>Cost Borne By</b></label><br>
-                <select class="form-control">
-                    <option>TSC</option>
-                    <option>Client</option>
-                    <option>TSC+Client</option>
-                    <option>Billed in Monday</option>
-                </select>
+                
             </div>
         </div>
         <div class="col-md-3">
@@ -121,10 +109,10 @@
         <div class="col-md-3">
             <div class="row">
                 <div class="col-md-9">
-                    <div class="form-group">
+                    @*<div class="form-group">
                         <label>Upload Scoping Document*</label>
                         <input class="form-control" data-val="true" data-val-required="Please upload a file." id="ScopingFile" name="ScopingFile" type="file" value="">
-                    </div>
+                    </div>*@
                 </div>
                
                 <div class="col-md-1">
@@ -138,10 +126,10 @@
         </div>
         <div class="clearfix"></div>
         <div class="col-md-3">
-            <div class="form-group">
+            @*<div class="form-group">
                 <label>Upload Approval Document*</label>
                 <input class="form-control" data-val="true" data-val-required="Please upload a file." id="ApprovalFile" name="ApprovalFile" type="file" value="">
-            </div>
+            </div>*@
         </div>
         <div class="col-md-3">
             <div class="form-group">
@@ -156,7 +144,75 @@
                 <input type="submit" value="Send Request" class="btn btn-primary">
             </div>
         </div>
-       
+        }
     </div>
 </div>
 
+@section scripts{
+
+    <script type="text/javascript">
+        $(function () {
+
+            $("#ClientId").change(function () {
+                var clientId = $("#ClientId").val();
+                if (clientId != "") {
+                    $.getJSON("/Requests/GetProjects/" + $("#ClientId").val(), function (data) {
+                        var items = "<option value=''>Select Project</option>";
+                        $.each(data, function (i, item) {
+                            items += "<option value='" + item.Id + "'>" + item.Name + "</option>";
+                        });
+                        $("#ProjectId").html(items);
+                    });
+
+                    $.getJSON("/Requests/GetProjectsBd/" + $("#ClientId").val(), function (name) {
+
+                        var bothName = name.split('>');
+                        var bdLeadName = bothName[0].trim();
+                        var bdLeadId = bothName[1].trim();
+                        $("#BdLeadName").val(bdLeadName);
+                        $("#BdLeadId").val(bdLeadId);
+                    });
+                   
+
+                } else {
+                    $("#ProjectId").html("<option value=''>Select Project </option>");
+                   
+                }
+            });
+
+
+            $("#ProjectId").change(function () {
+                $("#ProjectLeadId").html("<option value=''>Select Project Lead</option>");
+                $.getJSON("/Requests/GetProjectLeads/" + $("#ProjectId").val(), function (data) {
+                    var items = "<option value=''>Select Project Lead</option>";
+                    $.each(data, function (i, item) {
+                        if (i == 0) {
+                            items += "<option selected='selected' value='" + item.EmployeeId + "'>" + item.FullName + "</option>";
+
+                            $.getJSON("/Requests/GetProjectLead/" + $("#ProjectId").val(), function (name) {
+                                
+                                var  both = name.split('>');
+                                var projectLeadName = both[0].trim();
+                                var projectLeadId = both[1].trim();
+                                $("#ProjectLeadName").val(projectLeadName);
+                                $("#ProjectLeadId").val(projectLeadId);
+
+                            });
+                        }
+
+
+                        else {
+                            items += "<option value='" + item.EmployeeId + "'>" + item.FullName + "</option>";
+                        }
+                    });
+                    $("#ProjectLeadId").html(items);
+                });
+            });
+        });
+
+
+    </script>
+
+
+
+}

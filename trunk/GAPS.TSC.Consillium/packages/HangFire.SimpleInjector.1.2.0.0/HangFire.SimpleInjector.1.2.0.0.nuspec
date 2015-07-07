@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+  <metadata>
+    <id>HangFire.SimpleInjector</id>
+    <version>1.2.0.0</version>
+    <title>HangFire.SimpleInjector</title>
+    <authors>DevMondo</authors>
+    <owners>DevMondo</owners>
+    <projectUrl>https://github.com/devmondo/HangFire.SimpleInjector</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>SimpleInjector IOC hangfire Integration</description>
+    <copyright>Copyright ©  2014</copyright>
+    <dependencies>
+      <dependency id="HangFire.Core" version="0.7.5" />
+      <dependency id="SimpleInjector" version="2.5.0" />
+    </dependencies>
+  </metadata>
+</package>
