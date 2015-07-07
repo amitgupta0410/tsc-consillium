@@ -134,14 +134,14 @@
                 @Html.ValidationMessageFor(x => x.ApprovalDocumentFile)
             </div>
         </div>
-        <div class="col-md-3">
+        <div class="col-md-4">
             <div class="form-group">
                 <label><b>Unit</b></label><br>
                 @Html.DropDownListFor(x => x.UnitId, new SelectList(Model.Units, "Key", "Value"), "Select Unit", new { @class = "form-control", @data_placeholder = "Choose Unit" })
                 @*@Html.ValidationMessageFor(x => x.UnitId)*@
             </div>
         </div>
-        <div class="col-md-3">
+        <div class="col-md-2">
             <div class="form-group">
                 <div style="padding-top: 9px"></div>
                 <br>
@@ -199,8 +199,8 @@
 
                 });
                 $.getJSON("/Requests/GetProjectUnit/" + $("#ProjectId").val(), function (name) {
-
-                    var bothName = name.split('>');
+                    var dropdownvalues = $('#UnitId').val();
+                   
                     
                 });
                
