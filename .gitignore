@@ -157,3 +157,5 @@ $RECYCLE.BIN/
 /trunk/GAPS.TSC.Consillium/packages
 packages
 packages
+HangFire.SqlServer.1.4.3
+Hangfire.Core.1.4.3
