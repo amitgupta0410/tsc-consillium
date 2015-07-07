@@ -191,6 +191,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\AttachmentsController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\CallsController.cs" />
     <Compile Include="Controllers\EmployeesController.cs" />
@@ -206,6 +207,7 @@
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\AddMembersToTeam.cs" />
+    <Compile Include="Models\ExpertRequisitionModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\ProjectLeadMapModel.cs" />
@@ -353,6 +355,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\Attachments\" />
     <Folder Include="Views\Base\" />
   </ItemGroup>
   <ItemGroup>
