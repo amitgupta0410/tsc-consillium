@@ -22,7 +22,9 @@
     <div class="col-md-3">
         <div class="form-group">
             <label><b>Title</b></label><br>
-            @Html.DropDownListFor(x=>x.)
+            @Html.DropDownListFor(x => x.Title,new SelectList(Model.TitleOptions, "Key", "Value"), "All", new { @class = "form-control" })
+
+
         </div>
     </div>
     <div class="col-md-3">
