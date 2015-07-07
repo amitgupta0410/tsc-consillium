@@ -62,15 +62,31 @@ namespace GAPS.TSC.CONS.Services{
 
         public IEnumerable<GeographyModel> GetAllGeographies()
         {
-            return RestService.Get<List<GeographyModel>>("masters/geographies");
+            var data = RestService.Get<List<GeographyModel>>("masters/geographies");
+            if (data != null)
+            {
+              return  data.OrderBy(x => x.SequenceNo);
+            }
+            return new List<GeographyModel>();
         }
         public IEnumerable<Industry>GetAllIndustries()
         {
-            return RestService.Get<List<Industry>>("masters/ClientIndustries");
+            
+             var data = RestService.Get<List<Industry>>("masters/ClientIndustries");
+            if (data != null)
+            {
+               return data.OrderBy(x => x.Name);
+            }
+            return new List<Industry>();
         }
         public IEnumerable<CurrencyModel> GetAllCurrencies()
         {
-            return RestService.Get<List<CurrencyModel>>("masters/currencies");
+             var data =RestService.Get<List<CurrencyModel>>("masters/currencies");
+            if (data!=null)
+            {
+                return data.OrderBy(x => x.SequenceNo);
+            }
+            return new List<CurrencyModel>();
         }
 
         public IEnumerable<CountryModel> GetAllCountries()
