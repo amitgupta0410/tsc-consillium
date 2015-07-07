@@ -122,6 +122,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ExpertService.cs" />
+    <Compile Include="ExpertRequestService.cs" />
     <Compile Include="AttachmentService.cs" />
     <Compile Include="CacheHelper.cs" />
     <Compile Include="ClientService.cs" />

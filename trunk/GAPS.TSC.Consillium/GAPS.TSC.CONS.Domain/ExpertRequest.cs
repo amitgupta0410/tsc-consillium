@@ -41,5 +41,9 @@ namespace GAPS.TSC.CONS.Domain {
         public DateTime? EndDate { get; set; }
         public DateTime? RestartDate { get; set; }
 
+        [ForeignKey("AssignedTo")]
+        public int? AssignedToId { get; set; }
+        public virtual TeamMember AssignedTo { get; set; }
+
     }
 }

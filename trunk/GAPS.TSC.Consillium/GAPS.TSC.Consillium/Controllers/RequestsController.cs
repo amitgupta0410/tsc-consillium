@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using GAPS.TSC.CONS.Domain;
 using GAPS.TSC.CONS.Services;
+using GAPS.TSC.CONS.Util;
 using GAPS.TSC.Consillium.Models;
 //using GAPS.TSC.CONSILLIUM.Services;
 
@@ -32,50 +34,57 @@ namespace GAPS.TSC.Consillium.Controllers
             var projectClients =
                 _projectService.GetAllMasterProjects().Select(x => x.ClientId).Distinct().ToList();
             model.Clients =_masterService.GetAllClients().Where(x => projectClients.Contains(x.Id) && x.IsActive).ToDictionary(x => x.Id, x => x.Name);
+            model.Units = _masterService.GetAllUnits().ToDictionary(x => x.Id, x => x.Name);
             model.Industry=_masterService.GetAllIndustries().ToDictionary(x => x.Id, x => x.Name);
             model.Geography = _masterService.GetAllGeographies().ToDictionary(x => x.Id, x => x.Name);
             model.Currency = _masterService.GetAllCurrencies().ToDictionary(x => x.CurrencyId, x => x.CurrencyName);
+            model.CostSharingOptions = EnumHelper.GetEnumLabels(typeof(CostSharingType));
             return View(model);
         }
         [HttpPost]
         public ActionResult RequestExpertEn(RequestExpertEn model)
         {
+           var approveFile= UploadAndSave("ApprovalDocumentFile");
             return View();
         }
 
 
         public JsonResult GetProjects(int id)
         {
-           
             var projects = _projectService.GetAllMasterProjects().Where(x => x.ClientId == id);
             return Json(projects.Select(x => new { x.Id, x.Name }), JsonRequestBehavior.AllowGet);
         }
         public JsonResult GetProjectsBd(int id)
         {
-
-            var bdLeadPersonnel = _masterService.GetAllClients().Where(x => x.Id == id).FirstOrDefault();//_userService.FindById(id);
-            var bdLead = _userService.FindById(bdLeadPersonnel.BdPersonnelId);
-            string name = "";
-            if (bdLead != null)
-                name = bdLead.FullName + ">" + bdLead.Id;
-            return Json(name, JsonRequestBehavior.AllowGet);
-        }
-        public JsonResult GetProjectLeads(int id)
-        {
-            var projectLeads = _projectService.GetProjectLeads(id);
-
-            return Json(projectLeads.Select(x => new { x.EmployeeId, x.FullName }), JsonRequestBehavior.AllowGet);
+            var client = _masterService.GetAllClients().FirstOrDefault(x => x.Id == id);
+            if (client != null)
+            {
+                var bdLead = _userService.FindById(client.BdPersonnelId);
+                if (bdLead != null)
+                    return Json(bdLead, JsonRequestBehavior.AllowGet);
+            }
+            return Json(null, JsonRequestBehavior.AllowGet);
         }
         public JsonResult GetProjectLead(int id)
         {
-            var projectLead = _projectService.GetProjectLeads(id).Where(x=>x.IsActive).FirstOrDefault();
-            string name = "";
+            var projectLead = _projectService.GetProjectLeads(id).FirstOrDefault(x => x.IsActive);
             if (projectLead != null)
-                name = projectLead.FullName+">"+projectLead.EmployeeId;
-                
-            return Json(name, JsonRequestBehavior.AllowGet);
+            {
+                return Json(projectLead, JsonRequestBehavior.AllowGet);
+            }
+            return Json(null, JsonRequestBehavior.AllowGet);
         }
-
+        public JsonResult GetProjectUnit(int id)
+        {
+            var project = _projectService.GetAllMasterProjects().FirstOrDefault(x => x.Id == id);
+            if (project == null) {
+                return Json(null, JsonRequestBehavior.AllowGet);
+            }
+            int unitId = project.UnitId ?? default(int);
+            var unit = _masterService.FindUnitById(unitId);
+                
+            return Json(unit,JsonRequestBehavior.AllowGet);
+        }
         
 
         public ActionResult RequestExpertManual()

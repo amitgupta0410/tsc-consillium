@@ -14,7 +14,7 @@
 
 <div class="row">
     <div class="col-md-12">
-        @using (Html.BeginForm("RequestExpertEn", "Requests",FormMethod.Post))
+        @using (Html.BeginForm("RequestExpertEn", "Requests", FormMethod.Post, new { enctype = "multipart/form-data" }))
         { 
         <div class="col-md-4">
             <div class="form-group">
@@ -31,7 +31,7 @@
         <div class="col-md-4">
             <div class="form-group">
                 <label><b>Description</b></label>
-                <input class="form-control" id="Description" type="text" value="Filled By Requester" disabled>
+               @Html.TextAreaFor(model => model.Description, new { @class = "img-shadow", value = ""})
             </div>
         </div>
         <div class="clearfix"></div>
@@ -62,7 +62,7 @@
         <div class="col-md-4">
             <div class="form-group">
                 <label><b>Comments</b></label><br>
-                <textarea class="form-control" rows="5" id="Comments" style="width: 408px; height: 35px;"></textarea>
+                @Html.TextAreaFor(model => model.Description, new { @class = "img-shadow", value = "" })
             </div>
         </div>
         <div class="col-md-4">
@@ -75,7 +75,7 @@
         <div class="col-md-2">
             <div class="form-group">
                 <label><b>Budget</b></label>
-                <input class="form-control" id="Budget" name="Budget" type="text" value="">
+                @Html.TextBoxFor(x => x.BudgetAmount, new { @class = "form-control" })
             </div>
         </div>
         <div class="col-md-2">
@@ -91,53 +91,51 @@
         <div class="col-md-3">
             <div class="form-group">
                 <label><b>Cost Borne By</b></label><br>
-                
+                @Html.DropDownListFor(x => x.CostSharing, new SelectList(Model.CostSharingOptions, "Key", "Value"),
+                            new { @class = "form-control", value = Model.CostSharing, @data_placeholder = "Choose Cost" })
             </div>
         </div>
         <div class="col-md-3">
             <div class="form-group">
                 <label><b>TSC%</b></label>
-                <input class="form-control" id="TSC%" name="TSC%" type="text" value="">
+                @Html.TextBoxFor(x => x.TscShare, new { @class = "form-control" })
             </div>
         </div>
         <div class="col-md-3">
             <div class="form-group">
                 <label><b>Client%</b></label>
-                <input class="form-control" id="Client%" name="Client%" type="text" value="">
+                @Html.TextBoxFor(x => x.ClientShare, new { @class = "form-control" })
             </div>
         </div>
         <div class="col-md-3">
             <div class="row">
                 <div class="col-md-9">
-                    @*<div class="form-group">
-                        <label>Upload Scoping Document*</label>
-                        <input class="form-control" data-val="true" data-val-required="Please upload a file." id="ScopingFile" name="ScopingFile" type="file" value="">
-                    </div>*@
-                </div>
-               
-                <div class="col-md-1">
                     <div class="form-group">
-                        <div style="padding-top: 9px"></div>
-                        <br>
-                        <input type="submit" value="Upload" class="btn btn-primary">
+                        <label>Upload Scoping Document*</label>
+                        @Html.TextBoxFor(x => x.ScopingDocumentFile, new { @class = "form-control", type = "file" })
+                        @Html.ValidationMessageFor(x => x.ScopingDocumentFile)
+                        @*<input class="form-control" data-val="true" data-val-required="Please upload a file." id="ScopingFile" name="ScopingFile" type="file" value="">*@
                     </div>
-                </div>
+                </div>               
+               
             </div>
         </div>
         <div class="clearfix"></div>
         <div class="col-md-3">
-            @*<div class="form-group">
-                <label>Upload Approval Document*</label>
-                <input class="form-control" data-val="true" data-val-required="Please upload a file." id="ApprovalFile" name="ApprovalFile" type="file" value="">
-            </div>*@
-        </div>
-        <div class="col-md-3">
             <div class="form-group">
-                <label><b>Unit</b></label><br>
-                <input class="form-control" id="Unit" name="Unit" type="text" value="Auto Populated" disabled>
+                <label>Upload Approval Document</label>
+                @Html.TextBoxFor(x => x.ApprovalDocumentFile, new { @class = "form-control", type = "file" })
+                @Html.ValidationMessageFor(x => x.ApprovalDocumentFile)
             </div>
         </div>
-        <div class="col-md-3">
+        <div class="col-md-4">
+            <div class="form-group">
+                <label><b>Unit</b></label><br>
+                @Html.DropDownListFor(x => x.UnitId, new SelectList(Model.Units, "Key", "Value"), "Select Unit", new { @class = "form-control", @data_placeholder = "Choose Unit" })
+                @Html.ValidationMessageFor(x => x.UnitId)
+            </div>
+        </div>
+        <div class="col-md-2">
             <div class="form-group">
                 <div style="padding-top: 9px"></div>
                 <br>
@@ -151,62 +149,54 @@
 @section scripts{
 
     <script type="text/javascript">
-        $(function () {
+        $(function() {
 
-            $("#ClientId").change(function () {
+            $("#ClientId").change(function() {
                 var clientId = $("#ClientId").val();
                 if (clientId != "") {
-                    $.getJSON("/Requests/GetProjects/" + $("#ClientId").val(), function (data) {
+                    $.getJSON("/Requests/GetProjects/" + $("#ClientId").val(), function(data) {
                         var items = "<option value=''>Select Project</option>";
-                        $.each(data, function (i, item) {
+                        $.each(data, function(i, item) {
                             items += "<option value='" + item.Id + "'>" + item.Name + "</option>";
                         });
                         $("#ProjectId").html(items);
                     });
 
-                    $.getJSON("/Requests/GetProjectsBd/" + $("#ClientId").val(), function (name) {
-
-                        var bothName = name.split('>');
-                        var bdLeadName = bothName[0].trim();
-                        var bdLeadId = bothName[1].trim();
-                        $("#BdLeadName").val(bdLeadName);
-                        $("#BdLeadId").val(bdLeadId);
+                    $.getJSON("/Requests/GetProjectsBd/" + $("#ClientId").val(), function(bdLead) {
+                        if (bdLead != null) {
+                            $("#BdLeadName").val(bdLead.FullName);
+                            $("#BdLeadId").val(bdLead.Id);
+                        }
                     });
-                   
+
 
                 } else {
                     $("#ProjectId").html("<option value=''>Select Project </option>");
-                   
+                    $("#BdLeadName").val("");
+                    $("#BdLeadId").val("");
+                    $("#ProjectLeadName").val("");
+                    $("#ProjectLeadId").val("");
                 }
             });
 
 
-            $("#ProjectId").change(function () {
-                $("#ProjectLeadId").html("<option value=''>Select Project Lead</option>");
-                $.getJSON("/Requests/GetProjectLeads/" + $("#ProjectId").val(), function (data) {
-                    var items = "<option value=''>Select Project Lead</option>";
-                    $.each(data, function (i, item) {
-                        if (i == 0) {
-                            items += "<option selected='selected' value='" + item.EmployeeId + "'>" + item.FullName + "</option>";
-
-                            $.getJSON("/Requests/GetProjectLead/" + $("#ProjectId").val(), function (name) {
-                                
-                                var  both = name.split('>');
-                                var projectLeadName = both[0].trim();
-                                var projectLeadId = both[1].trim();
-                                $("#ProjectLeadName").val(projectLeadName);
-                                $("#ProjectLeadId").val(projectLeadId);
-
-                            });
-                        }
+            $("#ProjectId").change(function() {
+                $.getJSON("/Requests/GetProjectLead/" + $("#ProjectId").val(), function(projectLead) {
 
 
-                        else {
-                            items += "<option value='" + item.EmployeeId + "'>" + item.FullName + "</option>";
-                        }
-                    });
-                    $("#ProjectLeadId").html(items);
+                    $("#ProjectLeadName").val(projectLead.FullName);
+                    $("#ProjectLeadId").val(projectLead.EmployeeId);
+
                 });
+                $.getJSON("/Requests/GetProjectUnit/" + $("#ProjectId").val(), function(unit) {
+
+                    if (unit != null) {
+                        $('#UnitId option')
+                            .filter(function() { return $.trim($(this).val()) == unit.Id; })
+                            .attr('selected', true);
+                    }
+                });
+
             });
         });
 

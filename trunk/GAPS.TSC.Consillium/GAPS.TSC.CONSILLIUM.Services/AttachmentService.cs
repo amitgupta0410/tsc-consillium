@@ -17,7 +17,8 @@ namespace GAPS.TSC.CONS.Services{
         public Attachment SaveAttachment(string originalName, string newName) {
             var attachement = new Attachment {
                 ActualName = originalName,
-                FileName = newName
+                FileName = newName,
+                CreatedAt = DateTime.Now
             };
             return Add(attachement);
         }

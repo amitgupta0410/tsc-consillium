@@ -12,7 +12,7 @@ namespace GAPS.TSC.Consillium.Controllers
 {
     public class BaseController : Controller{
         private readonly IAttachmentService _attachmentService;
-        private static readonly string FilePath = ConfigurationManager.AppSettings["Uploads"];
+        protected static readonly string FilePath = ConfigurationManager.AppSettings["Uploads"];
         //
         // GET: /Base/
         public BaseController(IAttachmentService attachmentService) {
@@ -37,10 +37,8 @@ namespace GAPS.TSC.Consillium.Controllers
  
             if (file.ContentLength > 0)
             {
-               
                 file.SaveAs(string.Format("{0}{1}",FilePath,newName));
                 return _attachmentService.SaveAttachment(origName, newName);
-
             }
             return null;
 
