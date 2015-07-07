@@ -7,6 +7,10 @@ using System.Threading.Tasks;
 
 namespace GAPS.TSC.CONS.Domain {
   public class Call : BaseEntity {
+
+      [ForeignKey("ExpertRequest")]
+      public int ExpertRequestId { get; set; }
+      public virtual ExpertRequest ExpertRequest { get; set; }
       
       [ForeignKey("Expert")]
       public int ExpertId { get; set; }

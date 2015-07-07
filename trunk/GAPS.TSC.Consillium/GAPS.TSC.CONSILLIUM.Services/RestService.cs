@@ -28,7 +28,9 @@ namespace GAPS.TSC.CONS.Services{
             var response = client.Execute(req);
 
             var toReturn = JsonConvert.DeserializeObject<T>(response.Content);
-            CacheHelper.Add(url, data);
+            if (toReturn != null) {
+                CacheHelper.Add(url, toReturn);
+            }
             return toReturn;
         }
 
