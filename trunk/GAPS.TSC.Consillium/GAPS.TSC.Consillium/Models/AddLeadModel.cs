@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Web;
 using GAPS.TSC.CONS.Domain;
 
 namespace GAPS.TSC.Consillium.Models {
@@ -15,14 +16,14 @@ namespace GAPS.TSC.Consillium.Models {
         [Required]
         public string City { get; set; }
         [Required]
-        [DataType(DataType.EmailAddress)]
+        [EmailAddress(ErrorMessage = "Please enter a valid Email.")]
         public string Email { get; set; }
         [Required]
-        [DataType(DataType.PhoneNumber)]
+        [RegularExpression(@"[0-9]{10}", ErrorMessage = "Please enter a valid contact number.")]
         public string PrimaryContact { get; set; }
-        [DataType(DataType.PhoneNumber)]
+        [RegularExpression(@"[0-9]{10}", ErrorMessage = "Please enter a valid contact number.")]
         public string SecondaryContact { get; set; }
-        [DataType(DataType.Url)]
+        [Url(ErrorMessage = "Please enter a valid url.")]
         public string LinkedInUrl { get; set; }
         [Required]
         public DateTime ContactedOn { get; set; }
@@ -31,13 +32,18 @@ namespace GAPS.TSC.Consillium.Models {
         [Required]
         public int FeesCurrencyId { get; set; }
 
+        [Required]
+        public HttpPostedFileBase ResumeFile { get; set; }
+
         public IDictionary<string, string> TitleOptions { get; set; }
-        public IDictionary<int,string> CountryOptions { get; set; }
+        public IDictionary<string, string> ExpertTypeOptions { get; set; } 
+        public IDictionary<string, string> LeadStatusOptions { get; set; }
+        public IDictionary<int, string> CountryOptions { get; set; }
         public IDictionary<int,string> CurrencyOptions { get; set; }
         public IDictionary<int,string> RecruiterOptions { get; set; }
         public LeadStatus LeadStatus { get; set; }
         public string LeadComments { get; set; }
-       public int RecruiterId { get; set; }
+       public int? RecruiterId { get; set; }
         public string JobHistory { get; set; }
         public string Source { get; set; }
         public string Notes { get; set; }

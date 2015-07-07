@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
+using GAPS.TSC.Consillium.App_Start;
 
 namespace GAPS.TSC.Consillium
 {
@@ -16,6 +17,8 @@ namespace GAPS.TSC.Consillium
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
+            ViewModelMappings.Init();
+
         }
     }
 }
