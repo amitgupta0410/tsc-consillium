@@ -9,6 +9,7 @@ using GAPS.TSC.CONS.Domain;
 using GAPS.TSC.CONS.Services;
 using GAPS.TSC.Consillium.Models;
 using GAPS.TSC.Consillium.Utils;
+using GAPS.TSC.CONS.Util;
 
 namespace GAPS.TSC.Consillium.Controllers
 {
@@ -37,6 +38,7 @@ namespace GAPS.TSC.Consillium.Controllers
             model.CountryOptions = _mainMastersService.GetAllCountries().ToDictionary(x => x.Id, x => x.Name);
             model.CurrencyOptions = _mainMastersService.GetAllCurrencies().ToDictionary(x => x.CurrencyId, x => x.CurrencyName);
             model.RecruiterOptions = _userService.GetAllTeamMembers().ToDictionary(x => x.Id, x => x.Name);
+            model.TitleOptions = EnumHelper.GetEnumLabels(typeof (TitleOptions));
             return View(model);
         }
         public ActionResult LeadsDashboard()

@@ -14,7 +14,7 @@
 
 <div class="row">
     <div class="col-md-12">
-        @using (Html.BeginForm("RequestExpertEn", "Requests",FormMethod.Post))
+        @using (Html.BeginForm("RequestExpertEn", "Requests", FormMethod.Post, new { enctype = "multipart/form-data" }))
         { 
         <div class="col-md-4">
             <div class="form-group">
@@ -117,13 +117,7 @@
                         @*<input class="form-control" data-val="true" data-val-required="Please upload a file." id="ScopingFile" name="ScopingFile" type="file" value="">*@
                     </div>
                 </div>               
-                @*<div class="col-md-1">
-                    <div class="form-group">
-                        <div style="padding-top: 9px"></div>
-                        <br>
-                        <input type="submit" value="Upload" class="btn btn-primary">
-                    </div>
-                </div>*@
+               
             </div>
         </div>
         <div class="clearfix"></div>
@@ -134,14 +128,14 @@
                 @Html.ValidationMessageFor(x => x.ApprovalDocumentFile)
             </div>
         </div>
-        <div class="col-md-3">
+        <div class="col-md-4">
             <div class="form-group">
                 <label><b>Unit</b></label><br>
                 @Html.DropDownListFor(x => x.UnitId, new SelectList(Model.Units, "Key", "Value"), "Select Unit", new { @class = "form-control", @data_placeholder = "Choose Unit" })
-                @*@Html.ValidationMessageFor(x => x.UnitId)*@
+                @Html.ValidationMessageFor(x => x.UnitId)
             </div>
         </div>
-        <div class="col-md-3">
+        <div class="col-md-2">
             <div class="form-group">
                 <div style="padding-top: 9px"></div>
                 <br>
@@ -155,28 +149,26 @@
 @section scripts{
 
     <script type="text/javascript">
-        $(function () {
+        $(function() {
 
-            $("#ClientId").change(function () {
+            $("#ClientId").change(function() {
                 var clientId = $("#ClientId").val();
                 if (clientId != "") {
-                    $.getJSON("/Requests/GetProjects/" + $("#ClientId").val(), function (data) {
+                    $.getJSON("/Requests/GetProjects/" + $("#ClientId").val(), function(data) {
                         var items = "<option value=''>Select Project</option>";
-                        $.each(data, function (i, item) {
+                        $.each(data, function(i, item) {
                             items += "<option value='" + item.Id + "'>" + item.Name + "</option>";
                         });
                         $("#ProjectId").html(items);
                     });
 
-                    $.getJSON("/Requests/GetProjectsBd/" + $("#ClientId").val(), function (name) {
-
-                        var bothName = name.split('>');
-                        var bdLeadName = bothName[0].trim();
-                        var bdLeadId = bothName[1].trim();
-                        $("#BdLeadName").val(bdLeadName);
-                        $("#BdLeadId").val(bdLeadId);
+                    $.getJSON("/Requests/GetProjectsBd/" + $("#ClientId").val(), function(bdLead) {
+                        if (bdLead != null) {
+                            $("#BdLeadName").val(bdLead.FullName);
+                            $("#BdLeadId").val(bdLead.Id);
+                        }
                     });
-                   
+
 
                 } else {
                     $("#ProjectId").html("<option value=''>Select Project </option>");
@@ -188,22 +180,23 @@
             });
 
 
-            $("#ProjectId").change(function () {
-                $.getJSON("/Requests/GetProjectLead/" + $("#ProjectId").val(), function (name) {
+            $("#ProjectId").change(function() {
+                $.getJSON("/Requests/GetProjectLead/" + $("#ProjectId").val(), function(projectLead) {
 
-                    var both = name.split('>');
-                    var projectLeadName = both[0].trim();
-                    var projectLeadId = both[1].trim();
-                    $("#ProjectLeadName").val(projectLeadName);
-                    $("#ProjectLeadId").val(projectLeadId);
+
+                    $("#ProjectLeadName").val(projectLead.FullName);
+                    $("#ProjectLeadId").val(projectLead.EmployeeId);
 
                 });
-                $.getJSON("/Requests/GetProjectUnit/" + $("#ProjectId").val(), function (name) {
+                $.getJSON("/Requests/GetProjectUnit/" + $("#ProjectId").val(), function(unit) {
 
-                    var bothName = name.split('>');
-                    
+                    if (unit != null) {
+                        $('#UnitId option')
+                            .filter(function() { return $.trim($(this).val()) == unit.Id; })
+                            .attr('selected', true);
+                    }
                 });
-               
+
             });
         });
 

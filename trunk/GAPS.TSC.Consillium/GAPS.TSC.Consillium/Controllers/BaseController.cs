@@ -37,10 +37,8 @@ namespace GAPS.TSC.Consillium.Controllers
  
             if (file.ContentLength > 0)
             {
-               
                 file.SaveAs(string.Format("{0}{1}",FilePath,newName));
                 return _attachmentService.SaveAttachment(origName, newName);
-
             }
             return null;
 

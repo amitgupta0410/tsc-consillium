@@ -19,6 +19,13 @@ namespace GAPS.TSC.CONS.Domain {
         New,
     }
 
+    public enum TitleOptions
+    {
+        Mr,
+        Mrs,
+        Miss
+    }
+
     public enum ExpertType {
         Strategic,
         OnProject
