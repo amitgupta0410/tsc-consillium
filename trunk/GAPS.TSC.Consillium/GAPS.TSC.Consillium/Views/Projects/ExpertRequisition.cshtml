@@ -1,4 +1,6 @@
-﻿@model GAPS.TSC.Consillium.Models.ExpertRequisitionModel
+﻿@using Microsoft.Ajax.Utilities
+@using RestSharp.Extensions
+@model GAPS.TSC.Consillium.Models.ExpertRequisitionModel
 @{
     ViewBag.Title = "ExpertRequisition";
 }
@@ -18,7 +20,7 @@
             <div class="col-md-4">
                 <div class="form-group">
                     <label><b>Project Lead</b></label><br>
-
+                    @Html.DropDownListFor(x => x.ProjectLeadId, new SelectList(Model.ProjectLead, "Key", "Value"), "All", new { @class = "form-control", @data_placeholder = "Choose Status" })
                     @*<select class="form-control">
                             <option>Option1</option>
                             <option>Option2</option>
@@ -28,7 +30,7 @@
             <div class="col-md-4">
                 <div class="form-group">
                     <label><b>Status</b></label>
-                    @Html.DropDownListFor(x => x.ExpertRequests.RequestStatus, new SelectList(Model.StatusOptions, "Key", "Value"), "All", new { @class = "form-control", @data_placeholder = "Choose Status" })
+                    @Html.DropDownListFor(x => x.RequestStatus, new SelectList(Model.StatusOptions, "Key", "Value"), "All", new { @class = "form-control", @data_placeholder = "Choose Status" })
                     @*<select class="form-control">
                             <option>Option1</option>
                             <option>Option2</option>
@@ -68,28 +70,19 @@
                 </div>
             </div>
 
-    <div class="col-md-3">
-        <div class="form-group">
-            <label>From</label>
-            @Html.TextBoxFor(x => x.ExpertRequests.StartDate, new { @class = "form-control date", Value = Model.ExpertRequests.StartDate.ToString() })
-        </div>
-    </div>
-    <div class="col-md-3">
-        <div class="form-group">
-            <label>TO</label>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label>From</label>
+                    @Html.TextBoxFor(x => x.StartDate, new { @class = "form-control date", Value = Model.StartDate.ToString() })
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label>TO</label>
 
-            @Html.TextBoxFor(x => x.ExpertRequests.EndDate, new { @class = "form-control date", Value = Model.ExpertRequests.EndDate.ToString() })
-        </div>
-    </div>
-
-
-@*            <div class="col-md-3">*@
-@*                <div class="form-group">*@
-@*                    <label><b>Date</b></label>*@
-@*                    <input class="form-control daterange" id="Date" name="Date" type="text" value="">*@
-@*                </div>*@
-@*            </div>*@
-
+                    @Html.TextBoxFor(x => x.EndDate, new { @class = "form-control date", Value = Model.EndDate.ToString() })
+                </div>
+            </div>
             <div class="col-md-2">
                 <div class="form-group">
                     <div style="padding-top: 9px"></div>
@@ -118,65 +111,84 @@
                         <th><label>Start Date</label></th>
                         <th><label>End Date</label></th>
                     </tr>
-                    <tr class="">
-                        <td>Abc</td>
-                        <td>Dragos Hornoiu</td>
-                        <td>TSC Romania</td>
-                        <td>XYZ</td>
-                        <td>ABC</td>
-                        <td>XYZ</td>
-                        <td>XYZ</td>
-                        <td>22-Mar-2015</td>
-                        <td>22-Mar-2015</td>
-                    </tr>
-                    <tr class="info">
-                        <td>Abc</td>
-                        <td>Dragos Hornoiu</td>
-                        <td>TSC Romania</td>
-                        <td>XYZ</td>
-                        <td>ABC</td>
-                        <td>XYZ</td>
-                        <td>XYZ</td>
-                        <td>22-Mar-2015</td>
-                        <td>22-Mar-2015</td>
-                    </tr>
-                    <tr class="success">
-                        <td>Abc</td>
-                        <td>Dragos Hornoiu</td>
-                        <td>TSC Romania</td>
-                        <td>XYZ</td>
-                        <td>ABC</td>
-                        <td>XYZ</td>
-                        <td>XYZ</td>
-                        <td>22-Mar-2015</td>
-                        <td>22-Mar-2015</td>
-                    </tr>
-                    <tr class="warning">
-                        <td>Abc</td>
-                        <td>Dragos Hornoiu</td>
-                        <td>TSC Romania</td>
-                        <td>XYZ</td>
-                        <td>ABC</td>
-                        <td>XYZ</td>
-                        <td>XYZ</td>
-                        <td>22-Mar-2015</td>
-                        <td>22-Mar-2015</td>
-                    </tr>
-                    <tr class="danger">
-                        <td>Abc</td>
-                        <td>Dragos Hornoiu</td>
-                        <td>TSC Romania</td>
-                        <td>XYZ</td>
-                        <td>ABC</td>
-                        <td>XYZ</td>
-                        <td>XYZ</td>
-                        <td>22-Mar-2015</td>
-                        <td>22-Mar-2015</td>
-                    </tr>
+
+
+                                        @foreach (var experts in Model.ExpertRequests)
+                                        {
+                                            <tr>
+                                                <td> @experts.ProjectName</td>
+                                                <td> @Model.ClientList[experts.Id]</td>
+                                               
+                                              <td>  </td>
+                                               <td>sba</td>
+                                                <td> @experts.RequestStatus</td>
+                                                <td> <a href="">View</a></td>
+                                                <td> Consilium</td>
+                                                <td> @experts.CreatedAt.ToString("dd MMM yyyy")</td>
+                                                <td> @experts.StartDate.ToString()</td>
+                                                <td> @experts.EndDate.ToString()</td>
+
+
+                                            </tr>
+                                        }
+                    @*<tr class="">
+                            <td>Abc</td>
+                            <td>Dragos Hornoiu</td>
+                            <td>TSC Romania</td>
+                            <td>XYZ</td>
+                            <td>ABC</td>
+                            <td>XYZ</td>
+                            <td>XYZ</td>
+                            <td>22-Mar-2015</td>
+                            <td>22-Mar-2015</td>
+                        </tr>
+                        <tr class="info">
+                            <td>Abc</td>
+                            <td>Dragos Hornoiu</td>
+                            <td>TSC Romania</td>
+                            <td>XYZ</td>
+                            <td>ABC</td>
+                            <td>XYZ</td>
+                            <td>XYZ</td>
+                            <td>22-Mar-2015</td>
+                            <td>22-Mar-2015</td>
+                        </tr>
+                        <tr class="success">
+                            <td>Abc</td>
+                            <td>Dragos Hornoiu</td>
+                            <td>TSC Romania</td>
+                            <td>XYZ</td>
+                            <td>ABC</td>
+                            <td>XYZ</td>
+                            <td>XYZ</td>
+                            <td>22-Mar-2015</td>
+                            <td>22-Mar-2015</td>
+                        </tr>
+                        <tr class="warning">
+                            <td>Abc</td>
+                            <td>Dragos Hornoiu</td>
+                            <td>TSC Romania</td>
+                            <td>XYZ</td>
+                            <td>ABC</td>
+                            <td>XYZ</td>
+                            <td>XYZ</td>
+                            <td>22-Mar-2015</td>
+                            <td>22-Mar-2015</td>
+                        </tr>
+                        <tr class="danger">
+                            <td>Abc</td>
+                            <td>Dragos Hornoiu</td>
+                            <td>TSC Romania</td>
+                            <td>XYZ</td>
+                            <td>ABC</td>
+                            <td>XYZ</td>
+                            <td>XYZ</td>
+                            <td>22-Mar-2015</td>
+                            <td>22-Mar-2015</td>
+                        </tr>*@
                 </tbody>
             </table>
         </div>
     </div>
 </div>
-
 

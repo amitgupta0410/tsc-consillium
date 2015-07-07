@@ -44,7 +44,7 @@ namespace GAPS.TSC.Consillium.Controllers
         [HttpPost]
         public ActionResult RequestExpertEn(RequestExpertEn model)
         {
-            var csvFile = Request.Files["ApprovalDocumentFile"];
+           var approveFile= UploadAndSave("ApprovalDocumentFile");
             return View();
         }
 
@@ -56,32 +56,34 @@ namespace GAPS.TSC.Consillium.Controllers
         }
         public JsonResult GetProjectsBd(int id)
         {
-
-            var bdLeadPersonnel = _masterService.GetAllClients().Where(x => x.Id == id).FirstOrDefault();
-            var bdLead = _userService.FindById(bdLeadPersonnel.BdPersonnelId);
-            string name = "";
-            if (bdLead != null)
-                name = bdLead.FullName + ">" + bdLead.Id;
-            return Json(name, JsonRequestBehavior.AllowGet);
+            var client = _masterService.GetAllClients().FirstOrDefault(x => x.Id == id);
+            if (client != null)
+            {
+                var bdLead = _userService.FindById(client.BdPersonnelId);
+                if (bdLead != null)
+                    return Json(bdLead, JsonRequestBehavior.AllowGet);
+            }
+            return Json(null, JsonRequestBehavior.AllowGet);
         }
         public JsonResult GetProjectLead(int id)
         {
-            var projectLead = _projectService.GetProjectLeads(id).Where(x=>x.IsActive).FirstOrDefault();
-            string name = "";
+            var projectLead = _projectService.GetProjectLeads(id).FirstOrDefault(x => x.IsActive);
             if (projectLead != null)
-                name = projectLead.FullName+">"+projectLead.EmployeeId;
-            return Json(name, JsonRequestBehavior.AllowGet);
+            {
+                return Json(projectLead, JsonRequestBehavior.AllowGet);
+            }
+            return Json(null, JsonRequestBehavior.AllowGet);
         }
         public JsonResult GetProjectUnit(int id)
         {
-            var project = _projectService.GetAllMasterProjects().Where(x => x.Id == id).FirstOrDefault();
-            if (project != null)
-            {
-                int unitId = project.UnitId ?? default(int);
-                var unit = _masterService.FindUnitById(unitId);
+            var project = _projectService.GetAllMasterProjects().FirstOrDefault(x => x.Id == id);
+            if (project == null) {
+                return Json(null, JsonRequestBehavior.AllowGet);
             }
-            var name = "";
-            return Json(name, JsonRequestBehavior.AllowGet);
+            int unitId = project.UnitId ?? default(int);
+            var unit = _masterService.FindUnitById(unitId);
+                
+            return Json(unit,JsonRequestBehavior.AllowGet);
         }
         
 
