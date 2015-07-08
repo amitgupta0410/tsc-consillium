@@ -74,8 +74,8 @@ namespace GAPS.TSC.Consillium.Controllers
             }
             return Json(null, JsonRequestBehavior.AllowGet);
         }
-      
-        public JsonResult GetProjectLeads(int id)
+
+        public JsonResult GetProjectLeadList(int id)
         {
             var projectLeads = _projectService.GetProjectLeads(id);
 

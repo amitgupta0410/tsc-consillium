@@ -160,20 +160,20 @@
 @section scripts{
 
     <script type="text/javascript">
-        $(function () {
+        $(function() {
 
-            $("#ClientId").change(function () {
+            $("#ClientId").change(function() {
                 var clientId = $("#ClientId").val();
                 if (clientId != "") {
-                    $.getJSON("/Requests/GetProjects/" + $("#ClientId").val(), function (data) {
+                    $.getJSON("/Requests/GetProjects/" + $("#ClientId").val(), function(data) {
                         var items = "<option value=''>Select Project</option>";
-                        $.each(data, function (i, item) {
+                        $.each(data, function(i, item) {
                             items += "<option value='" + item.Id + "'>" + item.Name + "</option>";
                         });
                         $("#ProjectId").html(items);
                     });
 
-                    $.getJSON("/Requests/GetProjectsBd/" + $("#ClientId").val(), function (bdLead) {
+                    $.getJSON("/Requests/GetProjectsBd/" + $("#ClientId").val(), function(bdLead) {
                         if (bdLead != null) {
                             $("#BdLeadName").val(bdLead.FullName);
                             $("#BdLeadId").val(bdLead.Id);
@@ -191,34 +191,41 @@
             });
 
 
-            $("#ProjectId").change(function () {
-                $.getJSON("/Requests/GetProjectLeads/" + $("#ProjectId").val(), function (data) {
-                    var items = "";
-                    $.each(data, function (i, item) {
-                        if (i == 0) {
-                            items += "<option selected='selected' value='" + item.EmployeeId + "'>" + item.FullName + "</option>";
+            $("#ProjectId").change(function() {
+                var projectId = $("#ProjectId").val();
+                if (projectId != "") {
 
-                        } else {
-                            items += "<option value='" + item.EmployeeId + "'>" + item.FullName + "</option>";
+                    $.getJSON("/Requests/GetProjectLeadList/" + $("#ProjectId").val(), function(data) {
+                        var items = "";
+                        $.each(data, function(i, item) {
+                            if (i == 0) {
+                                items += "<option selected='selected' value='" + item.EmployeeId + "'>" + item.FullName + "</option>";
+
+                            } else {
+                                items += "<option value='" + item.EmployeeId + "'>" + item.FullName + "</option>";
+                            }
+                        });
+                        $("#ProjectLeadId").html(items);
+                    });
+                    $.getJSON("/Requests/GetProjectUnit/" + $("#ProjectId").val(), function(unit) {
+
+                        if (unit != null) {
+                            $('#UnitId option')
+                                .filter(function() { return $.trim($(this).val()) == unit.Id; })
+                                .attr('selected', true);
                         }
                     });
-                    $("#ProjectLeadId").html(items);
-                });
-                $.getJSON("/Requests/GetProjectUnit/" + $("#ProjectId").val(), function (unit) {
-
-                    if (unit != null) {
-                        $('#UnitId option')
-                            .filter(function () { return $.trim($(this).val()) == unit.Id; })
-                            .attr('selected', true);
-                    }
-                });
-
+                } else {
+                    $("#ProjectLeadName").val("");
+                    $("#ProjectLeadId").val("");
+                    $("#UnitId").html("<option value=''>Select Unit</option>");
+                }
             });
 
 
-            $("#CostSharingType").change(function () {
+            $("#CostSharingType").change(function() {
                 var str = "";
-                $("#CostSharingType option:selected").each(function () {
+                $("#CostSharingType option:selected").each(function() {
                     str = $(this).val();
                 });
                 if (str == "TSC") {
@@ -226,48 +233,46 @@
                     $("#ClientShare").val("00");
                     $("#TscShare").prop("readonly", true);
                     $("#ClientShare").prop("readonly", true);
-                }
-                else if (str == "Client") {
+                } else if (str == "Client") {
                     $("#TscShare").val("00");
                     $("#ClientShare").val("100");
                     $("#ClientShare").prop("readonly", true);
                     $("#TscShare").prop("readonly", true);
-                }
-                else if (str == "Both") {
+                } else if (str == "Both") {
                     $("#TscShare").val("50");
                     $("#ClientShare").val("50");
                     $("#ClientShare").prop("readonly", false);
                     $("#TscShare").prop("readonly", false);
-                }
-                else if (str == "ManDayBilling") {
+                } else if (str == "ManDayBilling") {
                     $("#TscShare").val("00");
                     $("#ClientShare").val("00");
-                    $("#ClientShare").prop("readonly", false);
-                    $("#TscShare").prop("readonly", false);
+                    $("#ClientShare").prop("readonly", true);
+                    $("#TscShare").prop("readonly", true);
                 }
-               
 
-                });
 
-            $('#TscShare').change('input', function () {
+            });
+
+            $('#TscShare').change('input', function() {
 
                 updateTotal();
             });
 
-            $('#ClientShare').change('input', function () {
+            $('#ClientShare').change('input', function() {
 
                 updateTotal();
             });
+
             function updateTotal() {
                 var total = 0;
-                $('.textboxes').each(function () {
+                $('.textboxes').each(function() {
                     total += Number($(this).val());
                 });
-                if (total>100 || total<100) {
+                if (total > 100 || total < 100) {
                     alert("Total Should be 100!!");
-                    
+
                 }
-                
+
             }
 
         });

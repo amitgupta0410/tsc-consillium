@@ -18,11 +18,9 @@ namespace GAPS.TSC.Consillium.Controllers {
         {
             _userService = userService;
         }
-        public ActionResult Index(Employees employees)
+        public ActionResult Index()
         {
-            employees.employees = _userService.GetAllUsers();
-
-            return View(employees);
+            return View();
         }
 
         public ActionResult About() {
