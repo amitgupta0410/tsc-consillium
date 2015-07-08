@@ -92,7 +92,7 @@
             <div class="col-md-3">
                 <div class="form-group">
                     <label><b>Cost Borne By*</b></label><br>
-                    @Html.DropDownListFor(x => x.CostSharingType, new SelectList(Model.CostSharingOptions, "Key", "Value", Model.CostSharingOptions.FirstOrDefault()), "Select Cost", new { @class = "form-control", @data_placeholder = "Choose Cost" })
+                    @Html.DropDownListFor(x => x.CostSharingType, new SelectList(Model.CostSharingOptions, "Key", "Value", Model.CostSharingOptions.FirstOrDefault()), new { @class = "form-control", @data_placeholder = "Choose Cost" })
                   
                 </div>
             </div>
