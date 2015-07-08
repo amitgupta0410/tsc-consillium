@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Web;
+using System.Web.Mvc;
 using GAPS.TSC.CONS.Domain;
 
 namespace GAPS.TSC.Consillium.Models {
@@ -10,6 +11,7 @@ namespace GAPS.TSC.Consillium.Models {
         [Required]
         public string Title { get; set; }
         [Required]
+        [Remote("LeadNameExist", "Employees", HttpMethod = "POST", ErrorMessage = "User name already exists. Please enter a different user name.")]
         public string Name { get; set; }
         [Required]
         public int CountryId { get; set; }
@@ -17,6 +19,7 @@ namespace GAPS.TSC.Consillium.Models {
         public string City { get; set; }
         [Required]
         [EmailAddress(ErrorMessage = "Please enter a valid Email.")]
+        [Remote("EmailExist", "Employees", HttpMethod = "POST", ErrorMessage = "Email already exists. Please enter a different email.")]
         public string Email { get; set; }
         [Required]
         [RegularExpression(@"[0-9]{10}", ErrorMessage = "Please enter a valid contact number.")]
@@ -32,8 +35,8 @@ namespace GAPS.TSC.Consillium.Models {
         [Required]
         public int FeesCurrencyId { get; set; }
 
-        [Required]
-        public HttpPostedFileBase ResumeFile { get; set; }
+//        [Required]
+//        public HttpPostedFileBase ResumeFile { get; set; }
 
         public IDictionary<string, string> TitleOptions { get; set; }
         public IDictionary<string, string> ExpertTypeOptions { get; set; } 
