@@ -191,7 +191,7 @@
 
 
             $("#ProjectId").change(function () {
-                $.getJSON("/Requests/GetProjectLead/" + $("#ProjectId").val(), function (projectLead) {
+                $.getJSON("/Requests/GetProjectLeadList/" + $("#ProjectId").val(), function (projectLead) {
 
 
                     $("#ProjectLeadName").val(projectLead.FullName);
