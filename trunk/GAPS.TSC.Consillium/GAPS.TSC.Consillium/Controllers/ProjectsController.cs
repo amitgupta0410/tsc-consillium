@@ -39,10 +39,10 @@ namespace GAPS.TSC.Consillium.Controllers
             return View();
         }
         [HttpGet]
-        public ActionResult ExpertRequisition(ExpertRequisitionModel model)
+        public ActionResult ExpertRequisition(ExpertRequestDashboardViewModel model)
         {
-            IEnumerable<int> leadIds = _expertRequestService.GetProjectLeads();
-            model.ProjectLead = _userService.GetAllUsers().Where(x => leadIds.Contains(x.Id)).ToDictionary(x => x.Id, x => x.FullName);
+            var leadIds = _expertRequestService.GetProjectLeads();
+            model.ProjectLeadList = _userService.GetAllUsers().Where(x => leadIds.Contains(x.Id)).ToDictionary(x => x.Id, x => x.FullName);
             model.StatusOptions = EnumHelper.GetEnumLabels(typeof(RequestStatus));
             model.AssignedList = _userService.GetAllTeamMembers().ToDictionary(x => x.Id, x => x.Name);
             model.ClientList = _clientService.GetAllClients().ToDictionary(x => x.Id, x => x.Name);
@@ -72,7 +72,7 @@ namespace GAPS.TSC.Consillium.Controllers
 
 
 
-            model.ExpertRequests = projects;
+            //model.ExpertRequests = projects;
             return View(model);
         }
 

@@ -1,6 +1,6 @@
 ﻿@using Microsoft.Ajax.Utilities
 @using RestSharp.Extensions
-@model GAPS.TSC.Consillium.Models.ExpertRequisitionModel
+@model GAPS.TSC.Consillium.Models.ExpertRequestDashboardViewModel
 @{
     ViewBag.Title = "ExpertRequisition";
 }
@@ -21,7 +21,7 @@
             <div class="col-md-3">
                 <div class="form-group">
                     <label><b>Project Lead</b></label><br>
-                    @Html.DropDownListFor(x => x.ProjectLeadId, new SelectList(Model.ProjectLead, "Key", "Value"), "All", new { @class = "form-control", @data_placeholder = "Choose Status" })
+                    @Html.DropDownListFor(x => x.ProjectLeadId, new SelectList(Model.ProjectLeadList, "Key", "Value"), "All", new { @class = "form-control", @data_placeholder = "Choose Status" })
                   
                 </div>
             </div>
@@ -117,8 +117,8 @@
                                                 <td> @Model.ClientList[experts.Id]</td>
                                                
                                                 <td> 
-                                                    @*@Model.ProjectLead[experts.ProjectLeadId.Value]*@ 
-                                                    ProjectLead
+                                                    @*@Model.ProjectLeadList[experts.ProjectLeadListId.Value]*@ 
+                                                    ProjectLeadList
                                                 </td>
                                              
                                                 <td> @experts.RequestStatus</td>

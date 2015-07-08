@@ -7,19 +7,19 @@ using GAPS.TSC.CONS.Domain.ApiModels;
 
 namespace GAPS.TSC.Consillium.Models
 {
-    public class ExpertRequisitionModel
+    public class ExpertRequestDashboardViewModel
     {
 
-        public ExpertRequisitionModel()
+        public ExpertRequestDashboardViewModel()
         {
-            ProjectLead = new Dictionary<int, string>();
+            ProjectLeadList = new Dictionary<int, string>();
             AssignedList = new Dictionary<int, string>();
             ProjectList=new Dictionary<int, string>();
             ClientList = new Dictionary<int, string>();
 
         }
-        public IEnumerable<ExpertRequest> ExpertRequests { get; set; }
-        public Dictionary<int, string> ProjectLead { get; set; }
+        public IEnumerable<ExpertRequestSingleViewModel> ExpertRequests { get; set; }
+        public Dictionary<int, string> ProjectLeadList { get; set; }
         public Dictionary<int, string> ProjectList { get; set; }
         public Dictionary<int, string> AssignedList { get; set; }
         public IDictionary<string, string> StatusOptions { get; set; }
@@ -31,5 +31,9 @@ namespace GAPS.TSC.Consillium.Models
         public DateTime? StartDate { get; set; }
         public DateTime? EndDate { get; set; }
         public int? ProjectLeadId { get; set; }
+    }
+
+    public class ExpertRequestSingleViewModel{
+        
     }
 }
