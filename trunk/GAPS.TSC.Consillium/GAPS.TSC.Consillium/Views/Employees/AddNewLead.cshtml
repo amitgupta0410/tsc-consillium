@@ -12,224 +12,219 @@
             Add New Lead/Expert
         </h3>
     </div>
-</div>
-<hr />
+</div><hr />
 <div class="row">
-<div class="col-md-12">
-@Html.BeginForm("AddNewLead", "Employees", FormMethod.Get))
-{
+    <div class="col-md-12">
+        @using (@Html.BeginForm("AddNewLead", "Employees", FormMethod.Post, new { enctype = "multipart/form-data" })) {
 
-    <div class="col-md-3">
-        <div class="form-group">
-            <label><b>Title</b></label><br>
-            @Html.DropDownListFor(x => x.Title,new SelectList(Model.TitleOptions, "Key", "Value"), "All", new { @class = "form-control" })
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label><b>Title</b></label><br>
+                    @Html.DropDownListFor(x => x.Title, new SelectList(Model.TitleOptions, "Key", "Value"), new { @class = "form-control" })
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label><b>Name</b></label><br />
+                    @Html.TextBoxFor(x => x.Name)
+                    @Html.ValidationMessageFor(x => x.Name)
+                </div>
+            </div>
+            <div class="clearfix"></div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label><b>Country</b></label><br>
+                    @Html.DropDownListFor(x => x.CountryId, new SelectList(Model.CountryOptions, "Key", "Value"), "Select Country", new { @class = "form-control" })
+                    @Html.ValidationMessageFor(x => x.CountryId)
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label><b>City</b></label><br />
+                    @Html.TextBoxFor(x => x.City)
+                    @Html.ValidationMessageFor(x => x.City)
+                </div>
+            </div>
+            <div class="clearfix"></div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label><b>Email</b></label><br />
+                    @Html.TextBoxFor(x => x.Email)
+                    @Html.ValidationMessageFor(x => x.Email)
+                </div>
+            </div>
+            <div class="clearfix"></div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label><b>Primary Contact No</b></label>
+                    @Html.TextBoxFor(x => x.PrimaryContact)
+                    @Html.ValidationMessageFor(x => x.PrimaryContact)
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label><b>Secondary Contact No</b></label>
+                    @Html.TextBoxFor(x => x.SecondaryContact)
+                    @Html.ValidationMessageFor(x => x.SecondaryContact)
+                </div>
+            </div>
+            <div class="clearfix"></div>
+
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label><b>Contacted On</b></label>
+                    @Html.TextBoxFor(x => x.ContactedOn, new { @class = "form-control date", Value = Model.ContactedOn.ToString("dd MMM yyyy") })
+                    @Html.ValidationMessageFor(x => x.ContactedOn)
 
 
-        </div>
-    </div>
-    <div class="col-md-3">
-        <div class="form-group">
-            <label><b>Name</b></label>
-            <input class="form-control" id="Name" name="Name" type="text" value="">
-        </div>
-    </div>
-    <div class="col-md-3">
-        <div class="form-group">
-            <div style="padding-top: 9px"></div>
-            <br/>
-            <input type="submit" class="btn btn-primary" value="Check For Duplication"/>
-        </div>
-    </div>
-    <div class="clearfix"></div>
-    <div class="col-md-3">
-        <div class="form-group">
-            <label><b>Country</b></label><br>
-            <select class="form-control">
-                <option>Option1</option>
-                <option>Option2</option>
-            </select>
-        </div>
-    </div>
-    <div class="col-md-3">
-        <div class="form-group">
-            <label><b>City</b></label>
-            <input class="form-control" id="City" name="City" type="text" value="">
-        </div>
-    </div>
-    <div class="clearfix"></div>
-    <div class="col-md-3">
-        <div class="form-group">
-            <label><b>Email</b></label>
-            <input class="form-control" id="Email" name="Email" type="text" value="">
-        </div>
-    </div>
-    <div class="col-md-3">
-        <div class="form-group">
-            <div style="padding-top: 9px"></div>
-            <br/>
-            <input type="submit" class="btn btn-primary" value="Check For Duplicates"/>
-        </div>
-    </div>
-    <div class="clearfix"></div>
-    <div class="col-md-3">
-        <div class="form-group">
-            <label><b>Contact No</b></label>
-            <input class="form-control" id="ContactNo" name="ContactNo" type="text" value="">
-        </div>
-    </div>
-    <div class="col-md-3">
-        <div class="form-group">
-            <label><b>Contacted On</b></label>
-            <select class="form-control">
-                <option>Option1</option>
-                <option>Option2</option>
-            </select>
-        </div>
-    </div>
-    <div class="clearfix"></div>
-    <div class="col-md-3">
-        <div class="form-group">
-            <label><b>LinkedIn</b></label>
-            <input class="form-control" id="LinkedIn" name="LinkedIn" type="text" value="">
-        </div>
-    </div>
-    <div class="clearfix"></div>
-    <div class="col-md-2">
-        <div class="form-group">
-            <label><b>Honorarium</b></label>
-            <select class="form-control">
-                <option>Option1</option>
-                <option>Option2</option>
-            </select>
-        </div>
-    </div>
-    <div class="col-md-1">
-        <div class="form-group">
-            <div style="padding-top: 7px"></div>
-            <br>
-            <select class="form-control">
-                <option></option>
-            </select>
-        </div>
-    </div>
-    <div class="col-md-3">
-        <div class="form-group">
-            <label><b>Lead Status</b></label>
-            <select class="form-control">
-                <option>Option1</option>
-                <option>Option2</option>
-            </select>
-        </div>
-    </div>
-    <div class="clearfix"></div>
-    <div class="col-md-3">
-        <div class="form-group">
-            <label><b>Lead Comments</b></label>
-            <textarea class="form-control" rows="2" id="Comments" style="width: 299px; height: 69px;"></textarea>
-        </div>
-    </div>
-    <div class="col-md-2">
-        <div class="form-group">
-            <div style="padding-top: 23px"></div><br/>
-            <input type="submit" class="btn btn-primary" value="Add CV">
-        </div>
-    </div>
-    <div class="col-md-1">
-        <div class="form-group">
-            <div style="padding-top: 30px"></div><br/>
-            @*<a href="#">View CV</a>*@
-            <a href="#" style="margin-left: -114px;">View CV</a>
-        </div>
-    </div>
-    <div class="clearfix"></div>
-    <div class="col-md-3">
-        <div class="form-group">
-            <label><b>ChangeRecruiter</b></label>
-            <select class="form-control">
-                <option>Option1</option>
-                <option>Option2</option>
-            </select>
-        </div>
-    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label><b>LinkedIn</b></label><br />
+                    @Html.TextBoxFor(x => x.LinkedInUrl)
+                    @Html.ValidationMessageFor(x => x.LinkedInUrl)
+                </div>
+            </div>
+            <div class="clearfix"></div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label><b>Honorarium</b></label>
+                    @Html.DropDownListFor(x => x.FeesCurrencyId, new SelectList(Model.CurrencyOptions, "Key", "Value"), "Select Currency", new { @class = "form-control" })
+                    @Html.ValidationMessageFor(x => x.FeesCurrencyId)
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <div style="padding-top: 7px"></div>
+                    <br>
+                    @Html.TextBoxFor(x => x.FeesAmount)
+                    @Html.ValidationMessageFor(x => x.FeesAmount)
 
-    <div class="clearfix"></div>
-    <div class="col-md-3">
-        <div class="form-group">
-            <label><b>Designation</b></label>
-            <input class="form-control" id="Designation" name="Designation" type="text" value="">
-        </div>
-    </div>
-    <div class="col-md-3">
-        <div class="form-group">
-            <label><b>From</b></label>
-            <input class="form-control date" id="From" name="From" type="text" value="">
-        </div>
-    </div>
-    <div class="clearfix"></div>
-    <div class="col-md-3">
-        <div class="form-group">
-            <label><b>Organization</b></label>
-            <input class="form-control" id="Organization" name="Organization" type="text" value="">
-        </div>
-    </div>
-    <div class="col-md-3">
-        <div class="form-group">
-            <label><b>To</b></label>
-            <input class="form-control date" id="To" name="To" type="text" value="">
-        </div>
-    </div>
-    <div class="col-md-3">
-        <div class="form-group">
-            <input type="submit" class="btn btn-primary" value="Add New" style="height: 110px; margin-top: -49px; width: 82px;">
-        </div>
-    </div>
-    <div class="clearfix"></div>
-    <div class="col-md-3">
-        <div class="form-group">
-            <label><b>JobHistory</b></label>
-            <textarea class="form-control" rows="2" id="JobHistory" style="width: 299px; height: 69px;"></textarea>
-        </div>
-    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label><b>Lead Status</b></label>
+                    @Html.DropDownListFor(x => x.LeadStatus, new SelectList(Model.LeadStatusOptions, "Key", "Value"), "Select Currency", new { @class = "form-control" })
+                    @Html.ValidationMessageFor(x => x.LeadStatus)
+                </div>
+            </div>
+            <div class="clearfix"></div>
+            <div class="col-md-8">
+                <div class="form-group">
+                    <label><b>Lead Comments</b></label><br />
+                    @Html.TextAreaFor(x => x.LeadComments)
+                    @Html.ValidationMessageFor(x => x.LeadComments)
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    @*                <div style="padding-top: 23px"></div><br />*@
+                    <input type="file" name="File" id="resumeFile" required />
+                    @*                @Html.ValidationMessageFor(x => x.ResumeFile)*@
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    @*                <div style="padding-top: 30px"></div><br />*@
+                    <a href="#">View CV</a>
+                </div>
+            </div>
+            <div class="clearfix"></div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label><b>ChangeRecruiter</b></label>
+                    @Html.DropDownListFor(x => x.RecruiterId, new SelectList(Model.RecruiterOptions, "Key", "Value"), "Select Recruiters", new { @class = "form-control" })
+                    @Html.ValidationMessageFor(x => x.RecruiterId)
+                </div>
+            </div>
 
-    <div class="clearfix"></div>
-    <div class="col-md-3">
-        <div class="form-group">
-            <label><b>Source</b></label>
-            <input class="form-control" id="Source" name="Source" type="text" value="">
-        </div>
+            @*<div class="clearfix"></div>*@
+            @*<div class="col-md-3">*@
+            @*    <div class="form-group">*@
+            @*        <label><b>Designation</b></label>*@
+            @*        <input class="form-control" id="Designation" name="Designation" type="text" value="">*@
+            @*    </div>*@
+            @*</div>*@
+            @*<div class="col-md-3">*@
+            @*    <div class="form-group">*@
+            @*        <label><b>From</b></label>*@
+            @*        <input class="form-control date" id="From" name="From" type="text" value="">*@
+            @*    </div>*@
+            @*</div>*@
+            @*<div class="clearfix"></div>*@
+            @*<div class="col-md-3">*@
+            @*    <div class="form-group">*@
+            @*        <label><b>Organization</b></label>*@
+            @*        <input class="form-control" id="Organization" name="Organization" type="text" value="">*@
+            @*    </div>*@
+            @*</div>*@
+            @*<div class="col-md-3">*@
+            @*    <div class="form-group">*@
+            @*        <label><b>To</b></label>*@
+            @*        <input class="form-control date" id="To" name="To" type="text" value="">*@
+            @*    </div>*@
+            @*</div>*@
+            @*<div class="col-md-3">*@
+            @*    <div class="form-group">*@
+            @*        <input type="submit" class="btn btn-primary" value="Add New" style="height: 110px; margin-top: -49px; width: 82px;">*@
+            @*    </div>*@
+            @*</div>*@
+            <div class="clearfix"></div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label><b>Job History</b></label> <br />
+                    @Html.TextAreaFor(x => x.JobHistory)
+                    @Html.ValidationMessageFor(x => x.JobHistory)
+                </div>
+            </div>
+
+            <div class="clearfix"></div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label><b>Source</b></label><br />
+                    @Html.TextAreaFor(x => x.Source)
+                    @Html.ValidationMessageFor(x => x.Source)
+
+                </div>
+            </div>
+            <div class="row col-md-6">
+                <div class="form-group">
+                    <label><b>Expert Type</b></label><br />
+
+                    @Html.DropDownListFor(x => x.ExpertType, new SelectList(Model.ExpertTypeOptions, "Key", "Value"), "Select Type", new { @class = "form-control" })
+                    @Html.ValidationMessageFor(x => x.ExpertType)
+                </div>
+            </div>
+
+            <div class="clearfix"></div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label><b>Notes</b></label><br />
+                    @Html.TextAreaFor(x => x.Notes)
+                    @Html.ValidationMessageFor(x => x.Notes)
+                </div>
+            </div>
+            <div class="clearfix"></div>
+            <div class="col-md-1">
+                <div class="form-group">
+                    <div style="padding-top: 9px"></div><br />
+                    <input type="button" class="btn btn-primary" value="Delete Lead" />
+                </div>
+            </div>
+            <div class="col-md-1">
+                <div class="form-group">
+                    <div style="padding-top: 9px"></div><br />
+                    <input type="submit" class="btn btn-primary" value="Save" style="margin-left: 17px; padding-left: 22px; padding-right: 22px;">
+                </div>
+            </div>
+            <div class="col-md-1">
+                <div class="form-group">
+                    <div style="padding-top: 9px"></div><br />
+                    <input type="button" class="btn btn-primary" value="Convert" />
+                </div>
+            </div>
+        }
     </div>
-    <div class="row col-md-3">
-        <select class="form-control" style="margin-top: 25px;">
-            <option>Strategic</option>
-            <option>On Project</option>
-        </select>
-    </div>
-    <div class="clearfix"></div>
-    <div class="col-md-3">
-        <div class="form-group">
-            <label><b>Notes</b></label>
-            <input class="form-control" id="Notes" name="Notes" type="text" value="">
-        </div>
-    </div>
-    <div class="clearfix"></div>
-    <div class="col-md-1">
-        <div class="form-group">
-            <div style="padding-top: 9px"></div><br/>
-            <input type="submit" class="btn btn-primary" value="Delete Lead"/>
-        </div>
-    </div>
-    <div class="col-md-1">
-        <div class="form-group">
-            <div style="padding-top: 9px"></div><br/>
-            <input type="submit" class="btn btn-primary" value="Save" style="margin-left: 17px; padding-left: 22px; padding-right: 22px;">
-        </div>
-    </div>
-    <div class="col-md-1">
-        <div class="form-group">
-            <div style="padding-top: 9px"></div><br/>
-            <input type="submit" class="btn btn-primary" value="Convert"/>
-        </div>
-    </div>
-}
-</div>
 </div>

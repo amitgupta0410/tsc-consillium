@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using AutoMapper;
 using GAPS.TSC.CONS.Domain;
 using GAPS.TSC.CONS.Services;
 using GAPS.TSC.CONS.Util;
 using GAPS.TSC.Consillium.Models;
 //using GAPS.TSC.CONSILLIUM.Services;
+using GAPS.TSC.Consillium.Utils;
 
 namespace GAPS.TSC.Consillium.Controllers
 {
@@ -17,20 +19,21 @@ namespace GAPS.TSC.Consillium.Controllers
         private readonly IUserService _userService;
         private readonly IMainMastersService _masterService;
         private readonly IProjectService _projectService;
-
+        private readonly IExpertRequestService _expertRequestService;
       
         // GET: /Requests/
         public RequestsController(IAttachmentService attachmentService, IMainMastersService mastersService,
-            IProjectService projectService, IUserService userService) : base(attachmentService)
+            IProjectService projectService, IUserService userService,IExpertRequestService expertRequestService) : base(attachmentService)
         {
            _userService= userService;
             _masterService = mastersService;
             _projectService = projectService;
+            _expertRequestService = expertRequestService;
         }
 
-        public ActionResult RequestExpertEn()
+        public ActionResult RequestExpert()
         {
-            var model = new RequestExpertEn();
+            var model = new ExpertRequestViewModel();
             var projectClients =
                 _projectService.GetAllMasterProjects().Select(x => x.ClientId).Distinct().ToList();
             model.Clients =_masterService.GetAllClients().Where(x => projectClients.Contains(x.Id) && x.IsActive).ToDictionary(x => x.Id, x => x.Name);
@@ -42,10 +45,16 @@ namespace GAPS.TSC.Consillium.Controllers
             return View(model);
         }
         [HttpPost]
-        public ActionResult RequestExpertEn(RequestExpertEn model)
+        public ActionResult RequestExpert(ExpertRequestViewModel model)
         {
-           var approveFile= UploadAndSave("ApprovalDocumentFile");
-            return View();
+            var approveFile = UploadAndSave("ApprovalDocumentFile");
+            var scopingFile = UploadAndSave("ScopingDocumentFile");
+            var expertRequest = Mapper.Map<ExpertRequestViewModel,ExpertRequest>(model);
+            expertRequest.ApprovalDocumentId = approveFile.Id;
+            expertRequest.ScopingDocumentId = scopingFile.Id;
+           _expertRequestService.Add(expertRequest);
+            SetMessage(MessageType.Success, MessageConstant.GetMessage(Messages.RequestSuccess));
+            return RedirectToAction("RequestExpert");
         }
 
 

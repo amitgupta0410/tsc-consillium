@@ -8,9 +8,9 @@ using Hangfire.Annotations;
 
 namespace GAPS.TSC.Consillium.Models
 {
-    public class RequestExpertEn
+    public class ExpertRequestViewModel
     {
-        public RequestExpertEn()
+        public ExpertRequestViewModel()
         {
             Clients=new Dictionary<int, string>();
             Units=new Dictionary<int, string>();
@@ -36,11 +36,11 @@ namespace GAPS.TSC.Consillium.Models
         public Dictionary<int, string> Geography { get; set; }
         public int GeographyId { get; set; }
         public Dictionary<int, string> Currency { get; set; }
-        public int CurrencyId { get; set; }
+        public int BudgetCurrencyId { get; set; }
         public string Comments { get; set; }
         public decimal BudgetAmount { get; set; }
         public IDictionary<string, string> CostSharingOptions { get; set; }
-        public CostSharingType CostSharing { get; set; }
+        public CostSharingType CostSharingType { get; set; }
         public decimal TscShare { get; set; }
         public decimal ClientShare { get; set; }       
         public HttpPostedFileBase ScopingDocumentFile { get; set; }
