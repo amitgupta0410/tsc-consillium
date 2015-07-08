@@ -232,6 +232,7 @@
   <ItemGroup>
     <Content Include="Assets\css\app.css" />
     <Content Include="Assets\js\app.js" />
+    <Content Include="Assets\js\bootbox.min.js" />
     <Content Include="Assets\js\datepickers.js" />
     <Content Include="Assets\js\jquery.validate.js" />
     <Content Include="Assets\js\jquery.validate.min.js" />
@@ -276,6 +277,7 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Icon.png" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Assets\css\app.scss" />
@@ -284,6 +286,10 @@
     <Content Include="Assets\plugins\bootstrap\fonts\glyphicons-halflings-regular.woff" />
     <Content Include="Content\bootstrap-theme.css.map" />
     <Content Include="Content\bootstrap.css.map" />
+    <Content Include="fonts\glyphicons-halflings-regular.woff2" />
+    <Content Include="fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -365,6 +371,7 @@
     <Content Include="Views\Requests\RequestExpertManual.cshtml" />
     <Content Include="Views\Shared\_PartialMessage.cshtml" />
     <Content Include="Views\Employees\AddNewLead.cshtml" />
+    <Content Include="Views\Employees\_EditWorkExperience.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -372,9 +379,6 @@
     <Folder Include="Views\Base\" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="fonts\glyphicons-halflings-regular.woff" />
-    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
-    <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="packages.config" />
     <None Include="Project_Readme.html" />
   </ItemGroup>

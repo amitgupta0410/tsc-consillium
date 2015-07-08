@@ -7,6 +7,7 @@ namespace GAPS.TSC.Consillium {
         public static void RegisterBundles(BundleCollection bundles) {
             bundles.Add(new ScriptBundle("~/Assets/bundles/js")
                   .Include("~/Assets/js/jquery.validate*")
+                  .Include("~/Assets/js/bootbox.min.js")
                   .Include("~/Assets/js/mvcfoolproof.unobtrusive.min.js")
                  .Include("~/Assets/plugins/daterangepicker/moment.min.js")
                  .Include("~/Assets/plugins/daterangepicker/daterangepicker.js")

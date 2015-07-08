@@ -34,8 +34,19 @@ namespace GAPS.TSC.Consillium.Controllers {
             return View();
         }
 
-        public ActionResult AddNewLead() {
+        public ActionResult AddNewLead(int? id) {
+
             var model = new AddLeadModel();
+            if (id.HasValue) {
+                var expert = _expertService.GetById(id.Value);
+                if (expert != null) {
+                    model = Mapper.Map<Expert, AddLeadModel>(expert);
+                    var workexperience = _expertService.GetWorkExperiences(expert.Id);
+                    if (workexperience != null)
+                        model.WorkExperiences = workexperience.Select(Mapper.Map<WorkExperience, WorkExperienceModel>);
+                }
+            }
+
             model.CountryOptions = _mainMastersService.GetAllCountries().ToDictionary(x => x.Id, x => x.Name);
             model.CurrencyOptions = _mainMastersService.GetAllCurrencies().ToDictionary(x => x.CurrencyId, x => x.CurrencyName);
             model.RecruiterOptions = _userService.GetAllTeamMembers().ToDictionary(x => x.Id, x => x.Name);
@@ -52,14 +63,33 @@ namespace GAPS.TSC.Consillium.Controllers {
 
             var expert = Mapper.Map<AddLeadModel, Expert>(model);
             expert.CreatedAt = DateTime.Now;
-
-            if (Request.Files["File"] != null && Request.Files["File"].ContentLength > 0) {
-                var file = UploadAndSave("File");
-                expert.ResumeId = file.Id;
+            if (model.Id == 0) {
+                if (!model.IsLead) {
+                    expert.JoiningDate = DateTime.Now;
+                }
             }
-            var result = _expertService.AddExpert(expert);
+            if (Request.Files["File"] != null && Request.Files["File"].ContentLength > 0) {
+                //                var file = UploadAndSave("File");
+                expert.ResumeId = 2;
+            }
+            var result = model.Id == 0 ? _expertService.Add(expert) : _expertService.Update(expert);
             //            if (result)
             //                return RedirectToAction("Index");
+            return RedirectToAction("AddNewLead", new { id = result.Id });
+        }
+
+
+        public ActionResult ConvertLead(int id) {
+            var expert = _expertService.GetById(id);
+            expert.JoiningDate = DateTime.Now;
+            var result = _expertService.Update(expert);
+            return RedirectToAction("AddNewLead", new { id = result.Id });
+        }
+
+        public ActionResult DeleteLead(int id) {
+            var expert = _expertService.GetById(id);
+            expert.DeletedAt = DateTime.Now;
+            var result = _expertService.Update(expert);
             return RedirectToAction("AddNewLead");
         }
 
@@ -73,6 +103,33 @@ namespace GAPS.TSC.Consillium.Controllers {
         public JsonResult EmailExist(string Email) {
             var result = _expertService.EmailExist(Email);
             return Json(result);
+        }
+
+        [HttpPost]
+        public ActionResult AddExperience(AddLeadModel model) {
+            //            var expert = _expertService.GetById(model.Id);
+            var workExperience = Mapper.Map<AddLeadModel, WorkExperience>(model);
+            var result = _expertService.AddExperience(model.Id, workExperience);
+
+            return RedirectToAction("AddNewLead", new { id = model.Id });
+        }
+
+        public ActionResult DeleteWork(int id) {
+            var result = _expertService.DeleteWorkExperience(id);
+            return RedirectToAction("AddNewLead", new { id = result });
+        }
+
+        public ActionResult EditWork(int id) {
+            var experience = _expertService.GetWorkExperienceById(id);
+            var model = Mapper.Map<WorkExperience, WorkExperienceModel>(experience);
+            return PartialView("_EditWorkExperience", model);
+        }
+
+        [HttpPost]
+        public ActionResult UpdateWork(WorkExperienceModel model) {
+            var toUpdate = Mapper.Map<WorkExperienceModel, WorkExperience>(model);
+            var result = _expertService.EditWorkExperience(toUpdate);
+            return RedirectToAction("AddNewLead", new { id = result });
         }
 
 
