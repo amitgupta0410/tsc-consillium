@@ -8,8 +8,16 @@ using GAPS.TSC.CONS.Domain;
 
 namespace GAPS.TSC.Consillium.Models {
     public class AddLeadModel {
+
+        public AddLeadModel() {
+            WorkExperiences = new List<WorkExperienceModel>();
+        }
+
+        public int Id { get; set; }
         [Required]
         public string Title { get; set; }
+
+        public bool IsLead { get; set; }
         [Required]
         [Remote("LeadNameExist", "Employees", HttpMethod = "POST", ErrorMessage = "User name already exists. Please enter a different user name.")]
         public string Name { get; set; }
@@ -31,27 +39,39 @@ namespace GAPS.TSC.Consillium.Models {
         [Required]
         public DateTime ContactedOn { get; set; }
         [Required]
+        [Range(1,int.MaxValue,ErrorMessage = "Amount must be greater than zero.")]
         public decimal FeesAmount { get; set; }
         [Required]
         public int FeesCurrencyId { get; set; }
-
-//        [Required]
-//        public HttpPostedFileBase ResumeFile { get; set; }
-
         public IDictionary<string, string> TitleOptions { get; set; }
-        public IDictionary<string, string> ExpertTypeOptions { get; set; } 
+        public IDictionary<string, string> ExpertTypeOptions { get; set; }
         public IDictionary<string, string> LeadStatusOptions { get; set; }
         public IDictionary<int, string> CountryOptions { get; set; }
-        public IDictionary<int,string> CurrencyOptions { get; set; }
-        public IDictionary<int,string> RecruiterOptions { get; set; }
+        public IDictionary<int, string> CurrencyOptions { get; set; }
+        public IDictionary<int, string> RecruiterOptions { get; set; }
+
+        public IEnumerable<WorkExperienceModel> WorkExperiences { get; set; }
         public LeadStatus LeadStatus { get; set; }
         public string LeadComments { get; set; }
-       public int? RecruiterId { get; set; }
+        public int RecruiterId { get; set; }
         public string JobHistory { get; set; }
         public string Source { get; set; }
         public string Notes { get; set; }
         public ExpertType ExpertType { get; set; }
-        public DateTime? JoiningDate { get; set; }
         public int ResumeId { get; set; }
+        public string Designation { get; set; }
+        public string Organisation { get; set; }
+        public DateTime StartDate { get; set; }
+        public DateTime? EndDate { get; set; }
+
+    }
+
+    public class WorkExperienceModel {
+        public int Id { get; set; }
+        public int ExpertId { get; set; }
+        public string Designation { get; set; }
+        public string Organisation { get; set; }
+        public DateTime StartDate { get; set; }
+        public DateTime? EndDate { get; set; }
     }
 }

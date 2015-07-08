@@ -119,9 +119,11 @@
                             <td> @experts.ClientName</td>
 
                             <td>
-                                @*@Model.ProjectLeadList[experts.ProjectLeadListId.Value]*@
-                                ProjectLeadList
-                            </td>
+                                @if (experts.ProjectLeadId != null && Model.ProjectLeadList.ContainsKey(experts.ProjectLeadId.Value))
+                                {
+                                    @Model.ProjectLeadList[experts.ProjectLeadId.Value]
+                                }
+                                </td>
 
                             <td> @experts.RequestStatus</td>
                             <td> <a href="">View</a></td>
