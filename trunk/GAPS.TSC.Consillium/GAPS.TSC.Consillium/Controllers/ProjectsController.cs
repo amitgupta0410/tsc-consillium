@@ -60,13 +60,18 @@ namespace GAPS.TSC.Consillium.Controllers
             }
             if (model.EndDate != null)
             {
-                projects =projects.Where(x => x.EndDate == model.EndDate);
+                projects = projects.Where(x => x.EndDate == model.EndDate);
             }
-          
+
             if (model.ClientId > 0)
             {
                 var projectids = _projectService.GetAllMasterProjects().Where(x => x.ClientId == model.ClientId).Select(x => x.Id);
                 projects = projects.Where(x => projectids.Contains(x.Id));
+            }
+            if (model.Assigned >0)
+            {
+                projects = projects.Where(x => x.AssignedToId == model.Assigned);
+
             }
 
 
