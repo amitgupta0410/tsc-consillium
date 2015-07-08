@@ -43,7 +43,7 @@ namespace GAPS.TSC.Consillium.Controllers
             model.ClientList = _clientService.GetAllClients().ToDictionary(x => x.Id, x => x.Name);
             model.ProjectList = _projectService.GetAllMasterProjects().ToDictionary(x => x.Id, x => x.Name);
             var projects = _expertRequestService.GetAllExpertsProjects();
-
+           
 
             if (model.Status != null)
             {
@@ -68,7 +68,7 @@ namespace GAPS.TSC.Consillium.Controllers
                 projects = projects.Where(x => x.AssignedToId == model.Assigned);
 
             }
-//            model.ExpertRequests = projects;
+            model.ExpertRequests = projects.Select(Mapper.Map<ExpertRequest,ExpertRequestSingleViewModel>);
             return View(model);
         }
 
