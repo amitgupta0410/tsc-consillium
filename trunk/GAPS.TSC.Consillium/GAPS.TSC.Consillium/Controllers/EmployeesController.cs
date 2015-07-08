@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Security;
 using System.Web.UI.WebControls;
 using AutoMapper;
 using GAPS.TSC.CONS.Domain;
@@ -19,7 +20,6 @@ namespace GAPS.TSC.Consillium.Controllers {
         private readonly IUserService _userService;
         private readonly IMainMastersService _mainMastersService;
         private readonly IExpertService _expertService;
-        private readonly IAttachmentService _attachmentService;
 
         public EmployeesController(IUserService userService, IAttachmentService attachmentService, IMainMastersService mainMastersService, IExpertService expertService)
             : base(attachmentService) {
@@ -27,7 +27,6 @@ namespace GAPS.TSC.Consillium.Controllers {
             _userService = userService;
             _mainMastersService = mainMastersService;
             _expertService = expertService;
-            _attachmentService = attachmentService;
         }
         //
         // GET: /Employees/
@@ -49,26 +48,31 @@ namespace GAPS.TSC.Consillium.Controllers {
 
         [HttpPost]
         public ActionResult AddNewLead(AddLeadModel model) {
-            if (!ModelState.IsValid) return View();
+            if (!ModelState.IsValid) return RedirectToAction("AddNewLead");
 
             var expert = Mapper.Map<AddLeadModel, Expert>(model);
             expert.CreatedAt = DateTime.Now;
 
-            if (model.ResumeFile != null && model.ResumeFile.ContentLength > 0) {
-
-//                model.ResumeFile.SaveAs(filename);
-
-                var file = UploadAndSave(model.ResumeFile.FileName);
+            if (Request.Files["File"] != null && Request.Files["File"].ContentLength > 0) {
+                var file = UploadAndSave("File");
                 expert.ResumeId = file.Id;
-
             }
-
             var result = _expertService.AddExpert(expert);
-
             //            if (result)
             //                return RedirectToAction("Index");
             return RedirectToAction("AddNewLead");
+        }
 
+        [HttpPost]
+        public JsonResult LeadNameExist(string Name) {
+            var result = _expertService.LeadNameExist(Name);
+            return Json(result);
+        }
+
+        [HttpPost]
+        public JsonResult EmailExist(string Email) {
+            var result = _expertService.EmailExist(Email);
+            return Json(result);
         }
 
 

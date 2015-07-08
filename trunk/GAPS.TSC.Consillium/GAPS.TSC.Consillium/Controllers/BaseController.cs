@@ -28,7 +28,6 @@ namespace GAPS.TSC.Consillium.Controllers
 
         protected Attachment UploadAndSave(string fileName) {
             var file = Request.Files[fileName];
-
             if (file == null) return null;
 
             var origName = file.FileName;
