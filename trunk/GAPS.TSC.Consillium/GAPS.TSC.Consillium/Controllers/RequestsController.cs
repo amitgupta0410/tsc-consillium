@@ -82,7 +82,7 @@ namespace GAPS.TSC.Consillium.Controllers
             model.Units = _masterService.GetAllUnits().ToDictionary(x => x.Id, x => x.Name);
             model.Industry=_masterService.GetAllIndustries().ToDictionary(x => x.Id, x => x.Name);
             model.Geography = _masterService.GetAllGeographies().ToDictionary(x => x.Id, x => x.Name);
-            model.Currency = _masterService.GetAllCurrencies().ToDictionary(x => x.CurrencyId, x => x.CurrencyName);
+            model.Currency = _masterService.GetAllCurrencies().ToDictionary(x => x.CurrencyId, x => x.CurrencyCode);
             model.CostSharingOptions = EnumHelper.GetEnumLabels(typeof(CostSharingType));
             return View(model);
         }
@@ -116,14 +116,12 @@ namespace GAPS.TSC.Consillium.Controllers
             }
             return Json(null, JsonRequestBehavior.AllowGet);
         }
-        public JsonResult GetProjectLead(int id)
+
+        public JsonResult GetProjectLeadList(int id)
         {
-            var projectLead = _projectService.GetProjectLeads(id).FirstOrDefault(x => x.IsActive);
-            if (projectLead != null)
-            {
-                return Json(projectLead, JsonRequestBehavior.AllowGet);
-            }
-            return Json(null, JsonRequestBehavior.AllowGet);
+            var projectLeads = _projectService.GetProjectLeads(id);
+
+            return Json(projectLeads.Select(x => new { x.EmployeeId, x.FullName }), JsonRequestBehavior.AllowGet);
         }
         public JsonResult GetProjectUnit(int id)
         {

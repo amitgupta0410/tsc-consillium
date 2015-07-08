@@ -11,7 +11,9 @@ namespace GAPS.TSC.CONS.Domain {
     public enum CostSharingType {
         TSC,
         Client,
+        [Display(Name = "TSC+Client")]
         Both,
+        [Display(Name = "Man Day Billing")]
         ManDayBilling,
     }
 
