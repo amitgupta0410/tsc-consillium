@@ -6,11 +6,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GAPS.TSC.CONS.Domain
-{
-    public class AppCtx : DbContext
-    {
-        public AppCtx() : base("AppCtx") { }
+namespace GAPS.TSC.CONS.Domain{
+    public class AppCtx : DbContext{
+        public AppCtx() : base("AppCtx") {}
         public DbSet<SpecialProjectLeadMap> ProjectLeads { get; set; }
         public DbSet<TeamMember> TeamMembers { get; set; }
         public DbSet<Expert> Experts { get; set; }
@@ -22,17 +20,31 @@ namespace GAPS.TSC.CONS.Domain
         public DbSet<Attachment> Attachments { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder) {
-      /*      modelBuilder.Conventions.Remove<OneToManyCascadeDeleteConvention>();
+            /*      modelBuilder.Conventions.Remove<OneToManyCascadeDeleteConvention>();
             modelBuilder.Conventions.Remove<ManyToManyCascadeDeleteConvention>();
 */
-         
-       modelBuilder.Entity<Expert>()
+
+            modelBuilder.Entity<Expert>()
                 .HasRequired(x => x.Recruiter).WithMany().WillCascadeOnDelete(false);
-             base.OnModelCreating(modelBuilder);
-
-
-
+            base.OnModelCreating(modelBuilder);
         }
 
+        public override int SaveChanges() {
+            var changeSet = ChangeTracker.Entries<ITrackable>();
+
+            if (changeSet != null) {
+                foreach (var entry in changeSet.Where(c => c.State != EntityState.Unchanged)) {
+                    if (entry.State == EntityState.Added) {
+                        entry.Entity.CreatedAt = DateTime.UtcNow;
+                    } else if (entry.State == EntityState.Deleted) {
+                        entry.Entity.DeletedAt = DateTime.UtcNow;
+                        entry.State = EntityState.Modified;
+                    }
+                    entry.Entity.UpdatedAt = DateTime.UtcNow;
+                }
+            }
+
+            return base.SaveChanges();
+        }
     }
 }
