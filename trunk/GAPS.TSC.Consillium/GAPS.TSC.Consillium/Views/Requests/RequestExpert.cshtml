@@ -10,8 +10,8 @@
         </h3>
     </div>
 </div>
+@Html.Partial("_PartialMessage")
 <hr />
-
 <div class="row">
     <div class="col-md-12">
         @using (Html.BeginForm("RequestExpert", "Requests", FormMethod.Post, new { enctype = "multipart/form-data" }))
