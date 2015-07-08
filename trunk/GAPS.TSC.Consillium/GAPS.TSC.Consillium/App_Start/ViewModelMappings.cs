@@ -19,6 +19,8 @@ namespace GAPS.TSC.Consillium.App_Start {
             Mapper.CreateMap<WorkExperience, WorkExperienceModel>();
             Mapper.CreateMap<WorkExperienceModel, WorkExperience>();
 
+            Mapper.CreateMap<ExpertRequestViewModel, ExpertRequest>();
+            Mapper.CreateMap<ExpertRequestSingleViewModel, ExpertRequest>();
         }
     
     }

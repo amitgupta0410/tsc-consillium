@@ -1,6 +1,6 @@
-﻿@model GAPS.TSC.Consillium.Models.RequestExpertEn
+﻿@model GAPS.TSC.Consillium.Models.ExpertRequestViewModel
 @{
-    ViewBag.Title = "RequestExpertEn";
+    ViewBag.Title = "RequestExpert";
 }
 
 <div class="row">
@@ -10,38 +10,39 @@
         </h3>
     </div>
 </div>
+@Html.Partial("_PartialMessage")
 <hr />
-
 <div class="row">
     <div class="col-md-12">
-        @using (Html.BeginForm("RequestExpertEn", "Requests", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        @using (Html.BeginForm("RequestExpert", "Requests", FormMethod.Post, new { enctype = "multipart/form-data" }))
         {
             <div class="col-md-3">
                 <div class="form-group">
-                    <label><b>Client</b></label>
+                    <label><b>Client*</b></label>
                     @Html.DropDownListFor(x => x.ClientId, new SelectList(Model.Clients, "Key", "Value"), "Select Client", new { @class = "form-control", @data_placeholder = "Choose Status" })
                     @Html.ValidationMessageFor(x => x.ClientId)
                 </div>
             </div>
             <div class="col-md-3">
                 <div class="form-group">
-                    <label><b>Project</b></label>
+                    <label><b>Project*</b></label>
                     @Html.DropDownListFor(x => x.ProjectId, new List<SelectListItem>(), "Select Project", new { @class = "form-control" })
                     @Html.ValidationMessageFor(x => x.ProjectId)
                 </div>
             </div>
             <div class="col-md-3">
                 <div class="form-group">
-                    <label><b>Bd Lead</b></label>
+                    <label><b>Bd Lead*</b></label>
                     @Html.TextBoxFor(x => x.BdLeadId, new { style = "display: none;" })
-                    @Html.TextBoxFor(x => x.BdLeadName, new { @class = "form-control ", Value = "" })
+                    @Html.TextBoxFor(x => x.BdLeadName, new { @class = "form-control ", Value = "", @readonly="readonly" })
                 </div>
             </div>
             <div class="col-md-3">
                 <div class="form-group">
-                    <label><b>Project Lead</b></label>
-                    @Html.TextBoxFor(x => x.ProjectLeadId, new { style = "display: none;" })
-                    @Html.TextBoxFor(x => x.ProjectLeadName, new { @class = "form-control ", Value = "" })
+                    <label><b>Project Lead*</b></label>
+                    @*@Html.TextBoxFor(x => x.ProjectLeadId, new { style = "display: none;" })*@
+                    @Html.DropDownListFor(x => x.ProjectLeadId, new List<SelectListItem>(), new { @class = "form-control" })
+                    @Html.ValidationMessageFor(x => x.ProjectLeadId)
                 </div>
             </div>
             <div class="clearfix"></div>
@@ -54,14 +55,14 @@
             </div>
             <div class="col-md-3">
                 <div class="form-group">
-                    <label><b>Industry</b></label><br>
+                    <label><b>Industry*</b></label><br>
                     @Html.DropDownListFor(x => x.IndustryId, new SelectList(Model.Industry, "Key", "Value"), "Select Industry", new { @class = "form-control", @data_placeholder = "Choose Status" })
                     @Html.ValidationMessageFor(x => x.IndustryId)
                 </div>
             </div>
             <div class="col-md-3">
                 <div class="form-group">
-                    <label><b>Geography</b></label>
+                    <label><b>Geography*</b></label>
                     @Html.DropDownListFor(x => x.GeographyId, new SelectList(Model.Geography, "Key", "Value"), "Select Geography", new { @class = "form-control", @data_placeholder = "Choose Status" })
                     @Html.ValidationMessageFor(x => x.GeographyId)
                 </div>
@@ -71,7 +72,7 @@
                     <div class="row">
                         <div class="col-md-5">
                             <div class="form-group">
-                                <label><b>Budget</b></label>
+                                <label><b>Budget*</b></label>
                                 @Html.TextBoxFor(x => x.BudgetAmount, new { @class = "form-control" })
                             </div>
                         </div>
@@ -79,8 +80,8 @@
                             <div class="form-group">
                                 <div style="padding-top: 7px"></div>
                                 <br>
-                                @Html.DropDownListFor(x => x.CurrencyId, new SelectList(Model.Currency, "Key", "Value"), "Currency", new { @class = "form-control", @data_placeholder = "Choose Status" })
-                                @Html.ValidationMessageFor(x => x.CurrencyId)
+                                @Html.DropDownListFor(x => x.BudgetCurrencyId, new SelectList(Model.Currency, "Key", "Value"),new { @class = "form-control", @data_placeholder = "Choose Status" })
+                                @Html.ValidationMessageFor(x => x.BudgetCurrencyId)
                             </div>
                         </div>
                     </div>
@@ -90,9 +91,9 @@
 
             <div class="col-md-3">
                 <div class="form-group">
-                    <label><b>Cost Borne By</b></label><br>
-                    @Html.DropDownListFor(x => x.CostSharing, new SelectList(Model.CostSharingOptions, "Key", "Value"),
-                        new { @class = "form-control", value = Model.CostSharing, @data_placeholder = "Choose Cost" })
+                    <label><b>Cost Borne By*</b></label><br>
+                    @Html.DropDownListFor(x => x.CostSharingType, new SelectList(Model.CostSharingOptions, "Key", "Value", Model.CostSharingOptions.FirstOrDefault()), "Select Cost", new { @class = "form-control", @data_placeholder = "Choose Cost" })
+                  
                 </div>
             </div>
             <div class="col-md-3">
@@ -101,13 +102,13 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label><b>TSC%</b></label>
-                                @Html.TextBoxFor(x => x.TscShare, new { @class = "form-control" })
+                                @Html.TextBoxFor(x => x.TscShare, new { @class = "form-control textboxes" })
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label><b>Client%</b></label>
-                                @Html.TextBoxFor(x => x.ClientShare, new { @class = "form-control" })
+                                @Html.TextBoxFor(x => x.ClientShare, new { @class = "form-control textboxes" })
                             </div>
                         </div>
                     </div>
@@ -124,7 +125,7 @@
             </div>
             <div class="col-md-3">
                 <div class="form-group">
-                    <label>Upload Approval Document</label>
+                    <label>Upload Approval Document*</label>
                     @Html.TextBoxFor(x => x.ApprovalDocumentFile, new { @class = "form-control", type = "file" })
                     @Html.ValidationMessageFor(x => x.ApprovalDocumentFile)
                 </div>
@@ -134,12 +135,12 @@
             <div class="col-md-4">
                 <div class="form-group">
                     <label><b>Comments</b></label><br>
-                    @Html.TextAreaFor(model => model.Description, new { @class = "form-control", value = "" })
+                    @Html.TextAreaFor(model => model.Comments, new { @class = "form-control", value = "" })
                 </div>
             </div>
             <div class="col-md-4">
                 <div class="form-group">
-                    <label><b>Description</b></label>
+                    <label><b>Project Description</b></label>
                     @Html.TextAreaFor(model => model.Description, new { @class = "form-control", value = "" })
                 </div>
             </div>
@@ -159,20 +160,20 @@
 @section scripts{
 
     <script type="text/javascript">
-        $(function () {
+        $(function() {
 
-            $("#ClientId").change(function () {
+            $("#ClientId").change(function() {
                 var clientId = $("#ClientId").val();
                 if (clientId != "") {
-                    $.getJSON("/Requests/GetProjects/" + $("#ClientId").val(), function (data) {
+                    $.getJSON("/Requests/GetProjects/" + $("#ClientId").val(), function(data) {
                         var items = "<option value=''>Select Project</option>";
-                        $.each(data, function (i, item) {
+                        $.each(data, function(i, item) {
                             items += "<option value='" + item.Id + "'>" + item.Name + "</option>";
                         });
                         $("#ProjectId").html(items);
                     });
 
-                    $.getJSON("/Requests/GetProjectsBd/" + $("#ClientId").val(), function (bdLead) {
+                    $.getJSON("/Requests/GetProjectsBd/" + $("#ClientId").val(), function(bdLead) {
                         if (bdLead != null) {
                             $("#BdLeadName").val(bdLead.FullName);
                             $("#BdLeadId").val(bdLead.Id);
@@ -190,24 +191,90 @@
             });
 
 
-            $("#ProjectId").change(function () {
-                $.getJSON("/Requests/GetProjectLead/" + $("#ProjectId").val(), function (projectLead) {
+            $("#ProjectId").change(function() {
+                var projectId = $("#ProjectId").val();
+                if (projectId != "") {
+
+                    $.getJSON("/Requests/GetProjectLeadList/" + $("#ProjectId").val(), function(data) {
+                        var items = "";
+                        $.each(data, function(i, item) {
+                            if (i == 0) {
+                                items += "<option selected='selected' value='" + item.EmployeeId + "'>" + item.FullName + "</option>";
+
+                            } else {
+                                items += "<option value='" + item.EmployeeId + "'>" + item.FullName + "</option>";
+                            }
+                        });
+                        $("#ProjectLeadId").html(items);
+                    });
+                    $.getJSON("/Requests/GetProjectUnit/" + $("#ProjectId").val(), function(unit) {
+
+                        if (unit != null) {
+                            $('#UnitId option')
+                                .filter(function() { return $.trim($(this).val()) == unit.Id; })
+                                .attr('selected', true);
+                        }
+                    });
+                } else {
+                    $("#ProjectLeadName").val("");
+                    $("#ProjectLeadId").val("");
+                    $("#UnitId").html("<option value=''>Select Unit</option>");
+                }
+            });
 
 
-                    $("#ProjectLeadName").val(projectLead.FullName);
-                    $("#ProjectLeadId").val(projectLead.EmployeeId);
-
+            $("#CostSharingType").change(function() {
+                var str = "";
+                $("#CostSharingType option:selected").each(function() {
+                    str = $(this).val();
                 });
-                $.getJSON("/Requests/GetProjectUnit/" + $("#ProjectId").val(), function (unit) {
+                if (str == "TSC") {
+                    $("#TscShare").val("100");
+                    $("#ClientShare").val("00");
+                    $("#TscShare").prop("readonly", true);
+                    $("#ClientShare").prop("readonly", true);
+                } else if (str == "Client") {
+                    $("#TscShare").val("00");
+                    $("#ClientShare").val("100");
+                    $("#ClientShare").prop("readonly", true);
+                    $("#TscShare").prop("readonly", true);
+                } else if (str == "Both") {
+                    $("#TscShare").val("50");
+                    $("#ClientShare").val("50");
+                    $("#ClientShare").prop("readonly", false);
+                    $("#TscShare").prop("readonly", false);
+                } else if (str == "ManDayBilling") {
+                    $("#TscShare").val("00");
+                    $("#ClientShare").val("00");
+                    $("#ClientShare").prop("readonly", true);
+                    $("#TscShare").prop("readonly", true);
+                }
 
-                    if (unit != null) {
-                        $('#UnitId option')
-                            .filter(function () { return $.trim($(this).val()) == unit.Id; })
-                            .attr('selected', true);
-                    }
-                });
 
             });
+
+            $('#TscShare').change('input', function() {
+
+                updateTotal();
+            });
+
+            $('#ClientShare').change('input', function() {
+
+                updateTotal();
+            });
+
+            function updateTotal() {
+                var total = 0;
+                $('.textboxes').each(function() {
+                    total += Number($(this).val());
+                });
+                if (total > 100 || total < 100) {
+                    alert("Total Should be 100!!");
+
+                }
+
+            }
+
         });
 
 

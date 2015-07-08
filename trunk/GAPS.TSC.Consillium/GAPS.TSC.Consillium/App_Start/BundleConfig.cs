@@ -9,6 +9,7 @@ namespace GAPS.TSC.Consillium {
                   .Include("~/Assets/js/jquery.validate*")
                   .Include("~/Assets/js/bootbox.min.js")
                   .Include("~/Assets/js/mvcfoolproof.unobtrusive.min.js")
+                  .Include("~/Assets/js/expressive.annotations.validate.js")
                  .Include("~/Assets/plugins/daterangepicker/moment.min.js")
                  .Include("~/Assets/plugins/daterangepicker/daterangepicker.js")
                  .Include("~/Assets/plugins/chosen/chosen.jquery.min.js")

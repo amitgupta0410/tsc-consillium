@@ -1,0 +1,139 @@
+﻿@using Microsoft.Ajax.Utilities
+@using RestSharp.Extensions
+@model GAPS.TSC.Consillium.Models.ExpertRequestDashboardViewModel
+@{
+    ViewBag.Title = "index";
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <h3 class="page-title">
+            Expert Requisition Dashboard
+        </h3>
+    </div>
+</div>
+<hr />
+<div class="row">
+    <div class="col-md-12">
+        @using (@Html.BeginForm("ExpertRequisition", "Projects", FormMethod.Get))
+        {
+
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label><b>Project Lead</b></label><br>
+                    @Html.DropDownListFor(x => x.ProjectLeadId, new SelectList(Model.ProjectLeadList, "Key", "Value"), "All", new { @class = "form-control", @data_placeholder = "Choose Status" })
+
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label><b>Status</b></label>
+                    @Html.DropDownListFor(x => x.Status, new SelectList(Model.StatusOptions, "Key", "Value"), "All", new { @class = "form-control", @data_placeholder = "Choose Status" })
+                    @*<select class="form-control">
+                            <option>Option1</option>
+                            <option>Option2</option>
+                        </select>*@
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label><b>Assigned To</b></label>
+                    @Html.DropDownListFor(x => x.Assigned, new SelectList(Model.AssignedList, "Key", "Value"), "All", new { @class = "form-control", @data_placeholder = "Choose Assigned to" })
+
+                </div>
+            </div>
+            <div class="clearfix"></div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label><b>Projects</b></label><br>
+                    @Html.DropDownListFor(x => x.ProjectId, new SelectList(Model.ProjectList, "Key", "Value"), "All", new { @class = "form-control", @data_placeholder = "Choose Status" })
+
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label><b>Client</b></label>
+                    @Html.DropDownListFor(x => x.ClientId, new SelectList(Model.ClientList, "Key", "Value"), "All", new { @class = "form-control" })
+
+
+
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label><b>Search</b></label>
+                    <input class="form-control" id="Search" name="Search" type="text" value="">
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label>From</label>
+                    @Html.TextBoxFor(x => x.StartDate, new { @class = "form-control date", Value = Model.StartDate.ToString() })
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label>TO</label>
+
+                    @Html.TextBoxFor(x => x.EndDate, new { @class = "form-control date", Value = Model.EndDate.ToString() })
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <div style="padding-top: 9px"></div>
+                    <br />
+                    <input type="submit" class="btn btn-primary" value="Go" />
+                </div>
+            </div>
+        }
+    </div>
+
+</div>
+<br />
+<div class="row">
+    <div class="col-md-12">
+        <div class="table-responsive table-bordered">
+            <table class="table">
+                <tbody>
+                    <tr>
+                        <th><label>Project Name</label></th>
+                        <th><label>Client</label></th>
+                        <th><label>Project Lead</label></th>
+                        <th><label>Status</label></th>
+                        <th><label>Calls</label></th>
+                        <th><label>Assigned To</label></th>
+                        <th><label>Request Date</label></th>
+                        <th><label>Start Date</label></th>
+                        <th><label>End Date</label></th>
+                    </tr>
+
+
+                    @foreach (var experts in Model.ExpertRequests)
+                    {
+                        <tr>
+                            <td> @experts.ProjectName</td>
+                            <td> @Model.ClientList[experts.Id]</td>
+
+                            <td>
+                                @*@Model.ProjectLeadList[experts.ProjectLeadListId.Value]*@
+                                ProjectLeadList
+                            </td>
+
+                            <td> @experts.RequestStatus</td>
+                            <td> <a href="">View</a></td>
+                            <td>@experts.AssignedTo</td>
+                            <td> @experts.CreatedAt.ToString("dd MMM yyyy")</td>
+                            <td> @experts.StartDate.ToString()</td>
+                            <td> @experts.EndDate.ToString()</td>
+
+
+                        </tr>
+                    }
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
