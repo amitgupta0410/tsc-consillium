@@ -43,7 +43,11 @@ namespace GAPS.TSC.Consillium.Controllers
             model.ClientList = _clientService.GetAllClients().ToDictionary(x => x.Id, x => x.Name);
             model.ProjectList = _projectService.GetAllMasterProjects().ToDictionary(x => x.Id, x => x.Name);
             var projects = _expertRequestService.GetAllExpertsProjects();
-           
+
+            if (model.ProjectLeadId != null)
+            {
+                projects = projects.Where(x => x.ProjectLeadId == model.ProjectLeadId);
+            }
 
             if (model.Status != null)
             {
