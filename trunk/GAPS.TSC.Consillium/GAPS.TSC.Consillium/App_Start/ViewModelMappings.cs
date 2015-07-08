@@ -14,6 +14,7 @@ namespace GAPS.TSC.Consillium.App_Start {
         public static void Init()
         {
             Mapper.CreateMap<AddLeadModel, Expert>();
+            Mapper.CreateMap<ExpertRequestViewModel, ExpertRequest>();
         }
     
     }

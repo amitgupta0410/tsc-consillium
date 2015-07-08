@@ -1,6 +1,6 @@
-﻿@model GAPS.TSC.Consillium.Models.RequestExpertEn
+﻿@model GAPS.TSC.Consillium.Models.ExpertRequestViewModel
 @{
-    ViewBag.Title = "RequestExpertEn";
+    ViewBag.Title = "RequestExpert";
 }
 
 <div class="row">
@@ -14,7 +14,7 @@
 
 <div class="row">
     <div class="col-md-12">
-        @using (Html.BeginForm("RequestExpertEn", "Requests", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        @using (Html.BeginForm("RequestExpert", "Requests", FormMethod.Post, new { enctype = "multipart/form-data" }))
         {
             <div class="col-md-3">
                 <div class="form-group">
@@ -79,8 +79,8 @@
                             <div class="form-group">
                                 <div style="padding-top: 7px"></div>
                                 <br>
-                                @Html.DropDownListFor(x => x.CurrencyId, new SelectList(Model.Currency, "Key", "Value"), "Currency", new { @class = "form-control", @data_placeholder = "Choose Status" })
-                                @Html.ValidationMessageFor(x => x.CurrencyId)
+                                @Html.DropDownListFor(x => x.BudgetCurrencyId, new SelectList(Model.Currency, "Key", "Value"), "Currency", new { @class = "form-control", @data_placeholder = "Choose Status" })
+                                @Html.ValidationMessageFor(x => x.BudgetCurrencyId)
                             </div>
                         </div>
                     </div>
@@ -91,8 +91,8 @@
             <div class="col-md-3">
                 <div class="form-group">
                     <label><b>Cost Borne By</b></label><br>
-                    @Html.DropDownListFor(x => x.CostSharing, new SelectList(Model.CostSharingOptions, "Key", "Value"),
-                        new { @class = "form-control", value = Model.CostSharing, @data_placeholder = "Choose Cost" })
+                    @Html.DropDownListFor(x => x.CostSharingType, new SelectList(Model.CostSharingOptions, "Key", "Value"),
+                        new { @class = "form-control", value = Model.CostSharingType, @data_placeholder = "Choose Cost" })
                 </div>
             </div>
             <div class="col-md-3">
@@ -134,7 +134,7 @@
             <div class="col-md-4">
                 <div class="form-group">
                     <label><b>Comments</b></label><br>
-                    @Html.TextAreaFor(model => model.Description, new { @class = "form-control", value = "" })
+                    @Html.TextAreaFor(model => model.Comments, new { @class = "form-control", value = "" })
                 </div>
             </div>
             <div class="col-md-4">
