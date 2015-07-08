@@ -75,7 +75,7 @@ namespace GAPS.TSC.CONS.Services{
              var data = RestService.Get<List<Industry>>("masters/ClientIndustries");
             if (data != null)
             {
-               return data.OrderBy(x => x.Name);
+               return data.OrderBy(x => x.Id);
             }
             return new List<Industry>();
         }

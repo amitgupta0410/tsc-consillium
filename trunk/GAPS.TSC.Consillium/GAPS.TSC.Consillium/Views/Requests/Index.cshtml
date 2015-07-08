@@ -2,7 +2,7 @@
 @using RestSharp.Extensions
 @model GAPS.TSC.Consillium.Models.ExpertRequestDashboardViewModel
 @{
-    ViewBag.Title = "ExpertRequisition";
+    ViewBag.Title = "index";
 }
 
 <div class="row">
@@ -17,12 +17,12 @@
     <div class="col-md-12">
         @using (@Html.BeginForm("ExpertRequisition", "Projects", FormMethod.Get))
         {
-           
+
             <div class="col-md-3">
                 <div class="form-group">
                     <label><b>Project Lead</b></label><br>
                     @Html.DropDownListFor(x => x.ProjectLeadId, new SelectList(Model.ProjectLeadList, "Key", "Value"), "All", new { @class = "form-control", @data_placeholder = "Choose Status" })
-                  
+
                 </div>
             </div>
             <div class="col-md-3">
@@ -39,24 +39,24 @@
                 <div class="form-group">
                     <label><b>Assigned To</b></label>
                     @Html.DropDownListFor(x => x.Assigned, new SelectList(Model.AssignedList, "Key", "Value"), "All", new { @class = "form-control", @data_placeholder = "Choose Assigned to" })
-                   
+
                 </div>
             </div>
             <div class="clearfix"></div>
-    <div class="col-md-3">
-        <div class="form-group">
-            <label><b>Projects</b></label><br>
-            @Html.DropDownListFor(x => x.ProjectId, new SelectList(Model.ProjectList, "Key", "Value"), "All", new { @class = "form-control", @data_placeholder = "Choose Status" })
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label><b>Projects</b></label><br>
+                    @Html.DropDownListFor(x => x.ProjectId, new SelectList(Model.ProjectList, "Key", "Value"), "All", new { @class = "form-control", @data_placeholder = "Choose Status" })
 
-        </div>
-    </div>
+                </div>
+            </div>
             <div class="col-md-3">
                 <div class="form-group">
                     <label><b>Client</b></label>
                     @Html.DropDownListFor(x => x.ClientId, new SelectList(Model.ClientList, "Key", "Value"), "All", new { @class = "form-control" })
 
 
-                  
+
                 </div>
             </div>
 
@@ -110,31 +110,30 @@
                     </tr>
 
 
-                                        @foreach (var experts in Model.ExpertRequests)
-                                        {
-                                            <tr>
-                                                <td> @experts.ProjectName</td>
-                                                <td> @Model.ClientList[experts.Id]</td>
-                                               
-                                                <td> 
-                                                    @*@Model.ProjectLeadList[experts.ProjectLeadListId.Value]*@ 
-                                                    ProjectLeadList
-                                                </td>
-                                             
-                                                <td> @experts.RequestStatus</td>
-                                                <td> <a href="">View</a></td>
-                                                <td>@experts.AssignedTo</td>
-                                                <td> @experts.CreatedAt.ToString("dd MMM yyyy")</td>
-                                                <td> @experts.StartDate.ToString()</td>
-                                                <td> @experts.EndDate.ToString()</td>
+                    @foreach (var experts in Model.ExpertRequests)
+                    {
+                        <tr>
+                            <td> @experts.ProjectName</td>
+                            <td> @Model.ClientList[experts.Id]</td>
+
+                            <td>
+                                @*@Model.ProjectLeadList[experts.ProjectLeadListId.Value]*@
+                                ProjectLeadList
+                            </td>
+
+                            <td> @experts.RequestStatus</td>
+                            <td> <a href="">View</a></td>
+                            <td>@experts.AssignedTo</td>
+                            <td> @experts.CreatedAt.ToString("dd MMM yyyy")</td>
+                            <td> @experts.StartDate.ToString()</td>
+                            <td> @experts.EndDate.ToString()</td>
 
 
-                                            </tr>
-                                        }
-                  
+                        </tr>
+                    }
+
                 </tbody>
             </table>
         </div>
     </div>
 </div>
-

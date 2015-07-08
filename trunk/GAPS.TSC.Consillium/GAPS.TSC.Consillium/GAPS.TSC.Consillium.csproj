@@ -349,7 +349,6 @@
     <Content Include="Views\Shared\_PartialHeader.cshtml" />
     <Content Include="Views\Shared\_PartialSideMenu.cshtml" />
     <Content Include="Views\Reports\Index.cshtml" />
-    <Content Include="Views\Projects\ExpertRequisition.cshtml" />
     <Content Include="Views\Projects\Projects.cshtml" />
     <Content Include="Views\Projects\Payments.cshtml" />
     <Content Include="Views\Calls\CallDasboard.cshtml" />
@@ -363,6 +362,7 @@
     <Content Include="Views\Requests\RequestExpertManual.cshtml" />
     <Content Include="Views\Shared\_PartialMessage.cshtml" />
     <Content Include="Views\Employees\AddNewLead.cshtml" />
+    <Content Include="Views\Requests\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

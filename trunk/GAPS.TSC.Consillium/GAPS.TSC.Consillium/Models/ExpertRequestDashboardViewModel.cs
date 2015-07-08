@@ -33,7 +33,17 @@ namespace GAPS.TSC.Consillium.Models
         public int? ProjectLeadId { get; set; }
     }
 
-    public class ExpertRequestSingleViewModel{
+    public class ExpertRequestSingleViewModel : BaseEntity{
+        public int? ProjectId { get; set; }
+        public string ProjectName { get; set; }
+        public string ClientName { get; set; }
+        public RequestStatus RequestStatus { get; set; }
+        public int? ProjectLeadId { get; set; }
+        public DateTime? StartDate { get; set; }
+        public DateTime? EndDate { get; set; }
+        public DateTime? RestartDate { get; set; }
+        public int? AssignedToId { get; set; }
+        public virtual TeamMember AssignedTo { get; set; }
         
     }
 }

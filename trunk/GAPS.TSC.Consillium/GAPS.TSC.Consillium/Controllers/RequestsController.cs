@@ -20,16 +20,58 @@ namespace GAPS.TSC.Consillium.Controllers
         private readonly IMainMastersService _masterService;
         private readonly IProjectService _projectService;
         private readonly IExpertRequestService _expertRequestService;
+        private readonly IClientService _clientService;
       
         // GET: /Requests/
         public RequestsController(IAttachmentService attachmentService, IMainMastersService mastersService,
-            IProjectService projectService, IUserService userService,IExpertRequestService expertRequestService) : base(attachmentService)
+            IProjectService projectService, IUserService userService,IExpertRequestService expertRequestService,IClientService clientService) : base(attachmentService)
         {
            _userService= userService;
             _masterService = mastersService;
             _projectService = projectService;
             _expertRequestService = expertRequestService;
+              _clientService = clientService;
         }
+        [HttpGet]
+        public ActionResult Index(ExpertRequestDashboardViewModel model)
+        {
+
+            var leadIds = _expertRequestService.GetProjectLeads();
+            model.ProjectLeadList = _userService.GetAllUsers().Where(x => leadIds.Contains(x.Id)).ToDictionary(x => x.Id, x => x.FullName);
+            model.StatusOptions = EnumHelper.GetEnumLabels(typeof(RequestStatus));
+            model.AssignedList = _userService.GetAllTeamMembers().ToDictionary(x => x.Id, x => x.Name);
+            model.ClientList = _clientService.GetAllClients().ToDictionary(x => x.Id, x => x.Name);
+            model.ProjectList = _projectService.GetAllMasterProjects().ToDictionary(x => x.Id, x => x.Name);
+            var projects = _expertRequestService.GetAllExpertsProjects();
+           
+
+            if (model.Status != null)
+            {
+                projects = projects.Where(x => x.RequestStatus == model.Status);
+            }
+            if (model.StartDate != null)
+            {
+                projects = projects.Where(x => x.StartDate == model.StartDate);
+            }
+            if (model.EndDate != null)
+            {
+                projects = projects.Where(x => x.EndDate == model.EndDate);
+            }
+
+            if (model.ClientId > 0)
+            {
+                var projectids = _projectService.GetAllMasterProjects().Where(x => x.ClientId == model.ClientId).Select(x => x.Id);
+                projects = projects.Where(x => projectids.Contains(x.Id));
+            }
+            if (model.Assigned > 0)
+            {
+                projects = projects.Where(x => x.AssignedToId == model.Assigned);
+
+            }
+            model.ExpertRequests = projects.Select(Mapper.Map<ExpertRequest,ExpertRequestSingleViewModel>);
+            return View(model);
+        }
+
 
         public ActionResult RequestExpert()
         {
@@ -40,7 +82,7 @@ namespace GAPS.TSC.Consillium.Controllers
             model.Units = _masterService.GetAllUnits().ToDictionary(x => x.Id, x => x.Name);
             model.Industry=_masterService.GetAllIndustries().ToDictionary(x => x.Id, x => x.Name);
             model.Geography = _masterService.GetAllGeographies().ToDictionary(x => x.Id, x => x.Name);
-            model.Currency = _masterService.GetAllCurrencies().ToDictionary(x => x.CurrencyId, x => x.CurrencyName);
+            model.Currency = _masterService.GetAllCurrencies().ToDictionary(x => x.CurrencyId, x => x.CurrencyCode);
             model.CostSharingOptions = EnumHelper.GetEnumLabels(typeof(CostSharingType));
             return View(model);
         }
@@ -74,14 +116,12 @@ namespace GAPS.TSC.Consillium.Controllers
             }
             return Json(null, JsonRequestBehavior.AllowGet);
         }
-        public JsonResult GetProjectLead(int id)
+
+        public JsonResult GetProjectLeadList(int id)
         {
-            var projectLead = _projectService.GetProjectLeads(id).FirstOrDefault(x => x.IsActive);
-            if (projectLead != null)
-            {
-                return Json(projectLead, JsonRequestBehavior.AllowGet);
-            }
-            return Json(null, JsonRequestBehavior.AllowGet);
+            var projectLeads = _projectService.GetProjectLeads(id);
+
+            return Json(projectLeads.Select(x => new { x.EmployeeId, x.FullName }), JsonRequestBehavior.AllowGet);
         }
         public JsonResult GetProjectUnit(int id)
         {
