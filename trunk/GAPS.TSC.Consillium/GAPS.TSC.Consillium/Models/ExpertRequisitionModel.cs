@@ -14,18 +14,20 @@ namespace GAPS.TSC.Consillium.Models
         {
             ProjectLead = new Dictionary<int, string>();
             AssignedList = new Dictionary<int, string>();
-           
+            ProjectList=new Dictionary<int, string>();
             ClientList = new Dictionary<int, string>();
 
         }
         public IEnumerable<ExpertRequest> ExpertRequests { get; set; }
         public Dictionary<int, string> ProjectLead { get; set; }
+        public Dictionary<int, string> ProjectList { get; set; }
         public Dictionary<int, string> AssignedList { get; set; }
         public IDictionary<string, string> StatusOptions { get; set; }
         public Dictionary<int, string> ClientList { get; set; }
         public int ClientId { get; set; }
+        public int ProjectId { get; set; }
         public int Assigned { get; set; }
-        public RequestStatus RequestStatus { get; set; }
+        public RequestStatus? Status { get; set; }
         public DateTime? StartDate { get; set; }
         public DateTime? EndDate { get; set; }
         public int? ProjectLeadId { get; set; }
