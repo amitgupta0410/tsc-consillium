@@ -124,7 +124,11 @@
 
                             <td> @experts.RequestStatus</td>
                             <td> <a href="">View</a></td>
-                            <td>@experts.AssignedTo.Name</td>
+                            <td>@if (experts.AssignedTo.Name != null)
+                                {
+                                    @experts.AssignedTo.Name
+                                }
+                            </td>
                             <td> @experts.CreatedAt.ToString("dd MMM yyyy")</td>
                             <td> @experts.StartDate.ToString()</td>
                             <td> @experts.EndDate.ToString()</td>
