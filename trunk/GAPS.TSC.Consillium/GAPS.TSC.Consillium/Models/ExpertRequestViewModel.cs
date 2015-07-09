@@ -19,6 +19,9 @@ namespace GAPS.TSC.Consillium.Models
             Geography=new Dictionary<int, string>();
             Currency = new Dictionary<int, string>();
             ProjectLeadList = new Dictionary<int, string>();
+            CostSharingTypeValue=CostSharingType.TSC;
+            TscShare = 100;
+            ClientShare = 0;
         }
 
         public Dictionary<int, string> Clients { get; set; }
@@ -41,13 +44,22 @@ namespace GAPS.TSC.Consillium.Models
         public int BudgetCurrencyId { get; set; }
         public string Comments { get; set; }
         public decimal BudgetAmount { get; set; }
-        public IDictionary<string, string> CostSharingOptions { get; set; }
-        public CostSharingType CostSharingType { get; set; }
+        public IDictionary<int, string> CostSharingOptions { get; set; }
+        public CostSharingType CostSharingTypeValue { get; set; }
         public decimal TscShare { get; set; }
 
-        [AssertThat("(CostSharingType == CostSharingType.TSC && ClientShare== 0 && TscShare== 100) || (CostSharingType == CostSharingType.Client && ClientShare== 100 && TscShare== 0) || (CostSharingType == CostSharingType.Both && ClientShare+TscShare== 100) || (CostSharingType == CostSharingType.ManDayBilling && ClientShare== 0 && TscShare== 0)", ErrorMessage = "Please select a valid share")]
+        [AssertThat("(CostSharingTypeValue == CostSharingType.TSC && ClientShare== 0 && TscShare== 100) || (CostSharingTypeValue == CostSharingType.Client && ClientShare == 100 && TscShare == 0) || (CostSharingTypeValue == CostSharingType.Both && ClientShare+TscShare== 100) || (CostSharingTypeValue == CostSharingType.ManDayBilling && ClientShare== 0 && TscShare== 0)", ErrorMessage = "Please select a valid share")]
       
-        public decimal ClientShare { get; set; }       
+        public decimal ClientShare { get; set; }
+
+        private bool Some() {
+            return (CostSharingTypeValue == CostSharingType.TSC && ClientShare == 0 && TscShare == 100) ||
+                   (CostSharingTypeValue == CostSharingType.Client && ClientShare == 100 && TscShare == 0) ||
+                   (CostSharingTypeValue == CostSharingType.Both && ClientShare + TscShare == 100) ||
+                   (CostSharingTypeValue == CostSharingType.ManDayBilling && ClientShare == 0 && TscShare == 0);
+        }
+
+
         public HttpPostedFileBase ScopingDocumentFile { get; set; }
 
         [Required(ErrorMessage = "Please upload a file.")]

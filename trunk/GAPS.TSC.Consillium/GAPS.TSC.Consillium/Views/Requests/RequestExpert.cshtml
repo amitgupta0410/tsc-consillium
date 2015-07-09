@@ -101,8 +101,8 @@
             <div class="col-md-3">
                 <div class="form-group">
                     <label><b>Cost Borne By*</b></label><br>
-                    @Html.DropDownListFor(x => x.CostSharingType, new SelectList(Model.CostSharingOptions, "Key", "Value", Model.CostSharingOptions.FirstOrDefault()), new { @class = "form-control", @data_placeholder = "Choose Cost" })
-                  
+                    @Html.DropDownListFor(x => x.CostSharingTypeValue, new SelectList(Model.CostSharingOptions, "Key", "Value", Model.CostSharingOptions.FirstOrDefault()), new { @class = "form-control", @data_placeholder = "Choose Cost" })
+                    @Html.ValidationMessageFor(x => x.CostSharingTypeValue)
                 </div>
             </div>
             <div class="col-md-3">
@@ -112,12 +112,14 @@
                             <div class="form-group">
                                 <label><b>TSC%</b></label>
                                 @Html.TextBoxFor(x => x.TscShare, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(x => x.TscShare)
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label><b>Client%</b></label>
                                 @Html.TextBoxFor(x => x.ClientShare, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(x => x.ClientShare)
                             </div>
                         </div>
                     </div>
@@ -232,9 +234,9 @@
             });
 
 
-            $("#CostSharingType").change(function() {
+            $("#CostSharingTypeValue").change(function() {
                 var str = "";
-                $("#CostSharingType option:selected").each(function() {
+                $("#CostSharingTypeValue option:selected").each(function() {
                     str = $(this).val();
                 });
                 if (str == "TSC") {
@@ -264,7 +266,7 @@
 
            
             
-            $("#CostSharingType").load(function () {
+            $("#CostSharingTypeValue").load(function () {
                 $("#TscShare").val("100");
                 $("#ClientShare").val("00");
                 $("#TscShare").prop("readonly", true);

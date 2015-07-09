@@ -94,7 +94,7 @@ namespace GAPS.TSC.Consillium.Controllers
             model.Industry=_masterService.GetAllIndustries().ToDictionary(x => x.Id, x => x.Name);
             model.Geography = _masterService.GetAllGeographies().ToDictionary(x => x.Id, x => x.Name);
             model.Currency = _masterService.GetAllCurrencies().ToDictionary(x => x.CurrencyId, x => x.CurrencyCode);
-            model.CostSharingOptions = EnumHelper.GetEnumLabels(typeof(CostSharingType));
+            model.CostSharingOptions = EnumHelper.GetEnumLabelValuess(typeof(CostSharingType));
             return View(model);
         }
         [HttpPost]
@@ -159,7 +159,7 @@ namespace GAPS.TSC.Consillium.Controllers
             model.Geography = _masterService.GetAllGeographies().ToDictionary(x => x.Id, x => x.Name);
             model.Currency = _masterService.GetAllCurrencies().ToDictionary(x => x.CurrencyId, x => x.CurrencyCode);
             model.Units = _masterService.GetAllUnits().ToDictionary(x => x.Id, x => x.Name);
-            model.CostSharingOptions = EnumHelper.GetEnumLabels(typeof(CostSharingType));
+            model.CostSharingOptions = EnumHelper.GetEnumLabelValuess(typeof(CostSharingType));
             model.IsRequestExpertManual = true;
             return View(model);
         }

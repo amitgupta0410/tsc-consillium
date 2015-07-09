@@ -25,6 +25,26 @@ namespace GAPS.TSC.CONS.Util{
 
             return toReturn;
         }
+        
+        public static Dictionary<int, string> GetEnumLabelValuess(Type typeOfEnum) {
+            var toReturn = new Dictionary<int, string>();
+            foreach (
+                var field in typeOfEnum.GetFields(BindingFlags.Static | BindingFlags.GetField | BindingFlags.Public)) {
+                var value = (int) field.GetValue(null);
+                var name = Enum.GetName(typeOfEnum, value);
+                var label = name;
+                foreach (DisplayAttribute currAttr in field.GetCustomAttributes(typeof (DisplayAttribute), true)) {
+                    label = currAttr.Name;
+                    break;
+                }
+
+                if (name != null) {
+                    toReturn[value] = label;
+                }
+            }
+
+            return toReturn;
+        }
 
         public static string DisplayName(Type enumType, string enumValue) {
             var member = enumType.GetMember(enumValue).FirstOrDefault();
