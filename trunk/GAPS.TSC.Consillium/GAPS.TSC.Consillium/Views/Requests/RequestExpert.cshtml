@@ -87,7 +87,7 @@
             <div class="clearfix"></div>
             <div class="col-md-3">
                 <div class="form-group">
-                    <label><b>Unit</b></label><br>
+                    <label><b>Unit*</b></label><br>
                     @Html.DropDownListFor(x => x.UnitId, new SelectList(Model.Units, "Key", "Value"), "Select Unit", new { @class = "form-control", @data_placeholder = "Choose Unit" })
                     @Html.ValidationMessageFor(x => x.UnitId)
                 </div>
@@ -141,14 +141,14 @@
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label><b>TSC%</b></label>
+                                <label><b>TSC%*</b></label>
                                 @Html.TextBoxFor(x => x.TscShare, new { @class = "form-control" })
                                 @Html.ValidationMessageFor(x => x.TscShare)
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label><b>Client%</b></label>
+                                <label><b>Client%*</b></label>
                                 @Html.TextBoxFor(x => x.ClientShare, new { @class = "form-control" })
                                 @Html.ValidationMessageFor(x => x.ClientShare)
                             </div>

@@ -130,8 +130,17 @@
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label>Description:</label>
+                                   
                                     @Html.DisplayFor(model => model.Description)
+                                    
                                 </div>
+                            </div>
+                                </div>
+                            </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="col-md-4">
+                                <input type="submit" class="btn btn-primary" value="Update" style="width: 99px;" onclick="location.href='@Url.Action("UpdateRequest", "Requests", new { id = Model.Id })' " />
                             </div>
                         </div>
                    </div>
@@ -152,7 +161,7 @@
                     <div class="row">
                         <div class="col-md-3">
                             <div class="form-group">
-                            
+                           
                               
                                 @Html.TextAreaFor(model => model.Comments, new { @class = "form-control", value = @Model.Comments } )
                             </div>
@@ -165,6 +174,7 @@
                             </div>
                         </div>
                     </div>
+                    
                 </div>
             </div>
         }
