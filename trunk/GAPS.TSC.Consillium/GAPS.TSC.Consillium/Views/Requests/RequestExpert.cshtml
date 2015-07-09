@@ -6,7 +6,14 @@
 <div class="row">
     <div class="col-md-12">
         <h3 class="page-title">
-            Request Expert (For EN Projects)
+            @if (!Model.IsRequestExpertManual)
+            {
+               <label><b>Request Expert(ForEN Projects)</b></label> 
+            }
+            else
+            {
+                <label><b>Request Manual</b></label> 
+            }
         </h3>
     </div>
 </div>
@@ -19,12 +26,16 @@
             <div class="col-md-3">
                 <div class="form-group">
                     <label><b>Client*</b></label>
-                   @if (!Model.IsRequestExpertManual)
-                   {
-                       @Html.DropDownListFor(x => x.ClientId, new SelectList(Model.Clients, "Key", "Value"), "Select Client", new {@class = "form-control", @data_placeholder = "Choose Status"})
-                       @Html.ValidationMessageFor(x => x.ClientId)
-                   }
-                    @Html.TextBoxFor(x=>x.ClientName, new { @class = "form-control ", Value = ""})
+                    @if (!Model.IsRequestExpertManual)
+                    {
+                        @Html.DropDownListFor(x => x.ClientId, new SelectList(Model.Clients, "Key", "Value"), "Select Client", new { @class = "form-control", @data_placeholder = "Choose Status" })
+                        @Html.ValidationMessageFor(x => x.ClientId)
+                    }
+                    else
+                    {
+                        @Html.TextBoxFor(x => x.ClientName, new { @class = "form-control ", Value = "" })
+                        @Html.ValidationMessageFor(x => x.ClientName)
+                    }
                 </div>
             </div>
             <div class="col-md-3">
@@ -32,26 +43,45 @@
                     <label><b>Project*</b></label>
                     @if (!Model.IsRequestExpertManual)
                     {
-                        @Html.DropDownListFor(x => x.ProjectId, new List<SelectListItem>(), "Select Project", new {@class = "form-control"})
+                        @Html.DropDownListFor(x => x.ProjectId, new List<SelectListItem>(), "Select Project", new { @class = "form-control" })
                         @Html.ValidationMessageFor(x => x.ProjectId)
                     }
-                    @Html.TextBoxFor(x => x.ProjectName
-                    , new { @class = "form-control ", Value = "" })
+                    else
+                    {
+                        @Html.TextBoxFor(x => x.ProjectName, new { @class = "form-control ", Value = "" })
+                        @Html.ValidationMessageFor(x => x.ProjectName)
+                    }
                 </div>
             </div>
             <div class="col-md-3">
                 <div class="form-group">
                     <label><b>Bd Lead*</b></label>
-                    @Html.TextBoxFor(x => x.BdLeadId, new { style = "display: none;" })
-                    @Html.TextBoxFor(x => x.BdLeadName, new { @class = "form-control ", Value = "", @readonly="readonly" })
+                    @if (!Model.IsRequestExpertManual)
+                    {
+                        @Html.TextBoxFor(x => x.BdLeadId, new { style = "display: none;" })
+                        @Html.TextBoxFor(x => x.BdLeadName, new { @class = "form-control ", Value = "", @readonly = "readonly" })
+
+                    }
+                    else
+                    {
+                       @Html.TextBoxFor(x => x.BdLeadName, new { @class = "form-control ", Value = "" })
+                       @Html.ValidationMessageFor(x => x.BdLeadName)
+                    }
                 </div>
             </div>
             <div class="col-md-3">
                 <div class="form-group">
                     <label><b>Project Lead*</b></label>
-                    @*@Html.TextBoxFor(x => x.ProjectLeadId, new { style = "display: none;" })*@
-                    @Html.DropDownListFor(x => x.ProjectLeadId, new List<SelectListItem>(), new { @class = "form-control" })
-                    @Html.ValidationMessageFor(x => x.ProjectLeadId)
+                    @if (!Model.IsRequestExpertManual)
+                    {
+                        @Html.DropDownListFor(x => x.ProjectLeadId, new List<SelectListItem>(), new {@class = "form-control"})
+                        @Html.ValidationMessageFor(x => x.ProjectLeadId)
+                    }
+                    else
+                    {
+                        @Html.DropDownListFor(x => x.ProjectLeadId, new SelectList(Model.ProjectLeadList, "Key", "Value"), "Select ProjectLead", new { @class = "form-control", @data_placeholder = "Choose Status" })
+                        @Html.ValidationMessageFor(x => x.ProjectLeadId)
+                    }
                 </div>
             </div>
             <div class="clearfix"></div>
@@ -83,13 +113,14 @@
                             <div class="form-group">
                                 <label><b>Budget*</b></label>
                                 @Html.TextBoxFor(x => x.BudgetAmount, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(x => x.BudgetAmount)
                             </div>
                         </div>
                         <div class="col-md-7">
                             <div class="form-group">
                                 <div style="padding-top: 7px"></div>
                                 <br>
-                                @Html.DropDownListFor(x => x.BudgetCurrencyId, new SelectList(Model.Currency, "Key", "Value"),new { @class = "form-control", @data_placeholder = "Choose Status" })
+                                @Html.DropDownListFor(x => x.BudgetCurrencyId, new SelectList(Model.Currency, "Key", "Value"), new { @class = "form-control", @data_placeholder = "Choose Status" })
                                 @Html.ValidationMessageFor(x => x.BudgetCurrencyId)
                             </div>
                         </div>
@@ -171,20 +202,20 @@
 @section scripts{
 
     <script type="text/javascript">
-        $(function() {
+        $(function () {
 
-            $("#ClientId").change(function() {
+            $("#ClientId").change(function () {
                 var clientId = $("#ClientId").val();
                 if (clientId != "") {
-                    $.getJSON("/Requests/GetProjects/" + $("#ClientId").val(), function(data) {
+                    $.getJSON("/Requests/GetProjects/" + $("#ClientId").val(), function (data) {
                         var items = "<option value=''>Select Project</option>";
-                        $.each(data, function(i, item) {
+                        $.each(data, function (i, item) {
                             items += "<option value='" + item.Id + "'>" + item.Name + "</option>";
                         });
                         $("#ProjectId").html(items);
                     });
 
-                    $.getJSON("/Requests/GetProjectsBd/" + $("#ClientId").val(), function(bdLead) {
+                    $.getJSON("/Requests/GetProjectsBd/" + $("#ClientId").val(), function (bdLead) {
                         if (bdLead != null) {
                             $("#BdLeadName").val(bdLead.FullName);
                             $("#BdLeadId").val(bdLead.Id);
@@ -202,13 +233,13 @@
             });
 
 
-            $("#ProjectId").change(function() {
+            $("#ProjectId").change(function () {
                 var projectId = $("#ProjectId").val();
                 if (projectId != "") {
 
-                    $.getJSON("/Requests/GetProjectLeadList/" + $("#ProjectId").val(), function(data) {
+                    $.getJSON("/Requests/GetProjectLeadList/" + $("#ProjectId").val(), function (data) {
                         var items = "";
-                        $.each(data, function(i, item) {
+                        $.each(data, function (i, item) {
                             if (i == 0) {
                                 items += "<option selected='selected' value='" + item.EmployeeId + "'>" + item.FullName + "</option>";
 
@@ -218,11 +249,11 @@
                         });
                         $("#ProjectLeadId").html(items);
                     });
-                    $.getJSON("/Requests/GetProjectUnit/" + $("#ProjectId").val(), function(unit) {
+                    $.getJSON("/Requests/GetProjectUnit/" + $("#ProjectId").val(), function (unit) {
 
                         if (unit != null) {
                             $('#UnitId option')
-                                .filter(function() { return $.trim($(this).val()) == unit.Id; })
+                                .filter(function () { return $.trim($(this).val()) == unit.Id; })
                                 .attr('selected', true);
                         }
                     });
@@ -234,44 +265,43 @@
             });
 
 
-            $("#CostSharingTypeValue").change(function() {
+            $("#CostSharingTypeValue").change(function () {
                 var str = "";
-                $("#CostSharingTypeValue option:selected").each(function() {
+                $("#CostSharingTypeValue option:selected").each(function () {
                     str = $(this).val();
                 });
-                if (str == "TSC") {
+                if (str == 0) {
                     $("#TscShare").val("100");
-                    $("#ClientShare").val("00");
+                    $("#ClientShare").val("0");
                     $("#TscShare").prop("readonly", true);
                     $("#ClientShare").prop("readonly", true);
-                } else if (str == "Client") {
-                    $("#TscShare").val("00");
+                } else if (str == 1) {
+                    $("#TscShare").val("0");
                     $("#ClientShare").val("100");
                     $("#ClientShare").prop("readonly", true);
                     $("#TscShare").prop("readonly", true);
-                } else if (str == "Both") {
+                } else if (str == 2) {
                     $("#TscShare").val("50");
                     $("#ClientShare").val("50");
                     $("#ClientShare").prop("readonly", false);
                     $("#TscShare").prop("readonly", false);
-                } else if (str == "ManDayBilling") {
-                    $("#TscShare").val("00");
-                    $("#ClientShare").val("00");
+                } else if (str == 3) {
+                    $("#TscShare").val("0");
+                    $("#ClientShare").val("0");
                     $("#ClientShare").prop("readonly", true);
                     $("#TscShare").prop("readonly", true);
                 }
 
-
             });
 
-           
-            
-            $("#CostSharingTypeValue").load(function () {
-                $("#TscShare").val("100");
-                $("#ClientShare").val("00");
-                $("#TscShare").prop("readonly", true);
-                $("#ClientShare").prop("readonly", true);
-            });
+
+
+            //$("#CostSharingTypeValue").load(function () {
+            //    $("#TscShare").val("100");
+            //    $("#ClientShare").val("00");
+            //    $("#TscShare").prop("readonly", true);
+            //    $("#ClientShare").prop("readonly", true);
+            //});
 
         });
 

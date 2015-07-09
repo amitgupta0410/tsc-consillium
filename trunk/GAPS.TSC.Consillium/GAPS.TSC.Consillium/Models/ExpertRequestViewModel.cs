@@ -34,6 +34,7 @@ namespace GAPS.TSC.Consillium.Models
         public int? ProjectLeadId { get; set; }
         public string ProjectLeadName { get; set; }
         public int? BdLeadId { get; set; }
+        [Required(ErrorMessage = "Please enter BD Lead name.")]
         public string BdLeadName { get; set; }
         public string Description { get; set; }
         public Dictionary<int, string> Industry { get; set; }
@@ -46,20 +47,21 @@ namespace GAPS.TSC.Consillium.Models
         public decimal BudgetAmount { get; set; }
         public IDictionary<int, string> CostSharingOptions { get; set; }
         public CostSharingType CostSharingTypeValue { get; set; }
+        [AssertThat("(CostSharingTypeValue == CostSharingType.TSC && ClientShare == 0 && TscShare== 100) || (CostSharingTypeValue == CostSharingType.Client && ClientShare == 100 && TscShare == 0) || (CostSharingTypeValue == CostSharingType.Both && ClientShare+TscShare== 100) || (CostSharingTypeValue == CostSharingType.ManDayBilling && ClientShare == 0 && TscShare == 0)", ErrorMessage = "Please select a valid share")]
         public decimal TscShare { get; set; }
 
-        [AssertThat("(CostSharingTypeValue == CostSharingType.TSC && ClientShare== 0 && TscShare== 100) || (CostSharingTypeValue == CostSharingType.Client && ClientShare == 100 && TscShare == 0) || (CostSharingTypeValue == CostSharingType.Both && ClientShare+TscShare== 100) || (CostSharingTypeValue == CostSharingType.ManDayBilling && ClientShare== 0 && TscShare== 0)", ErrorMessage = "Please select a valid share")]
+        [AssertThat("(CostSharingTypeValue == CostSharingType.TSC && ClientShare == 0 && TscShare== 100) || (CostSharingTypeValue == CostSharingType.Client && ClientShare == 100 && TscShare == 0) || (CostSharingTypeValue == CostSharingType.Both && ClientShare+TscShare== 100) || (CostSharingTypeValue == CostSharingType.ManDayBilling && ClientShare == 0 && TscShare == 0)", ErrorMessage = "Please select a valid share")]
       
         public decimal ClientShare { get; set; }
 
-        private bool Some() {
-            return (CostSharingTypeValue == CostSharingType.TSC && ClientShare == 0 && TscShare == 100) ||
-                   (CostSharingTypeValue == CostSharingType.Client && ClientShare == 100 && TscShare == 0) ||
-                   (CostSharingTypeValue == CostSharingType.Both && ClientShare + TscShare == 100) ||
-                   (CostSharingTypeValue == CostSharingType.ManDayBilling && ClientShare == 0 && TscShare == 0);
-        }
+        //private bool Some() {
+        //    return (CostSharingTypeValue == CostSharingType.TSC && ClientShare == 0 && TscShare == 100) ||
+        //           (CostSharingTypeValue == CostSharingType.Client && ClientShare == 100 && TscShare == 0) ||
+        //           (CostSharingTypeValue == CostSharingType.Both && ClientShare + TscShare == 100) ||
+        //           (CostSharingTypeValue == CostSharingType.ManDayBilling && ClientShare == 0 && TscShare == 0);
+        //}
 
-
+          [Required(ErrorMessage = "Please upload a file.")]
         public HttpPostedFileBase ScopingDocumentFile { get; set; }
 
         [Required(ErrorMessage = "Please upload a file.")]
@@ -68,7 +70,9 @@ namespace GAPS.TSC.Consillium.Models
         public int ApprovalDocumentId { get; set; }
         public bool IsRequestExpertManual { get; set; }
         public Dictionary<int, string> ProjectLeadList { get; set; }
+        [Required(ErrorMessage = "Please enter client name.")]
         public string ClientName { get; set; }
+        [Required(ErrorMessage = "Please enter project name.")]
         public string ProjectName { get; set; }
 
     }

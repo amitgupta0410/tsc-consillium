@@ -33,6 +33,7 @@ namespace GAPS.TSC.CONS.Domain {
         public virtual ICollection<Expert> Experts { get; set; } 
 
         public int? BdLeadId { get; set; }
+        public string BdLeadName { get; set; }
         public int? ProjectLeadId { get; set; }
         public int? UnitId { get; set; }
         public ExpertRequestType ExpertRequestType { get; set; }

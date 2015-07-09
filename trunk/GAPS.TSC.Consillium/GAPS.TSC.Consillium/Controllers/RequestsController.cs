@@ -200,7 +200,7 @@ namespace GAPS.TSC.Consillium.Controllers
             model.Units = _masterService.GetAllUnits().ToDictionary(x => x.Id, x => x.Name);
             model.CostSharingOptions = EnumHelper.GetEnumLabelValuess(typeof(CostSharingType));
             model.IsRequestExpertManual = true;
-            return View(model);
+            return View("RequestExpert",model);
         }
 
         
