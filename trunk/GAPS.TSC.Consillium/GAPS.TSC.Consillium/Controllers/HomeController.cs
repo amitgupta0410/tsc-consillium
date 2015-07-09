@@ -20,6 +20,7 @@ namespace GAPS.TSC.Consillium.Controllers {
         }
         public ActionResult Index()
         {
+            
             return View();
         }
 
@@ -31,7 +32,6 @@ namespace GAPS.TSC.Consillium.Controllers {
 
         public ActionResult Contact() {
             ViewBag.Message = "Your contact page.";
-
             return View();
         }
     }

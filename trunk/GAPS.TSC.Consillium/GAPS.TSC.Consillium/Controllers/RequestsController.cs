@@ -112,6 +112,11 @@ namespace GAPS.TSC.Consillium.Controllers
             return RedirectToAction("Index");
         }
 
+        public ActionResult UpdateRequest(int id)
+        {
+            var expertRequest = _expertRequestService.GetAllExpertsProjects().Single(m => m.Id == id);
+            return View();
+        }
 
         public JsonResult GetProjects(int id)
         {
