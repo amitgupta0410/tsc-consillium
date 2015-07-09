@@ -109,13 +109,25 @@ namespace GAPS.TSC.Consillium.Controllers
             expertRequest.ScopingDocumentId = scopingFile.Id;
             _expertRequestService.Add(expertRequest);
             SetMessage(MessageType.Success, MessageConstant.GetMessage(Messages.RequestSuccess));
-            return RedirectToAction("Index");
+            return RedirectToAction("RequestExpert");
         }
 
         public ActionResult UpdateRequest(int id)
         {
             var expertRequest = _expertRequestService.GetAllExpertsProjects().Single(m => m.Id == id);
-            return View();
+            var expertRequestModel = Mapper.Map<ExpertRequest,ExpertRequestViewModel>(expertRequest);
+            expertRequestModel.CostSharingOptions = EnumHelper.GetEnumLabelValuess(typeof(CostSharingType));
+            var project = _projectService.GetAllMasterProjects().Single(x => x.Id == expertRequestModel.ProjectId);
+            expertRequestModel.ClientId = project.ClientId ?? default(int);
+            var projectClients =_projectService.GetAllMasterProjects().Select(x => x.ClientId).Distinct().ToList();
+            expertRequestModel.Clients = _masterService.GetAllClients().Where(x => projectClients.Contains(x.Id) && x.IsActive).ToDictionary(x => x.Id, x => x.Name);
+            expertRequestModel.Currency = _masterService.GetAllCurrencies().ToDictionary(x => x.CurrencyId, x => x.CurrencyCode);
+            expertRequestModel.Units = _masterService.GetAllUnits().ToDictionary(x => x.Id, x => x.Name);
+            expertRequestModel.Industry = _masterService.GetAllIndustries().ToDictionary(x => x.Id, x => x.Name);
+            expertRequestModel.Geography = _masterService.GetAllGeographies().ToDictionary(x => x.Id, x => x.Name);
+
+
+            return View("RequestExpert",expertRequestModel);
         }
 
         public JsonResult GetProjects(int id)

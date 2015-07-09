@@ -44,7 +44,7 @@ namespace GAPS.TSC.Consillium.Models
         public int IndustryId { get; set; }
         public Dictionary<int, string> Geography { get; set; }
         [Required(ErrorMessage = "Please Select Geography Field.")]
-        public int GeographyId { get; set; }
+        public int GeographicId { get; set; }
         public Dictionary<int, string> Currency { get; set; }
         [Required(ErrorMessage = "Please Select Currency Field.")]
         public int BudgetCurrencyId { get; set; }

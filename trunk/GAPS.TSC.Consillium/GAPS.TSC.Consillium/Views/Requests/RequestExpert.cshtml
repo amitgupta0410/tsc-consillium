@@ -28,8 +28,17 @@
                     <label><b>Client*</b></label>
                     @if (!Model.IsRequestExpertManual)
                     {
-                        @Html.DropDownListFor(x => x.ClientId, new SelectList(Model.Clients, "Key", "Value"), "Select Client", new { @class = "form-control", @data_placeholder = "Choose Status" })
-                        @Html.ValidationMessageFor(x => x.ClientId)
+                        //if (Model == null)
+                        //{
+                            @Html.DropDownListFor(x => x.ClientId, new SelectList(Model.Clients, "Key", "Value"), "Select Client", new {@class = "form-control", @data_placeholder = "Choose Status"})
+                            @Html.ValidationMessageFor(x => x.ClientId)
+                       // }
+                        @*else
+                        {
+                            @Html.DropDownListFor(x => x.ClientId, Model.Clients.Select(x => new SelectListItem() { Text = x.Value, Value = x.Key.ToString(), Selected = x.Key == Model.ClientId }), "Select Client", new { @class = "form-control" })
+                            @Html.ValidationMessageFor(x => x.ClientId)
+
+                        }*@
                     }
                     else
                     {
@@ -58,8 +67,15 @@
                     <label><b>Bd Lead*</b></label>
                     @if (!Model.IsRequestExpertManual)
                     {
-                        @Html.TextBoxFor(x => x.BdLeadId, new { style = "display: none;" })
-                        @Html.TextBoxFor(x => x.BdLeadName, new { @class = "form-control ", Value = "", @readonly = "readonly" })
+                        
+                            @Html.TextBoxFor(x => x.BdLeadId, new {style = "display: none;"})
+                            @Html.TextBoxFor(x => x.BdLeadName, new {@class = "form-control ", Value = "", @readonly = "readonly"})
+                        
+                        @*else
+                        {
+                         @Html.TextBoxFor(x => x.BdLeadId, new { style = "display: none;" ,Value = @Model.BdLeadId})
+                        @Html.TextBoxFor(x => x.BdLeadName, new { @class = "form-control ", Value = @Model.BdLeadName, @readonly = "readonly" })
+                        }*@
 
                     }
                     else
@@ -102,8 +118,8 @@
             <div class="col-md-3">
                 <div class="form-group">
                     <label><b>Geography*</b></label>
-                    @Html.DropDownListFor(x => x.GeographyId, new SelectList(Model.Geography, "Key", "Value"), "Select Geography", new { @class = "form-control", @data_placeholder = "Choose Status" })
-                    @Html.ValidationMessageFor(x => x.GeographyId)
+                    @Html.DropDownListFor(x => x.GeographicId, new SelectList(Model.Geography, "Key", "Value"), "Select Geography", new { @class = "form-control", @data_placeholder = "Choose Status" })
+                    @Html.ValidationMessageFor(x => x.GeographicId)
                 </div>
             </div>
             <div class="col-md-3">
