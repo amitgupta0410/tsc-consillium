@@ -36,14 +36,18 @@ namespace GAPS.TSC.Consillium.Controllers
         public ActionResult Index(ExpertRequestDashboardViewModel model)
         {
 
-            var leadIds = _expertRequestService.GetProjectLeads();
-            model.ProjectLeadList = _userService.GetAllUsers().Where(x => leadIds.Contains(x.Id)).ToDictionary(x => x.Id, x => x.FullName);
+            var leadIds = _expertRequestService.GetProjectLeads().ToList();
+            model.ProjectLeadList = _userService.GetAllUsers().ToList().Where(x => leadIds.Contains(x.Id)).ToDictionary(x => x.Id, x => x.FullName);
             model.StatusOptions = EnumHelper.GetEnumLabels(typeof(RequestStatus));
             model.AssignedList = _userService.GetAllTeamMembers().ToDictionary(x => x.Id, x => x.Name);
             model.ClientList = _clientService.GetAllClients().ToDictionary(x => x.Id, x => x.Name);
             model.ProjectList = _projectService.GetAllMasterProjects().ToDictionary(x => x.Id, x => x.Name);
             var projects = _expertRequestService.GetAllExpertsProjects();
-           
+
+            if (model.ProjectLeadId != null)
+            {
+                projects = projects.Where(x => x.ProjectLeadId == model.ProjectLeadId);
+            }
 
             if (model.Status != null)
             {
@@ -68,6 +72,13 @@ namespace GAPS.TSC.Consillium.Controllers
                 projects = projects.Where(x => x.AssignedToId == model.Assigned);
 
             }
+
+            if (!String.IsNullOrEmpty(model.SearchString))
+            {
+                projects = projects.Where(x => x.ProjectName.Contains(model.SearchString)
+                                       || x.ClientName.Contains(model.SearchString));
+            }
+
             model.ExpertRequests = projects.Select(Mapper.Map<ExpertRequest,ExpertRequestSingleViewModel>);
             return View(model);
         }

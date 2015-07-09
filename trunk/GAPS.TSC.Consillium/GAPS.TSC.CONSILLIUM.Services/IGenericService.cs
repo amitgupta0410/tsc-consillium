@@ -27,7 +27,7 @@ namespace GAPS.TSC.CONS.Services{
         }
 
         public T GetById(int id) {
-            return Repository.Get(x => x.Id == id).FirstOrDefault();
+            return Repository.Get(x => x.Id == id && x.DeletedAt == null).FirstOrDefault();
         }
 
         public T Add(T obj) {

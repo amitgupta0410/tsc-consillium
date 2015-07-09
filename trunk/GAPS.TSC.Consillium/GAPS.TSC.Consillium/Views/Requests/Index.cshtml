@@ -15,7 +15,7 @@
 <hr />
 <div class="row">
     <div class="col-md-12">
-        @using (@Html.BeginForm("ExpertRequisition", "Projects", FormMethod.Get))
+        @using (@Html.BeginForm("Index", "Requests", FormMethod.Get))
         {
 
             <div class="col-md-3">
@@ -63,7 +63,8 @@
             <div class="col-md-3">
                 <div class="form-group">
                     <label><b>Search</b></label>
-                    <input class="form-control" id="Search" name="Search" type="text" value="">
+                    @Html.TextBoxFor(x => x.SearchString,  new { @class = "form-control ", Value = ""})
+@*                    <input class="form-control" id="Search" name="Search" type="text" value="">*@
                 </div>
             </div>
 
@@ -114,12 +115,15 @@
                     {
                         <tr>
                             <td> @experts.ProjectName</td>
-                            <td> @Model.ClientList[experts.Id]</td>
+
+                            <td> @experts.ClientName</td>
 
                             <td>
-                                @*@Model.ProjectLeadList[experts.ProjectLeadListId.Value]*@
-                                ProjectLeadList
-                            </td>
+                                @if (experts.ProjectLeadId != null && Model.ProjectLeadList.ContainsKey(experts.ProjectLeadId.Value))
+                                {
+                                    @Model.ProjectLeadList[experts.ProjectLeadId.Value]
+                                }
+                                </td>
 
                             <td> @experts.RequestStatus</td>
                             <td> <a href="">View</a></td>

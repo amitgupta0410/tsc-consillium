@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using GAPS.TSC.CONS.Domain;
 using GAPS.TSC.CONS.Domain.ApiModels;
+using Microsoft.Ajax.Utilities;
 
 namespace GAPS.TSC.Consillium.Models
 {
@@ -24,13 +25,14 @@ namespace GAPS.TSC.Consillium.Models
         public Dictionary<int, string> AssignedList { get; set; }
         public IDictionary<string, string> StatusOptions { get; set; }
         public Dictionary<int, string> ClientList { get; set; }
-        public int ClientId { get; set; }
-        public int ProjectId { get; set; }
-        public int Assigned { get; set; }
+        public int? ClientId { get; set; }
+        public int? ProjectId { get; set; }
+        public int? Assigned { get; set; }
         public RequestStatus? Status { get; set; }
         public DateTime? StartDate { get; set; }
         public DateTime? EndDate { get; set; }
         public int? ProjectLeadId { get; set; }
+        public String SearchString { get; set; }
     }
 
     public class ExpertRequestSingleViewModel : BaseEntity{
