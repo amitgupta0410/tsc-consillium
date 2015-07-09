@@ -107,7 +107,7 @@ namespace GAPS.TSC.Consillium.Controllers
             expertRequest.ScopingDocumentId = scopingFile.Id;
            _expertRequestService.Add(expertRequest);
             SetMessage(MessageType.Success, MessageConstant.GetMessage(Messages.RequestSuccess));
-            return RedirectToAction("RequestExpert");
+            return RedirectToAction("Index");
         }
 
 
