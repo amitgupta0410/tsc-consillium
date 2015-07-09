@@ -22,7 +22,7 @@ namespace GAPS.TSC.Consillium.Controllers
         private readonly IProjectService _projectService;
         private readonly IExpertRequestService _expertRequestService;
         private readonly IClientService _clientService;
-
+      
         // GET: /Requests/
         public RequestsController(IAttachmentService attachmentService, IMainMastersService mastersService,
             IProjectService projectService, IUserService userService, IExpertRequestService expertRequestService, IClientService clientService)
@@ -32,7 +32,7 @@ namespace GAPS.TSC.Consillium.Controllers
             _masterService = mastersService;
             _projectService = projectService;
             _expertRequestService = expertRequestService;
-            _clientService = clientService;
+              _clientService = clientService;
         }
         [HttpGet]
         public ActionResult Index(ExpertRequestDashboardViewModel model)
@@ -94,7 +94,7 @@ namespace GAPS.TSC.Consillium.Controllers
             model.Industry = _masterService.GetAllIndustries().ToDictionary(x => x.Id, x => x.Name);
             model.Geography = _masterService.GetAllGeographies().ToDictionary(x => x.Id, x => x.Name);
             model.Currency = _masterService.GetAllCurrencies().ToDictionary(x => x.CurrencyId, x => x.CurrencyCode);
-            model.CostSharingOptions = EnumHelper.GetEnumLabels(typeof(CostSharingType));
+            model.CostSharingOptions = EnumHelper.GetEnumLabelValuess(typeof(CostSharingType));
             return View(model);
         }
         [HttpPost]
@@ -105,7 +105,7 @@ namespace GAPS.TSC.Consillium.Controllers
             var expertRequest = Mapper.Map<ExpertRequestViewModel, ExpertRequest>(model);
             expertRequest.ApprovalDocumentId = approveFile.Id;
             expertRequest.ScopingDocumentId = scopingFile.Id;
-            _expertRequestService.Add(expertRequest);
+           _expertRequestService.Add(expertRequest);
             SetMessage(MessageType.Success, MessageConstant.GetMessage(Messages.RequestSuccess));
             return RedirectToAction("RequestExpert");
         }
@@ -143,11 +143,9 @@ namespace GAPS.TSC.Consillium.Controllers
             }
             int unitId = project.UnitId ?? default(int);
             var unit = _masterService.FindUnitById(unitId);
-
+                
             return Json(unit, JsonRequestBehavior.AllowGet);
         }
-
-
         public ActionResult RequestExpertManual()
         {
             return View();
@@ -186,5 +184,21 @@ namespace GAPS.TSC.Consillium.Controllers
           
             return View(model);
         }
-    }
+
+        public ActionResult RequestManual()
+        {
+            var model = new ExpertRequestViewModel();
+            var projectLeadIds = _expertRequestService.GetProjectLeads();
+            model.ProjectLeadList = _userService.GetAllUsers().Where(x => projectLeadIds.Contains(x.Id)).ToDictionary(x=>x.Id,x=>x.FullName);
+            model.Industry = _masterService.GetAllIndustries().ToDictionary(x => x.Id, x => x.Name);
+            model.Geography = _masterService.GetAllGeographies().ToDictionary(x => x.Id, x => x.Name);
+            model.Currency = _masterService.GetAllCurrencies().ToDictionary(x => x.CurrencyId, x => x.CurrencyCode);
+            model.Units = _masterService.GetAllUnits().ToDictionary(x => x.Id, x => x.Name);
+            model.CostSharingOptions = EnumHelper.GetEnumLabelValuess(typeof(CostSharingType));
+            model.IsRequestExpertManual = true;
+            return View(model);
+        }
+
+        
+	}
 }
