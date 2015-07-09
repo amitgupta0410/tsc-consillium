@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
-using GAPS.TSC.CONS.Domain;
-using Hangfire.Annotations;
 using ExpressiveAnnotations.Attributes;
+using GAPS.TSC.CONS.Domain;
+
 
 namespace GAPS.TSC.Consillium.Models
 {
@@ -18,6 +18,7 @@ namespace GAPS.TSC.Consillium.Models
             Industry = new Dictionary<int, string>();
             Geography=new Dictionary<int, string>();
             Currency = new Dictionary<int, string>();
+            ProjectLeadList = new Dictionary<int, string>();
         }
 
         public Dictionary<int, string> Clients { get; set; }
@@ -43,6 +44,9 @@ namespace GAPS.TSC.Consillium.Models
         public IDictionary<string, string> CostSharingOptions { get; set; }
         public CostSharingType CostSharingType { get; set; }
         public decimal TscShare { get; set; }
+
+        [AssertThat("(CostSharingType == CostSharingType.TSC && ClientShare== 0 && TscShare== 100) || (CostSharingType == CostSharingType.Client && ClientShare== 100 && TscShare== 0) || (CostSharingType == CostSharingType.Both && ClientShare+TscShare== 100) || (CostSharingType == CostSharingType.ManDayBilling && ClientShare== 0 && TscShare== 0)", ErrorMessage = "Please select a valid share")]
+      
         public decimal ClientShare { get; set; }       
         public HttpPostedFileBase ScopingDocumentFile { get; set; }
 
@@ -50,6 +54,10 @@ namespace GAPS.TSC.Consillium.Models
         public HttpPostedFileBase ApprovalDocumentFile { get; set; }
         public int ScopingDocumentId { get; set; }
         public int ApprovalDocumentId { get; set; }
+        public bool IsRequestExpertManual { get; set; }
+        public Dictionary<int, string> ProjectLeadList { get; set; }
+        public string ClientName { get; set; }
+        public string ProjectName { get; set; }
 
     }
 }

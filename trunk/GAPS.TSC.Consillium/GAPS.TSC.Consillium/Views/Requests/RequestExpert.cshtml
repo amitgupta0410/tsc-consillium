@@ -19,15 +19,24 @@
             <div class="col-md-3">
                 <div class="form-group">
                     <label><b>Client*</b></label>
-                    @Html.DropDownListFor(x => x.ClientId, new SelectList(Model.Clients, "Key", "Value"), "Select Client", new { @class = "form-control", @data_placeholder = "Choose Status" })
-                    @Html.ValidationMessageFor(x => x.ClientId)
+                   @if (!Model.IsRequestExpertManual)
+                   {
+                       @Html.DropDownListFor(x => x.ClientId, new SelectList(Model.Clients, "Key", "Value"), "Select Client", new {@class = "form-control", @data_placeholder = "Choose Status"})
+                       @Html.ValidationMessageFor(x => x.ClientId)
+                   }
+                    @Html.TextBoxFor(x=>x.ClientName, new { @class = "form-control ", Value = ""})
                 </div>
             </div>
             <div class="col-md-3">
                 <div class="form-group">
                     <label><b>Project*</b></label>
-                    @Html.DropDownListFor(x => x.ProjectId, new List<SelectListItem>(), "Select Project", new { @class = "form-control" })
-                    @Html.ValidationMessageFor(x => x.ProjectId)
+                    @if (!Model.IsRequestExpertManual)
+                    {
+                        @Html.DropDownListFor(x => x.ProjectId, new List<SelectListItem>(), "Select Project", new {@class = "form-control"})
+                        @Html.ValidationMessageFor(x => x.ProjectId)
+                    }
+                    @Html.TextBoxFor(x => x.ProjectName
+                    , new { @class = "form-control ", Value = "" })
                 </div>
             </div>
             <div class="col-md-3">
@@ -102,13 +111,13 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label><b>TSC%</b></label>
-                                @Html.TextBoxFor(x => x.TscShare, new { @class = "form-control textboxes" })
+                                @Html.TextBoxFor(x => x.TscShare, new { @class = "form-control" })
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label><b>Client%</b></label>
-                                @Html.TextBoxFor(x => x.ClientShare, new { @class = "form-control textboxes" })
+                                @Html.TextBoxFor(x => x.ClientShare, new { @class = "form-control" })
                             </div>
                         </div>
                     </div>
@@ -253,27 +262,14 @@
 
             });
 
-            $('#TscShare').change('input', function() {
-
-                updateTotal();
+           
+            
+            $("#CostSharingType").load(function () {
+                $("#TscShare").val("100");
+                $("#ClientShare").val("00");
+                $("#TscShare").prop("readonly", true);
+                $("#ClientShare").prop("readonly", true);
             });
-
-            $('#ClientShare').change('input', function() {
-
-                updateTotal();
-            });
-
-            function updateTotal() {
-                var total = 0;
-                $('.textboxes').each(function() {
-                    total += Number($(this).val());
-                });
-                if (total > 100 || total < 100) {
-                    alert("Total Should be 100!!");
-
-                }
-
-            }
 
         });
 
