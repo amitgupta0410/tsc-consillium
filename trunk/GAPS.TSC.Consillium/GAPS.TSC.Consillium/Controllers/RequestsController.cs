@@ -22,7 +22,7 @@ namespace GAPS.TSC.Consillium.Controllers
         private readonly IProjectService _projectService;
         private readonly IExpertRequestService _expertRequestService;
         private readonly IClientService _clientService;
-      
+
         // GET: /Requests/
         public RequestsController(IAttachmentService attachmentService, IMainMastersService mastersService,
             IProjectService projectService, IUserService userService, IExpertRequestService expertRequestService, IClientService clientService)
@@ -32,7 +32,7 @@ namespace GAPS.TSC.Consillium.Controllers
             _masterService = mastersService;
             _projectService = projectService;
             _expertRequestService = expertRequestService;
-              _clientService = clientService;
+            _clientService = clientService;
         }
         [HttpGet]
         public ActionResult Index(ExpertRequestDashboardViewModel model)
@@ -79,7 +79,7 @@ namespace GAPS.TSC.Consillium.Controllers
 
 
                 projects = projects.Where(x => x.ProjectName.Contains(model.SearchString.ToLower())
-                                                       || x.ClientName.Contains(model.SearchString.ToLower())||model.ProjectLeadList.ContainsValue(model.SearchString.ToLower()));
+                                                       || x.ClientName.Contains(model.SearchString.ToLower()) || model.ProjectLeadList.ContainsValue(model.SearchString.ToLower()));
             }
             model.ExpertRequests = projects.Select(Mapper.Map<ExpertRequest, ExpertRequestSingleViewModel>);
             return View(model);
@@ -107,7 +107,7 @@ namespace GAPS.TSC.Consillium.Controllers
             var expertRequest = Mapper.Map<ExpertRequestViewModel, ExpertRequest>(model);
             expertRequest.ApprovalDocumentId = approveFile.Id;
             expertRequest.ScopingDocumentId = scopingFile.Id;
-           _expertRequestService.Add(expertRequest);
+            _expertRequestService.Add(expertRequest);
             SetMessage(MessageType.Success, MessageConstant.GetMessage(Messages.RequestSuccess));
             return RedirectToAction("Index");
         }
@@ -145,19 +145,19 @@ namespace GAPS.TSC.Consillium.Controllers
             }
             int unitId = project.UnitId ?? default(int);
             var unit = _masterService.FindUnitById(unitId);
-                
+
             return Json(unit, JsonRequestBehavior.AllowGet);
         }
         public ActionResult RequestExpertManual()
         {
             return View();
         }
-
+        [HttpGet]
         public ActionResult ProjectDetail(int id)
         {
             var model = new ProjectDetailViewModel();
-            //var clientId = _clientService.GetAllClients().Where(x => x.Id == id).ToDictionary(x => x.Id, x => x.Name);
-            var projectMeta = _expertRequestService.GetAllExpertsProjects().FirstOrDefault(x => x.Id== id);
+
+            var projectMeta = _expertRequestService.GetAllExpertsProjects().FirstOrDefault(x => x.Id == id);
             if (projectMeta != null)
             {
                 model.ClientName = projectMeta.ClientName;
@@ -169,45 +169,73 @@ namespace GAPS.TSC.Consillium.Controllers
                 model.EndDate = projectMeta.EndDate;
                 model.RestartDate = projectMeta.RestartDate;
                 model.Description = projectMeta.Description;
-//                model.RestartEndDate = projectMeta.DeletedAt;
+                //                model.RestartEndDate = projectMeta.DeletedAt;
                 model.RequestedDate = projectMeta.CreatedAt;
                 var industry = _masterService.GetAllIndustries().FirstOrDefault(x => x.Id == projectMeta.IndustryId);
-                if (industry != null) 
-                model.Industry = industry.Name;
+                if (industry != null)
+                    model.Industry = industry.Name;
                 var geographic = _masterService.GetAllGeographies().FirstOrDefault(x => x.Id == projectMeta.GeographicId);
                 if (geographic != null)
                     model.Geography = geographic.Name;
                 var projectLead = _userService.GetAllUsers().FirstOrDefault(x => x.Id == projectMeta.ProjectLeadId);
                 if (projectLead != null)
-                model.ProjectLeadName = projectLead.FullName;
+                    model.ProjectLeadName = projectLead.FullName;
                 var bdLead = _userService.GetAllUsers().FirstOrDefault(x => x.Id == projectMeta.BdLeadId);
                 if (bdLead != null)
                     model.BdLeadName = bdLead.FullName;
             }
-          
+
             return View(model);
         }
         [HttpPost]
         public ActionResult ProjectDetail(ProjectDetailViewModel model)
         {
+            var projectMeta = _expertRequestService.GetAllExpertsProjects().FirstOrDefault(x => x.Id == model.Id);
             
-            return View();
+            if (projectMeta != null)
+            {
+                projectMeta.Comments = model.Comments;
+//                model.ClientName = projectMeta.ClientName;
+//                model.ProjectName = projectMeta.ProjectName;
+//                model.CostSharingType = projectMeta.CostSharingType;
+//                model.AllocatedBudget = projectMeta.BudgetAmount;
+//                model.StartDate = projectMeta.StartDate;
+//                model.EndDate = projectMeta.EndDate;
+//                model.RestartDate = projectMeta.RestartDate;
+//                model.Description = projectMeta.Description;
+//                //                model.RestartEndDate = projectMeta.DeletedAt;
+//                model.RequestedDate = projectMeta.CreatedAt;
+//                var industry = _masterService.GetAllIndustries().FirstOrDefault(x => x.Id == projectMeta.IndustryId);
+//                if (industry != null)
+//                    model.Industry = industry.Name;
+//                var geographic = _masterService.GetAllGeographies().FirstOrDefault(x => x.Id == projectMeta.GeographicId);
+//                if (geographic != null)
+//                    model.Geography = geographic.Name;
+//                var projectLead = _userService.GetAllUsers().FirstOrDefault(x => x.Id == projectMeta.ProjectLeadId);
+//                if (projectLead != null)
+//                    model.ProjectLeadName = projectLead.FullName;
+//                var bdLead = _userService.GetAllUsers().FirstOrDefault(x => x.Id == projectMeta.BdLeadId);
+//                if (bdLead != null)
+//                    model.BdLeadName = bdLead.FullName;
+            }
+            _expertRequestService.Update(projectMeta);
+            return View(model);
         }
 
         public ActionResult RequestManual()
         {
             var model = new ExpertRequestViewModel();
             var projectLeadIds = _expertRequestService.GetProjectLeads();
-            model.ProjectLeadList = _userService.GetAllUsers().Where(x => projectLeadIds.Contains(x.Id)).ToDictionary(x=>x.Id,x=>x.FullName);
+            model.ProjectLeadList = _userService.GetAllUsers().Where(x => projectLeadIds.Contains(x.Id)).ToDictionary(x => x.Id, x => x.FullName);
             model.Industry = _masterService.GetAllIndustries().ToDictionary(x => x.Id, x => x.Name);
             model.Geography = _masterService.GetAllGeographies().ToDictionary(x => x.Id, x => x.Name);
             model.Currency = _masterService.GetAllCurrencies().ToDictionary(x => x.CurrencyId, x => x.CurrencyCode);
             model.Units = _masterService.GetAllUnits().ToDictionary(x => x.Id, x => x.Name);
             model.CostSharingOptions = EnumHelper.GetEnumLabelValuess(typeof(CostSharingType));
             model.IsRequestExpertManual = true;
-            return View("RequestExpert",model);
+            return View("RequestExpert", model);
         }
 
-        
-	}
+
+    }
 }

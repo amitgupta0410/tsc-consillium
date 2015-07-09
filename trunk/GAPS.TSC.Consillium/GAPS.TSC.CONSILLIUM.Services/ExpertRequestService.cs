@@ -65,6 +65,12 @@ namespace GAPS.TSC.CONS.Services
 
 
         }
+        public bool UpdateProject(ExpertRequest project)
+        {
+            _unitOfWork.ExpertRequests.Update(project);
+            _unitOfWork.Save();
+            return true;
+        }
         public void RemoveExpertFromRequest(int requestId, int expertId)
         {
             var req = GetById(requestId);
