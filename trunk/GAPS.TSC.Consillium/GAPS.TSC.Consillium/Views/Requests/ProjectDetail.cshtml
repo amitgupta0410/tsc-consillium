@@ -138,21 +138,24 @@
                    </div>
                 </div>
             </div>
-
+       
             <div class="col-md-3">
+                using (@Html.BeginForm("ProjectDetail", "Requests", FormMethod.Post))
+                {
                 <div class="jumbotron" style="padding: 15px;">
                     <div class="row">
+                        
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label><b>Notes</b></label>
-                              
+                                @Html.DisplayFor(model => model.Comments)
                             </div>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-md-3">
                             <div class="form-group">
-                            
+                           
                               
                                 @Html.TextAreaFor(model => model.Comments, new { @class = "form-control", value = @Model.Comments })
                             </div>
