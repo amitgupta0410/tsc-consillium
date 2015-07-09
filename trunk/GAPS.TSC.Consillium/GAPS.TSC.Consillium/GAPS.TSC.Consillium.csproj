@@ -227,6 +227,7 @@
     <Compile Include="Models\ExpertRequestDashboardViewModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\ProjectDetailViewModel.cs" />
     <Compile Include="Models\ProjectLeadMapModel.cs" />
     <Compile Include="Models\ExpertRequestViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -377,6 +378,7 @@
     <Content Include="Views\Employees\AddNewLead.cshtml" />
     <Content Include="Views\Employees\_EditWorkExperience.cshtml" />
     <Content Include="Views\Requests\Index.cshtml" />
+    <Content Include="Views\Requests\ProjectDetail.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
