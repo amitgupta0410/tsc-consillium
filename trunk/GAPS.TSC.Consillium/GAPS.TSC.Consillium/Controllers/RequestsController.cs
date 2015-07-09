@@ -76,8 +76,10 @@ namespace GAPS.TSC.Consillium.Controllers
 
             if (!String.IsNullOrEmpty(model.SearchString))
             {
-                projects = projects.Where(x => x.ProjectName.Contains(model.SearchString)
-                                                       || x.ClientName.Contains(model.SearchString) || model.ProjectLeadList.ContainsValue(model.SearchString));
+
+
+                projects = projects.Where(x => x.ProjectName.Contains(model.SearchString.ToLower())
+                                                       || x.ClientName.Contains(model.SearchString.ToLower())||model.ProjectLeadList.ContainsValue(model.SearchString.ToLower()));
             }
             model.ExpertRequests = projects.Select(Mapper.Map<ExpertRequest, ExpertRequestSingleViewModel>);
             return View(model);
@@ -166,6 +168,7 @@ namespace GAPS.TSC.Consillium.Controllers
                 model.StartDate = projectMeta.StartDate;
                 model.EndDate = projectMeta.EndDate;
                 model.RestartDate = projectMeta.RestartDate;
+                model.Description = projectMeta.Description;
 //                model.RestartEndDate = projectMeta.DeletedAt;
                 model.RequestedDate = projectMeta.CreatedAt;
                 var industry = _masterService.GetAllIndustries().FirstOrDefault(x => x.Id == projectMeta.IndustryId);
@@ -184,6 +187,7 @@ namespace GAPS.TSC.Consillium.Controllers
           
             return View(model);
         }
+        
 
         public ActionResult RequestManual()
         {

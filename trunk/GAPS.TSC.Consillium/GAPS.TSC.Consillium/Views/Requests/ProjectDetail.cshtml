@@ -17,135 +17,144 @@
         @using (@Html.BeginForm("ProjectDetail", "Requests", FormMethod.Get))
         {
             <div class="col-md-9">
-                <div class="jumbotron" style="padding: 15px;">
+                <div class="jumbotron" >
                     <div class="row">
 
                         <div class="col-md-12">
-                            <div class="form-group">
-                                <label><b>Project Name</b></label>
-                                @Html.DisplayFor(model => model.ProjectName)
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label><b>Project Name</b></label>
+                                    @Html.DisplayFor(model => model.ProjectName)
+                                </div>
                             </div>
-                        </div>
+                            </div>
                     </div>
                     <div class="row">
+                        <div class="col-md-12">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>Client: </label>
+                                    @Html.DisplayFor(model => model.ClientName)
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>B.D.Lead: </label>
+                                    @Html.DisplayFor(model => model.BdLeadName)
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>Reopening Date: </label>
+                                    @Html.DisplayFor(model => model.RestartDate)
 
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label>Client: </label>
-                                @Html.DisplayFor(model => model.ClientName)
+                                </div>
                             </div>
                         </div>
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label>B.D.Lead: </label>
-                                @Html.DisplayFor(model => model.BdLeadName)
-                            </div>
                         </div>
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label>Reopening Date: </label>
-                                @Html.DisplayFor(model => model.RestartDate)
-
-                            </div>
-                        </div>
-                    </div>
                     <div class="row">
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label>Project Lead: </label>
-                                @Html.DisplayFor(model => model.ProjectLeadName)
+                        <div class="col-md-12">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>Project Lead: </label>
+                                    @Html.DisplayFor(model => model.ProjectLeadName)
+                                </div>
                             </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label>Geography:</label>
-                                @Html.DisplayFor(model => model.Geography)
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>Geography:</label>
+                                    @Html.DisplayFor(model => model.Geography)
+                                </div>
                             </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label>Cost borne by: </label>
-                                @Html.DisplayFor(model => model.CostSharingType)
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>Cost borne by: </label>
+                                    @Html.DisplayFor(model => model.CostSharingType)
 
+                                </div>
                             </div>
-                        </div>
-                    </div>
+                        </div></div>
                     <div class="row">
-                       
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label>Allocated Budget:</label>
-                                @Html.DisplayFor(model => model.AllocatedBudget)
+                        <div class="col-md-12">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>Allocated Budget:</label>
+                                    @Html.DisplayFor(model => model.AllocatedBudget)
+                                </div>
                             </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label>Start Date: </label>
-                                @Html.DisplayFor(model => model.StartDate)
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>Start Date: </label>
+                                    @Html.DisplayFor(model => model.StartDate)
 
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>End Date:</label>
+                                    @Html.DisplayFor(model => model.EndDate)
+                                </div>
                             </div>
                         </div>
-                        <div class="col-md-3">
-                            <div class="form-group">
-                                <label>End Date:</label>
-                                @Html.DisplayFor(model => model.EndDate)
-                            </div>
-                        </div>
-                    </div>
-               
+               </div>
                     <div class="row">
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label>No. Of Paid Calls: </label>
-                                staticdata(lakshdeep sir)
+                        <div class="col-md-12">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>No. Of Paid Calls: </label>
+                                    staticdata(lakshdeep sir)
+                                </div>
                             </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label>First Recruit:</label>
-                                staticdata(lakshdeep sir)
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>First Recruit:</label>
+                                    staticdata(lakshdeep sir)
+                                </div>
                             </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label>Requested Date: </label>
-                                @Html.DisplayFor(model => model.RequestedDate)
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>Requested Date: </label>
+                                    @Html.DisplayFor(model => model.RequestedDate)
 
+                                </div>
                             </div>
                         </div>
-                    </div>
+                        </div>
                     <div class="row">
-                       
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label>Industry:</label>
-                                @Html.DisplayFor(model => model.Industry)
+                        <div class="col-md-12">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>Industry:</label>
+                                    @Html.DisplayFor(model => model.Industry)
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>Description:</label>
+                                    @Html.DisplayFor(model => model.Description)
+                                </div>
                             </div>
                         </div>
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label>Comments:</label>
-                                @Html.DisplayFor(model => model.Comments)
-                            </div>
-                        </div>
-                    </div>
-                   
+                   </div>
                 </div>
             </div>
 
             <div class="col-md-3">
-                <div class="jumbotron" style="padding: 15px; height: 361px;">
+                <div class="jumbotron" style="padding: 15px;">
                     <div class="row">
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label><b>Notes</b></label>
+                              
                             </div>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-md-3">
                             <div class="form-group">
-                                <textarea class="form-control" rows="5" id="Notes" style="width: 262px; height: 246px;"></textarea>
+                            
+                              
+                                @Html.TextAreaFor(model => model.Comments, new { @class = "form-control", value = @Model.Comments })
                             </div>
                         </div>
                     </div>
