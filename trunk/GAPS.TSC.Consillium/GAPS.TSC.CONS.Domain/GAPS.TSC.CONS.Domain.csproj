@@ -83,6 +83,10 @@
     <Compile Include="Migrations\201507071355566_AddAssignedToTorequest.Designer.cs">
       <DependentUpon>201507071355566_AddAssignedToTorequest.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201507091244422_ExpertRequest_BdLeadName.cs" />
+    <Compile Include="Migrations\201507091244422_ExpertRequest_BdLeadName.Designer.cs">
+      <DependentUpon>201507091244422_ExpertRequest_BdLeadName.cs</DependentUpon>
+    </Compile>
     <Compile Include="PaymentMode.cs" />
     <Compile Include="WorkExperience.cs" />
     <Compile Include="Expert.cs" />
@@ -110,6 +114,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201507071355566_AddAssignedToTorequest.resx">
       <DependentUpon>201507071355566_AddAssignedToTorequest.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201507091244422_ExpertRequest_BdLeadName.resx">
+      <DependentUpon>201507091244422_ExpertRequest_BdLeadName.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
