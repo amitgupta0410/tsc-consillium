@@ -187,7 +187,12 @@ namespace GAPS.TSC.Consillium.Controllers
           
             return View(model);
         }
-        
+        [HttpPost]
+        public ActionResult ProjectDetail(ProjectDetailViewModel model)
+        {
+            
+            return View();
+        }
 
         public ActionResult RequestManual()
         {
