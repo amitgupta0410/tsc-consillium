@@ -1,0 +1,276 @@
+﻿@model GAPS.TSC.Consillium.Models.ProjectDetailViewModel
+@{
+    ViewBag.Title = "Projects";
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <h3 class="page-title">
+            Projects
+        </h3>
+    </div>
+</div>
+<hr />
+
+<div class="row">
+    <div class="col-md-12">
+        @using (@Html.BeginForm("ProjectDetail", "Requests", FormMethod.Get))
+        {
+            <div class="col-md-9">
+                <div class="jumbotron" style="padding: 15px;">
+                    <div class="row">
+
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label><b>Project Name</b></label>
+                                @Html.DisplayFor(model => model.ProjectName)
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label>Client: </label>
+                                @Html.DisplayFor(model => model.ClientName)
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label>B.D.Lead: </label>
+                                @Html.DisplayFor(model => model.BdLeadName)
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label>Reopening Date: </label>
+                                @Html.DisplayFor(model => model.RestartDate)
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label>Project Lead: </label>
+                                @Html.DisplayFor(model => model.ProjectLeadName)
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label>Geography:</label>
+                                @Html.DisplayFor(model => model.Geography)
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label>Cost borne by: </label>
+                                @Html.DisplayFor(model => model.CostSharingType)
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                       
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label>Allocated Budget:</label>
+                                @Html.DisplayFor(model => model.AllocatedBudget)
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label>Start Date: </label>
+                                @Html.DisplayFor(model => model.StartDate)
+
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>End Date:</label>
+                                @Html.DisplayFor(model => model.EndDate)
+                            </div>
+                        </div>
+                    </div>
+               
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label>No. Of Paid Calls: </label>
+                                staticdata(lakshdeep sir)
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label>First Recruit:</label>
+                                staticdata(lakshdeep sir)
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label>Requested Date: </label>
+                                @Html.DisplayFor(model => model.RequestedDate)
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                       
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label>Industry:</label>
+                                @Html.DisplayFor(model => model.Industry)
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label>Comments:</label>
+                                @Html.DisplayFor(model => model.Comments)
+                            </div>
+                        </div>
+                    </div>
+                   
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <div class="jumbotron" style="padding: 15px; height: 361px;">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label><b>Notes</b></label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <textarea class="form-control" rows="5" id="Notes" style="width: 262px; height: 246px;"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <input type="submit" class="btn btn-primary" value="Save" style="width: 99px;" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+        <div class="clearfix"></div>
+        <div class="col-md-10">
+            <div class="col-md-1">
+                <div class="form-group">
+                    <div style="padding-top: 9px"></div><br />
+                    <input type="submit" class="btn btn-primary btn-sm" value="Add Lead" />
+                </div>
+            </div>
+            <div class="col-md-1">
+                <div class="form-group">
+                    <div style="padding-top: 9px"></div><br />
+                    <input type="submit" class="btn btn-primary btn-sm" value="Add Expert" />
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <div style="padding-top: 9px"></div><br />
+                    <input type="submit" class="btn btn-primary btn-sm" value="Export To Excel" style="padding-left:11px;margin-left: 11px;" />
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <div style="padding-top: 9px"></div><br />
+                    <input type="submit" class="btn btn-primary btn-sm" value="Import From Excel" style="padding-left:11px;margin-left: -39px;" />
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <div style="padding-top: 9px"></div><br />
+                    <input type="text" class="form-control" id="Effort" placeholder="Effort" style="margin-left: 32px;">
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <div style="padding-top: 9px"></div><br />
+                    <input type="submit" class="btn btn-primary btn-sm" value="Paid Experts" style="margin-left: 13px; padding-top: 8px; " />
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<br />
+<div class="row">
+    <div class="col-md-12">
+        <div class="col-md-9">
+            <div class="table-responsive table-bordered">
+                <table class="table">
+                    <tbody>
+                        <tr>
+                            <th><label>S.No.</label></th>
+                            <th><label>Name</label></th>
+                            <th><label>Designation</label></th>
+                            <th><label>Company</label></th>
+                            <th><label>Lead Status</label></th>
+                            <th><label>Email ID</label></th>
+                            <th><label>Contact Number</label></th>
+                            <th><label>Region</label></th>
+                        </tr>
+                        <tr class="">
+                            <td>1</td>
+                            <td>Abc</td>
+                            <td>Dragos Hornoiu</td>
+                            <td>TSC Romania</td>
+                            <td>XYZ</td>
+                            <td>ABC</td>
+                            <td>XYZ</td>
+                            <td>XYZ</td>
+                        </tr>
+                        <tr class="info">
+                            <td>2</td>
+                            <td>Abc</td>
+                            <td>Dragos Hornoiu</td>
+                            <td>TSC Romania</td>
+                            <td>XYZ</td>
+                            <td>ABC</td>
+                            <td>XYZ</td>
+                            <td>XYZ</td>
+                        </tr>
+                        <tr class="success">
+                            <td>3</td>
+                            <td>Abc</td>
+                            <td>Dragos Hornoiu</td>
+                            <td>TSC Romania</td>
+                            <td>XYZ</td>
+                            <td>ABC</td>
+                            <td>XYZ</td>
+                            <td>XYZ</td>
+                        </tr>
+                        <tr class="warning">
+                            <td>4</td>
+                            <td>Abc</td>
+                            <td>Dragos Hornoiu</td>
+                            <td>TSC Romania</td>
+                            <td>XYZ</td>
+                            <td>ABC</td>
+                            <td>XYZ</td>
+                            <td>XYZ</td>
+                        </tr>
+                        <tr class="danger">
+                            <td>5</td>
+                            <td>Abc</td>
+                            <td>Dragos Hornoiu</td>
+                            <td>TSC Romania</td>
+                            <td>XYZ</td>
+                            <td>ABC</td>
+                            <td>XYZ</td>
+                            <td>XYZ</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

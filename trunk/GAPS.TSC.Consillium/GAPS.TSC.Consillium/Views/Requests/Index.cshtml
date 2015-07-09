@@ -29,10 +29,7 @@
                 <div class="form-group">
                     <label><b>Status</b></label>
                     @Html.DropDownListFor(x => x.Status, new SelectList(Model.StatusOptions, "Key", "Value"), "All", new { @class = "form-control", @data_placeholder = "Choose Status" })
-                    @*<select class="form-control">
-                            <option>Option1</option>
-                            <option>Option2</option>
-                        </select>*@
+                   
                 </div>
             </div>
             <div class="col-md-3">
@@ -127,7 +124,7 @@
 
                             <td> @experts.RequestStatus</td>
                             <td> <a href="">View</a></td>
-                            <td>@experts.AssignedTo</td>
+                            <td>@experts.AssignedTo.Name</td>
                             <td> @experts.CreatedAt.ToString("dd MMM yyyy")</td>
                             <td> @experts.StartDate.ToString()</td>
                             <td> @experts.EndDate.ToString()</td>

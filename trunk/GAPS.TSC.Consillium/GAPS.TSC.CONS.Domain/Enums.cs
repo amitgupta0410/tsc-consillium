@@ -49,6 +49,10 @@ namespace GAPS.TSC.CONS.Domain {
 
     public enum RequestStatus {
         NotStarted,
+        Active,
+        OnHold,
+        Closed,
+        Reopened,
     }
 
     public enum ExpertRequestType {
