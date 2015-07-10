@@ -77,7 +77,8 @@ namespace GAPS.TSC.CONS.Domain {
         Random,
         RequestError,
         RequestSuccess,
-        Duplicate
+        Duplicate,
+        Update
     }
     public enum ProjectStaffType
     {

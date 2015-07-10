@@ -230,6 +230,7 @@
     <Compile Include="Models\ProjectDetailViewModel.cs" />
     <Compile Include="Models\ProjectLeadMapModel.cs" />
     <Compile Include="Models\ExpertRequestViewModel.cs" />
+    <Compile Include="Models\UpdateExpertRequest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="Utils\MessageConstant.cs" />
@@ -378,6 +379,7 @@
     <Content Include="Views\Employees\_EditWorkExperience.cshtml" />
     <Content Include="Views\Requests\Index.cshtml" />
     <Content Include="Views\Requests\ProjectDetail.cshtml" />
+    <Content Include="Views\Requests\UpdateRequest.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
