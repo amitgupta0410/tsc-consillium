@@ -37,7 +37,7 @@ namespace GAPS.TSC.CONS.Services
         }
         public IEnumerable<Expert> GetExpertsForRequest(int requestId)
         {
-            var req = GetById(requestId);
+            var req= Repository.Get(x => x.Id == requestId && x.DeletedAt == null,p=>p.Experts).FirstOrDefault();
             if (null == req)
             {
                 return null;
