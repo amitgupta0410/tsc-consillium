@@ -22,6 +22,7 @@ namespace GAPS.TSC.Consillium.Controllers
         private readonly IProjectService _projectService;
         private readonly IExpertRequestService _expertRequestService;
         private readonly IClientService _clientService;
+        private readonly IAttachmentService _attachmentService;
 
         // GET: /Requests/
         public RequestsController(IAttachmentService attachmentService, IMainMastersService mastersService,
@@ -33,6 +34,7 @@ namespace GAPS.TSC.Consillium.Controllers
             _projectService = projectService;
             _expertRequestService = expertRequestService;
             _clientService = clientService;
+            _attachmentService=attachmentService;
         }
         [HttpGet]
         public ActionResult Index(ExpertRequestDashboardViewModel model)
@@ -113,8 +115,7 @@ namespace GAPS.TSC.Consillium.Controllers
         public ActionResult RequestExpert()
         {
             var model = new ExpertRequestViewModel();
-            var projectClients =
-                _projectService.GetAllMasterProjects().Select(x => x.ClientId).Distinct().ToList();
+            var projectClients =_projectService.GetAllMasterProjects().Select(x => x.ClientId).Distinct().ToList();
             model.Clients = _masterService.GetAllClients().Where(x => projectClients.Contains(x.Id) && x.IsActive).ToDictionary(x => x.Id, x => x.Name);
             model.Units = _masterService.GetAllUnits().ToDictionary(x => x.Id, x => x.Name);
             model.Industry = _masterService.GetAllIndustries().ToDictionary(x => x.Id, x => x.Name);
@@ -126,6 +127,10 @@ namespace GAPS.TSC.Consillium.Controllers
         [HttpPost]
         public ActionResult RequestExpert(ExpertRequestViewModel model)
         {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
             var approveFile = UploadAndSave("ApprovalDocumentFile");
             var scopingFile = UploadAndSave("ScopingDocumentFile");
             var expertRequest = Mapper.Map<ExpertRequestViewModel, ExpertRequest>(model);
@@ -139,21 +144,59 @@ namespace GAPS.TSC.Consillium.Controllers
         public ActionResult UpdateRequest(int id)
         {
             var expertRequest = _expertRequestService.GetAllExpertsProjects().Single(m => m.Id == id);
-            var expertRequestModel = Mapper.Map<ExpertRequest, ExpertRequestViewModel>(expertRequest);
+            var expertRequestModel = Mapper.Map<ExpertRequest,UpdateExpertRequest>(expertRequest);
             expertRequestModel.CostSharingOptions = EnumHelper.GetEnumLabelValuess(typeof(CostSharingType));
             var project = _projectService.GetAllMasterProjects().Single(x => x.Id == expertRequestModel.ProjectId);
             expertRequestModel.ClientId = project.ClientId ?? default(int);
-            var projectClients = _projectService.GetAllMasterProjects().Select(x => x.ClientId).Distinct().ToList();
+            expertRequestModel.Id = id;
+            expertRequestModel.ProjectList =_projectService.GetAllMasterProjects().Where(x => x.ClientId == expertRequestModel.ClientId).ToDictionary(x=>x.Id,x=>x.Name);
+            expertRequestModel.ProjectLeadList = _userService.GetAllUsers().Where(x=>x.Id==expertRequestModel.ProjectLeadId).ToDictionary(x=>x.Id,x=>x.FullName);
+            var projectClients =_projectService.GetAllMasterProjects().Select(x => x.ClientId).Distinct().ToList();
             expertRequestModel.Clients = _masterService.GetAllClients().Where(x => projectClients.Contains(x.Id) && x.IsActive).ToDictionary(x => x.Id, x => x.Name);
             expertRequestModel.Currency = _masterService.GetAllCurrencies().ToDictionary(x => x.CurrencyId, x => x.CurrencyCode);
             expertRequestModel.Units = _masterService.GetAllUnits().ToDictionary(x => x.Id, x => x.Name);
             expertRequestModel.Industry = _masterService.GetAllIndustries().ToDictionary(x => x.Id, x => x.Name);
             expertRequestModel.Geography = _masterService.GetAllGeographies().ToDictionary(x => x.Id, x => x.Name);
-
-
-            return View("RequestExpert", expertRequestModel);
+            return View(expertRequestModel);
         }
 
+        [HttpPost]
+        public ActionResult UpdateRequest(UpdateExpertRequest model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+            if (model.ApprovalDocumentFile != null)
+            {
+                var approveFile = UploadAndSave("ApprovalDocumentFile");
+                model.ApprovalDocumentId = approveFile.Id;
+            }
+            if (model.ScopingDocumentFile != null)
+            {
+                var scopingFile = UploadAndSave("ScopingDocumentFile");
+                model.ScopingDocumentId = scopingFile.Id;
+            }
+            var expertRequest = _expertRequestService.GetAllExpertsProjects().Single(m => m.Id == model.Id);
+            expertRequest.ProjectId = model.ProjectId;
+            expertRequest.ProjectLeadId = model.ProjectId;
+            expertRequest.ProjectLeadId = model.ProjectLeadId;
+            expertRequest.ScopingDocumentId = model.ScopingDocumentId;
+            expertRequest.ApprovalDocumentId = model.ApprovalDocumentId;
+            expertRequest.IndustryId = model.IndustryId;
+            expertRequest.GeographicId = model.GeographicId;
+            expertRequest.CostSharingType = model.CostSharingTypeValue;
+            expertRequest.BudgetAmount = model.BudgetAmount;
+            expertRequest.BudgetCurrencyId = model.BudgetCurrencyId;
+            expertRequest.UnitId = model.UnitId;
+            expertRequest.TscShare = model.TscShare;
+            expertRequest.ClientShare = model.ClientShare;
+            expertRequest.Description = model.Description;
+            expertRequest.Comments = model.Comments;
+            _expertRequestService.Update(expertRequest);
+            SetMessage(MessageType.Success, MessageConstant.GetMessage(Messages.Update));
+            return RedirectToAction("UpdateRequest");
+        }
         public JsonResult GetProjects(int id)
         {
             var projects = _projectService.GetAllMasterProjects().Where(x => x.ClientId == id);

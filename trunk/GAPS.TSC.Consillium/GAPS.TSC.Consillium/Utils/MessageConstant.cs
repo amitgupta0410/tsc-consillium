@@ -24,6 +24,9 @@ namespace GAPS.TSC.Consillium.Utils
                 case Messages.Duplicate:
                     messagetext = "Duplicate entries not allowed.";
                     break;
+                case Messages.Update:
+                    messagetext = "Your Request has been sucessfully updated";
+                    break;
             }
             return messagetext;
         }
