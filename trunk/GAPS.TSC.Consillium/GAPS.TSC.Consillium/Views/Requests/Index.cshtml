@@ -42,16 +42,28 @@
             <div class="clearfix"></div>
             <div class="col-md-3">
                 <div class="form-group">
-                    <label><b>Projects</b></label><br>
-                    @Html.DropDownListFor(x => x.ProjectId, new SelectList(Model.ProjectList, "Key", "Value"), "All", new { @class = "form-control", @data_placeholder = "Choose Status" })
-
+                    <label><b>Client</b></label><br>
+                    @Html.DropDownListFor(x => x.ClientId, new SelectList(Model.ClientList, "Key", "Value"), "All", new { @class = "form-control" })
                 </div>
             </div>
             <div class="col-md-3">
                 <div class="form-group">
-                    <label><b>Client</b></label>
-                    @Html.DropDownListFor(x => x.ClientId, new SelectList(Model.ClientList, "Key", "Value"), "All", new { @class = "form-control" })
+                    <label><b>Projects</b></label>
+                   
+@*                                        @Html.DropDownListFor(x => x.ProjectId, new SelectList(Model.ProjectList, "Key", "Value"), "All", new { @class = "form-control", @data_placeholder = "Choose Status" })*@
+                   
+                    @if (Model.ProjectList.Any())
+                    {
+                        @Html.DropDownListFor(x => x.ProjectId, new SelectList(Model.ProjectList, "Key", "Value"), "All", new { @class = "form-control" })
 
+                    }
+                    else
+                    {
+                        @Html.DropDownListFor(x => x.ProjectId, new List<SelectListItem>(), "All", new { @class = "form-control" })
+
+                    }
+
+                 
 
 
                 </div>
@@ -120,7 +132,7 @@
                                 {
                                     @Model.ProjectLeadList[experts.ProjectLeadId.Value]
                                 }
-                                </td>
+                            </td>
 
                             <td> @experts.RequestStatus</td>
                             <td> <a href="">View</a></td>
@@ -142,3 +154,30 @@
         </div>
     </div>
 </div>
+
+@section scripts
+{
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+            $(".chosen-select").chosen();
+            $("#ClientId").change(function () {
+                if ($("#ClientId").val() > 0) {
+                    $.getJSON("/Requests/GetClientProjects/" + $("#ClientId").val(), function (data) {
+                        var items = "<option value = '0'>All</option>";
+                        $.each(data, function (i, item) {
+                            items += "<option value='" + item.Id + "'>" + item.ProjectName + "</option>";
+                        });
+                        $("#ProjectId").html(items);
+                    });
+                } else {
+                    var items = "<option value = '0'>All</option>";
+                    $("#ProjectId").html(items);
+
+                }
+            });
+        });
+       
+
+    </script>
+}

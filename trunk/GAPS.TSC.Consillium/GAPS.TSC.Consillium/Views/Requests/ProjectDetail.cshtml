@@ -163,7 +163,13 @@
                             <div class="form-group">
                            
                               
-                                @Html.TextAreaFor(model => model.Comments, new { @class = "form-control", value = @Model.Comments } )
+                                @Html.TextAreaFor(model => model.Comments, new
+                           {
+                               @class = "form-control",
+                               value = @Model.Comments,
+                               maxlength = 50,
+                               style = "width: 200px; height: 100px;"
+                           }) 
                             </div>
                         </div>
                     </div>
