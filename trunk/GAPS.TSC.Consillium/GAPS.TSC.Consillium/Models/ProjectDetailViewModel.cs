@@ -6,11 +6,20 @@ using GAPS.TSC.CONS.Domain;
 
 namespace GAPS.TSC.Consillium.Models
 {
-    public class ProjectDetailViewModel:BaseEntity
+    public class ProjectDetailViewModel : BaseEntity
     {
+        public ProjectDetailViewModel()
+        {
+
+            ToAddIndustries = new List<string>();
+            ToAddCountries = new List<string>();
+
+
+
+        }
         public int? ProjectId { get; set; }
         public string ProjectLeadName { get; set; }
-        public string ProjectName { get; set; } 
+        public string ProjectName { get; set; }
         public string ClientName { get; set; }
         public int? ClientId { get; set; }
         public DateTime? StartDate { get; set; }
@@ -26,7 +35,9 @@ namespace GAPS.TSC.Consillium.Models
         public String Comments { get; set; }
         public CostSharingType CostSharingType { get; set; }
         public string Description { get; set; }
-        public ICollection<Expert> Experts { get; set; } 
-        public DateTime? RestartEndDate { get; set; }   
+        public IEnumerable<Expert> Experts { get; set; }
+        public DateTime? RestartEndDate { get; set; }
+        public List<string> ToAddIndustries = new List<string>();
+        public List<string> ToAddCountries = new List<string>();
     }
 }

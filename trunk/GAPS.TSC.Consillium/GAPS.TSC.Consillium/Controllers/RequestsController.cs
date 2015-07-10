@@ -226,7 +226,20 @@ namespace GAPS.TSC.Consillium.Controllers
                     model.BdLeadName = bdLead.FullName;
             }
             
-            var experts = _expertRequestService.GetExpertsForRequest(id);
+            model.Experts = _expertRequestService.GetExpertsForRequest(id);
+//            List<string>toAddIndustries=new List<string>();
+//            List<string> toAddCountries = new List<string>();
+
+            foreach (var expert in model.Experts)
+            {
+                var name = _masterService.GetAllIndustries().FirstOrDefault(x => x.Id == expert.IndustryId);
+                var country = _masterService.GetAllCountries().FirstOrDefault(x => x.Id == expert.CountryId);
+                if (name != null)
+                    model.ToAddIndustries.Add(name.ToString());
+                if (country != null)
+                 model.ToAddIndustries.Add(country.ToString());
+
+            }
 
             return View(model);
         }
