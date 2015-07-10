@@ -174,7 +174,7 @@ namespace GAPS.TSC.Consillium.Controllers
                 model.EndDate = projectMeta.EndDate;
                 model.RestartDate = projectMeta.RestartDate;
                 model.Description = projectMeta.Description;
-                //                model.RestartEndDate = projectMeta.DeletedAt;
+               
                 model.RequestedDate = projectMeta.CreatedAt;
                 var industry = _masterService.GetAllIndustries().FirstOrDefault(x => x.Id == projectMeta.IndustryId);
                 if (industry != null)
@@ -200,31 +200,10 @@ namespace GAPS.TSC.Consillium.Controllers
             if (projectMeta != null)
             {
                 projectMeta.Comments = model.Comments;
-//                model.ClientName = projectMeta.ClientName;
-//                model.ProjectName = projectMeta.ProjectName;
-//                model.CostSharingType = projectMeta.CostSharingType;
-//                model.AllocatedBudget = projectMeta.BudgetAmount;
-//                model.StartDate = projectMeta.StartDate;
-//                model.EndDate = projectMeta.EndDate;
-//                model.RestartDate = projectMeta.RestartDate;
-//                model.Description = projectMeta.Description;
-//                //                model.RestartEndDate = projectMeta.DeletedAt;
-//                model.RequestedDate = projectMeta.CreatedAt;
-//                var industry = _masterService.GetAllIndustries().FirstOrDefault(x => x.Id == projectMeta.IndustryId);
-//                if (industry != null)
-//                    model.Industry = industry.Name;
-//                var geographic = _masterService.GetAllGeographies().FirstOrDefault(x => x.Id == projectMeta.GeographicId);
-//                if (geographic != null)
-//                    model.Geography = geographic.Name;
-//                var projectLead = _userService.GetAllUsers().FirstOrDefault(x => x.Id == projectMeta.ProjectLeadId);
-//                if (projectLead != null)
-//                    model.ProjectLeadName = projectLead.FullName;
-//                var bdLead = _userService.GetAllUsers().FirstOrDefault(x => x.Id == projectMeta.BdLeadId);
-//                if (bdLead != null)
-//                    model.BdLeadName = bdLead.FullName;
+             
             }
             _expertRequestService.Update(projectMeta);
-            return View(model);
+            return RedirectToAction("ProjectDetail");
         }
 
         public ActionResult RequestManual()
