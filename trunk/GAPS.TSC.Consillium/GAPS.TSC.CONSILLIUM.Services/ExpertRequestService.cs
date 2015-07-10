@@ -12,6 +12,7 @@ namespace GAPS.TSC.CONS.Services
     {
         IEnumerable<int> GetProjectLeads();
         IEnumerable<ExpertRequest> GetAllExpertsProjects();
+        IEnumerable<Expert> GetExpertsForRequest(int requestId);
     }
 
     public class ExpertRequestService : GenericService<ExpertRequest>, IExpertRequestService
@@ -37,7 +38,7 @@ namespace GAPS.TSC.CONS.Services
         }
         public IEnumerable<Expert> GetExpertsForRequest(int requestId)
         {
-            var req = GetById(requestId);
+            var req= Repository.Get(x => x.Id == requestId && x.DeletedAt == null,p=>p.Experts).FirstOrDefault();
             if (null == req)
             {
                 return null;
@@ -65,12 +66,7 @@ namespace GAPS.TSC.CONS.Services
 
 
         }
-        public bool UpdateProject(ExpertRequest project)
-        {
-            _unitOfWork.ExpertRequests.Update(project);
-            _unitOfWork.Save();
-            return true;
-        }
+     
         public void RemoveExpertFromRequest(int requestId, int expertId)
         {
             var req = GetById(requestId);

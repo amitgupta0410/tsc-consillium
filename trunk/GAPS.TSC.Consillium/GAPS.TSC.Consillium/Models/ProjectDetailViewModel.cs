@@ -26,7 +26,7 @@ namespace GAPS.TSC.Consillium.Models
         public String Comments { get; set; }
         public CostSharingType CostSharingType { get; set; }
         public string Description { get; set; }
-
+        public ICollection<Expert> Experts { get; set; } 
         public DateTime? RestartEndDate { get; set; }   
     }
 }
