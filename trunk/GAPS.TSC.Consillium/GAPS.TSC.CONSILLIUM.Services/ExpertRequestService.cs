@@ -13,6 +13,7 @@ namespace GAPS.TSC.CONS.Services
         IEnumerable<int> GetProjectLeads();
         IEnumerable<ExpertRequest> GetAllExpertsProjects();
         IEnumerable<Expert> GetExpertsForRequest(int requestId);
+        IEnumerable<WorkExperience> GetAllDesignations(int id);
     }
 
     public class ExpertRequestService : GenericService<ExpertRequest>, IExpertRequestService
@@ -99,6 +100,10 @@ namespace GAPS.TSC.CONS.Services
             call.ExpertRequestId = id;
             _unitOfWork.Calls.Add(call);
             _unitOfWork.Save();
+        }
+        public IEnumerable<WorkExperience> GetAllDesignations(int id)
+        {
+            return _unitOfWork.WorkExperiences.Get(x => x.Designation).Where(x => x.ExpertId == id);
         }
     }
 }

@@ -40,7 +40,9 @@ namespace GAPS.TSC.Consillium.Controllers
         public ActionResult Index(ExpertRequestDashboardViewModel model)
         {
             var leadIds = _expertRequestService.GetProjectLeads().ToList();
+            
             model.ProjectLeadList = _userService.GetAllUsers().ToList().Where(x => leadIds.Contains(x.Id)).ToDictionary(x => x.Id, x => x.FullName);
+           
             model.StatusOptions = EnumHelper.GetEnumLabels(typeof(RequestStatus));
             model.AssignedList = _userService.GetAllTeamMembers().ToDictionary(x => x.Id, x => x.Name);
             model.ClientList = _clientService.GetAllClients().ToDictionary(x => x.Id, x => x.Name);
@@ -268,29 +270,29 @@ namespace GAPS.TSC.Consillium.Controllers
                 if (bdLead != null)
                     model.BdLeadName = bdLead.FullName;
             }
-            
-            model.Experts = _expertRequestService.GetExpertsForRequest(id);
 
+            model.Experts = _expertRequestService.GetExpertsForRequest(id).Select(Mapper.Map<Expert, ExpertViewModel>);
+         
             foreach (var expert in model.Experts)
             {
-//                var name = _masterService.GetAllIndustries().FirstOrDefault(x => x.Id == expert.IndustryId);
-//                var country = _masterService.GetAllCountries().FirstOrDefault(x => x.Id == expert.CountryId);
-//                if (name != null)
-//                    model.ToAddIndustries.Add(name.ToString());
-//                if (country != null)
-//                 model.ToAddIndustries.Add(country.ToString());
-                model.CountryList =
-                    _masterService.GetAllIndustries()
-                        .Where(x => x.Id == expert.IndustryId)
-                        .ToDictionary(x => x.Id, x => x.Name);
-                model.Industrylist =
-                   _masterService.GetAllIndustries()
-                       .Where(x => x.Id == expert.IndustryId)
-                       .ToDictionary(x => x.Id, x => x.Name);
+                var name = _masterService.GetAllGeographies().FirstOrDefault(x => x.Id == expert.GeographicId);
+               
+                if (name != null)
+                    model.ToAddRegions.Add(name.Name);
+                var workExperience = _expertRequestService.GetAllDesignations(expert.Id).OrderByDescending(x=>x.StartDate);
+                foreach (var experience in workExperience)
+                {
+                    string designation = experience.Designation;
+                   model.ToAddDesignations.Add(designation);
+                    string company = experience.Organisation;
+                    model.ToAddOrganisations.Add(company);
+                    break;
 
+
+                }
 
             }
-
+           
             return View(model);
         }
         [HttpPost]

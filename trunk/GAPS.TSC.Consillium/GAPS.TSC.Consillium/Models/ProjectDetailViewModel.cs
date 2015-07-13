@@ -11,10 +11,10 @@ namespace GAPS.TSC.Consillium.Models
         public ProjectDetailViewModel()
         {
 
-            ToAddIndustries = new List<string>();
-            ToAddCountries = new List<string>();
-            Industrylist = new Dictionary<int, string>();
-            CountryList = new Dictionary<int, string>();
+            ToAddRegions = new List<string>();
+            ToAddDesignations = new List<string>();
+            ToAddOrganisations=new List<string>();
+
 
 
 
@@ -39,9 +39,24 @@ namespace GAPS.TSC.Consillium.Models
         public String Comments { get; set; }
         public CostSharingType CostSharingType { get; set; }
         public string Description { get; set; }
-        public IEnumerable<Expert> Experts { get; set; }
+        public IEnumerable<ExpertViewModel> Experts { get; set; }
         public DateTime? RestartEndDate { get; set; }
-        public List<string> ToAddIndustries = new List<string>();
-        public List<string> ToAddCountries = new List<string>();
+        public List<string> ToAddRegions = new List<string>();
+        public string Designation { get; set; }
+        public List<string> ToAddDesignations = new List<string>();
+        public List<string> ToAddOrganisations = new List<string>();
+
+
+
+    }
+
+    public class ExpertViewModel
+    {
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public string Email { get; set; }
+        public string PrimaryContact { get; set; }
+        public LeadStatus LeadStatus { get; set; }
+        public int? GeographicId { get; set; }
     }
 }

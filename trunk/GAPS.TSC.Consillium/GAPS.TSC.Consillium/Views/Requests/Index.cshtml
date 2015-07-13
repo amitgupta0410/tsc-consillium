@@ -21,8 +21,9 @@
             <div class="col-md-3">
                 <div class="form-group">
                     <label><b>Project Lead</b></label><br>
+                    
                     @Html.DropDownListFor(x => x.ProjectLeadId, new SelectList(Model.ProjectLeadList, "Key", "Value"), "All", new { @class = "form-control", @data_placeholder = "Choose Status" })
-
+                
                 </div>
             </div>
             <div class="col-md-3">
@@ -136,11 +137,12 @@
 
                             <td> @experts.RequestStatus</td>
                             <td> <a href="">View</a></td>
-                            <td>@if (experts.AssignedTo.Name != null)
-                                {
-                                    @experts.AssignedTo.Name
-                                }
-                            </td>
+                          @*<td>if (experts.AssignedTo.Name != null)
+                              {
+                                   @experts.AssignedTo.Name
+                              }
+                                                 </td>*@
+                            <td>assigned</td>
                             <td> @experts.CreatedAt.ToString("dd MMM yyyy")</td>
                             <td> @experts.StartDate.ToString()</td>
                             <td> @experts.EndDate.ToString()</td>

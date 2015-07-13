@@ -245,25 +245,25 @@
                             <th><label>Contact Number</label></th>
                             <th><label>Region</label></th>
                         </tr>
-                        
+                       @{
+                           int i = 0;
+                    }
                         @foreach (var expert in Model.Experts)
                         {
                             
                             <tr>
-                                <td>1</td>
+                                <td>i</td>
                                 <td>@expert.Name</td>
-                                <td>Designation</td>
-                                <td>@if (expert.IndustryId != null && Model.Industrylist.ContainsKey(expert.IndustryId.Value))
-                                {
-                                    @Model.Industrylist[expert.IndustryId.Value]
-                                }</td>
+                                <td>@Model.ToAddDesignations.ElementAtOrDefault(i)</td>
+                                <td>@Model.ToAddOrganisations.ElementAtOrDefault(i) </td>
                                 <td>@expert.LeadStatus</td>
                                 <td>@expert.Email</td>
                                 <td>@expert.PrimaryContact</td>
-                                <td> @Model.ToAddCountries.</td>
+                               
+                                <td>@Model.ToAddRegions.ElementAtOrDefault(i)</td>
 
                             </tr>
-                          
+                            i++;
                         }
                         @*<tr class="">
                                 <td>1</td>
