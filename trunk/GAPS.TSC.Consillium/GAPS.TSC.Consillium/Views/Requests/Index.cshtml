@@ -144,8 +144,8 @@
                                                  </td>*@
                             <td>assigned</td>
                             <td> @experts.CreatedAt.ToString("dd MMM yyyy")</td>
-                            <td> @experts.StartDate.ToString()</td>
-                            <td> @experts.EndDate.ToString()</td>
+                            <td> @experts.StartDate.GetValueOrDefault().ToString("dd/MM/yyyy")</td>
+                            <td> @experts.EndDate.GetValueOrDefault().ToString("dd/MM/yyyy")</td>
 
 
                         </tr>

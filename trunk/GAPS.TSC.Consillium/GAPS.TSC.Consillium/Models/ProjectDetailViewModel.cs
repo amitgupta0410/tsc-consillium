@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 using GAPS.TSC.CONS.Domain;
@@ -14,11 +15,13 @@ namespace GAPS.TSC.Consillium.Models
             ToAddRegions = new List<string>();
             ToAddDesignations = new List<string>();
             ToAddOrganisations=new List<string>();
-
-
+            ExpertList=new Dictionary<int, string>();
+            Industrylist = new Dictionary<int, string>();
+             CountryList= new Dictionary<int, string>();
 
 
         }
+        public Dictionary<int, string> ExpertList { get; set; }
         public Dictionary<int, string> Industrylist { get; set; }
         public Dictionary<int, string> CountryList { get; set; }
         public int? ProjectId { get; set; }
@@ -26,8 +29,11 @@ namespace GAPS.TSC.Consillium.Models
         public string ProjectName { get; set; }
         public string ClientName { get; set; }
         public int? ClientId { get; set; }
+        [DisplayFormat(DataFormatString = "{0:MM-dd-yyyy}", ApplyFormatInEditMode = true)]
         public DateTime? StartDate { get; set; }
+        [DisplayFormat(DataFormatString = "{0:MM-dd-yyyy}", ApplyFormatInEditMode = true)]
         public DateTime? EndDate { get; set; }
+        [DisplayFormat(DataFormatString = "{0:MM-dd-yyyy}", ApplyFormatInEditMode = true)]
         public DateTime? RestartDate { get; set; }
         public TeamMember Recruiter { get; set; }
         public string BdLeadName { get; set; }
@@ -35,6 +41,7 @@ namespace GAPS.TSC.Consillium.Models
         public decimal AllocatedBudget { get; set; }
         public string Industry { get; set; }
         public int PaidCalls { get; set; }
+         [DisplayFormat(DataFormatString = "{0:MM-dd-yyyy}", ApplyFormatInEditMode = true)]
         public DateTime RequestedDate { get; set; }
         public String Comments { get; set; }
         public CostSharingType CostSharingType { get; set; }
@@ -45,6 +52,8 @@ namespace GAPS.TSC.Consillium.Models
         public string Designation { get; set; }
         public List<string> ToAddDesignations = new List<string>();
         public List<string> ToAddOrganisations = new List<string>();
+        public String BudgetCurrencyName { get; set; }
+        public IEnumerable<int> ExpertIds { get; set; }
 
 
 

@@ -81,6 +81,7 @@
                             <div class="form-group">
                                 <label>Allocated Budget:</label>
                                 @Html.DisplayFor(model => model.AllocatedBudget)
+                                @Html.DisplayFor(model => model.BudgetCurrencyName)
                             </div>
                         </div>
                         <div class="col-md-4">
@@ -188,16 +189,16 @@
         }
         <div class="clearfix"></div>
         <div class="col-md-10">
-            <div class="col-md-1">
+            <div class="col-md-2">
                 <div class="form-group">
                     <div style="padding-top: 9px"></div><br />
-                    <input type="submit" class="btn btn-primary btn-sm" value="Add Lead" />
+                    @Html.ListBoxFor(x => x.ExpertIds, new SelectList(Model.ExpertList, "Key", "Value"), new { @class = "form-control chosen-select", multiple = "multiple", @data_placeholder = "All" })
                 </div>
             </div>
-            <div class="col-md-1">
+            <div class="col-md-2">
                 <div class="form-group">
                     <div style="padding-top: 9px"></div><br />
-                    <input type="submit" class="btn btn-primary btn-sm" value="Add Expert" />
+                    <input type="submit" class="btn btn-primary btn-sm" value="Add Expert/Lead" />
                 </div>
             </div>
             <div class="col-md-2">
@@ -212,13 +213,13 @@
                     <input type="submit" class="btn btn-primary btn-sm" value="Import From Excel" style="padding-left:11px;margin-left: -39px;" />
                 </div>
             </div>
-            <div class="col-md-2">
+            <div class="col-md-1">
                 <div class="form-group">
                     <div style="padding-top: 9px"></div><br />
                     <input type="text" class="form-control" id="Effort" placeholder="Effort" style="margin-left: 32px;">
                 </div>
             </div>
-            <div class="col-md-2">
+            <div class="col-md-1">
                 <div class="form-group">
                     <div style="padding-top: 9px"></div><br />
                     <input type="submit" class="btn btn-primary btn-sm" value="Paid Experts" style="margin-left: 13px; padding-top: 8px; " />
@@ -245,9 +246,9 @@
                             <th><label>Contact Number</label></th>
                             <th><label>Region</label></th>
                         </tr>
-                       @{
-                           int i = 0;
-                    }
+                        @{
+                            int i = 0;
+                        }
                         @foreach (var expert in Model.Experts)
                         {
                             
@@ -321,3 +322,18 @@
         </div>
     </div>
 </div>
+@section scripts
+{
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+            $(".chosen-select").chosen();
+          
+
+
+        });
+       
+
+    </script>
+}
+
