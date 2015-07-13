@@ -1,4 +1,5 @@
-﻿@model GAPS.TSC.Consillium.Models.ProjectDetailViewModel
+﻿@using System.Threading
+@model GAPS.TSC.Consillium.Models.ProjectDetailViewModel
 @{
     ViewBag.Title = "Projects";
 }
@@ -244,21 +245,25 @@
                             <th><label>Contact Number</label></th>
                             <th><label>Region</label></th>
                         </tr>
-
-                                                @foreach (var expert in Model.Experts)
-                                                   
+                        
+                        @foreach (var expert in Model.Experts)
                         {
+                            
                             <tr>
                                 <td>1</td>
                                 <td>@expert.Name</td>
                                 <td>Designation</td>
-                                <td>@Model.ToAddIndustries</td>
+                                <td>@if (expert.IndustryId != null && Model.Industrylist.ContainsKey(expert.IndustryId.Value))
+                                {
+                                    @Model.Industrylist[expert.IndustryId.Value]
+                                }</td>
                                 <td>@expert.LeadStatus</td>
                                 <td>@expert.Email</td>
                                 <td>@expert.PrimaryContact</td>
-                                <td> @Model.ToAddCountries.Count()</td>
+                                <td> @Model.ToAddCountries.</td>
 
                             </tr>
+                          
                         }
                         @*<tr class="">
                                 <td>1</td>

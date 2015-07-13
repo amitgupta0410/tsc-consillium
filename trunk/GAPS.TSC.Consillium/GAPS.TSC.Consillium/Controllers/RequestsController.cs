@@ -270,17 +270,24 @@ namespace GAPS.TSC.Consillium.Controllers
             }
             
             model.Experts = _expertRequestService.GetExpertsForRequest(id);
-//            List<string>toAddIndustries=new List<string>();
-//            List<string> toAddCountries = new List<string>();
 
             foreach (var expert in model.Experts)
             {
-                var name = _masterService.GetAllIndustries().FirstOrDefault(x => x.Id == expert.IndustryId);
-                var country = _masterService.GetAllCountries().FirstOrDefault(x => x.Id == expert.CountryId);
-                if (name != null)
-                    model.ToAddIndustries.Add(name.ToString());
-                if (country != null)
-                 model.ToAddIndustries.Add(country.ToString());
+//                var name = _masterService.GetAllIndustries().FirstOrDefault(x => x.Id == expert.IndustryId);
+//                var country = _masterService.GetAllCountries().FirstOrDefault(x => x.Id == expert.CountryId);
+//                if (name != null)
+//                    model.ToAddIndustries.Add(name.ToString());
+//                if (country != null)
+//                 model.ToAddIndustries.Add(country.ToString());
+                model.CountryList =
+                    _masterService.GetAllIndustries()
+                        .Where(x => x.Id == expert.IndustryId)
+                        .ToDictionary(x => x.Id, x => x.Name);
+                model.Industrylist =
+                   _masterService.GetAllIndustries()
+                       .Where(x => x.Id == expert.IndustryId)
+                       .ToDictionary(x => x.Id, x => x.Name);
+
 
             }
 

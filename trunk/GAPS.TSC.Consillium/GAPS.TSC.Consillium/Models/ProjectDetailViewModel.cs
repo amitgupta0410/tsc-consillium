@@ -13,10 +13,14 @@ namespace GAPS.TSC.Consillium.Models
 
             ToAddIndustries = new List<string>();
             ToAddCountries = new List<string>();
+            Industrylist = new Dictionary<int, string>();
+            CountryList = new Dictionary<int, string>();
 
 
 
         }
+        public Dictionary<int, string> Industrylist { get; set; }
+        public Dictionary<int, string> CountryList { get; set; }
         public int? ProjectId { get; set; }
         public string ProjectLeadName { get; set; }
         public string ProjectName { get; set; }
