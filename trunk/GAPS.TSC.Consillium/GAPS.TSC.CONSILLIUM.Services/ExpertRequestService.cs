@@ -14,6 +14,8 @@ namespace GAPS.TSC.CONS.Services
         IEnumerable<ExpertRequest> GetAllExpertsProjects();
         IEnumerable<Expert> GetExpertsForRequest(int requestId);
         IEnumerable<WorkExperience> GetAllDesignations(int id);
+        void AddExpertToRequest(int requestId, int expertId);
+        void RemoveExpertFromRequest(int requestId, int expertId);
     }
 
     public class ExpertRequestService : GenericService<ExpertRequest>, IExpertRequestService

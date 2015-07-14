@@ -51,6 +51,19 @@ namespace GAPS.TSC.Consillium.Controllers
             model.ProjectList = _projectService.GetAllMasterProjects().ToDictionary(x => x.Id, x => x.Name);
             var projects = _expertRequestService.GetAllExpertsProjects();
 
+            foreach (var expertRequest in projects)
+            {
+                if (expertRequest.ProjectId != null)
+                {
+                      var projectApi =
+                    _projectService.GetAllMasterProjects().FirstOrDefault(x => x.Id == expertRequest.ProjectId);
+                      if (projectApi != null)
+                    expertRequest.ProjectName = projectApi.Name;
+                    var client = _clientService.GetAllClients().FirstOrDefault(x => x.Id == projectApi.ClientId);
+                    if (client != null)
+                        expertRequest.ClientName = client.Name;
+                }
+            }
             if (model.ProjectLeadId != null)
             {
                 projects = projects.Where(x => x.ProjectLeadId == model.ProjectLeadId);
@@ -280,7 +293,8 @@ namespace GAPS.TSC.Consillium.Controllers
                 model.EndDate = projectMeta.EndDate;
                 model.RestartDate = projectMeta.RestartDate;
                 model.Description = projectMeta.Description;
-
+                model.Id = id;
+               
 
                 model.RequestedDate = projectMeta.CreatedAt;
                 var currency =
@@ -320,7 +334,7 @@ namespace GAPS.TSC.Consillium.Controllers
 
 
                 }
-
+                
             }
             model.ExpertList = _unitOfWork.Experts.Get().ToDictionary(x => x.Id, x => x.Name);
 
@@ -341,6 +355,26 @@ namespace GAPS.TSC.Consillium.Controllers
             return RedirectToAction("ProjectDetail");
         }
 
+        [HttpPost]
+        public ActionResult ProjectDetailButton(ProjectDetailViewModel model)
+        {
+            foreach (var expertId in model.ExpertIds)
+            {
+                _expertRequestService.AddExpertToRequest(model.Id, expertId); 
+            }
+          
+            return RedirectToAction("ProjectDetail"); 
+        }
+       
+        public ActionResult DeleteExpert(ProjectDetailViewModel model)
+        {
+            
+           
+                _expertRequestService.RemoveExpertFromRequest(model.Id, model.ExpertId);
+           
+
+            return RedirectToAction("ProjectDetail");
+        }
         public ActionResult RequestManual()
         {
             var model = new ExpertRequestViewModel();
