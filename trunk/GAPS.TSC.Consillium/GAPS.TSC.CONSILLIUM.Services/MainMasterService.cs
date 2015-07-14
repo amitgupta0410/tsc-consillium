@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using GAPS.TSC.CONS.Domain;
 using GAPS.TSC.CONS.Domain.ApiModels;
 
 namespace GAPS.TSC.CONS.Services{
@@ -92,6 +93,8 @@ namespace GAPS.TSC.CONS.Services{
         public IEnumerable<CountryModel> GetAllCountries()
         {
             return RestService.Get<List<CountryModel>>("masters/countries");
-        } 
+        }
+
+       
     }
 }
