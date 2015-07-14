@@ -80,12 +80,6 @@ namespace GAPS.TSC.CONS.Services{
             }
             return new List<Industry>();
         }
-        //
-        //public Industry FindIndustryById(int id)
-        //{
-        //    return GetAllIndustries().FirstOrDefault(x => x.Id == id);
-        //}
-        //
 
         public IEnumerable<CurrencyModel> GetAllCurrencies()
         {

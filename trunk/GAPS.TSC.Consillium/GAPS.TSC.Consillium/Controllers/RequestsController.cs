@@ -264,10 +264,11 @@ namespace GAPS.TSC.Consillium.Controllers
 
             return Json(unit, JsonRequestBehavior.AllowGet);
         }
-        public ActionResult RequestExpertManual()
-        {
-            return View();
-        }
+      
+        //public ActionResult RequestExpertManual()
+        //{
+        //    return View();
+        //}
         [HttpGet]
         public ActionResult ProjectDetail(int id)
         {
