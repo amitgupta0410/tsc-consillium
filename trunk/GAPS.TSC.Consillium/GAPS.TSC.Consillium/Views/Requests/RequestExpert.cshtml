@@ -113,7 +113,7 @@
                 <div class="form-group">
                     <label><b>Unit*</b></label><br>
                     @Html.DropDownListFor(x => x.UnitId, new SelectList(Model.Units, "Key", "Value"), "Select Unit", new { @class = "form-control", @data_placeholder = "Choose Unit" })
-                    @Html.ValidationMessageFor(x => x.UnitId)
+                    @*@Html.ValidationMessageFor(x => x.UnitId)*@
                 </div>
             </div>
             <div class="col-md-3">
@@ -237,14 +237,8 @@
                 <div class="form-group">
                     <div style="padding-top: 9px"></div>
                     <br>
-                    @if (Model == null)
-                    {
+                  
                         <input type="submit" value="Send Request" class="btn btn-primary">
-                    }
-                    else
-                    {
-                        <input type="submit" value="Update Request" class="btn btn-primary">
-                    }
                 </div>
             </div>
         }

@@ -26,20 +26,20 @@
         @using (Html.BeginForm("UpdateRequest", "Requests", FormMethod.Post, new { enctype = "multipart/form-data" }))
         {
             @Html.HiddenFor(x => x.Id)
-            @Html.HiddenFor(x=>x.ApprovalDocumentId)
-             @Html.HiddenFor(x=>x.ScopingDocumentId)
+            @Html.HiddenFor(x => x.ApprovalDocumentId)
+            @Html.HiddenFor(x => x.ScopingDocumentId)
             <div class="col-md-3">
                 <div class="form-group">
                     <label><b>Client*</b></label>
                     @if (!Model.IsRequestExpertManual)
                     {
                         @Html.DropDownListFor(x => x.ClientId, new SelectList(Model.Clients, "Key", "Value"), "Select Client", new { @class = "form-control", @data_placeholder = "Choose Status" })
-                        @Html.ValidationMessageFor(x => x.ClientId)
+                        @*@Html.ValidationMessageFor(x => x.ClientId)*@
                     }
                     else
                     {
-                        @Html.TextBoxFor(x => x.ClientName, new { @class = "form-control ", Value = "" })
-                        @Html.ValidationMessageFor(x => x.ClientName)
+                        @Html.TextBoxFor(x => x.ClientName, new { @class = "form-control "})
+                        @*@Html.ValidationMessageFor(x => x.ClientName)*@
                     }
                 </div>
             </div>
@@ -48,20 +48,15 @@
                     <label><b>Project*</b></label>
                     @if (!Model.IsRequestExpertManual)
                     {
-                        if (Model == null)
-                        {
-                            @Html.DropDownListFor(x => x.ProjectId, new List<SelectListItem>(), "Select Project", new { @class = "form-control" })
-                            @Html.ValidationMessageFor(x => x.ProjectId)
-                        }
-                        else
-                        {
-                            @Html.DropDownListFor(x => x.ProjectId, Model.ProjectList.Select(x => new SelectListItem() { Text = x.Value, Value = x.Key.ToString(), Selected = x.Key == Model.ProjectId }), new { @class = "form-control" })
-                            @Html.ValidationMessageFor(x => x.ProjectId)
-                        }
+
+
+                        @Html.DropDownListFor(x => x.ProjectId, Model.ProjectList.Select(x => new SelectListItem() { Text = x.Value, Value = x.Key.ToString(), Selected = x.Key == Model.ProjectId }), new { @class = "form-control" })
+                        @Html.ValidationMessageFor(x => x.ProjectId)
+
                     }
                     else
                     {
-                        @Html.TextBoxFor(x => x.ProjectName, new { @class = "form-control ", Value = "" })
+                        @Html.TextBoxFor(x => x.ProjectName, new { @class = "form-control "})
                         @*@Html.ValidationMessageFor(x => x.ProjectName)*@
                     }
                 </div>
@@ -71,20 +66,14 @@
                     <label><b>Bd Lead*</b></label>
                     @if (!Model.IsRequestExpertManual)
                     {
-                        if (Model == null)
-                        {
-                            @Html.TextBoxFor(x => x.BdLeadId, new { style = "display: none;" })
-                            @Html.TextBoxFor(x => x.BdLeadName, new { @class = "form-control ", Value = "", @readonly = "readonly" })
-                        }
-                        else
-                        {
-                            @Html.TextBoxFor(x => x.BdLeadId, new { style = "display: none;", Value = @Model.BdLeadId })
-                            @Html.TextBoxFor(x => x.BdLeadName, new { @class = "form-control ", Value = @Model.BdLeadName, @readonly = "readonly" })
-                        }
+                        @Html.TextBoxFor(x => x.BdLeadId, new { style = "display: none;", Value = @Model.BdLeadId })
+                        @Html.ValidationMessageFor(x => x.BdLeadId)
+                        @Html.TextBoxFor(x => x.BdLeadName, new { @class = "form-control ", Value = @Model.BdLeadName, @readonly = "readonly" })
+
                     }
                     else
                     {
-                        @Html.TextBoxFor(x => x.BdLeadName, new { @class = "form-control ", Value = "" })
+                        @Html.TextBoxFor(x => x.BdLeadName, new { @class = "form-control "})
                         @*@Html.ValidationMessageFor(x => x.BdLeadName)*@
                     }
                 </div>
@@ -94,16 +83,9 @@
                     <label><b>Project Lead*</b></label>
                     @if (!Model.IsRequestExpertManual)
                     {
-                        if (Model == null)
-                        {
-                            @Html.DropDownListFor(x => x.ProjectLeadId, new List<SelectListItem>(), new { @class = "form-control" })
-                            @Html.ValidationMessageFor(x => x.ProjectLeadId)
-                        }
-                        else
-                        {
-                            @Html.DropDownListFor(x => x.ProjectLeadId, Model.ProjectLeadList.Select(x => new SelectListItem() { Text = x.Value, Value = x.Key.ToString(), Selected = x.Key == Model.ProjectLeadId }), new { @class = "form-control" })
-                            @Html.ValidationMessageFor(x => x.ProjectLeadId)
-                        }
+                        @Html.DropDownListFor(x => x.ProjectLeadId, Model.ProjectLeadList.Select(x => new SelectListItem() { Text = x.Value, Value = x.Key.ToString(), Selected = x.Key == Model.ProjectLeadId }), new { @class = "form-control" })
+                        @*@Html.ValidationMessageFor(x => x.ProjectLeadId)*@
+
                     }
                     else
                     {
@@ -117,7 +99,7 @@
                 <div class="form-group">
                     <label><b>Unit*</b></label><br>
                     @Html.DropDownListFor(x => x.UnitId, new SelectList(Model.Units, "Key", "Value"), "Select Unit", new { @class = "form-control", @data_placeholder = "Choose Unit" })
-                    @Html.ValidationMessageFor(x => x.UnitId)
+                    @*@Html.ValidationMessageFor(x => x.UnitId)*@
                 </div>
             </div>
             <div class="col-md-3">
@@ -192,7 +174,7 @@
                     {
                         <label>Upload Scoping Document*</label>
                         @Html.TextBoxFor(x => x.ScopingDocumentFile, new { @class = "form-control", type = "file" })
-                        @*@Html.ValidationMessageFor(x => x.ScopingDocumentFile)*@
+                     
                     }
                     else
                     {
@@ -209,7 +191,6 @@
                     {
                         <label>Upload Approval Document*</label>
                         @Html.TextBoxFor(x => x.ApprovalDocumentFile, new { @class = "form-control", type = "file" })
-                        @*@Html.ValidationMessageFor(x => x.ApprovalDocumentFile)*@
                     }
                     else
                     {
