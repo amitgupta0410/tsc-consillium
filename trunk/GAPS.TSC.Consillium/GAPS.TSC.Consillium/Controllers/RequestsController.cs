@@ -57,12 +57,16 @@ namespace GAPS.TSC.Consillium.Controllers
                 {
                       var projectApi =
                     _projectService.GetAllMasterProjects().FirstOrDefault(x => x.Id == expertRequest.ProjectId);
-                      if (projectApi != null)
+                      if (projectApi != null) { 
                     expertRequest.ProjectName = projectApi.Name;
                     var client = _clientService.GetAllClients().FirstOrDefault(x => x.Id == projectApi.ClientId);
                     if (client != null)
                         expertRequest.ClientName = client.Name;
+                      }
                 }
+                var team = _userService.GetAllTeamMembers().FirstOrDefault(x => x.Id == expertRequest.AssignedToId);
+                if (team != null)
+                model.ToAddMembers.Add(team.Name);
             }
             if (model.ProjectLeadId != null)
             {

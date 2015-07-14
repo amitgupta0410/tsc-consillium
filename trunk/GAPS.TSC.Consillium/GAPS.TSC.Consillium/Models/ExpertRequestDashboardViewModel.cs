@@ -18,6 +18,7 @@ namespace GAPS.TSC.Consillium.Models
             AssignedList = new Dictionary<int, string>();
             ProjectList=new Dictionary<int, string>();
             ClientList = new Dictionary<int, string>();
+            ToAddMembers=new List<string>();
 
         }
         public IEnumerable<ExpertRequestSingleViewModel> ExpertRequests { get; set; }
@@ -36,6 +37,7 @@ namespace GAPS.TSC.Consillium.Models
         public DateTime? EndDate { get; set; }
         public int? ProjectLeadId { get; set; }
         public String SearchString { get; set; }
+        public List<string> ToAddMembers = new List<string>();
     }
 
     public class ExpertRequestSingleViewModel : BaseEntity{
@@ -51,7 +53,7 @@ namespace GAPS.TSC.Consillium.Models
         [DisplayFormat(DataFormatString = "dd MM, yyyy")] 
         public DateTime? RestartDate { get; set; }
         public int? AssignedToId { get; set; }
-        public virtual TeamMember AssignedTo { get; set; }
+        public TeamMember AssignedTo { get; set; }
         
     }
 }

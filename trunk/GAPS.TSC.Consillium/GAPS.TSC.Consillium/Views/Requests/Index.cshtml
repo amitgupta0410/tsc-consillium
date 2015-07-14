@@ -21,16 +21,16 @@
             <div class="col-md-3">
                 <div class="form-group">
                     <label><b>Project Lead</b></label><br>
-                    
+
                     @Html.DropDownListFor(x => x.ProjectLeadId, new SelectList(Model.ProjectLeadList, "Key", "Value"), "All", new { @class = "form-control", @data_placeholder = "Choose Status" })
-                
+
                 </div>
             </div>
             <div class="col-md-3">
                 <div class="form-group">
                     <label><b>Status</b></label>
                     @Html.DropDownListFor(x => x.Status, new SelectList(Model.StatusOptions, "Key", "Value"), "All", new { @class = "form-control", @data_placeholder = "Choose Status" })
-                   
+
                 </div>
             </div>
             <div class="col-md-3">
@@ -40,7 +40,7 @@
 
                 </div>
             </div>
-            <div class="clearfix"></div>
+
             <div class="col-md-3">
                 <div class="form-group">
                     <label><b>Client</b></label><br>
@@ -50,9 +50,9 @@
             <div class="col-md-3">
                 <div class="form-group">
                     <label><b>Projects</b></label>
-                   
-@*                                        @Html.DropDownListFor(x => x.ProjectId, new SelectList(Model.ProjectList, "Key", "Value"), "All", new { @class = "form-control", @data_placeholder = "Choose Status" })*@
-                   
+
+                    @*                                        @Html.DropDownListFor(x => x.ProjectId, new SelectList(Model.ProjectList, "Key", "Value"), "All", new { @class = "form-control", @data_placeholder = "Choose Status" })*@
+
                     @if (Model.ProjectList.Any())
                     {
                         @Html.DropDownListFor(x => x.ProjectId, new SelectList(Model.ProjectList, "Key", "Value"), "All", new { @class = "form-control" })
@@ -64,17 +64,9 @@
 
                     }
 
-                 
 
 
-                </div>
-            </div>
 
-            <div class="col-md-3">
-                <div class="form-group">
-                    <label><b>Search</b></label>
-                    @Html.TextBoxFor(x => x.SearchString,  new { @class = "form-control ", Value = ""})
-@*                    <input class="form-control" id="Search" name="Search" type="text" value="">*@
                 </div>
             </div>
 
@@ -82,13 +74,23 @@
                 <div class="form-group">
                     <label>From</label>
                     @Html.TextBoxFor(x => x.StartDate, new { @class = "form-control date", Value = Model.StartDate.ToString() })
+
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <div class="form-group">
+
+                    <label>To</label>
+                    @Html.TextBoxFor(x => x.EndDate, new { @class = "form-control date", Value = Model.EndDate.ToString() })
+
+
                 </div>
             </div>
             <div class="col-md-3">
                 <div class="form-group">
-                    <label>TO</label>
-
-                    @Html.TextBoxFor(x => x.EndDate, new { @class = "form-control date", Value = Model.EndDate.ToString() })
+                    <label><b>Search</b></label>
+                    @Html.TextBoxFor(x => x.SearchString, new { @class = "form-control ", Value = "" })
                 </div>
             </div>
             <div class="col-md-2">
@@ -120,7 +122,9 @@
                         <th><label>End Date</label></th>
                     </tr>
 
-
+                    @{
+                        int i = 0;
+                    }
                     @foreach (var experts in Model.ExpertRequests)
                     {
                         <tr>
@@ -137,18 +141,35 @@
 
                             <td> @experts.RequestStatus</td>
                             <td> <a href="">View</a></td>
-                          @*<td>if (experts.AssignedTo.Name != null)
-                              {
-                                   @experts.AssignedTo.Name
-                              }
-                                                 </td>*@
-                            <td>assigned</td>
-                            <td> @experts.CreatedAt.ToString("dd MMM yyyy")</td>
-                            <td> @experts.StartDate.GetValueOrDefault().ToString("dd/MM/yyyy")</td>
-                            <td> @experts.EndDate.GetValueOrDefault().ToString("dd/MM/yyyy")</td>
+                           
+                            <td>@Model.ToAddMembers.ElementAtOrDefault(i)</td>
+                                
+                           
+                         
+                            <td>
+
+                                @experts.CreatedAt.ToString("dd/MM yyyy")
+
+
+                            </td>
+                            <td>
+                                @if (experts.StartDate != null)
+                                {
+                                    @experts.StartDate.GetValueOrDefault().ToString("dd/MM/yyyy")
+                                }
+
+                            </td>
+                            <td>
+                                @if (experts.EndDate != null)
+                                {
+                                    @experts.EndDate.GetValueOrDefault().ToString("dd/MM/yyyy")
+                                }
+
+                            </td>
 
 
                         </tr>
+                        i++;
                     }
 
                 </tbody>
@@ -179,7 +200,7 @@
                 }
             });
         });
-       
+
 
     </script>
 }

@@ -267,16 +267,11 @@
 
                                 <td>@Model.ToAddRegions.ElementAtOrDefault(i)</td>
                                 <td>
-                                    @using (@Html.BeginForm("DeleteExpert", "Requests", FormMethod.Post))
-                                    {
-                                        @Html.HiddenFor(x => x.Id)
-                                        @Html.HiddenFor(x => x.ExpertId)
-                                        @*                                                                        <td><input type="submit" title="DeleteExpert" value="DeleteExpert" class="btn btn-primary btn-sm" onclick=" location.href='@Url.Action("ProjectDetailButton", "Requests", new {id = expert.Id})' " /></td>*@
-                                        @*                                        <input type="submit" class="btn btn-primary btn-sm" value="Add Expert/Lead"  new {id = expert.Id}/>*@
-                                        <a href="@Url.Action("DeleteExpert", new { id=expert.Id })">
+                                                                     
+                                        <a href="@Url.Action("DeleteExpert", new { @Model.id,@expert.Id})">
                                             <i class="fa fa-trash-o"></i>
                                         </a>
-                                    }
+                                  
                                 </td>
                             </tr>
                                     i++;
