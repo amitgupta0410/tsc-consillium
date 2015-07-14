@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using AutoMapper;
 using GAPS.TSC.CONS.Domain;
 using GAPS.TSC.CONS.Domain.ApiModels;
+using GAPS.TSC.CONS.Repositories;
 using GAPS.TSC.CONS.Services;
 using GAPS.TSC.CONS.Util;
 using GAPS.TSC.Consillium.Models;
@@ -22,10 +23,11 @@ namespace GAPS.TSC.Consillium.Controllers
         private readonly IProjectService _projectService;
         private readonly IExpertRequestService _expertRequestService;
         private readonly IClientService _clientService;
-
+        private readonly IAttachmentService _attachmentService;
+        private readonly IUnitOfWork _unitOfWork;
         // GET: /Requests/
         public RequestsController(IAttachmentService attachmentService, IMainMastersService mastersService,
-            IProjectService projectService, IUserService userService, IExpertRequestService expertRequestService, IClientService clientService)
+            IProjectService projectService, IUserService userService, IExpertRequestService expertRequestService, IClientService clientService, IUnitOfWork unitOfWork)
             : base(attachmentService)
         {
             _userService = userService;
@@ -33,12 +35,16 @@ namespace GAPS.TSC.Consillium.Controllers
             _projectService = projectService;
             _expertRequestService = expertRequestService;
             _clientService = clientService;
+            _attachmentService = attachmentService;
+            _unitOfWork = unitOfWork;
         }
         [HttpGet]
         public ActionResult Index(ExpertRequestDashboardViewModel model)
         {
             var leadIds = _expertRequestService.GetProjectLeads().ToList();
+
             model.ProjectLeadList = _userService.GetAllUsers().ToList().Where(x => leadIds.Contains(x.Id)).ToDictionary(x => x.Id, x => x.FullName);
+
             model.StatusOptions = EnumHelper.GetEnumLabels(typeof(RequestStatus));
             model.AssignedList = _userService.GetAllTeamMembers().ToDictionary(x => x.Id, x => x.Name);
             model.ClientList = _clientService.GetAllClients().ToDictionary(x => x.Id, x => x.Name);
@@ -66,12 +72,19 @@ namespace GAPS.TSC.Consillium.Controllers
             if (model.ClientId > 0)
             {
                 var projectids = _projectService.GetAllMasterProjects().Where(x => x.ClientId == model.ClientId).Select(x => x.Id);
-                projects = projects.Where(x => projectids.Contains(x.Id));
+                projects = projects.Where(x => projectids.Contains(x.ProjectId.GetValueOrDefault())).ToList();
+                model.ProjectList =
+                    GetProjectsForClientForFilter(model.ClientId.GetValueOrDefault())
+                        .ToDictionary(x => x.Id, x => x.ProjectName);
             }
             if (model.Assigned > 0)
             {
                 projects = projects.Where(x => x.AssignedToId == model.Assigned);
 
+            }
+            if (model.ProjectId != null)
+            {
+                projects = projects.Where(x => x.Id == model.ProjectId);
             }
 
             if (!String.IsNullOrEmpty(model.SearchString))
@@ -82,15 +95,31 @@ namespace GAPS.TSC.Consillium.Controllers
                                                        || x.ClientName.Contains(model.SearchString.ToLower()) || model.ProjectLeadList.ContainsValue(model.SearchString.ToLower()));
             }
             model.ExpertRequests = projects.Select(Mapper.Map<ExpertRequest, ExpertRequestSingleViewModel>);
+
+
             return View(model);
         }
+
+        private IEnumerable<ExpertRequest> GetProjectsForClientForFilter(int clientId)
+        {
+            var projects = _expertRequestService.GetAllExpertsProjects().ToList();
+            var projectids = _projectService.GetAllMasterProjects().Where(x => x.ClientId == clientId).Select(x => x.Id).ToList();
+            projects = projects.Where(x => projectids.Contains(x.ProjectId.GetValueOrDefault())).ToList();
+            return projects;
+        }
+        public JsonResult GetClientProjects(int id)
+        {
+            var projects = GetProjectsForClientForFilter(id);
+
+            return Json(projects.Select(x => new { x.Id, x.ProjectName }), JsonRequestBehavior.AllowGet);
+        }
+
 
 
         public ActionResult RequestExpert()
         {
             var model = new ExpertRequestViewModel();
-            var projectClients =
-                _projectService.GetAllMasterProjects().Select(x => x.ClientId).Distinct().ToList();
+            var projectClients = _projectService.GetAllMasterProjects().Select(x => x.ClientId).Distinct().ToList();
             model.Clients = _masterService.GetAllClients().Where(x => projectClients.Contains(x.Id) && x.IsActive).ToDictionary(x => x.Id, x => x.Name);
             model.Units = _masterService.GetAllUnits().ToDictionary(x => x.Id, x => x.Name);
             model.Industry = _masterService.GetAllIndustries().ToDictionary(x => x.Id, x => x.Name);
@@ -115,21 +144,74 @@ namespace GAPS.TSC.Consillium.Controllers
         public ActionResult UpdateRequest(int id)
         {
             var expertRequest = _expertRequestService.GetAllExpertsProjects().Single(m => m.Id == id);
-            var expertRequestModel = Mapper.Map<ExpertRequest,ExpertRequestViewModel>(expertRequest);
+            var expertRequestModel = Mapper.Map<ExpertRequest, UpdateExpertRequest>(expertRequest);
             expertRequestModel.CostSharingOptions = EnumHelper.GetEnumLabelValuess(typeof(CostSharingType));
-            var project = _projectService.GetAllMasterProjects().Single(x => x.Id == expertRequestModel.ProjectId);
-            expertRequestModel.ClientId = project.ClientId ?? default(int);
-            var projectClients =_projectService.GetAllMasterProjects().Select(x => x.ClientId).Distinct().ToList();
+            if (expertRequestModel.ProjectId != 0 && expertRequestModel.ProjectId != null)
+            {
+                var project = _projectService.GetAllMasterProjects().Single(x => x.Id == expertRequestModel.ProjectId);
+                expertRequestModel.ClientId = project.ClientId ?? default(int);
+                expertRequestModel.IsRequestExpertManual = false;
+            }
+            else
+            {
+                expertRequestModel.ProjectName = expertRequest.ProjectName;
+                expertRequestModel.ClientName = expertRequest.ClientName;
+                expertRequestModel.BdLeadName = expertRequest.BdLeadName;
+                expertRequestModel.IsRequestExpertManual = true;
+            }
+            expertRequestModel.Id = id;
+            expertRequestModel.ProjectList = _projectService.GetAllMasterProjects().Where(x => x.ClientId == expertRequestModel.ClientId).ToDictionary(x => x.Id, x => x.Name);
+            expertRequestModel.ProjectLeadList = _userService.GetAllUsers().Where(x => x.Id == expertRequestModel.ProjectLeadId).ToDictionary(x => x.Id, x => x.FullName);
+            var projectClients = _projectService.GetAllMasterProjects().Select(x => x.ClientId).Distinct().ToList();
             expertRequestModel.Clients = _masterService.GetAllClients().Where(x => projectClients.Contains(x.Id) && x.IsActive).ToDictionary(x => x.Id, x => x.Name);
             expertRequestModel.Currency = _masterService.GetAllCurrencies().ToDictionary(x => x.CurrencyId, x => x.CurrencyCode);
             expertRequestModel.Units = _masterService.GetAllUnits().ToDictionary(x => x.Id, x => x.Name);
             expertRequestModel.Industry = _masterService.GetAllIndustries().ToDictionary(x => x.Id, x => x.Name);
             expertRequestModel.Geography = _masterService.GetAllGeographies().ToDictionary(x => x.Id, x => x.Name);
-
-
-            return View("RequestExpert",expertRequestModel);
+            return View(expertRequestModel);
         }
 
+        [HttpPost]
+        public ActionResult UpdateRequest(UpdateExpertRequest model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+            if (model.ApprovalDocumentFile != null)
+            {
+                var approveFile = UploadAndSave("ApprovalDocumentFile");
+                model.ApprovalDocumentId = approveFile.Id;
+            }
+            if (model.ScopingDocumentFile != null)
+            {
+                var scopingFile = UploadAndSave("ScopingDocumentFile");
+                model.ScopingDocumentId = scopingFile.Id;
+            }
+            var expertRequest = _expertRequestService.GetAllExpertsProjects().Single(m => m.Id == model.Id);
+            expertRequest.ProjectId = model.ProjectId;
+            expertRequest.ProjectLeadId = model.ProjectLeadId;
+            expertRequest.ScopingDocumentId = model.ScopingDocumentId;
+            expertRequest.ApprovalDocumentId = model.ApprovalDocumentId;
+            expertRequest.IndustryId = model.IndustryId;
+            expertRequest.GeographicId = model.GeographicId;
+            expertRequest.CostSharingType = model.CostSharingTypeValue;
+            expertRequest.BudgetAmount = model.BudgetAmount;
+            expertRequest.BudgetCurrencyId = model.BudgetCurrencyId;
+            expertRequest.UnitId = model.UnitId;
+            expertRequest.TscShare = model.TscShare;
+            expertRequest.ClientShare = model.ClientShare;
+            expertRequest.Description = model.Description;
+            expertRequest.Comments = model.Comments;
+
+            expertRequest.ProjectName = model.ProjectName;
+            expertRequest.ClientName = model.ClientName;
+            expertRequest.BdLeadName = model.BdLeadName;
+
+            _expertRequestService.Update(expertRequest);
+            SetMessage(MessageType.Success, MessageConstant.GetMessage(Messages.Update));
+            return RedirectToAction("UpdateRequest");
+        }
         public JsonResult GetProjects(int id)
         {
             var projects = _projectService.GetAllMasterProjects().Where(x => x.ClientId == id);
@@ -175,10 +257,33 @@ namespace GAPS.TSC.Consillium.Controllers
             var model = new ProjectDetailViewModel();
 
             var projectMeta = _expertRequestService.GetAllExpertsProjects().FirstOrDefault(x => x.Id == id);
+            if (projectMeta != null && projectMeta.ProjectId != null)
+            {
+                var projectApi =
+                    _projectService.GetAllMasterProjects().FirstOrDefault(x => x.Id == projectMeta.ProjectId);
+
+                if (projectApi != null)
+                {
+                    model.ProjectName = projectApi.Name;
+                    var client = _clientService.GetAllClients().FirstOrDefault(x => x.Id == projectApi.ClientId);
+                    if (client != null)
+                        model.ClientName = client.Name;
+                }
+            }
+            else
+            {
+                if (projectMeta != null)
+                {
+
+
+                    model.ClientName = projectMeta.ClientName;
+                    model.ProjectName = projectMeta.ProjectName;
+                }
+            }
             if (projectMeta != null)
             {
-                model.ClientName = projectMeta.ClientName;
-                model.ProjectName = projectMeta.ProjectName;
+                //                model.ClientName = projectMeta.ClientName;
+                //                model.ProjectName = projectMeta.ProjectName;
                 model.Comments = projectMeta.Comments;
                 model.CostSharingType = projectMeta.CostSharingType;
                 model.AllocatedBudget = projectMeta.BudgetAmount;
@@ -186,8 +291,13 @@ namespace GAPS.TSC.Consillium.Controllers
                 model.EndDate = projectMeta.EndDate;
                 model.RestartDate = projectMeta.RestartDate;
                 model.Description = projectMeta.Description;
-               
+
+
                 model.RequestedDate = projectMeta.CreatedAt;
+                var currency =
+                    _masterService.GetAllCurrencies().FirstOrDefault(x => x.CurrencyId == projectMeta.BudgetCurrencyId);
+                if (currency != null)
+                    model.BudgetCurrencyName = currency.CurrencyName;
                 var industry = _masterService.GetAllIndustries().FirstOrDefault(x => x.Id == projectMeta.IndustryId);
                 if (industry != null)
                     model.Industry = industry.Name;
@@ -202,17 +312,41 @@ namespace GAPS.TSC.Consillium.Controllers
                     model.BdLeadName = bdLead.FullName;
             }
 
+            model.Experts = _expertRequestService.GetExpertsForRequest(id).Select(Mapper.Map<Expert, ExpertViewModel>);
+
+            foreach (var expert in model.Experts)
+            {
+                var name = _masterService.GetAllGeographies().FirstOrDefault(x => x.Id == expert.GeographicId);
+
+                if (name != null)
+                    model.ToAddRegions.Add(name.Name);
+                var workExperience = _expertRequestService.GetAllDesignations(expert.Id).OrderByDescending(x => x.StartDate);
+                foreach (var experience in workExperience)
+                {
+                    string designation = experience.Designation;
+                    model.ToAddDesignations.Add(designation);
+                    string company = experience.Organisation;
+                    model.ToAddOrganisations.Add(company);
+                    break;
+
+
+                }
+
+            }
+            model.ExpertList = _unitOfWork.Experts.Get().ToDictionary(x => x.Id, x => x.Name);
+
+
             return View(model);
         }
         [HttpPost]
         public ActionResult ProjectDetail(ProjectDetailViewModel model)
         {
             var projectMeta = _expertRequestService.GetAllExpertsProjects().FirstOrDefault(x => x.Id == model.Id);
-            
+
             if (projectMeta != null)
             {
                 projectMeta.Comments = model.Comments;
-             
+
             }
             _expertRequestService.Update(projectMeta);
             return RedirectToAction("ProjectDetail");

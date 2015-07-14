@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 using GAPS.TSC.CONS.Domain;
@@ -29,7 +30,9 @@ namespace GAPS.TSC.Consillium.Models
         public int? ProjectId { get; set; }
         public int? Assigned { get; set; }
         public RequestStatus? Status { get; set; }
+        [DisplayFormat(DataFormatString = "dd MM, yyyy")] 
         public DateTime? StartDate { get; set; }
+        [DisplayFormat(DataFormatString = "dd MM, yyyy")] 
         public DateTime? EndDate { get; set; }
         public int? ProjectLeadId { get; set; }
         public String SearchString { get; set; }
@@ -41,8 +44,11 @@ namespace GAPS.TSC.Consillium.Models
         public string ClientName { get; set; }
         public RequestStatus RequestStatus { get; set; }
         public int? ProjectLeadId { get; set; }
+        [DisplayFormat(DataFormatString = "dd MM, yyyy")] 
         public DateTime? StartDate { get; set; }
+        [DisplayFormat(DataFormatString = "dd MM, yyyy")] 
         public DateTime? EndDate { get; set; }
+        [DisplayFormat(DataFormatString = "dd MM, yyyy")] 
         public DateTime? RestartDate { get; set; }
         public int? AssignedToId { get; set; }
         public virtual TeamMember AssignedTo { get; set; }
