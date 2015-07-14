@@ -128,7 +128,7 @@
                     @foreach (var experts in Model.ExpertRequests)
                     {
                         <tr>
-                            <td> @experts.ProjectName</td>
+                            <td><a href="@Url.Action("ProjectDetail", new { id=experts.Id})"> @experts.ProjectName</a></td>
 
                             <td> @experts.ClientName</td>
 
