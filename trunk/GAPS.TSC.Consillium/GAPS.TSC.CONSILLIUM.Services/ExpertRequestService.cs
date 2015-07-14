@@ -14,6 +14,8 @@ namespace GAPS.TSC.CONS.Services
         IEnumerable<ExpertRequest> GetAllExpertsProjects();
         IEnumerable<Expert> GetExpertsForRequest(int requestId);
         IEnumerable<WorkExperience> GetAllDesignations(int id);
+        void AddExpertToRequest(int requestId, int expertId);
+        void RemoveExpertFromRequest(int requestId, int expertId);
     }
 
     public class ExpertRequestService : GenericService<ExpertRequest>, IExpertRequestService
@@ -48,7 +50,7 @@ namespace GAPS.TSC.CONS.Services
         }
         public void AddExpertToRequest(int requestId, int expertId)
         {
-            var req = GetById(requestId);
+            var req = Repository.Get(x => x.Id == requestId && x.DeletedAt == null, p => p.Experts).FirstOrDefault();
             if (null == req)
             {
                 throw new Exception();
@@ -70,7 +72,7 @@ namespace GAPS.TSC.CONS.Services
      
         public void RemoveExpertFromRequest(int requestId, int expertId)
         {
-            var req = GetById(requestId);
+            var req = Repository.Get(x => x.Id == requestId && x.DeletedAt == null, p => p.Experts).FirstOrDefault();
             if (null == req)
             {
                 throw new Exception();

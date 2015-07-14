@@ -54,6 +54,7 @@ namespace GAPS.TSC.Consillium.Models
         public List<string> ToAddOrganisations = new List<string>();
         public String BudgetCurrencyName { get; set; }
         public IEnumerable<int> ExpertIds { get; set; }
+        public int ExpertId { get; set; }
 
 
 
