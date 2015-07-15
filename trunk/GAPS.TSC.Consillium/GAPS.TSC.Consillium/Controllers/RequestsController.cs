@@ -24,10 +24,11 @@ namespace GAPS.TSC.Consillium.Controllers
         private readonly IExpertRequestService _expertRequestService;
         private readonly IClientService _clientService;
         private readonly IAttachmentService _attachmentService;
-        private readonly IUnitOfWork _unitOfWork;
+        private readonly IExpertService _expertService;
+        
         // GET: /Requests/
         public RequestsController(IAttachmentService attachmentService, IMainMastersService mastersService,
-            IProjectService projectService, IUserService userService, IExpertRequestService expertRequestService, IClientService clientService, IUnitOfWork unitOfWork)
+            IProjectService projectService, IUserService userService, IExpertRequestService expertRequestService, IClientService clientService, IExpertService expertService)
             : base(attachmentService)
         {
             _userService = userService;
@@ -36,7 +37,7 @@ namespace GAPS.TSC.Consillium.Controllers
             _expertRequestService = expertRequestService;
             _clientService = clientService;
             _attachmentService = attachmentService;
-            _unitOfWork = unitOfWork;
+            _expertService = expertService;
         }
         [HttpGet]
         public ActionResult Index(ExpertRequestDashboardViewModel model)
@@ -50,7 +51,8 @@ namespace GAPS.TSC.Consillium.Controllers
             model.ClientList = _clientService.GetAllClients().ToDictionary(x => x.Id, x => x.Name);
             model.ProjectList = _projectService.GetAllMasterProjects().ToDictionary(x => x.Id, x => x.Name);
             var projects = _expertRequestService.GetAllExpertsProjects();
-
+            int parsedId;
+            int.TryParse(model.SearchString, out parsedId);
             foreach (var expertRequest in projects)
             {
                 if (expertRequest.ProjectId != null)
@@ -109,7 +111,7 @@ namespace GAPS.TSC.Consillium.Controllers
 
 
                 projects = projects.Where(x => x.ProjectName.Contains(model.SearchString.ToLower())
-                                                       || x.ClientName.Contains(model.SearchString.ToLower()) || model.ProjectLeadList.ContainsValue(model.SearchString.ToLower()));
+                                                       || x.ClientName.Contains(model.SearchString.ToLower()) || x.ProjectLeadId == parsedId);
             }
             model.ExpertRequests = projects.Select(Mapper.Map<ExpertRequest, ExpertRequestSingleViewModel>);
 
@@ -352,8 +354,8 @@ namespace GAPS.TSC.Consillium.Controllers
                 }
                 
             }
-            model.ExpertList = _unitOfWork.Experts.Get().ToDictionary(x => x.Id, x => x.Name);
 
+            model.ExpertList = _expertService.Get(x => x.DeletedAt == null).ToDictionary(x => x.Id, x => x.Name);
 
             return View(model);
         }

@@ -256,7 +256,7 @@
                         @foreach (var expert in Model.Experts)
                         {
 
-                            <tr>
+                            <tr id ="expert-@expert.Id">
                                 <td>@i</td>
                                 <td>@expert.Name</td>
                                 <td>@Model.ToAddDesignations.ElementAtOrDefault(i)</td>
@@ -270,7 +270,10 @@
                                                                      
 
                                    
-                                  @Html.ActionLink("Delete Expert", "DeleteExpert", new { requestId = Model.Id, expertId = expert.Id }, new { @class = "button delete_recipient" }) 
+@*                                                                      @Html.ActionLink("Delete Expert", "DeleteExpert", new { requestId = Model.Id, expertId = expert.Id }, new { @class = "button delete_recipient" }) *@
+                                    <a onclick="askDeleteExpert(' @Model.Id',  '@expert.Id') " title="Delete" style="cursor: pointer; text-decoration: none">
+                                        <i class="fa fa-trash-o"></i>
+                                    </a>
                                 </td>
                             </tr>
                                     i++;
@@ -292,8 +295,22 @@
 
 
         });
-
+        function askDeleteExpert(requestId , expertId ) {
+            bootbox.confirm("Are you sure you want to delete expert?", function (result) {
+                if (result) {
+                    $.post('/Requests/DeleteExpert', { requestId: requestId, expertId: expertId }, function (data) {
+                                                $('#expert-' + expertId).remove();
+                       
+                    });
+                   
+                }
+            });
+        }
 
     </script>
 }
+
+
+
+
 

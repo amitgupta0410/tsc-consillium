@@ -8,30 +8,73 @@ using System.Web.Security;
 using System.Web.UI.WebControls;
 using AutoMapper;
 using GAPS.TSC.CONS.Domain;
+using GAPS.TSC.CONS.Domain.ApiModels;
+using GAPS.TSC.CONS.Repositories;
 using GAPS.TSC.CONS.Services;
 using GAPS.TSC.Consillium.Models;
 using GAPS.TSC.Consillium.Utils;
 using GAPS.TSC.CONS.Util;
+using Microsoft.Ajax.Utilities;
+using WebGrease.Css.Extensions;
 
 namespace GAPS.TSC.Consillium.Controllers {
     public class EmployeesController : BaseController {
 
-
+        private readonly IProjectService _projectService;
         private readonly IUserService _userService;
         private readonly IMainMastersService _mainMastersService;
         private readonly IExpertService _expertService;
+        private readonly IClientService _clientService;
+        private readonly IExpertRequestService _expertRequestService;
 
-        public EmployeesController(IUserService userService, IAttachmentService attachmentService, IMainMastersService mainMastersService, IExpertService expertService)
+        public EmployeesController(IUserService userService, IAttachmentService attachmentService, IMainMastersService mainMastersService, IExpertService expertService, IClientService clientService, IProjectService projectService , IExpertRequestService expertRequestService)
             : base(attachmentService) {
 
             _userService = userService;
             _mainMastersService = mainMastersService;
             _expertService = expertService;
-        }
+            _clientService = clientService;
+            _projectService = projectService;
+            _expertRequestService = expertRequestService;
+            }
         //
         // GET: /Employees/
-        public ActionResult Index() {
-            return View();
+        public ActionResult Index(ExpertDashboardViewModel model)
+        {
+            var experts = _expertService.Get(x => x.DeletedAt == null);
+            var expertRequests = experts.Select(x => x.ExpertRequests);
+
+            model.IndustryList = _mainMastersService.GetAllIndustries().ToDictionary(x => x.Id, x => x.Name);
+            model.GeographicList = _mainMastersService.GetAllGeographies().ToDictionary(x => x.Id, x =>x.Name);
+            model.ClientList = _clientService.GetAllClients().ToDictionary(x => x.Id, x => x.Name);
+//            model.ProjectList = _projectService.GetAllMasterProjects().ToDictionary(x => x.Id, x => x.Name);
+            model.ProjectList= _expertRequestService.GetAllExpertsProjects()
+                .ToDictionary(x => x.Id, x => x.ProjectName);
+            int parsedId;
+            int.TryParse(model.SearchString, out parsedId);
+            if (!String.IsNullOrEmpty(model.SearchString))
+            {
+
+
+                experts = experts.Where(x => x.Name.Contains(model.SearchString.ToLower())
+                                                       || x.Email.Contains(model.SearchString.ToLower())||x.GeographicId==parsedId||x.IndustryId==parsedId);
+            }
+            if (model.GeographicId!= null)
+            {
+                experts = experts.Where(x => x.GeographicId == model.GeographicId);
+            }
+            if (model.IndustryId != null)
+            {
+                experts = experts.Where(x => x.IndustryId == model.IndustryId);
+            }
+            if (model.ProjectId.HasValue)
+            {
+              experts = experts.Where(x =>x.ExpertRequests.Select(y=>y.Id).Contains(model.ProjectId.Value));
+            }
+
+            model.Experts = experts.Select((Mapper.Map<Expert, ExpertSingleViewModel>));
+             
+            return View(model);
         }
 
         public ActionResult AddNewLead(int? id) {
