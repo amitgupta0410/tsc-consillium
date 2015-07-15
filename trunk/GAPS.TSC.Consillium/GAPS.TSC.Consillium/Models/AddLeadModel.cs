@@ -19,15 +19,15 @@ namespace GAPS.TSC.Consillium.Models {
 
         public bool IsLead { get; set; }
         [Required]
-        [Remote("LeadNameExist", "Employees", HttpMethod = "POST", ErrorMessage = "User name already exists. Please enter a different user name.")]
+        [Remote("LeadNameExist", "Employees", HttpMethod = "POST", ErrorMessage = "User name already exists. Please enter a different user name." , AdditionalFields = "Id")]
         public string Name { get; set; }
-        [Required]
+        [Required (ErrorMessage = "The country field is required")]
         public int CountryId { get; set; }
         [Required]
         public string City { get; set; }
         [Required]
         [EmailAddress(ErrorMessage = "Please enter a valid Email.")]
-        [Remote("EmailExist", "Employees", HttpMethod = "POST", ErrorMessage = "Email already exists. Please enter a different email.")]
+        [Remote("EmailExist", "Employees", HttpMethod = "POST", ErrorMessage = "Email already exists. Please enter a different email." , AdditionalFields = "Id")]
         public string Email { get; set; }
         [Required]
         [RegularExpression(@"[0-9]{10}", ErrorMessage = "Please enter a valid contact number.")]
@@ -41,7 +41,7 @@ namespace GAPS.TSC.Consillium.Models {
         [Required]
         [Range(1,int.MaxValue,ErrorMessage = "Amount must be greater than zero.")]
         public decimal FeesAmount { get; set; }
-        [Required]
+        [Required(ErrorMessage = "The Currency field is required.")]
         public int FeesCurrencyId { get; set; }
         public IDictionary<string, string> TitleOptions { get; set; }
         public IDictionary<string, string> ExpertTypeOptions { get; set; }
@@ -53,14 +53,20 @@ namespace GAPS.TSC.Consillium.Models {
         public IEnumerable<WorkExperienceModel> WorkExperiences { get; set; }
         public LeadStatus LeadStatus { get; set; }
         public string LeadComments { get; set; }
+        [Required(ErrorMessage = "The Recruiter field is required.")]
         public int RecruiterId { get; set; }
         public string JobHistory { get; set; }
         public string Source { get; set; }
         public string Notes { get; set; }
         public ExpertType ExpertType { get; set; }
-        public int ResumeId { get; set; }
+        public int? ResumeId { get; set; }
+        public string FileName { get; set; }
+        public string FileGuidName { get; set; }
+        [Required]
         public string Designation { get; set; }
+        [Required]
         public string Organisation { get; set; }
+        [Required]
         public DateTime StartDate { get; set; }
         public DateTime? EndDate { get; set; }
 

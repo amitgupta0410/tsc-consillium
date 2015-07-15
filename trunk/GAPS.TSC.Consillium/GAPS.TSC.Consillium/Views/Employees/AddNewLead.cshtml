@@ -13,12 +13,13 @@
         </h3>
     </div>
 </div><hr />
+@Html.Partial("_PartialMessage")
 <div class="row">
     <div class="col-md-12">
         @using (@Html.BeginForm("AddNewLead", "Employees", FormMethod.Post, new { enctype = "multipart/form-data" })) {
-            @Html.HiddenFor(x=>x.Id)
-            if (Model.Id == 0)
-            {
+            @Html.HiddenFor(x => x.Id)
+            @Html.HiddenFor(x => x.ResumeId)
+            if (Model.Id == 0) {
                 <div class="col-md-12">
                     <div class="form-group">
                         @Html.RadioButtonFor(x => x.IsLead, !Model.IsLead) Lead
@@ -128,20 +129,22 @@
             <div class="col-md-2">
                 <div class="form-group">
                     <label><b>Upload Resume*</b></label><br />
-                    <input type="file" name="File" id="resumeFile"/>
+                    <input type="file" name="File" id="resumeFile" />
                 </div>
             </div>
             <div class="col-md-2">
                 <div class="form-group">
                     @*                <div style="padding-top: 30px"></div><br />*@
-                    <a href="#">View CV</a>
+                    @if (@Model.ResumeId.HasValue) {
+                        <a href="@Model.FileGuidName">@Model.FileName</a>
+                    }
                 </div>
             </div>
             <div class="clearfix"></div>
             <div class="col-md-3">
                 <div class="form-group">
                     <label><b>Recruiter*</b></label>
-                    @Html.DropDownListFor(x => x.RecruiterId, new SelectList(Model.RecruiterOptions, "Key", "Value"), "Select Recruiters", new { @class = "form-control" })
+                    @Html.DropDownListFor(x => x.RecruiterId, new SelectList(Model.RecruiterOptions, "Key", "Value"), "Select Recruiter", new { @class = "form-control" })
                     @Html.ValidationMessageFor(x => x.RecruiterId)
                 </div>
             </div>
@@ -183,11 +186,10 @@
                 </div>
             </div>
             <div class="clearfix"></div>
-            if (Model.Id > 0)
-            {
+            if (Model.Id > 0) {
                 <div class="col-md-1">
                     <div class="form-group">
-                        <div style="padding-top: 9px"></div><br/>
+                        <div style="padding-top: 9px"></div><br />
                         <a class="btn btn-primary" href="@Url.Action("DeleteLead", "Employees", new {id = @Model.Id})">Delete</a>
                     </div>
                 </div>
@@ -219,25 +221,29 @@
                 <div class="col-md-3">
                     <div class="form-group">
                         <label><b>Designation*</b></label><br />
-                        @Html.TextBoxFor(x => x.Designation)
+                        @Html.TextBoxFor(x => x.Designation)<br/>
+                        @Html.ValidationMessageFor(x=>x.Designation)
                     </div>
                 </div>
                 <div class="col-md-3">
                     <div class="form-group">
                         <label><b>Organisation*</b></label><br />
-                        @Html.TextBoxFor(x => x.Organisation)
+                        @Html.TextBoxFor(x => x.Organisation)<br/>
+                        @Html.ValidationMessageFor(x=>x.Organisation)
                     </div>
                 </div>
                 <div class="col-md-2">
                     <div class="form-group">
                         <label><b>From*</b></label><br />
-                        @Html.TextBoxFor(x => x.StartDate, new { @class = "form-control date", Value = Model.StartDate.ToString("dd MMM yyyy") })
+                        @Html.TextBoxFor(x => x.StartDate, new { @class = "form-control date"})
+                        @Html.ValidationMessageFor(x=>x.StartDate)
                     </div>
                 </div>
                 <div class="col-md-2">
                     <div class="form-group">
                         <label><b>To</b></label><br />
                         @Html.TextBoxFor(x => x.EndDate, new { @class = "form-control date", Value = Model.EndDate.HasValue ? Model.EndDate.Value.ToString("dd MMM yyyy") : string.Empty })
+                        @Html.ValidationMessageFor(x=>x.EndDate)
                     </div>
                 </div>
                 <div class="col-md-1">

@@ -78,7 +78,10 @@ namespace GAPS.TSC.CONS.Domain {
         RequestError,
         RequestSuccess,
         Duplicate,
-        Update
+        Update,
+        AddLeadSuccess,
+        ConvertLead,
+        DeleteLead
     }
     public enum ProjectStaffType
     {

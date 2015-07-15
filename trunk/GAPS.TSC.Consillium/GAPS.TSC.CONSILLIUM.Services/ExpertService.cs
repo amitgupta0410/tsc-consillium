@@ -6,8 +6,8 @@ using GAPS.TSC.CONS.Repositories;
 
 namespace GAPS.TSC.CONS.Services {
     public interface IExpertService : IGenericService<Expert> {
-        bool LeadNameExist(string name);
-        bool EmailExist(string email);
+        bool LeadNameExist(string name, int id);
+        bool EmailExist(string email, int id);
         bool AddExperience(int expertId, WorkExperience workExperience);
         IEnumerable<WorkExperience> GetWorkExperiences(int expertId);
         int? DeleteWorkExperience(int id);
@@ -27,12 +27,29 @@ namespace GAPS.TSC.CONS.Services {
 
 
 
-        public bool LeadNameExist(string name) {
+        public bool LeadNameExist(string name, int id) {
+            if (id > 0) {
+                var existingUser = GetById(id);
+                var nameUser = Get(x => x.Name == name);
+
+                if (nameUser.Any()) {
+                    return existingUser == nameUser.FirstOrDefault();
+                }
+                return !nameUser.Any();
+            }
             var user = Get(x => x.Name == name);
             return !user.Any();
         }
 
-        public bool EmailExist(string email) {
+        public bool EmailExist(string email, int id) {
+            if (id > 0) {
+                var existingUser = GetById(id);
+                var emailUser = Get(x => x.Email == email);
+                if (emailUser.Any()) {
+                    return existingUser == emailUser.FirstOrDefault();
+                }
+                return !emailUser.Any();
+            }
             var user = Get(x => x.Email == email);
             return !user.Any();
         }
@@ -42,7 +59,6 @@ namespace GAPS.TSC.CONS.Services {
             try {
                 workExperience.ExpertId = expertId;
                 _unitOfWork.WorkExperiences.Add(workExperience);
-
                 _unitOfWork.Save();
                 return true;
             } catch (Exception ex) {
@@ -90,6 +106,7 @@ namespace GAPS.TSC.CONS.Services {
                 return null;
             }
         }
+
 
     }
 }

@@ -127,7 +127,8 @@
                     }
                     @foreach (var experts in Model.ExpertRequests)
                     {
-                        <tr>
+                        var isProjectId = string.Format("row-projectid-{0}", experts.ProjectId);
+                        <tr class="@isProjectId">
                             <td><a href="@Url.Action("ProjectDetail", new { id=experts.Id})"> @experts.ProjectName</a></td>
 
                             <td> @experts.ClientName</td>
@@ -204,3 +205,8 @@
 
     </script>
 }
+<style>
+    tr.row-projectid- {
+        background-color: #FAFACC !important;
+    }
+</style>
