@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 using GAPS.TSC.CONS.Domain;
@@ -22,6 +23,7 @@ namespace GAPS.TSC.Consillium.Models
         public int CallFacilitatedById { get; set; }
         public IDictionary<int, string> CallTypeOptions { get; set; }
         public CallType CallType { get; set; }
+        [DataType(DataType.DateTime)]
         public DateTime InterviewDate { get; set; }
         public decimal CallDuration { get; set; }
         public decimal FeesPerHour { get; set; }
