@@ -1,9 +1,9 @@
-﻿
+﻿@model GAPS.TSC.Consillium.Models.CallsViewModel
 @{
-    ViewBag.Title = "Payments";
+    ViewBag.Title = "Calls";
 }
 
-
+<h2>Calls</h2>
 <div class="row">
     <div class="col-md-12">
         <h3 class="page-title">
@@ -17,17 +17,15 @@
         <div class="col-md-3">
             <div class="form-group">
                 <label><b>Expert Name</b></label><br>
-                <input class="form-control" id="ExpertName" name="ExpertName" type="text" value="">
+                @Html.DropDownListFor(x => x.ExpertId, new SelectList(Model.ExpertList, "Key", "Value"), new { @class = "form-control", @data_placeholder = "Choose Expert" })
+                @Html.ValidationMessageFor(x => x.ExpertId)
             </div>
         </div>
         <div class="col-md-3">
             <div class="form-group">
                 <label><b>Nature Of Interview</b></label>
-                <select class="form-control">
-                    <option>Call</option>
-                    <option>Email</option>
-                    <option>Survey</option>
-                </select>
+                @Html.DropDownListFor(x => x.CallType, new SelectList(Model.CallTypeOptions, "Key", "Value", Model.CallTypeOptions.FirstOrDefault()), new { @class = "form-control", @data_placeholder = "Choose Cost" })
+                @Html.ValidationMessageFor(x => x.CallType)
             </div>
         </div>
         <div class="col-md-3">
@@ -59,11 +57,8 @@
         <div class="col-md-3">
             <div class="form-group">
                 <label><b>Cost Borne By</b></label><br>
-                <select class="form-control">
-                    <option>Option 1</option>
-                    <option>Option 2</option>
-                    <option>Option 3</option>
-                </select>
+                @Html.DropDownListFor(x => x.CostBorneBy, new SelectList(Model.CostSharingOptions, "Key", "Value", Model.CostSharingOptions.FirstOrDefault()), new { @class = "form-control", @data_placeholder = "Choose Cost" })
+                @Html.ValidationMessageFor(x => x.CostBorneBy)
             </div>
         </div>
         <div class="col-md-3">
@@ -87,11 +82,8 @@
         <div class="col-md-3">
             <div class="form-group">
                 <label><b>Geography</b></label><br>
-                <select class="form-control">
-                    <option>Option 1</option>
-                    <option>Option 2</option>
-                    <option>Option 3</option>
-                </select>
+                @Html.DropDownListFor(x => x.GeographicId, new SelectList(Model.Geography, "Key", "Value"), new { @class = "form-control", @data_placeholder = "Choose Expert" })
+                @Html.ValidationMessageFor(x => x.GeographicId)
             </div>
         </div>
         <div class="col-md-2">
@@ -104,20 +96,15 @@
             <div class="form-group">
                 <div style="padding-top: 7px"></div>
                 <br>
-                <select class="form-control">
-                    <option>USD</option>
-                </select>
+                @Html.DropDownListFor(x => x.AmountCurrencyId, new SelectList(Model.Currency, "Key", "Value"), new { @class = "form-control", @data_placeholder = "Choose Currency" })
+                @Html.ValidationMessageFor(x => x.AmountCurrencyId)
             </div>
         </div>
         <div class="col-md-3">
             <div class="form-group">
                 <label><b>Payment Status</b></label>
-                <select class="form-control">
-                    <option>In Progress</option>
-                    <option>On Hold</option>
-                    <option>Paid</option>
-                    <option>Cancelled</option>
-                </select>
+                @Html.DropDownListFor(x => x.PaymentStatus, new SelectList(Model.PaymentStatusOptions, "Key", "Value", Model.PaymentStatusOptions.FirstOrDefault()), new { @class = "form-control", @data_placeholder = "Choose Cost" })
+@Html.ValidationMessageFor(x => x.PaymentStatus)
             </div>
         </div>
         <div class="clearfix"></div>
@@ -130,7 +117,7 @@
         <div class="col-md-2">
             <div class="form-group">
                 <div></div>
-                <br/>
+                <br />
                 <input type="submit" value="save" class="btn btn-primary" style="width: 109px; margin-top: 7px;">
             </div>
         </div>
@@ -167,7 +154,7 @@
                             <td>XYZ</td>
                             <td>22-Mar-2015</td>
                             <td>22-Mar-2015</td>
-                            <td><input type="submit" class="btn btn-default" value="InitiatePayment"/></td>
+                            <td><input type="submit" class="btn btn-default" value="InitiatePayment" /></td>
                         </tr>
                         <tr class="info">
                             <td>2</td>
@@ -180,7 +167,7 @@
                             <td>XYZ</td>
                             <td>22-Mar-2015</td>
                             <td>22-Mar-2015</td>
-                            <td><input type="submit" class="btn btn-default" value="InitiatePayment"/></td>
+                            <td><input type="submit" class="btn btn-default" value="InitiatePayment" /></td>
                         </tr>
                         <tr class="success">
                             <td>3</td>
