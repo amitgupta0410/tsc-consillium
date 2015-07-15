@@ -49,7 +49,8 @@ namespace GAPS.TSC.Consillium.Controllers
             model.ClientList = _clientService.GetAllClients().ToDictionary(x => x.Id, x => x.Name);
             model.ProjectList = _projectService.GetAllMasterProjects().ToDictionary(x => x.Id, x => x.Name);
             var projects = _expertRequestService.GetAllExpertsProjects();
-
+            int parsedId;
+            int.TryParse(model.SearchString, out parsedId);
             foreach (var expertRequest in projects)
             {
                 if (expertRequest.ProjectId != null)
@@ -108,7 +109,7 @@ namespace GAPS.TSC.Consillium.Controllers
 
 
                 projects = projects.Where(x => x.ProjectName.Contains(model.SearchString.ToLower())
-                                                       || x.ClientName.Contains(model.SearchString.ToLower()) || model.ProjectLeadList.ContainsValue(model.SearchString.ToLower()));
+                                                       || x.ClientName.Contains(model.SearchString.ToLower()) || x.ProjectLeadId == parsedId);
             }
             model.ExpertRequests = projects.Select(Mapper.Map<ExpertRequest, ExpertRequestSingleViewModel>);
 
@@ -348,8 +349,8 @@ namespace GAPS.TSC.Consillium.Controllers
                 }
                 
             }
-          //  model.ExpertList = _unitOfWork.Experts.Get().ToDictionary(x => x.Id, x => x.Name);
 
+            model.ExpertList = _expertService.Get(x => x.DeletedAt == null).ToDictionary(x => x.Id, x => x.Name);
 
             return View(model);
         }
@@ -430,7 +431,7 @@ namespace GAPS.TSC.Consillium.Controllers
                 return View(model);
             }
            var call = Mapper.Map<CallsViewModel,Call>(model);
-            _expertRequestService.AddCallsToRequest(model.ExpertId, call);
+           _expertRequestService.AddCallsToRequest(model.ExpertId, call);
             SetMessage(MessageType.Success, MessageConstant.GetMessage(Messages.RequestSuccess));
             return RedirectToAction("Calls");
         }
