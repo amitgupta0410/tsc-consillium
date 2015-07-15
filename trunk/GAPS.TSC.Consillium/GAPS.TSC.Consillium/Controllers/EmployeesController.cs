@@ -67,7 +67,7 @@ namespace GAPS.TSC.Consillium.Controllers {
 
         [HttpPost]
         public ActionResult AddNewLead(AddLeadModel model) {
-            if (!ModelState.IsValid) return RedirectToAction("AddNewLead");
+//            if (!ModelState.IsValid) return RedirectToAction("AddNewLead");
 
             var expert = Mapper.Map<AddLeadModel, Expert>(model);
             expert.CreatedAt = DateTime.Now;
@@ -82,9 +82,13 @@ namespace GAPS.TSC.Consillium.Controllers {
             }
             var result = model.Id == 0 ? _expertService.Add(expert) : _expertService.Update(expert);
             if (result != null)
+            {
                 SetMessage(MessageType.Success, MessageConstant.GetMessage(Messages.AddLeadSuccess));
-            //                            return RedirectToAction("Index");
-            return RedirectToAction("AddNewLead", new { id = result.Id });
+                //                            return RedirectToAction("Index");
+                return RedirectToAction("AddNewLead", new {id = result.Id});
+            }
+            return RedirectToAction("AddNewLead");
+
         }
 
 
