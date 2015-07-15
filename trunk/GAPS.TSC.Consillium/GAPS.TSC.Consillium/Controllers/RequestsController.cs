@@ -382,14 +382,14 @@ namespace GAPS.TSC.Consillium.Controllers
             return RedirectToAction("ProjectDetail", new { id = model.Id }); 
         }
        
-        public ActionResult DeleteExpert(ProjectDetailViewModel model)
+        public ActionResult DeleteExpert( int requestId,int expertId)
         {
-            
-           
-                _expertRequestService.RemoveExpertFromRequest(model.Id, model.ExpertId);
-           
 
-            return RedirectToAction("ProjectDetail");
+
+            _expertRequestService.RemoveExpertFromRequest(requestId, expertId);
+
+
+            return RedirectToAction("ProjectDetail", new { id =requestId });
         }
         public ActionResult RequestManual()
         {
