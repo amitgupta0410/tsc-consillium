@@ -11,11 +11,11 @@ namespace GAPS.TSC.Consillium.Models
         {
             IndustryList=new Dictionary<int, string>();
             GeographicList =new Dictionary<int, string>();
-            ProjectList=new Dictionary<int, string>();
+            ProjectList=new Dictionary<string, string>();
             ClientList =new Dictionary<int, string>();
         }
-      
-      
+
+        public String ProjectName { get; set; }
         public int? ProjectId { get; set; }
         public int? ClientId { get; set; }
        
@@ -24,7 +24,7 @@ namespace GAPS.TSC.Consillium.Models
         public String SearchString { get; set; }
         public Dictionary<int, string> IndustryList { get; set; }
         public Dictionary<int, string> GeographicList { get; set; }
-        public Dictionary<int, string> ProjectList { get; set; }
+        public Dictionary<string, string> ProjectList { get; set; }
         public Dictionary<int, string> ClientList { get; set; }
         public IEnumerable<ExpertSingleViewModel> Experts { get; set; } 
     }

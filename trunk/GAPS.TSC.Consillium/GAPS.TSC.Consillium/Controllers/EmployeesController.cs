@@ -51,8 +51,31 @@ namespace GAPS.TSC.Consillium.Controllers {
             model.GeographicList = _mainMastersService.GetAllGeographies().ToDictionary(x => x.Id, x =>x.Name);
             model.ClientList = _clientService.GetAllClients().ToDictionary(x => x.Id, x => x.Name);
 //            model.ProjectList = _projectService.GetAllMasterProjects().ToDictionary(x => x.Id, x => x.Name);
-            model.ProjectList= _expertRequestService.GetAllExpertsProjects()
+            var mannualProjects= _expertRequestService.GetAllExpertsProjects().Where(x=>x.ProjectId==null)
                 .ToDictionary(x => x.Id, x => x.ProjectName);
+            var apiProjects = _expertRequestService.GetAllExpertsProjects().Where(x => x.ProjectId != null);
+            List<string> mannualNames = new List<string>();
+            foreach (var mannualProject in mannualProjects)
+            {
+                mannualNames.Add(mannualProject.Value);
+            }
+            var masterProjects = _projectService.GetAllMasterProjects().ToDictionary(x => x.Id, x => x.Name);
+            List<string>apiNames=new List<string>();
+            foreach (var apiProject in apiProjects)
+            {
+                
+                var name = _projectService.GetAllMasterProjects().FirstOrDefault(x => x.Id == apiProject.ProjectId);
+                if(name!=null)
+                apiNames.Add(name.Name);
+            }
+            var combineList = mannualNames.Concat(apiNames);
+            model.ProjectList = combineList.ToDictionary(x => x, x => x);
+            if (!String.IsNullOrEmpty(model.ProjectName))
+            {
+
+
+                experts = experts.Where(x => x.ExpertRequests.Select(y => y.ProjectName).Contains(model.ProjectName));
+            }
             int parsedId;
             int.TryParse(model.SearchString, out parsedId);
             if (!String.IsNullOrEmpty(model.SearchString))
