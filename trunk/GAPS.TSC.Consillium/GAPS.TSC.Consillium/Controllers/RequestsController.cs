@@ -405,12 +405,24 @@ namespace GAPS.TSC.Consillium.Controllers
         {
             var model = new CallsViewModel();
             model.ExpertList = _expertRequestService.GetExpertsForRequest(id).ToDictionary(x=>x.Id,x=>x.Name);
+            var expertRequest = _expertRequestService.GetAllExpertsProjects().Where(x => x.Id == id).FirstOrDefault();
+            model.GeographicId = expertRequest.GeographicId;
+            //model.AmountCurrencyId = expertRequest.BudgetCurrencyId;
+            model.ExpertRequestId = id;
+            model.CostBorneBy = expertRequest.CostSharingType;
             model.CallTypeOptions = EnumHelper.GetEnumLabelValuess(typeof(CallType));
             model.CostSharingOptions = EnumHelper.GetEnumLabelValuess(typeof(CostSharingType));
             model.Geography = _masterService.GetAllGeographies().ToDictionary(x => x.Id, x => x.Name);
             model.Currency = _masterService.GetAllCurrencies().ToDictionary(x => x.CurrencyId, x => x.CurrencyCode);
             model.PaymentStatusOptions = EnumHelper.GetEnumLabelValuess(typeof (PaymentStatus));
             return View(model);
+        }
+
+        public JsonResult GetHonorarium(int expertReqId, int expertId)
+        {
+
+            var expert = _expertRequestService.GetExpertById(expertReqId, expertId);
+            return Json(expert, JsonRequestBehavior.AllowGet);
         }
 
 

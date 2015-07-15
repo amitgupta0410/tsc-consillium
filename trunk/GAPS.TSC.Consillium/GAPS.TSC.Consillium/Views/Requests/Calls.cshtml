@@ -14,10 +14,11 @@
 <hr />
 <div class="row">
     <div class="col-md-12">
+        @Html.HiddenFor(x => x.ExpertRequestId)
         <div class="col-md-3">
             <div class="form-group">
                 <label><b>Expert Name</b></label><br>
-                @Html.DropDownListFor(x => x.ExpertId, new SelectList(Model.ExpertList, "Key", "Value"), new { @class = "form-control", @data_placeholder = "Choose Expert" })
+                @Html.DropDownListFor(x => x.ExpertId, new SelectList(Model.ExpertList, "Key", "Value"),"Select Expert", new { @class = "form-control", @data_placeholder = "Choose Expert" })
                 @Html.ValidationMessageFor(x => x.ExpertId)
             </div>
         </div>
@@ -44,7 +45,7 @@
         <div class="col-md-3">
             <div class="form-group">
                 <label><b>Honorarium Per Hour</b></label>
-                <input class="form-control" id="HonorariumPerHour" name="HonorariumPerHour" type="text" value="">
+                @Html.TextBoxFor(x => x.FeesPerHour, new { @class = "form-control ", Value = "" })
             </div>
         </div>
         <div class="col-md-3">
@@ -104,7 +105,7 @@
             <div class="form-group">
                 <label><b>Payment Status</b></label>
                 @Html.DropDownListFor(x => x.PaymentStatus, new SelectList(Model.PaymentStatusOptions, "Key", "Value", Model.PaymentStatusOptions.FirstOrDefault()), new { @class = "form-control", @data_placeholder = "Choose Cost" })
-@Html.ValidationMessageFor(x => x.PaymentStatus)
+                @Html.ValidationMessageFor(x => x.PaymentStatus)
             </div>
         </div>
         <div class="clearfix"></div>
@@ -233,3 +234,31 @@
     </div>
 
 </div>
+@section scripts{
+
+    <script type="text/javascript">
+        $(function () {
+
+
+           
+
+            $("#ExpertId").change(function () {
+                var expertId = $("#ExpertId").val();
+               var expertReqId =  $("#ExpertRequestId").val();
+                if (expertId != "") {
+                   
+                    $.getJSON("/Requests/GetHonorarium/", { expertReqId: expertReqId, expertId: expertId }, function (expert) {
+                        //$("#FeesPerHour").val(expert.FeesAmount).toString();
+                        var fees = expert.FeesAmount;
+                    });
+                   
+                }
+                
+            });
+
+
+        });
+       
+    </script>
+    }
+   
