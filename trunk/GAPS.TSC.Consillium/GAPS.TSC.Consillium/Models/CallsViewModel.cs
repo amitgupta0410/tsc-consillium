@@ -13,10 +13,12 @@ namespace GAPS.TSC.Consillium.Models
             ExpertList = new Dictionary<int, string>();
             Geography = new Dictionary<int, string>();
             Currency = new Dictionary<int, string>();
+            TeamMembers = new Dictionary<int, string>();
             PaymentStatusOptions = new Dictionary<int, string>();
         }
         public int ExpertRequestId { get; set; }
         public int ExpertId { get; set; }
+        public IDictionary<int, string> TeamMembers { get; set; } 
         public int CallFacilitatedById { get; set; }
         public IDictionary<int, string> CallTypeOptions { get; set; }
         public CallType CallType { get; set; }
