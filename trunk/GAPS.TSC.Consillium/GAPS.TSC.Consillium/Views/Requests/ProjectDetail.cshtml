@@ -188,10 +188,12 @@
             </div>
         }
         <div class="clearfix"></div>
+
+        @Html.HiddenFor(x => x.Id)
+        <div class="col-md-10">
         @using (@Html.BeginForm("ProjectDetailButton", "Requests", FormMethod.Post))
         {
-            @Html.HiddenFor(x => x.Id)
-            <div class="col-md-10">
+                <div>
                 <div class="col-md-2">
                     <div class="form-group">
                         <div style="padding-top: 9px"></div><br />
@@ -204,6 +206,8 @@
                         <input type="submit" class="btn btn-primary btn-sm" value="Add Expert/Lead" />
                     </div>
                 </div>
+                </div>
+            }
                 <div class="col-md-2">
                     <div class="form-group">
                         <div style="padding-top: 9px"></div><br />
@@ -225,12 +229,13 @@
                 <div class="col-md-1">
                     <div class="form-group">
                         <div style="padding-top: 9px"></div><br />
-                        <input type="button" class="btn btn-primary btn-sm" value="Paid Experts" style="margin-left: 13px; padding-top: 8px;" />
+                    <input type="submit" class="btn btn-primary" value="Paid Experts" style="width: 99px;" onclick="location.href='@Url.Action("Calls", "Requests", new { id = Model.Id})' " />
+                    @*<input type="button" class="btn btn-primary btn-sm" value="Paid Experts" style="margin-left: 13px; padding-top: 8px;" />*@
                     </div>
                 </div>
 
             </div>
-        }
+
     </div>
 </div>
 <br />
@@ -269,7 +274,7 @@
                                 <td>
                                                                      
 
-                                   
+                                  
                                   @Html.ActionLink("Delete Expert", "DeleteExpert", new { requestId = Model.Id, expertId = expert.Id }, new { @class = "button delete_recipient" }) 
                                 </td>
                             </tr>
