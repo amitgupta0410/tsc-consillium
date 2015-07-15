@@ -27,6 +27,15 @@ namespace GAPS.TSC.Consillium.Utils
                 case Messages.Update:
                     messagetext = "Your Request has been sucessfully updated";
                     break;
+                case Messages.AddLeadSuccess:
+                    messagetext = "Lead has been saved successfully";
+                    break;
+                case Messages.ConvertLead:
+                    messagetext = "Lead has been converted to expert successfully";
+                    break;
+                case Messages.DeleteLead:
+                    messagetext = "Lead has been deleted successfully.";
+                    break;
             }
             return messagetext;
         }
