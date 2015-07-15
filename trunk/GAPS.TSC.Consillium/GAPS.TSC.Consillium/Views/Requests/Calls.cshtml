@@ -26,7 +26,7 @@
             </div>
             <div class="col-md-3">
                 <div class="form-group">
-                    <label><b>Nature Of Interview</b></label>
+                    <label><b>Nature Of Interview</b></label>  
                     @Html.DropDownListFor(x => x.CallType, new SelectList(Model.CallTypeOptions, "Key", "Value", Model.CallTypeOptions.FirstOrDefault()), new { @class = "form-control", @data_placeholder = "Choose Cost" })
                     @Html.ValidationMessageFor(x => x.CallType)
                 </div>
@@ -35,7 +35,7 @@
                 <div class="form-group">
                     <label><b>Interview Date</b></label>
                     @Html.TextBoxFor(x => x.InterviewDate, new { @class = "form-control date", Value = "" })
-                </div>
+                   </div>
             </div>
             <div class="clearfix"></div>
             <div class="col-md-3">
@@ -242,9 +242,12 @@
                 if (expertId != "") {
                     
                     $.getJSON("/Requests/GetHonorarium/", { expertReqId: expertReqId, expertId: expertId }, function (data) {
-                        $("#FeesPerHour").val(data.Name);
-                        getResult(data.FeesAmount, data.ID);
-                        var fees = data.FeesAmount;
+                        $("#FeesPerHour").val(data.FeesAmount);
+                        if (data.FeesCurrencyId != null) {
+                            $('#AmountCurrencyId option')
+                                .filter(function () { return $.trim($(this).val()) == data.FeesCurrencyId; })
+                                .attr('selected', true);
+                        }
                     });
                 }
 

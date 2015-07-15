@@ -21,13 +21,13 @@ namespace GAPS.TSC.Consillium.Controllers
         private readonly IUserService _userService;
         private readonly IMainMastersService _masterService;
         private readonly IProjectService _projectService;
+        private readonly IExpertService _expertService;
         private readonly IExpertRequestService _expertRequestService;
         private readonly IClientService _clientService;
-        private readonly IAttachmentService _attachmentService;
-        private readonly IUnitOfWork _unitOfWork;
+
         // GET: /Requests/
         public RequestsController(IAttachmentService attachmentService, IMainMastersService mastersService,
-            IProjectService projectService, IUserService userService, IExpertRequestService expertRequestService, IClientService clientService, IUnitOfWork unitOfWork)
+            IProjectService projectService, IUserService userService, IExpertRequestService expertRequestService, IClientService clientService, IExpertService expertService)
             : base(attachmentService)
         {
             _userService = userService;
@@ -35,8 +35,7 @@ namespace GAPS.TSC.Consillium.Controllers
             _projectService = projectService;
             _expertRequestService = expertRequestService;
             _clientService = clientService;
-            _attachmentService = attachmentService;
-            _unitOfWork = unitOfWork;
+            _expertService = expertService;
         }
         [HttpGet]
         public ActionResult Index(ExpertRequestDashboardViewModel model)
@@ -349,7 +348,7 @@ namespace GAPS.TSC.Consillium.Controllers
                 }
                 
             }
-            model.ExpertList = _unitOfWork.Experts.Get().ToDictionary(x => x.Id, x => x.Name);
+          //  model.ExpertList = _unitOfWork.Experts.Get().ToDictionary(x => x.Id, x => x.Name);
 
 
             return View(model);
@@ -431,18 +430,14 @@ namespace GAPS.TSC.Consillium.Controllers
                 return View(model);
             }
            var call = Mapper.Map<CallsViewModel,Call>(model);
-
-           _expertRequestService.AddCallsToRequest(model.ExpertId, call);
+            _expertRequestService.AddCallsToRequest(model.ExpertId, call);
             SetMessage(MessageType.Success, MessageConstant.GetMessage(Messages.RequestSuccess));
             return RedirectToAction("Calls");
-
-            
         }
         public JsonResult GetHonorarium(int expertReqId, int expertId)
         {
-            var expert = _expertRequestService.GetExpertById(expertReqId, expertId);
-            var data = expert;
-            return Json(data, JsonRequestBehavior.AllowGet);
+            var expert = _expertService.GetById(expertId);
+            return Json(new{expert.Id,expert.FeesAmount,expert.FeesCurrencyId}, JsonRequestBehavior.AllowGet);
         }
        
 
