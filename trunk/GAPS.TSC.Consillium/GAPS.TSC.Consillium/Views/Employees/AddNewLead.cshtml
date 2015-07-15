@@ -5,7 +5,10 @@
 @{
     ViewBag.Title = "Add New Lead";
 }
-
+@{
+    Model.StartDate = DateTime.Today;
+    Model.ContactedOn = DateTime.Today;
+}
 <div class="row">
     <div class="col-md-12">
         <h3 class="page-title">
@@ -51,7 +54,7 @@
             <div class="col-md-3">
                 <div class="form-group">
                     <label><b>City*</b></label><br />
-                    @Html.TextBoxFor(x => x.City)
+                    @Html.TextBoxFor(x => x.City)<br/>
                     @Html.ValidationMessageFor(x => x.City)
                 </div>
             </div>
@@ -59,7 +62,7 @@
             <div class="col-md-3">
                 <div class="form-group">
                     <label><b>Email*</b></label><br />
-                    @Html.TextBoxFor(x => x.Email)
+                    @Html.TextBoxFor(x => x.Email)<br/>
                     @Html.ValidationMessageFor(x => x.Email)
                 </div>
             </div>
@@ -67,14 +70,14 @@
             <div class="col-md-3">
                 <div class="form-group">
                     <label><b>Primary Contact No*</b></label>
-                    @Html.TextBoxFor(x => x.PrimaryContact)
+                    @Html.TextBoxFor(x => x.PrimaryContact)<br/>
                     @Html.ValidationMessageFor(x => x.PrimaryContact)
                 </div>
             </div>
             <div class="col-md-3">
                 <div class="form-group">
                     <label><b>Secondary Contact No</b></label>
-                    @Html.TextBoxFor(x => x.SecondaryContact)
+                    @Html.TextBoxFor(x => x.SecondaryContact)<br/>
                     @Html.ValidationMessageFor(x => x.SecondaryContact)
                 </div>
             </div>
@@ -90,7 +93,7 @@
             <div class="col-md-3">
                 <div class="form-group">
                     <label><b>LinkedIn</b></label><br />
-                    @Html.TextBoxFor(x => x.LinkedInUrl)
+                    @Html.TextBoxFor(x => x.LinkedInUrl)<br/>
                     @Html.ValidationMessageFor(x => x.LinkedInUrl)
                 </div>
             </div>
@@ -203,9 +206,8 @@
             if (Model.IsLead && Model.Id > 0) {
                 <div class="col-md-1">
                     <div class="form-group">
-                        <div style="padding-top: 9px"></div><br />
-                        @*                    <input type="button" class="btn btn-primary" value="Convert"/>*@
-                        <a class="btn btn-primary" href="@Url.Action("ConvertLead", "Employees", new {id = @Model.Id})">Convert</a>
+                        <div style="padding-top: 9px"></div><br/>
+                        <a class="btn btn-primary" href="@Url.Action("ConvertLead", "Employees", new {id = @Model.Id})">Convert</a>&nbsp;
 
                     </div>
                 </div>
@@ -235,7 +237,7 @@
                 <div class="col-md-2">
                     <div class="form-group">
                         <label><b>From*</b></label><br />
-                        @Html.TextBoxFor(x => x.StartDate, new { @class = "form-control date"})
+                        @Html.TextBoxFor(x => x.StartDate, new { @class = "form-control date" , Value = Model.StartDate.ToString("dd MMM yyyy")})
                         @Html.ValidationMessageFor(x=>x.StartDate)
                     </div>
                 </div>
@@ -315,7 +317,6 @@
                 function (data) {
                     $('#edit-work-modal').find('.modal-body').html(data);
                     $.validator.unobtrusive.parse(document);
-                    configurePopup();
                 });
             $('#edit-work-modal').modal();
 

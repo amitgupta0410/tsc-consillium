@@ -42,11 +42,14 @@ namespace GAPS.TSC.Consillium.Controllers {
             var model = new AddLeadModel();
             if (id.HasValue) {
                 var expert = _expertService.GetById(id.Value);
+                
                 if (expert != null) {
                     model = Mapper.Map<Expert, AddLeadModel>(expert);
                     var workexperience = _expertService.GetWorkExperiences(expert.Id);
                     if (expert.ResumeId != null) {
                         var attachment = _attachmentService.GetById(expert.ResumeId.Value);
+                
+                        
                         model.FileName = attachment.ActualName;
                         model.FileGuidName = attachment.FileName;
                     }
@@ -77,18 +80,14 @@ namespace GAPS.TSC.Consillium.Controllers {
                 }
             }
             if (Request.Files["File"] != null && Request.Files["File"].ContentLength > 0) {
-                //                var file = UploadAndSave("File");
+//                                var file = UploadAndSave("File");
                 expert.ResumeId = 2;
             }
             var result = model.Id == 0 ? _expertService.Add(expert) : _expertService.Update(expert);
-            if (result != null)
-            {
-                SetMessage(MessageType.Success, MessageConstant.GetMessage(Messages.AddLeadSuccess));
-                //                            return RedirectToAction("Index");
-                return RedirectToAction("AddNewLead", new {id = result.Id});
-            }
-            return RedirectToAction("AddNewLead");
-
+            if (result == null) return RedirectToAction("AddNewLead");
+            SetMessage(MessageType.Success, MessageConstant.GetMessage(Messages.AddLeadSuccess));
+            //                            return RedirectToAction("Index");
+            return RedirectToAction("AddNewLead", new {id = result.Id});
         }
 
 
