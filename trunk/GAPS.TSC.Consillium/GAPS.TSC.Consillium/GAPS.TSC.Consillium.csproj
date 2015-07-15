@@ -224,6 +224,7 @@
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\AddLeadModel.cs" />
     <Compile Include="Models\AddMembersToTeam.cs" />
+    <Compile Include="Models\CallsViewModel.cs" />
     <Compile Include="Models\ExpertDashboardViewModel.cs" />
     <Compile Include="Models\ExpertRequestDashboardViewModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
@@ -358,14 +359,12 @@
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Shared\_Scripts.cshtml" />
     <Content Include="Views\Shared\_Layout1.cshtml" />
-    <Content Include="Views\Shared\_PartialScripts.cshtml" />
     <Content Include="Views\LogIn\Index.cshtml" />
     <Content Include="Views\Shared\_Styles.cshtml" />
     <Content Include="Views\Shared\_PartialHeader.cshtml" />
     <Content Include="Views\Shared\_PartialSideMenu.cshtml" />
     <Content Include="Views\Reports\Index.cshtml" />
     <Content Include="Views\Projects\Projects.cshtml" />
-    <Content Include="Views\Projects\Payments.cshtml" />
     <Content Include="Views\Calls\CallDasboard.cshtml" />
     <Content Include="Views\Calls\PaidCallDetails.cshtml" />
     <Content Include="Views\Employees\LeadsDashboard.cshtml" />
@@ -382,6 +381,8 @@
     <Content Include="Views\Requests\ProjectDetail.cshtml" />
     <Content Include="Views\Requests\UpdateRequest.cshtml" />
     <Content Include="Views\Employees\Index.cshtml" />
+    <Content Include="Views\Requests\Calls.cshtml" />
+    <Content Include="Views\Shared\_PartialScripts.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -1,0 +1,257 @@
+﻿@model GAPS.TSC.Consillium.Models.CallsViewModel
+@{
+    ViewBag.Title = "Calls";
+}
+
+<h2>Calls</h2>
+<div class="row">
+    <div class="col-md-12">
+        <h3 class="page-title">
+            Payments to be made to Experts
+        </h3>
+    </div>
+</div>
+<hr />
+<div class="row">
+    <div class="col-md-12">
+        @using (@Html.BeginForm("Calls", "Requests", FormMethod.Post))
+        {
+            @Html.HiddenFor(x => x.ExpertRequestId)
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label><b>Expert Name</b></label><br>
+                    @Html.DropDownListFor(x => x.ExpertId, new SelectList(Model.ExpertList, "Key", "Value"), "Select Expert", new { @class = "form-control", @data_placeholder = "Choose Expert" })
+                    @Html.ValidationMessageFor(x => x.ExpertId)
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label><b>Nature Of Interview</b></label>
+                    @Html.DropDownListFor(x => x.CallType, new SelectList(Model.CallTypeOptions, "Key", "Value", Model.CallTypeOptions.FirstOrDefault()), new { @class = "form-control", @data_placeholder = "Choose Cost" })
+                    @Html.ValidationMessageFor(x => x.CallType)
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label><b>Interview Date</b></label>
+                    @Html.TextBoxFor(x => x.InterviewDate, new { @class = "form-control date", Value = "" })
+                </div>
+            </div>
+            <div class="clearfix"></div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label><b>Call Duration</b></label><br>
+                    @Html.TextBoxFor(x => x.CallDuration, new { @class = "form-control ", Value = "" })
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label><b>Honorarium Per Hour</b></label>
+                    @Html.TextBoxFor(x => x.FeesPerHour, new { @class = "form-control ", Value = "" })
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label><b>Payment Mode</b></label>
+                    <input class="form-control" id="PaymentMode" name="PaymentMode" type="text" value="">
+                </div>
+            </div>
+            <div class="clearfix"></div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label><b>Cost Borne By</b></label><br>
+                    @Html.DropDownListFor(x => x.CostBorneBy, new SelectList(Model.CostSharingOptions, "Key", "Value", Model.CostSharingOptions.FirstOrDefault()), new { @class = "form-control", @data_placeholder = "Choose Cost" })
+                    @Html.ValidationMessageFor(x => x.CostBorneBy)
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label><b>Call Facilitated By</b></label>
+                    @Html.DropDownListFor(x => x.CallFacilitatedById, new SelectList(Model.TeamMembers, "Key", "Value"), new { @class = "form-control", @data_placeholder = "Choose Member" })
+                    @Html.ValidationMessageFor(x => x.CallFacilitatedById)
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label><b>Payment Details</b></label>
+                    @Html.TextBoxFor(x => x.Details, new { @class = "form-control ", Value = "" })
+                </div>
+            </div>
+
+            <div class="clearfix"></div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label><b>Geography</b></label><br>
+                    @Html.DropDownListFor(x => x.GeographicId, new SelectList(Model.Geography, "Key", "Value"), new { @class = "form-control", @data_placeholder = "Choose Expert" })
+                    @Html.ValidationMessageFor(x => x.GeographicId)
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label><b>Amount to be paid</b></label>
+                    @Html.TextBoxFor(x => x.Amount, new { @class = "form-control ", Value = "" })
+                </div>
+            </div>
+            <div class="col-md-1">
+                <div class="form-group">
+                    <div style="padding-top: 7px"></div>
+                    <br>
+                    @Html.DropDownListFor(x => x.AmountCurrencyId, new SelectList(Model.Currency, "Key", "Value"), new { @class = "form-control", @data_placeholder = "Choose Currency" })
+                    @Html.ValidationMessageFor(x => x.AmountCurrencyId)
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label><b>Payment Status</b></label>
+                    @Html.DropDownListFor(x => x.PaymentStatus, new SelectList(Model.PaymentStatusOptions, "Key", "Value", Model.PaymentStatusOptions.FirstOrDefault()), new { @class = "form-control", @data_placeholder = "Choose Cost" })
+                    @Html.ValidationMessageFor(x => x.PaymentStatus)
+                </div>
+            </div>
+            <div class="clearfix"></div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <div></div>
+                    <br />
+                    <input type="submit" value="save" class="btn btn-primary" style="width: 109px; margin-top: 7px;">
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="col-md-10">
+            <div class="table-responsive table-bordered">
+                <table class="table">
+                    <tbody>
+                        <tr>
+                            <th><label>S.No.</label></th>
+                            <th><label>Expert Name</label></th>
+                            <th><label>Nature Of Interview</label></th>
+                            <th><label>Interview Date</label></th>
+                            <th><label>Call Duration</label></th>
+                            <th><label>Honorarium per Hour</label></th>
+                            <th><label>Payment Mode</label></th>
+                            <th><label>Cost Corne By</label></th>
+                            <th><label>Call Facilitated By</label></th>
+                            <th><label>Payment Details</label></th>
+                            <th><label></label></th>
+                        </tr>
+                        <tr class="">
+                            <td>1</td>
+                            <td>Abc</td>
+                            <td>Dragos Hornoiu</td>
+                            <td>TSC Romania</td>
+                            <td>XYZ</td>
+                            <td>ABC</td>
+                            <td>XYZ</td>
+                            <td>XYZ</td>
+                            <td>22-Mar-2015</td>
+                            <td>22-Mar-2015</td>
+                            <td><input type="submit" class="btn btn-default" value="InitiatePayment" /></td>
+                        </tr>
+                        <tr class="info">
+                            <td>2</td>
+                            <td>Abc</td>
+                            <td>Dragos Hornoiu</td>
+                            <td>TSC Romania</td>
+                            <td>XYZ</td>
+                            <td>ABC</td>
+                            <td>XYZ</td>
+                            <td>XYZ</td>
+                            <td>22-Mar-2015</td>
+                            <td>22-Mar-2015</td>
+                            <td><input type="submit" class="btn btn-default" value="InitiatePayment" /></td>
+                        </tr>
+                        <tr class="success">
+                            <td>3</td>
+                            <td>Abc</td>
+                            <td>Dragos Hornoiu</td>
+                            <td>TSC Romania</td>
+                            <td>XYZ</td>
+                            <td>ABC</td>
+                            <td>XYZ</td>
+                            <td>XYZ</td>
+                            <td>22-Mar-2015</td>
+                            <td>22-Mar-2015</td>
+                            <td><input type="submit" class="btn btn-default" value="InitiatePayment" /></td>
+                        </tr>
+                        <tr class="warning">
+                            <td>4</td>
+                            <td>Abc</td>
+                            <td>Dragos Hornoiu</td>
+                            <td>TSC Romania</td>
+                            <td>XYZ</td>
+                            <td>ABC</td>
+                            <td>XYZ</td>
+                            <td>XYZ</td>
+                            <td>22-Mar-2015</td>
+                            <td>22-Mar-2015</td>
+                            <td><input type="submit" class="btn btn-default" value="InitiatePayment" /></td>
+                        </tr>
+                        <tr class="danger">
+                            <td>5</td>
+                            <td>Abc</td>
+                            <td>Dragos Hornoiu</td>
+                            <td>TSC Romania</td>
+                            <td>XYZ</td>
+                            <td>ABC</td>
+                            <td>XYZ</td>
+                            <td>XYZ</td>
+                            <td>22-Mar-2015</td>
+                            <td>22-Mar-2015</td>
+                            <td><input type="submit" class="btn btn-default" value="InitiatePayment" /></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="clearfix"></div>
+        <div class="col-md-6">
+            <div class="col-md-3">
+                <div class="form-group">
+                    <div style="padding-top: 9px"></div>
+                    <br />
+                    <input type="submit" class="btn btn-primary btn-sm" value="Export To Excel" />
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <div style="padding-top: 9px"></div>
+                    <br />
+                    <input type="submit" class="btn btn-primary btn-sm" value="Save" style="width:128px;" />
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+@section scripts{
+
+    <script type="text/javascript">
+        $(function () {
+
+
+
+
+            $("#ExpertId").change(function () {
+                var expertId = $("#ExpertId").val();
+                var expertReqId = $("#ExpertRequestId").val();
+                if (expertId != "") {
+                    
+                    $.getJSON("/Requests/GetHonorarium/", { expertReqId: expertReqId, expertId: expertId }, function (data) {
+                        $("#FeesPerHour").val(data.Name);
+                        getResult(data.FeesAmount, data.ID);
+                        var fees = data.FeesAmount;
+                    });
+                }
+
+            });
+
+
+        });
+
+    </script>
+}

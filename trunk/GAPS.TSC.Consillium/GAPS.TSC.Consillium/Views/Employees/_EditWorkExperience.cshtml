@@ -8,25 +8,29 @@
                 <div class="col-md-6">
                     <div class="form-group">
                         <label><b>Designation*</b></label><br />
-                        @Html.TextBoxFor(x => x.Designation)
+                        @Html.TextBoxFor(x => x.Designation)<br/>
+                        @Html.ValidationMessageFor(x=>x.Designation)
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
                         <label><b>Organisation*</b></label><br />
-                        @Html.TextBoxFor(x => x.Organisation)
+                        @Html.TextBoxFor(x => x.Organisation)<br/>
+                        @Html.ValidationMessageFor(x=>x.Organisation)
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
-                        <label><b>From*</b></label><br />
+                        <label><b>Start Date*</b></label><br />
                         @Html.TextBoxFor(x => x.StartDate, new { @class = "form-control date", Value = Model.StartDate.ToString("dd MMM yyyy") })
+@Html.ValidationMessageFor(x=>x.StartDate)
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
-                        <label><b>To</b></label><br />
+                        <label><b>End Date</b></label><br />
                         @Html.TextBoxFor(x => x.EndDate, new { @class = "form-control date", Value = Model.EndDate.HasValue ? Model.EndDate.Value.ToString("dd MMM yyyy") : string.Empty })
+                 
                     </div>
                 </div>
                 <div class="col-md-2">
@@ -36,3 +40,5 @@
                     </div>
                 </div>
 }
+@Html.Partial("_PartialScripts")
+

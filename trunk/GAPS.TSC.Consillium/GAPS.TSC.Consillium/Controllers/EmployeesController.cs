@@ -6,6 +6,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
 using System.Web.UI.WebControls;
+using System.Xml.Linq;
 using AutoMapper;
 using GAPS.TSC.CONS.Domain;
 using GAPS.TSC.CONS.Domain.ApiModels;
@@ -26,6 +27,7 @@ namespace GAPS.TSC.Consillium.Controllers {
         private readonly IExpertService _expertService;
         private readonly IClientService _clientService;
         private readonly IExpertRequestService _expertRequestService;
+        private readonly IAttachmentService _attachmentService;
 
         public EmployeesController(IUserService userService, IAttachmentService attachmentService, IMainMastersService mainMastersService, IExpertService expertService, IClientService clientService, IProjectService projectService , IExpertRequestService expertRequestService)
             : base(attachmentService) {
@@ -36,7 +38,8 @@ namespace GAPS.TSC.Consillium.Controllers {
             _clientService = clientService;
             _projectService = projectService;
             _expertRequestService = expertRequestService;
-            }
+            _attachmentService = attachmentService;
+        }
         //
         // GET: /Employees/
         public ActionResult Index(ExpertDashboardViewModel model)
@@ -82,9 +85,17 @@ namespace GAPS.TSC.Consillium.Controllers {
             var model = new AddLeadModel();
             if (id.HasValue) {
                 var expert = _expertService.GetById(id.Value);
+                
                 if (expert != null) {
                     model = Mapper.Map<Expert, AddLeadModel>(expert);
                     var workexperience = _expertService.GetWorkExperiences(expert.Id);
+                    if (expert.ResumeId != null) {
+                        var attachment = _attachmentService.GetById(expert.ResumeId.Value);
+                
+                        
+                        model.FileName = attachment.ActualName;
+                        model.FileGuidName = attachment.FileName;
+                    }
                     if (workexperience != null)
                         model.WorkExperiences = workexperience.Select(Mapper.Map<WorkExperience, WorkExperienceModel>);
                 }
@@ -102,7 +113,7 @@ namespace GAPS.TSC.Consillium.Controllers {
 
         [HttpPost]
         public ActionResult AddNewLead(AddLeadModel model) {
-            if (!ModelState.IsValid) return RedirectToAction("AddNewLead");
+//            if (!ModelState.IsValid) return RedirectToAction("AddNewLead");
 
             var expert = Mapper.Map<AddLeadModel, Expert>(model);
             expert.CreatedAt = DateTime.Now;
@@ -112,13 +123,14 @@ namespace GAPS.TSC.Consillium.Controllers {
                 }
             }
             if (Request.Files["File"] != null && Request.Files["File"].ContentLength > 0) {
-                //                var file = UploadAndSave("File");
+//                                var file = UploadAndSave("File");
                 expert.ResumeId = 2;
             }
             var result = model.Id == 0 ? _expertService.Add(expert) : _expertService.Update(expert);
-            //            if (result)
-            //                return RedirectToAction("Index");
-            return RedirectToAction("AddNewLead", new { id = result.Id });
+            if (result == null) return RedirectToAction("AddNewLead");
+            SetMessage(MessageType.Success, MessageConstant.GetMessage(Messages.AddLeadSuccess));
+            //                            return RedirectToAction("Index");
+            return RedirectToAction("AddNewLead", new {id = result.Id});
         }
 
 
@@ -126,6 +138,8 @@ namespace GAPS.TSC.Consillium.Controllers {
             var expert = _expertService.GetById(id);
             expert.JoiningDate = DateTime.Now;
             var result = _expertService.Update(expert);
+            if (result != null)
+                SetMessage(MessageType.Success, MessageConstant.GetMessage(Messages.ConvertLead));
             return RedirectToAction("AddNewLead", new { id = result.Id });
         }
 
@@ -133,18 +147,20 @@ namespace GAPS.TSC.Consillium.Controllers {
             var expert = _expertService.GetById(id);
             expert.DeletedAt = DateTime.Now;
             var result = _expertService.Update(expert);
+            if (result != null)
+                SetMessage(MessageType.Success, MessageConstant.GetMessage(Messages.DeleteLead));
             return RedirectToAction("AddNewLead");
         }
 
         [HttpPost]
-        public JsonResult LeadNameExist(string Name) {
-            var result = _expertService.LeadNameExist(Name);
+        public JsonResult LeadNameExist(string Name, int Id) {
+            var result = _expertService.LeadNameExist(Name, Id);
             return Json(result);
         }
 
         [HttpPost]
-        public JsonResult EmailExist(string Email) {
-            var result = _expertService.EmailExist(Email);
+        public JsonResult EmailExist(string Email, int Id) {
+            var result = _expertService.EmailExist(Email, Id);
             return Json(result);
         }
 
