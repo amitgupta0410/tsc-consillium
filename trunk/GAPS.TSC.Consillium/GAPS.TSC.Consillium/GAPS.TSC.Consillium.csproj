@@ -358,7 +358,6 @@
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Shared\_Scripts.cshtml" />
     <Content Include="Views\Shared\_Layout1.cshtml" />
-    <Content Include="Views\Shared\_PartialScripts.cshtml" />
     <Content Include="Views\LogIn\Index.cshtml" />
     <Content Include="Views\Shared\_Styles.cshtml" />
     <Content Include="Views\Shared\_PartialHeader.cshtml" />
@@ -381,6 +380,7 @@
     <Content Include="Views\Requests\ProjectDetail.cshtml" />
     <Content Include="Views\Requests\UpdateRequest.cshtml" />
     <Content Include="Views\Requests\Calls.cshtml" />
+    <Content Include="Views\Shared\_PartialScripts.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

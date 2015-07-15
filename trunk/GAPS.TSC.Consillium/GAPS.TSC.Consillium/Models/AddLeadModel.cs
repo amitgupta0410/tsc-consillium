@@ -62,11 +62,11 @@ namespace GAPS.TSC.Consillium.Models {
         public int? ResumeId { get; set; }
         public string FileName { get; set; }
         public string FileGuidName { get; set; }
-//        [Required]
+        [Required]
         public string Designation { get; set; }
-//        [Required]
+        [Required]
         public string Organisation { get; set; }
-//        [Required]
+        [Required]
         public DateTime StartDate { get; set; }
         public DateTime? EndDate { get; set; }
 
@@ -75,8 +75,12 @@ namespace GAPS.TSC.Consillium.Models {
     public class WorkExperienceModel {
         public int Id { get; set; }
         public int ExpertId { get; set; }
+
+        [Required]
         public string Designation { get; set; }
+        [Required]
         public string Organisation { get; set; }
+        [Required]
         public DateTime StartDate { get; set; }
         public DateTime? EndDate { get; set; }
     }
