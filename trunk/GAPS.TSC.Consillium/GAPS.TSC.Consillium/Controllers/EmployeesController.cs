@@ -167,6 +167,8 @@ namespace GAPS.TSC.Consillium.Controllers {
             model.CountryOptions = _mainMastersService.GetAllCountries().ToDictionary(x => x.Id, x => x.Name);
             model.CurrencyOptions = _mainMastersService.GetAllCurrencies().ToDictionary(x => x.CurrencyId, x => x.CurrencyCode);
             model.RecruiterOptions = _userService.GetAllTeamMembers().ToDictionary(x => x.Id, x => x.Name);
+            model.GeographicOptions = _mainMastersService.GetAllGeographies().ToDictionary(x => x.Id, x => x.Name);
+            model.IndustryOptions = _mainMastersService.GetAllIndustries().ToDictionary(x => x.Id, x => x.Name);
             model.TitleOptions = EnumHelper.GetEnumLabels(typeof(TitleOptions));
             model.ExpertTypeOptions = EnumHelper.GetEnumLabels(typeof(ExpertType));
             model.LeadStatusOptions = EnumHelper.GetEnumLabels(typeof(LeadStatus));
