@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using GAPS.TSC.CONS.Domain;
 using GAPS.TSC.CONS.Repositories;
@@ -13,6 +14,9 @@ namespace GAPS.TSC.CONS.Services {
         int? DeleteWorkExperience(int id);
         int? EditWorkExperience(WorkExperience work);
         WorkExperience GetWorkExperienceById(int id);
+        int? AddNote(ExpertNote note);
+        IEnumerable<ExpertNote> GetNotes(int id);
+        IEnumerable<Call> GetCallsForExperts(int id);
     }
 
     public class ExpertService : GenericService<Expert>, IExpertService {
@@ -66,6 +70,10 @@ namespace GAPS.TSC.CONS.Services {
             }
         }
 
+        public IEnumerable<Call> GetCallsForExperts(int id) {
+            return id < 1 ? null : _unitOfWork.Calls.Get(x => x.ExpertId == id);
+        }
+
         public IEnumerable<WorkExperience> GetWorkExperiences(int expertId) {
             if (expertId < 1) return null;
             var experience = _unitOfWork.WorkExperiences.Get(x => x.ExpertId == expertId);
@@ -105,6 +113,20 @@ namespace GAPS.TSC.CONS.Services {
             } catch (Exception ex) {
                 return null;
             }
+        }
+
+        public int? AddNote(ExpertNote note) {
+            try {
+                _unitOfWork.ExpertNotes.Add(note);
+                _unitOfWork.Save();
+                return note.ExpertId;
+            } catch (Exception ex) {
+                return null;
+            }
+        }
+
+        public IEnumerable<ExpertNote> GetNotes(int id) {
+            return _unitOfWork.ExpertNotes.Get(x => x.ExpertId == id);
         }
 
 

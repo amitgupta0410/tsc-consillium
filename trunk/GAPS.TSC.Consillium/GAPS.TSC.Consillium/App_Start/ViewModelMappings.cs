@@ -27,6 +27,14 @@ namespace GAPS.TSC.Consillium.App_Start {
             Mapper.CreateMap<ExpertRequest, UpdateExpertRequest>();
             Mapper.CreateMap<UpdateExpertRequest, ExpertRequest>();
             Mapper.CreateMap<CallsViewModel, Call>();
+            Mapper.CreateMap<Expert, ProfileViewModel>();
+            Mapper.CreateMap<ExpertNote, ExpertNoteModel>().ForMember(x=>x.TeamMember , v=>v.MapFrom(a=>a.TeamMember.Name));
+            Mapper.CreateMap<Call, CallsExpertViewModel>()
+                .ForMember(x=>x.CallFacilitatedBy , v=>v.MapFrom(u=>u.CallFacilitatedBy.Name))
+                .ForMember(x=>x.PaymentMode , v=>v.MapFrom(u=>u.PaymentMode.Name));
+            Mapper.CreateMap<Call, ExpertCallsModel>()
+                .ForMember(x => x.CallFacilitatedBy, v => v.MapFrom(u => u.CallFacilitatedBy.Name))
+                .ForMember(x => x.PaymentMode, v => v.MapFrom(u => u.PaymentMode.Name));
         }
     
     }

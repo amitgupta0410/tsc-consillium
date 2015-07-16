@@ -4,10 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GAPS.TSC.CONS.Domain.ApiModels
-{
-    public class Project : IEquatable<Project>
-    {
+namespace GAPS.TSC.CONS.Domain.ApiModels {
+    public class Project : IEquatable<Project> {
         public int Id { get; set; }
         public string Name { get; set; }
         public int TypeId { get; set; }
@@ -64,60 +62,47 @@ namespace GAPS.TSC.CONS.Domain.ApiModels
         public string Style { get; set; }
         public int? QmReviewerId { get; set; }
         public string OutputType { get; set; }
-        public bool Equals(Project other)
-        {
-            if (ReferenceEquals(null, other))
-            {
+        public bool Equals(Project other) {
+            if (ReferenceEquals(null, other)) {
                 return false;
             }
-            if (ReferenceEquals(this, other))
-            {
+            if (ReferenceEquals(this, other)) {
                 return true;
             }
             return Id == other.Id;
         }
 
-        public override bool Equals(object obj)
-        {
-            if (ReferenceEquals(null, obj))
-            {
+        public override bool Equals(object obj) {
+            if (ReferenceEquals(null, obj)) {
                 return false;
             }
-            if (ReferenceEquals(this, obj))
-            {
+            if (ReferenceEquals(this, obj)) {
                 return true;
             }
-            if (obj.GetType() != this.GetType())
-            {
+            if (obj.GetType() != this.GetType()) {
                 return false;
             }
             return Equals((Project)obj);
         }
 
-        public override int GetHashCode()
-        {
+        public override int GetHashCode() {
             return Id;
         }
     }
 
-    public class ClientModel
-    {
+    public class ClientModel {
         public int Id { get; set; }
         public string Code { get; set; }
         public string Name { get; set; }
         public bool IsActive { get; set; }
         public int BdPersonnelId { get; set; }
-
     }
-    public class ProjectLeadModel
-    {
+
+    public class ProjectLeadModel {
         public int EmployeeId { get; set; }
         public bool IsActive { get; set; }
-
         public string FirstName { get; set; }
         public string LastName { get; set; }
-
         public string FullName { get { return string.Format("{0} {1}", FirstName, LastName); } }
-
     }
 }

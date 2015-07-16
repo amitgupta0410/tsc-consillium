@@ -3,8 +3,11 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.IO;
 using System.Linq;
+using System.Text;
 using System.Web;
 using System.Web.Mvc;
+using CsvHelper;
+using CsvHelper.Configuration;
 using GAPS.TSC.CONS.Domain;
 using GAPS.TSC.CONS.Services;
 
@@ -41,6 +44,19 @@ namespace GAPS.TSC.Consillium.Controllers
             }
             return null;
 
+        }
+
+        protected FileResult DownloadCsv<T>(IEnumerable<T> records, string filename, CsvClassMap mapper = null) {
+            using (var stringWriter = new StringWriter()) {
+                using (var csv = new CsvWriter(stringWriter)) {
+                    if (mapper != null) {
+                        csv.Configuration.RegisterClassMap(mapper);
+                    }
+                    csv.WriteRecords(records);
+                    stringWriter.Flush();
+                    return File(Encoding.UTF8.GetBytes(stringWriter.GetStringBuilder().ToString()), "text/csv", filename);
+                }
+            }
         }
        
 	}
