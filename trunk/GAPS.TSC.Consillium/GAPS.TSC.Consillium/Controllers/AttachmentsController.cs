@@ -13,7 +13,7 @@ namespace GAPS.TSC.Consillium.Controllers{
             _attachmentService = attachmentService;
         }
 
-        [Authorize]
+//        [Authorize]
 
         // GET: Attachments
         public FileResult Index(int id) {

@@ -231,6 +231,7 @@
     <Compile Include="Models\ExpertRequestDashboardViewModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\ProfileViewModel.cs" />
     <Compile Include="Models\ProjectDetailViewModel.cs" />
     <Compile Include="Models\ProjectLeadMapModel.cs" />
     <Compile Include="Models\ExpertRequestViewModel.cs" />
