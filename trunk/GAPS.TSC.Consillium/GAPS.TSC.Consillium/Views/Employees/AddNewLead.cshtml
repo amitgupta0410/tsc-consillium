@@ -86,7 +86,7 @@
             <div class="col-md-3">
                 <div class="form-group">
                     <label><b>Contacted On*</b></label>
-                    @Html.TextBoxFor(x => x.ContactedOn, new { @class = "form-control date", Value = Model.ContactedOn.ToString("dd MMM yyyy") })
+                    @Html.TextBoxFor(x => x.ContactedOn, new { @class = "form-control date", Value = Model.ContactedOn.ToString("dd/MM/yyyy") })
                     @Html.ValidationMessageFor(x => x.ContactedOn)
                 </div>
             </div>
@@ -134,7 +134,7 @@
                     <label><b>Upload Resume</b></label>
                     @if (@Model.ResumeId.HasValue) {
                         <i class="fa fa-check" style="color: green;"></i>
-                        @* <a href="@Model.FileGuidName">@Model.FileName</a>*@
+                       <a href="~/Attachments/Index/@Model.ResumeId.Value">@Model.FileName</a>
                     }<br />
                     <input type="file" name="File" id="resumeFile" />
                 </div>
@@ -233,14 +233,14 @@
                 <div class="col-md-2">
                     <div class="form-group">
                         <label><b>From*</b></label><br />
-                        @Html.TextBoxFor(x => x.StartDate, new { @class = "form-control date", Value = Model.StartDate.ToString("dd MMM yyyy") })
+                        @Html.TextBoxFor(x => x.StartDate, new { @class = "form-control date", Value = Model.StartDate.ToString("dd/MM/yyyy") })
                         @Html.ValidationMessageFor(x => x.StartDate)
                     </div>
                 </div>
                 <div class="col-md-2">
                     <div class="form-group">
                         <label><b>To</b></label><br />
-                        @Html.TextBoxFor(x => x.EndDate, new { @class = "form-control date", Value = Model.EndDate.HasValue ? Model.EndDate.Value.ToString("dd MMM yyyy") : string.Empty })
+                        @Html.TextBoxFor(x => x.EndDate, new { @class = "form-control date", Value = Model.EndDate.HasValue ? Model.EndDate.Value.ToString("dd/MM/yyyy") : string.Empty })
                         @Html.ValidationMessageFor(x => x.EndDate)
                     </div>
                 </div>
@@ -269,10 +269,10 @@
                             <tr id="work-@work.Id">
                                 <td>@work.Designation</td>
                                 <td>@work.Organisation</td>
-                                <td>@work.StartDate.ToString("dd MMM yyyy")</td>
+                                <td>@work.StartDate.ToString("dd/MM/yyyy")</td>
                                 <td>
                                     @if (work.EndDate != null) {
-                                        @work.EndDate.Value.ToString("dd MMM yyyy")
+                                        @work.EndDate.Value.ToString("dd/MM/yyyy")
                                     }
                                     <span class="pull-right">
                                         <a onclick="EditWork('@work.Id') " title="Edit" style="cursor: pointer; text-decoration: none">

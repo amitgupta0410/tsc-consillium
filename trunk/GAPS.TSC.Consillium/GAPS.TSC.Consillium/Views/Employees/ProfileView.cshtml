@@ -11,7 +11,8 @@
         </h3>
     </div>
 </div>
-<hr />
+<hr/>
+@Html.Partial("_PartialMessage")
 <div class="row">
     <div class="col-md-12 jumbotron">
         <div class="col-md-4">
@@ -53,7 +54,35 @@
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                @Model.FeesAmount  @Model.FeesCurrency
+                                @Model.FeesAmount @Model.FeesCurrency
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label><b>Status: </b></label>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                @Model.LeadStatus
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label><b>Recruited By: </b></label>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                @Model.RecruiterName
                             </div>
                         </div>
                     </div>
@@ -100,7 +129,7 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 @if (@Model.JoiningDate.HasValue) {
-                                    @Model.JoiningDate.Value.ToString("dd MMM yyyy")
+                                    @Model.JoiningDate.Value.ToString("dd/MM/yyyy")
                                 } else {
                                 }
                             </div>
@@ -117,6 +146,20 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 @Model.City
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label><b>LinkedIn : </b></label>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                               <a href="@Model.LinkedInUrl">@Model.LinkedInUrl</a>
                             </div>
                         </div>
                     </div>
@@ -296,7 +339,7 @@
                                         <b> Note By: </b>@note.TeamMember
                                     </div>
                                     <div>
-                                        <b>  Date: </b>@note.CreatedAt.ToString("dd MMM yyyy")
+                                        <b>  Date: </b>@note.CreatedAt.ToString("dd/MM/yyyy")
                                     </div>
                                 </div>
                             }
@@ -333,12 +376,12 @@
                                     </div>
                                     <div class="col-md-3">
                                         <b>Start Date: </b>
-                                        @work.StartDate.ToString("dd MMM yyyy")
+                                        @work.StartDate.ToString("dd/MM/yyyy")
                                     </div>
                                     <div class="col-md-3">
                                         @if (work.EndDate.HasValue) {
                                             <b>End: </b>
-                                            @work.EndDate.Value.ToString("dd MMM yyyy")
+                                            @work.EndDate.Value.ToString("dd/MM/yyyy")
                                         }
                                     </div>
                                 }
@@ -364,23 +407,72 @@
                     </div>
                     <div id="collapseTwo" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
                         <div class="panel-body">
-                            Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
-                        </div>
+@*                            Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.*@
+                        @if (Model.ExpertCallsModels.Any())
+                        {
+                            <div class="col-md-12">
+                                <div class="table-responsive table-bordered">
+                                    <table class="table">
+                                        <tbody>
+                                        <tr>
+                                            <th><label>S.No.</label></th>
+                                            <th><label>Project Name</label></th>
+                                            <th><label>Nature Of Interview</label></th>
+                                            <th><label>Interview Date</label></th>
+                                            <th><label>Call Duration</label></th>
+                                            <th><label>Honorarium per Hour</label></th>
+                                            <th><label>Payment Mode</label></th>
+                                            <th><label>Cost Corne By</label></th>
+                                            <th><label>Call Facilitated By</label></th>
+                                            <th><label>Payment Details</label></th>
+
+                                        </tr>
+                                        @{ var count = (int) 1; }
+                                        @foreach (var expert in Model.ExpertCallsModels)
+                                        {
+                                            <tr class="">
+                                                <td>@count</td>
+                                                <td>@expert.ExpertRequestName</td>
+                                                <td>@expert.CallType</td>
+                                                <td>@expert.InterviewDate.ToString("dd/MM/yyyy")</td>
+                                                <td>@expert.CallDuration</td>
+                                                <td>@expert.FeesPerHour</td>
+                                                <td>
+                                                    @expert.PaymentMode
+                                                </td>
+                                                <td>@expert.CostBorneBy</td>
+                                                <td>
+                                                    @expert.CallFacilitatedBy
+                                                </td>
+                                                <td>@expert.Details</td>
+                                            </tr>
+                                            count++;
+                                        }
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+                        }
+                         </div>
                     </div>
                 </div>
             </div>
             @*  *@
         </div>
         <div class="clearfix"></div>
+    @using (Html.BeginForm("UploadCv", "Employees", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {@Html.HiddenFor(x=>x.Id)
         <div class="col-md-12">
             <div class="row">
                 <div class="col-md-3">
                     <div class="form-group">
                         <label>Upload Scoping Document*</label>
-@*                        <input class="form-control" data-val="true" data-val-required="Please upload a file." id="File" name="File" type="file" value="">*@
+                        <input class="form-control" data-val="true" data-val-required="Please upload a file." id="File" name="File" type="file" value="">
+@*                        <input type="file" name="File" id="resumeFile" />*@
+
                     </div>
                 </div>
-                @*  *@
                 <div class="col-md-1">
                     <div class="form-group">
                         <div style="padding-top: 9px"></div>
@@ -391,9 +483,11 @@
                 <div class="col-md-2">
                     <div class="form-group">
                         <div style="padding-top: 25px"></div>
-<a class="btn btn-primary" href="~/Attachments/Index/@Model.ResumeId.Value">View</a> </div>
+                        <a class="btn btn-primary" href="~/Attachments/Index/@Model.ResumeId.Value">View</a>
+                    </div>
                 </div>
             </div>
         </div>
+    }
     </div>
 </div>
