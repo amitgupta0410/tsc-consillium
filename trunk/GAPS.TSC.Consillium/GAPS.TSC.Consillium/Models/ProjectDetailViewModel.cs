@@ -43,7 +43,7 @@ namespace GAPS.TSC.Consillium.Models
         public int PaidCalls { get; set; }
          [DisplayFormat(DataFormatString = "{0:MM-dd-yyyy}", ApplyFormatInEditMode = true)]
         public DateTime RequestedDate { get; set; }
-        public String Comments { get; set; }
+        public string Comments { get; set; }
         public CostSharingType CostSharingType { get; set; }
         public string Description { get; set; }
         public IEnumerable<ExpertViewModel> Experts { get; set; }
@@ -52,7 +52,7 @@ namespace GAPS.TSC.Consillium.Models
         public string Designation { get; set; }
         public List<string> ToAddDesignations = new List<string>();
         public List<string> ToAddOrganisations = new List<string>();
-        public String BudgetCurrencyName { get; set; }
+        public string BudgetCurrencyName { get; set; }
         public IEnumerable<int> ExpertIds { get; set; }
         public int ExpertId { get; set; }
 

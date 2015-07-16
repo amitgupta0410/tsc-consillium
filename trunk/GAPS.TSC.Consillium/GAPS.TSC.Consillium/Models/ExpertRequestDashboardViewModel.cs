@@ -36,7 +36,7 @@ namespace GAPS.TSC.Consillium.Models
         [DisplayFormat(DataFormatString = "dd MM, yyyy")] 
         public DateTime? EndDate { get; set; }
         public int? ProjectLeadId { get; set; }
-        public String SearchString { get; set; }
+        public string SearchString { get; set; }
         public List<string> ToAddMembers = new List<string>();
     }
 
