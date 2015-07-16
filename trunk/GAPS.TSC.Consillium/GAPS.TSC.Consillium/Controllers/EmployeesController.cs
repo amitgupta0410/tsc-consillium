@@ -96,16 +96,23 @@ namespace GAPS.TSC.Consillium.Controllers
             }
             var combineList = mannualNames.Concat(apiNames);
             model.ProjectList = combineList.Distinct().ToDictionary(x => x, x => x);
-//            if (!String.IsNullOrEmpty(model.ClientName))
-//            {
-//                var client = _clientService.GetAllClients().FirstOrDefault(x => x.Name == model.ClientName);
-//                var clientId = 0;
-//                if (client != null)
-//                {
-//                    clientId = client.Id;
-//                }
-//                experts = experts.Where(x => x.ExpertRequests.Select(y => y.ClientName).Contains(model.ClientName) || (x.ExpertRequests.Select(y => y.ProjectId).Contains(clientId)));
-//            }
+            if (!String.IsNullOrEmpty(model.ClientName))
+            {
+                var projectId = 0;
+                var client = _clientService.GetAllClients().FirstOrDefault(x => x.Name == model.ClientName);
+                if (client != null)
+                {
+                    var project = _projectService.GetAllMasterProjects().FirstOrDefault(x => x.ClientId == client.Id);
+
+                    
+                    if (project != null)
+                    {
+
+                        projectId = project.Id;
+                    }
+                }
+                experts = experts.Where(x => x.ExpertRequests.Select(y => y.ClientName).Contains(model.ClientName) || (x.ExpertRequests.Select(y => y.ProjectId).Contains(projectId)));
+            }
 
 
             if (!String.IsNullOrEmpty(model.ProjectName))
