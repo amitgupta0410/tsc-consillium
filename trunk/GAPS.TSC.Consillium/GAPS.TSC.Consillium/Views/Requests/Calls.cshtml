@@ -53,7 +53,8 @@
             <div class="col-md-3">
                 <div class="form-group">
                     <label><b>Payment Mode</b></label>
-                    <input class="form-control" id="PaymentMode" name="PaymentMode" type="text" value="">
+                    @*<input class="form-control" id="PaymentMode" name="PaymentMode" type="text" value="">*@
+                    @Html.DropDownListFor(x => x.PaymentModeId, new SelectList(new[] { new { Value = "1", Text = "Cash" }, new { Value = "2", Text = "Cheque" }, new { Value = "3", Text = "DD" } }, "Value", "Text", Model), "Select", new { @class = "form-control" })
                 </div>
             </div>
             <div class="clearfix"></div>
