@@ -44,7 +44,11 @@
             <div class="clearfix"></div>
             <div class="col-md-4">
                 <div class="form-group">
-                    <label><b>Company</b></label><br>
+                    <label>
+                        <b>
+                            Client Name
+                        </b>
+                    </label><br>
                     @Html.DropDownListFor(x => x.ClientName, new SelectList(Model.ClientList, "key", "value"), "All", new { @class = "form-control", @data_placeholder = "choose Client" })
                 </div>
             </div>
@@ -64,13 +68,15 @@
 </div>
 <br />
 <div class="row">
+    @using (@Html.BeginForm("AddExpertToRequest", "Employees", FormMethod.Post))
+    {
     <div class="col-lg-12">
         <div class="col-md-9">
             <div class="table-responsive table-bordered">
                 <table class="table">
                     <tbody>
                         <tr>
-
+                            <td>@Html.CheckBoxFor(m => m.Check, new { @checked = "checked", id = "AllChecked" })</td>
                             <th><label>Name</label></th>
                             <th><label>Current Company</label></th>
                             <th><label>E-Mail-Id</label></th>
@@ -81,6 +87,12 @@
                         @foreach (var expert in Model.Experts)
                         {
                             <tr>
+                                <td>
+                                    @*@Html.CheckBoxFor(m => m.Check, new { @checked = "checked", @class = "AllChecked", @value = expert.Id })*@
+                                    <input type="checkbox" name="Expert[]" value="@expert.Id" />
+                                </td>
+
+
                                 <td>@expert.Name</td>
                                 <td>Current Company</td>
                                 <td>@expert.Email</td>
@@ -95,38 +107,80 @@
                                     {
                                         @Model.GeographicList[expert.GeographicId.Value]
                                     }
-                            </td>
+                                </td>
 
-                            <td><input type="submit" class="btn btn-default" value="View Details" /></td>
-                        </tr>
+                                <td><input type="submit" class="btn btn-default" value="View Details" /></td>
+                            </tr>
                         }
                     </tbody>
                 </table>
             </div>
         </div>
     </div>
-</div>
-<br />
-<div class="row">
-    <div class="col-md-8">
-        <div class="col-md-2">
-            <div class="form-group">
-                <label style="padding-top: 7px;"><b>Add To Project</b></label>
+
+    <br />
+    <div class="row">
+       
+        <div class="col-md-8">
+
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label style="padding-top: 7px;"><b>Add To Project</b></label>
+
+                </div>
             </div>
-        </div>
-        <div class="row col-md-2">
-            <div class="form-group">
-                <select class="form-control">
-                    <option>Value1</option>
-                    <option>Value2</option>
-                    <option>Value3</option>
-                </select>
+            <div class="row col-md-2">
+                <div class="form-group">
+                    @Html.DropDownListFor(x => x.RequestId, new SelectList(Model.ExpertRequestlist, "key", "value"), "All", new { @class = "form-control", @data_placeholder = "Choose Expert Request" })
+                </div>
             </div>
-        </div>
-        <div class="col-md-1">
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary">
+            <div class="col-md-1">
+                <div class="form-group">
+                    <input type="submit" value="Save" class="btn btn-primary">
+                </div>
             </div>
+
         </div>
+       
     </div>
+    }
 </div>
+@section scripts
+{
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+
+
+
+            $('.AllChecked').on('change', function () {
+                var matches = []; $(".AllChecked:checked").each(function () {
+                    matches.push(this.value);
+
+                });
+                console.log(matches);
+
+            });
+
+
+            //$("#ExpertId").change(function () {
+            //    var expertId = $("#ExpertId").val();
+            //    var expertReqId = $("#ExpertRequestId").val();
+            //    if (expertId != "") {
+
+            //        $.getJSON("/Requests/GetHonorarium/", { expertReqId: expertReqId, expertId: expertId }, function (data) {
+            //            $("#FeesPerHour").val(data.FeesAmount);
+            //            if (data.FeesCurrencyId != null) {
+            //                $('#AmountCurrencyId option')
+            //                    .filter(function () { return $.trim($(this).val()) == data.FeesCurrencyId; })
+            //                    .attr('selected', true);
+            //            }
+            //        });
+            //    }
+
+            //});
+
+        });
+    </script>
+}

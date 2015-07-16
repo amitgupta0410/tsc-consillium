@@ -369,7 +369,7 @@ namespace GAPS.TSC.Consillium.Controllers
         }
 
         [HttpPost]
-        public ActionResult ProjectDetailButton(ProjectDetailViewModel model)
+        public ActionResult ProjectDetailAddExpert(ProjectDetailViewModel model)
         {
             foreach (var expertId in model.ExpertIds)
             {
