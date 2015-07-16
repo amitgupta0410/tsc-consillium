@@ -21,7 +21,6 @@ namespace GAPS.TSC.CONS.Services
         IEnumerable<TeamMember> GetAllTeamMembers();
         IEnumerable<PaymentMode> GetAllPayments();
         IQueryable<Call> GetCallsForRequest(int id);
-        //IEnumerable<Call> GetAllCalls();
     }
 
     public class ExpertRequestService : GenericService<ExpertRequest>, IExpertRequestService
@@ -119,11 +118,6 @@ namespace GAPS.TSC.CONS.Services
             return _unitOfWork.Calls.Get(x => x.ExpertRequestId == id);
         }
 
-        //public IEnumerable<Call> GetAllCalls()
-        //{
-        //    var calls = _unitOfWork.Calls.Get();
-        //    return calls;
-        //}
 
         public void AddCallsToRequest(int id, Call call)
         {
