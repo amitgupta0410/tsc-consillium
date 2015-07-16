@@ -21,13 +21,13 @@ namespace GAPS.TSC.Consillium.Controllers
         private readonly IUserService _userService;
         private readonly IMainMastersService _masterService;
         private readonly IProjectService _projectService;
+        private readonly IExpertService _expertService;
         private readonly IExpertRequestService _expertRequestService;
         private readonly IClientService _clientService;
-        private readonly IAttachmentService _attachmentService;
-        private readonly IUnitOfWork _unitOfWork;
+
         // GET: /Requests/
         public RequestsController(IAttachmentService attachmentService, IMainMastersService mastersService,
-            IProjectService projectService, IUserService userService, IExpertRequestService expertRequestService, IClientService clientService, IUnitOfWork unitOfWork)
+            IProjectService projectService, IUserService userService, IExpertRequestService expertRequestService, IClientService clientService, IExpertService expertService)
             : base(attachmentService)
         {
             _userService = userService;
@@ -35,8 +35,7 @@ namespace GAPS.TSC.Consillium.Controllers
             _projectService = projectService;
             _expertRequestService = expertRequestService;
             _clientService = clientService;
-            _attachmentService = attachmentService;
-            _unitOfWork = unitOfWork;
+            _expertService = expertService;
         }
         [HttpGet]
         public ActionResult Index(ExpertRequestDashboardViewModel model)
@@ -50,7 +49,8 @@ namespace GAPS.TSC.Consillium.Controllers
             model.ClientList = _clientService.GetAllClients().ToDictionary(x => x.Id, x => x.Name);
             model.ProjectList = _projectService.GetAllMasterProjects().ToDictionary(x => x.Id, x => x.Name);
             var projects = _expertRequestService.GetAllExpertsProjects();
-
+            int parsedId;
+            int.TryParse(model.SearchString, out parsedId);
             foreach (var expertRequest in projects)
             {
                 if (expertRequest.ProjectId != null)
@@ -109,7 +109,7 @@ namespace GAPS.TSC.Consillium.Controllers
 
 
                 projects = projects.Where(x => x.ProjectName.Contains(model.SearchString.ToLower())
-                                                       || x.ClientName.Contains(model.SearchString.ToLower()) || model.ProjectLeadList.ContainsValue(model.SearchString.ToLower()));
+                                                       || x.ClientName.Contains(model.SearchString.ToLower()) || x.ProjectLeadId == parsedId);
             }
             model.ExpertRequests = projects.Select(Mapper.Map<ExpertRequest, ExpertRequestSingleViewModel>);
 
@@ -153,6 +153,7 @@ namespace GAPS.TSC.Consillium.Controllers
             var expertRequest = Mapper.Map<ExpertRequestViewModel, ExpertRequest>(model);
             expertRequest.ApprovalDocumentId = approveFile.Id;
             expertRequest.ScopingDocumentId = scopingFile.Id;
+            expertRequest.CostSharingType = model.CostSharingTypeValue;
             _expertRequestService.Add(expertRequest);
             SetMessage(MessageType.Success, MessageConstant.GetMessage(Messages.RequestSuccess));
             return RedirectToAction("RequestExpert");
@@ -348,8 +349,8 @@ namespace GAPS.TSC.Consillium.Controllers
                 }
                 
             }
-            model.ExpertList = _unitOfWork.Experts.Get().ToDictionary(x => x.Id, x => x.Name);
 
+            model.ExpertList = _expertService.Get(x => x.DeletedAt == null).ToDictionary(x => x.Id, x => x.Name);
 
             return View(model);
         }
@@ -405,6 +406,15 @@ namespace GAPS.TSC.Consillium.Controllers
         {
             var model = new CallsViewModel();
             model.ExpertList = _expertRequestService.GetExpertsForRequest(id).ToDictionary(x=>x.Id,x=>x.Name);
+            var expertRequest = _expertRequestService.GetAllExpertsProjects().FirstOrDefault(x=>x.Id==id);
+            if (expertRequest != null)
+            {
+                model.GeographicId = expertRequest.GeographicId;
+                model.ExpertRequestId = id;
+                model.CostBorneBy = expertRequest.CostSharingType;
+            }
+
+            model.TeamMembers = _expertRequestService.GetAllTeamMembers().ToDictionary(x => x.Id, x => x.Name);
             model.CallTypeOptions = EnumHelper.GetEnumLabelValuess(typeof(CallType));
             model.CostSharingOptions = EnumHelper.GetEnumLabelValuess(typeof(CostSharingType));
             model.Geography = _masterService.GetAllGeographies().ToDictionary(x => x.Id, x => x.Name);
@@ -412,7 +422,25 @@ namespace GAPS.TSC.Consillium.Controllers
             model.PaymentStatusOptions = EnumHelper.GetEnumLabelValuess(typeof (PaymentStatus));
             return View(model);
         }
-
+        
+        [HttpPost]
+        public ActionResult Calls(CallsViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+           var call = Mapper.Map<CallsViewModel,Call>(model);
+           _expertRequestService.AddCallsToRequest(model.ExpertId, call);
+            SetMessage(MessageType.Success, MessageConstant.GetMessage(Messages.RequestSuccess));
+            return RedirectToAction("Calls");
+        }
+        public JsonResult GetHonorarium(int expertReqId, int expertId)
+        {
+            var expert = _expertService.GetById(expertId);
+            return Json(new{expert.Id,expert.FeesAmount,expert.FeesCurrencyId}, JsonRequestBehavior.AllowGet);
+        }
+       
 
     }
 }

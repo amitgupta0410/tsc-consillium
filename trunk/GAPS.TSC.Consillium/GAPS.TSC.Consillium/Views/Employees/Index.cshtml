@@ -1,0 +1,132 @@
+﻿@model GAPS.TSC.Consillium.Models.ExpertDashboardViewModel
+
+@{
+    ViewBag.Title = "ExpertsDasboard";
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <h3 class="page-title">
+            View all Expert/Search/Assign
+        </h3>
+    </div>
+</div>
+<hr />
+<div class="row">
+    <div class="col-md-12">
+        @using (@Html.BeginForm("Index", "Employees", FormMethod.Get))
+        {
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label><b>Search</b></label>
+                    @Html.TextBoxFor(x => x.SearchString, new { @class = "form-control ", Value = "" })
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label><b>Industry</b></label><br>
+                    @Html.DropDownListFor(x => x.IndustryId, new SelectList(Model.IndustryList, "key", "value"), "All", new { @class = "form-control", @data_placeholder = "Choose Industry" })
+                </div>
+            </div>
+            <div class="clearfix"></div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label><b>Geographic</b></label><br>
+                    @Html.DropDownListFor(x => x.GeographicId, new SelectList(Model.GeographicList, "key", "value"), "All", new { @class = "form-control", @data_placeholder = "choose Geograpic" })
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label><b>Project Name</b></label><br>
+                    @Html.DropDownListFor(x => x.ProjectName, new SelectList(Model.ProjectList, "key", "value"), "All", new { @class = "form-control", @data_placeholder = "choose Project" })
+                </div>
+            </div>
+            <div class="clearfix"></div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label><b>Company</b></label><br>
+                    @Html.DropDownListFor(x => x.ClientId, new SelectList(Model.ClientList, "key", "value"), "All", new { @class = "form-control", @data_placeholder = "choose Client" })
+                </div>
+            </div>
+            <div class="clearfix"></div>
+            <div class="col-md-1">
+                <div class="form-group">
+                    <input type="submit" value="Filter" class="btn btn-primary">
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <input type="submit" value="Export To Excel" class="btn btn-primary">
+                </div>
+            </div>
+        }
+    </div>
+</div>
+<br />
+<div class="row">
+    <div class="col-lg-12">
+        <div class="col-md-9">
+            <div class="table-responsive table-bordered">
+                <table class="table">
+                    <tbody>
+                        <tr>
+
+                            <th><label>Name</label></th>
+                            <th><label>Current Company</label></th>
+                            <th><label>E-Mail-Id</label></th>
+                            <th><label>Industry</label></th>
+                            <th><label>Geography</label></th>
+                            <th></th>
+                        </tr>
+                        @foreach (var expert in Model.Experts)
+                        {
+                            <tr>
+                                <td>@expert.Name</td>
+                                <td>Current Company</td>
+                                <td>@expert.Email</td>
+                                <td>
+                                    @if (expert.IndustryId != null && Model.IndustryList.ContainsKey(expert.IndustryId.Value))
+                                    {
+                                        @Model.IndustryList[expert.IndustryId.Value]
+                                    }
+                                </td>
+                                <td>
+                                    @if (expert.GeographicId != null && Model.GeographicList.ContainsKey(expert.GeographicId.Value))
+                                    {
+                                        @Model.GeographicList[expert.GeographicId.Value]
+                                    }
+                            </td>
+
+                            <td><input type="submit" class="btn btn-default" value="View Details" /></td>
+                        </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<br />
+<div class="row">
+    <div class="col-md-8">
+        <div class="col-md-2">
+            <div class="form-group">
+                <label style="padding-top: 7px;"><b>Add To Project</b></label>
+            </div>
+        </div>
+        <div class="row col-md-2">
+            <div class="form-group">
+                <select class="form-control">
+                    <option>Value1</option>
+                    <option>Value2</option>
+                    <option>Value3</option>
+                </select>
+            </div>
+        </div>
+        <div class="col-md-1">
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary">
+            </div>
+        </div>
+    </div>
+</div>

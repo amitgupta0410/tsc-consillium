@@ -16,6 +16,9 @@ namespace GAPS.TSC.CONS.Services
         IEnumerable<WorkExperience> GetAllDesignations(int id);
         void AddExpertToRequest(int requestId, int expertId);
         void RemoveExpertFromRequest(int requestId, int expertId);
+      
+        void AddCallsToRequest(int id, Call call);
+        IEnumerable<TeamMember> GetAllTeamMembers();
     }
 
     public class ExpertRequestService : GenericService<ExpertRequest>, IExpertRequestService
@@ -47,6 +50,15 @@ namespace GAPS.TSC.CONS.Services
                 return null;
             }
             return req.Experts;
+        }
+
+        
+      
+        public IEnumerable<TeamMember> GetAllTeamMembers()
+        {
+            var teamMembers = _unitOfWork.TeamMembers.Get();
+            return teamMembers;
+
         }
         public void AddExpertToRequest(int requestId, int expertId)
         {
