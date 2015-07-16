@@ -432,10 +432,16 @@ namespace GAPS.TSC.Consillium.Controllers
             {
                 return View(model);
             }
-           var call = Mapper.Map<CallsViewModel,Call>(model);
+            var call = Mapper.Map<CallsViewModel,Call>(model);
            _expertRequestService.AddCallsToRequest(model.ExpertRequestId, call);
             SetMessage(MessageType.Success, MessageConstant.GetMessage(Messages.RequestSuccess));
             return RedirectToAction("Calls");
+        }
+        [HttpPost]
+        public ActionResult ExportCallDetails(CallsViewModel model)
+        {
+
+            return View();
         }
         public JsonResult GetHonorarium(int expertReqId, int expertId)
         {

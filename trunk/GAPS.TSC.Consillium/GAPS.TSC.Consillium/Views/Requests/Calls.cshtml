@@ -182,22 +182,28 @@
         </div>
 
         <div class="clearfix"></div>
+
         <div class="col-md-6">
-            <div class="col-md-3">
-                <div class="form-group">
-                    <div style="padding-top: 9px"></div>
-                    <br />
-                    <input type="submit" class="btn btn-primary btn-sm" value="Export To Excel" />
+            @using (@Html.BeginForm("ExportCallDetails", "Requests", FormMethod.Post))
+            {
+                @Html.HiddenFor(x => x.ExpertRequestId)
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <div style="padding-top: 9px"></div>
+                        <br />
+                        <input type="submit" class="btn btn-primary" value="Export to Excel" style="width: 99px;"/>
+                    </div>
                 </div>
-            </div>
-            <div class="col-md-2">
-                <div class="form-group">
-                    <div style="padding-top: 9px"></div>
-                    <br />
-                    <input type="submit" class="btn btn-primary btn-sm" value="Save" style="width:128px;" />
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <div style="padding-top: 9px"></div>
+                        <br />
+                        <input type="submit" class="btn btn-primary btn-sm" value="Save" style="width: 128px;" />
+                    </div>
                 </div>
-            </div>
+            }
         </div>
+
     </div>
 
 </div>
