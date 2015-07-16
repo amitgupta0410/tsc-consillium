@@ -189,52 +189,55 @@
         }
         <div class="clearfix"></div>
 
-        @Html.HiddenFor(x => x.Id)
+      
         <div class="col-md-10">
-        @using (@Html.BeginForm("ProjectDetailButton", "Requests", FormMethod.Post))
-        {
-                <div>
-                <div class="col-md-2">
-                    <div class="form-group">
-                        <div style="padding-top: 9px"></div><br />
-                        @Html.ListBoxFor(x => x.ExpertIds, new SelectList(Model.ExpertList, "Key", "Value"), new { @class = "form-control chosen-select", multiple = "multiple", @data_placeholder = "All" })
+            <div>
+                @using (@Html.BeginForm("ProjectDetailButton", "Requests", FormMethod.Post))
+                {
+                    @Html.HiddenFor(x => x.Id)
+
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <div style="padding-top: 9px"></div><br />
+                            @Html.ListBoxFor(x => x.ExpertIds, new SelectList(Model.ExpertList, "Key", "Value"), new { @class = "form-control chosen-select", multiple = "multiple", @data_placeholder = "All" })
+                        </div>
                     </div>
-                </div>
-                <div class="col-md-2">
-                    <div class="form-group">
-                        <div style="padding-top: 9px"></div><br />
-                        <input type="submit" class="btn btn-primary btn-sm" value="Add Expert/Lead" />
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <div style="padding-top: 9px"></div><br />
+                            <input type="submit" class="btn btn-primary btn-sm" value="Add Expert/Lead" />
+                        </div>
                     </div>
+
+                }
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <div style="padding-top: 9px"></div><br />
+                    <input type="button" class="btn btn-primary btn-sm" value="Export To Excel" style="padding-left: 11px; margin-left: 11px;" />
                 </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <div style="padding-top: 9px"></div><br />
+                    <input type="button" class="btn btn-primary btn-sm" value="Import From Excel" style="padding-left: 11px; margin-left: -39px;" />
                 </div>
-            }
-                <div class="col-md-2">
-                    <div class="form-group">
-                        <div style="padding-top: 9px"></div><br />
-                        <input type="button" class="btn btn-primary btn-sm" value="Export To Excel" style="padding-left: 11px; margin-left: 11px;" />
-                    </div>
+            </div>
+            <div class="col-md-1">
+                <div class="form-group">
+                    <div style="padding-top: 9px"></div><br />
+                    <input type="text" class="form-control" id="Effort" placeholder="Effort" style="margin-left: 32px;">
                 </div>
-                <div class="col-md-2">
-                    <div class="form-group">
-                        <div style="padding-top: 9px"></div><br />
-                        <input type="button" class="btn btn-primary btn-sm" value="Import From Excel" style="padding-left: 11px; margin-left: -39px;" />
-                    </div>
-                </div>
-                <div class="col-md-1">
-                    <div class="form-group">
-                        <div style="padding-top: 9px"></div><br />
-                        <input type="text" class="form-control" id="Effort" placeholder="Effort" style="margin-left: 32px;">
-                    </div>
-                </div>
-                <div class="col-md-1">
-                    <div class="form-group">
-                        <div style="padding-top: 9px"></div><br />
+            </div>
+            <div class="col-md-1">
+                <div class="form-group">
+                    <div style="padding-top: 9px"></div><br />
                     <input type="submit" class="btn btn-primary" value="Paid Experts" style="width: 99px;" onclick="location.href='@Url.Action("Calls", "Requests", new { id = Model.Id})' " />
                     @*<input type="button" class="btn btn-primary btn-sm" value="Paid Experts" style="margin-left: 13px; padding-top: 8px;" />*@
-                    </div>
                 </div>
-
             </div>
+
+        </div>
 
     </div>
 </div>
