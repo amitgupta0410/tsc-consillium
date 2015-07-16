@@ -414,12 +414,14 @@ namespace GAPS.TSC.Consillium.Controllers
                 model.CostBorneBy = expertRequest.CostSharingType;
             }
 
+            model.PaymentModeDictionary = _expertRequestService.GetAllPayments().ToDictionary(x => x.Id, x => x.Name);
             model.TeamMembers = _expertRequestService.GetAllTeamMembers().ToDictionary(x => x.Id, x => x.Name);
             model.CallTypeOptions = EnumHelper.GetEnumLabelValuess(typeof(CallType));
             model.CostSharingOptions = EnumHelper.GetEnumLabelValuess(typeof(CostSharingType));
             model.Geography = _masterService.GetAllGeographies().ToDictionary(x => x.Id, x => x.Name);
             model.Currency = _masterService.GetAllCurrencies().ToDictionary(x => x.CurrencyId, x => x.CurrencyCode);
             model.PaymentStatusOptions = EnumHelper.GetEnumLabelValuess(typeof (PaymentStatus));
+            model.ExpertCalls = _expertRequestService.GetCallsForRequest(id).Select(Mapper.Map<Call, CallsExpertViewModel>);
             return View(model);
         }
         
@@ -431,7 +433,7 @@ namespace GAPS.TSC.Consillium.Controllers
                 return View(model);
             }
            var call = Mapper.Map<CallsViewModel,Call>(model);
-           _expertRequestService.AddCallsToRequest(model.ExpertId, call);
+           _expertRequestService.AddCallsToRequest(model.ExpertRequestId, call);
             SetMessage(MessageType.Success, MessageConstant.GetMessage(Messages.RequestSuccess));
             return RedirectToAction("Calls");
         }

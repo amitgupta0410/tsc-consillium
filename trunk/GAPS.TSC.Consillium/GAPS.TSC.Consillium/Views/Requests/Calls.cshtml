@@ -11,68 +11,74 @@
         </h3>
     </div>
 </div>
+@Html.Partial("_PartialMessage")
 <hr />
 <div class="row">
+    <div class="well" style="height: 386px">
     <div class="col-md-12">
         @using (@Html.BeginForm("Calls", "Requests", FormMethod.Post))
         {
             @Html.HiddenFor(x => x.ExpertRequestId)
-            <div class="col-md-3">
+            <div class="col-md-4">
                 <div class="form-group">
                     <label><b>Expert Name</b></label><br>
                     @Html.DropDownListFor(x => x.ExpertId, new SelectList(Model.ExpertList, "Key", "Value"), "Select Expert", new { @class = "form-control", @data_placeholder = "Choose Expert" })
                     @Html.ValidationMessageFor(x => x.ExpertId)
                 </div>
             </div>
-            <div class="col-md-3">
+            <div class="col-md-4">
                 <div class="form-group">
-                    <label><b>Nature Of Interview</b></label>  
+                    <label><b>Nature Of Interview</b></label>
                     @Html.DropDownListFor(x => x.CallType, new SelectList(Model.CallTypeOptions, "Key", "Value", Model.CallTypeOptions.FirstOrDefault()), new { @class = "form-control", @data_placeholder = "Choose Cost" })
                     @Html.ValidationMessageFor(x => x.CallType)
                 </div>
             </div>
-            <div class="col-md-3">
+            <div class="col-md-4">
                 <div class="form-group">
                     <label><b>Interview Date</b></label>
-                    @Html.TextBoxFor(x => x.InterviewDate, new { @class = "form-control date", Value = "" })
-                   </div>
-            </div>
-            <div class="clearfix"></div>
-            <div class="col-md-3">
-                <div class="form-group">
-                    <label><b>Call Duration</b></label><br>
-                    @Html.TextBoxFor(x => x.CallDuration, new { @class = "form-control ", Value = "" })
+                    @Html.TextBoxFor(x => x.InterviewDate, new { @class = "form-control datetime", Value = "" })
+                    @Html.ValidationMessageFor(x => x.InterviewDate)
                 </div>
             </div>
-            <div class="col-md-3">
+            <div class="clearfix"></div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label><b>Call Duration(In minutes)</b></label><br>
+                    @Html.TextBoxFor(x => x.CallDuration, new { @class = "form-control ", Value = "" })
+                    @Html.ValidationMessageFor(x => x.CallDuration)
+                </div>
+            </div>
+            <div class="col-md-4">
                 <div class="form-group">
                     <label><b>Honorarium Per Hour</b></label>
                     @Html.TextBoxFor(x => x.FeesPerHour, new { @class = "form-control ", Value = "" })
+                    @Html.ValidationMessageFor(x => x.FeesPerHour)
                 </div>
             </div>
-            <div class="col-md-3">
+            <div class="col-md-4">
                 <div class="form-group">
                     <label><b>Payment Mode</b></label>
-                    @*<input class="form-control" id="PaymentMode" name="PaymentMode" type="text" value="">*@
-                    @Html.DropDownListFor(x => x.PaymentModeId, new SelectList(new[] { new { Value = "1", Text = "Cash" }, new { Value = "2", Text = "Cheque" }, new { Value = "3", Text = "DD" } }, "Value", "Text", Model), "Select", new { @class = "form-control" })
+                    @Html.DropDownListFor(x => x.PaymentModeId, new SelectList(Model.PaymentModeDictionary, "Key", "Value"), new { @class = "form-control", @data_placeholder = "Choose PaymentMode" })
+                    @Html.ValidationMessageFor(x => x.PaymentModeId)
+                    @*@Html.DropDownListFor(x => x.PaymentModeId, new SelectList(new[] { new { Value = "1", Text = "Cash" }, new { Value = "2", Text = "Cheque" }, new { Value = "3", Text = "DD" } }, "Value", "Text", Model), "Select", new { @class = "form-control" })*@
                 </div>
             </div>
             <div class="clearfix"></div>
-            <div class="col-md-3">
+            <div class="col-md-4">
                 <div class="form-group">
                     <label><b>Cost Borne By</b></label><br>
                     @Html.DropDownListFor(x => x.CostBorneBy, new SelectList(Model.CostSharingOptions, "Key", "Value", Model.CostSharingOptions.FirstOrDefault()), new { @class = "form-control", @data_placeholder = "Choose Cost" })
                     @Html.ValidationMessageFor(x => x.CostBorneBy)
                 </div>
             </div>
-            <div class="col-md-3">
+            <div class="col-md-4">
                 <div class="form-group">
                     <label><b>Call Facilitated By</b></label>
                     @Html.DropDownListFor(x => x.CallFacilitatedById, new SelectList(Model.TeamMembers, "Key", "Value"), new { @class = "form-control", @data_placeholder = "Choose Member" })
                     @Html.ValidationMessageFor(x => x.CallFacilitatedById)
                 </div>
             </div>
-            <div class="col-md-3">
+            <div class="col-md-4">
                 <div class="form-group">
                     <label><b>Payment Details</b></label>
                     @Html.TextBoxFor(x => x.Details, new { @class = "form-control ", Value = "" })
@@ -80,7 +86,7 @@
             </div>
 
             <div class="clearfix"></div>
-            <div class="col-md-3">
+            <div class="col-md-4">
                 <div class="form-group">
                     <label><b>Geography</b></label><br>
                     @Html.DropDownListFor(x => x.GeographicId, new SelectList(Model.Geography, "Key", "Value"), new { @class = "form-control", @data_placeholder = "Choose Expert" })
@@ -91,9 +97,10 @@
                 <div class="form-group">
                     <label><b>Amount to be paid</b></label>
                     @Html.TextBoxFor(x => x.Amount, new { @class = "form-control ", Value = "" })
+                    @Html.ValidationMessageFor(x => x.Amount)
                 </div>
             </div>
-            <div class="col-md-1">
+            <div class="col-md-2">
                 <div class="form-group">
                     <div style="padding-top: 7px"></div>
                     <br>
@@ -101,7 +108,7 @@
                     @Html.ValidationMessageFor(x => x.AmountCurrencyId)
                 </div>
             </div>
-            <div class="col-md-3">
+            <div class="col-md-4">
                 <div class="form-group">
                     <label><b>Payment Status</b></label>
                     @Html.DropDownListFor(x => x.PaymentStatus, new SelectList(Model.PaymentStatusOptions, "Key", "Value", Model.PaymentStatusOptions.FirstOrDefault()), new { @class = "form-control", @data_placeholder = "Choose Cost" })
@@ -118,11 +125,13 @@
             </div>
         }
     </div>
+    
+</div>
 </div>
 
 <div class="row">
     <div class="col-md-12">
-        <div class="col-md-10">
+        <div class="col-md-12">
             <div class="table-responsive table-bordered">
                 <table class="table">
                     <tbody>
@@ -139,71 +148,34 @@
                             <th><label>Payment Details</label></th>
                             <th><label></label></th>
                         </tr>
-                        <tr class="">
-                            <td>1</td>
-                            <td>Abc</td>
-                            <td>Dragos Hornoiu</td>
-                            <td>TSC Romania</td>
-                            <td>XYZ</td>
-                            <td>ABC</td>
-                            <td>XYZ</td>
-                            <td>XYZ</td>
-                            <td>22-Mar-2015</td>
-                            <td>22-Mar-2015</td>
-                            <td><input type="submit" class="btn btn-default" value="InitiatePayment" /></td>
-                        </tr>
-                        <tr class="info">
-                            <td>2</td>
-                            <td>Abc</td>
-                            <td>Dragos Hornoiu</td>
-                            <td>TSC Romania</td>
-                            <td>XYZ</td>
-                            <td>ABC</td>
-                            <td>XYZ</td>
-                            <td>XYZ</td>
-                            <td>22-Mar-2015</td>
-                            <td>22-Mar-2015</td>
-                            <td><input type="submit" class="btn btn-default" value="InitiatePayment" /></td>
-                        </tr>
-                        <tr class="success">
-                            <td>3</td>
-                            <td>Abc</td>
-                            <td>Dragos Hornoiu</td>
-                            <td>TSC Romania</td>
-                            <td>XYZ</td>
-                            <td>ABC</td>
-                            <td>XYZ</td>
-                            <td>XYZ</td>
-                            <td>22-Mar-2015</td>
-                            <td>22-Mar-2015</td>
-                            <td><input type="submit" class="btn btn-default" value="InitiatePayment" /></td>
-                        </tr>
-                        <tr class="warning">
-                            <td>4</td>
-                            <td>Abc</td>
-                            <td>Dragos Hornoiu</td>
-                            <td>TSC Romania</td>
-                            <td>XYZ</td>
-                            <td>ABC</td>
-                            <td>XYZ</td>
-                            <td>XYZ</td>
-                            <td>22-Mar-2015</td>
-                            <td>22-Mar-2015</td>
-                            <td><input type="submit" class="btn btn-default" value="InitiatePayment" /></td>
-                        </tr>
-                        <tr class="danger">
-                            <td>5</td>
-                            <td>Abc</td>
-                            <td>Dragos Hornoiu</td>
-                            <td>TSC Romania</td>
-                            <td>XYZ</td>
-                            <td>ABC</td>
-                            <td>XYZ</td>
-                            <td>XYZ</td>
-                            <td>22-Mar-2015</td>
-                            <td>22-Mar-2015</td>
-                            <td><input type="submit" class="btn btn-default" value="InitiatePayment" /></td>
-                        </tr>
+                        @{ var count = (int)1; }
+                        @foreach (var expert in Model.ExpertCalls)
+                        {
+                            <tr class="">
+                                <td>@count</td>
+                                <td>@expert.ExpertName</td>
+                                <td>@expert.CallType</td>
+                                <td>@expert.InterviewDate.ToString("dd/MM/yyyy")</td>
+                                <td>@expert.CallDuration</td>
+                                <td>@expert.FeesPerHour</td>
+                                <td>
+                                    @if (expert.PaymentModeId != 0 && Model.PaymentModeDictionary.ContainsKey(expert.PaymentModeId))
+                                    {
+                                        @Model.PaymentModeDictionary[expert.PaymentModeId]
+                                    }
+                                </td>
+                                <td>@expert.CostBorneBy</td>
+                                <td>
+                                    @if (expert.CallFacilitatedById != 0 && Model.TeamMembers.ContainsKey(expert.CallFacilitatedById))
+                                    {
+                                        @Model.TeamMembers[expert.CallFacilitatedById]
+                                    }
+                                </td>
+                                <td>@expert.Details</td>
+                                <td><input type="submit" class="btn btn-default" value="InitiatePayment" /></td>
+                            </tr>
+                            count++;
+                        }
                     </tbody>
                 </table>
             </div>
@@ -241,7 +213,7 @@
                 var expertId = $("#ExpertId").val();
                 var expertReqId = $("#ExpertRequestId").val();
                 if (expertId != "") {
-                    
+
                     $.getJSON("/Requests/GetHonorarium/", { expertReqId: expertReqId, expertId: expertId }, function (data) {
                         $("#FeesPerHour").val(data.FeesAmount);
                         if (data.FeesCurrencyId != null) {
