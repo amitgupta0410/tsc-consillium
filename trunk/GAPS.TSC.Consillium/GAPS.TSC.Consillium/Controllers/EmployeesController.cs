@@ -18,8 +18,10 @@ using GAPS.TSC.CONS.Util;
 using Microsoft.Ajax.Utilities;
 using WebGrease.Css.Extensions;
 
-namespace GAPS.TSC.Consillium.Controllers {
-    public class EmployeesController : BaseController {
+namespace GAPS.TSC.Consillium.Controllers
+{
+    public class EmployeesController : BaseController
+    {
 
         private readonly IProjectService _projectService;
         private readonly IUserService _userService;
@@ -29,8 +31,9 @@ namespace GAPS.TSC.Consillium.Controllers {
         private readonly IExpertRequestService _expertRequestService;
         private readonly IAttachmentService _attachmentService;
 
-        public EmployeesController(IUserService userService, IAttachmentService attachmentService, IMainMastersService mainMastersService, IExpertService expertService, IClientService clientService, IProjectService projectService , IExpertRequestService expertRequestService)
-            : base(attachmentService) {
+        public EmployeesController(IUserService userService, IAttachmentService attachmentService, IMainMastersService mainMastersService, IExpertService expertService, IClientService clientService, IProjectService projectService, IExpertRequestService expertRequestService)
+            : base(attachmentService)
+        {
 
             _userService = userService;
             _mainMastersService = mainMastersService;
@@ -48,11 +51,43 @@ namespace GAPS.TSC.Consillium.Controllers {
             var expertRequests = experts.Select(x => x.ExpertRequests);
 
             model.IndustryList = _mainMastersService.GetAllIndustries().ToDictionary(x => x.Id, x => x.Name);
-            model.GeographicList = _mainMastersService.GetAllGeographies().ToDictionary(x => x.Id, x =>x.Name);
+            model.GeographicList = _mainMastersService.GetAllGeographies().ToDictionary(x => x.Id, x => x.Name);
             model.ClientList = _clientService.GetAllClients().ToDictionary(x => x.Id, x => x.Name);
-//            model.ProjectList = _projectService.GetAllMasterProjects().ToDictionary(x => x.Id, x => x.Name);
-            model.ProjectList= _expertRequestService.GetAllExpertsProjects()
+            //            model.ProjectList = _projectService.GetAllMasterProjects().ToDictionary(x => x.Id, x => x.Name);
+            var mannualProjects = _expertRequestService.GetAllExpertsProjects().Where(x => x.ProjectId == null)
                 .ToDictionary(x => x.Id, x => x.ProjectName);
+            var mannualProjectsclients = _expertRequestService.GetAllExpertsProjects().Where(x => x.ProjectId == null)
+               .ToDictionary(x => x.Id, x => x.ClientName);
+            var apiProjects = _expertRequestService.GetAllExpertsProjects().Where(x => x.ProjectId != null);
+           
+            List<string>mannualClients=new List<string>();
+            foreach (var mannualProjectclient in mannualProjectsclients)
+            {
+                mannualClients.Add(mannualProjectclient.Value);
+
+            }
+            List<string> mannualNames = new List<string>();
+            foreach (var mannualProject in mannualProjects)
+            {
+                mannualNames.Add(mannualProject.Value);
+                
+            }
+         
+            List<string> apiNames = new List<string>();
+            foreach (var apiProject in apiProjects)
+            {
+
+                var name = _projectService.GetAllMasterProjects().FirstOrDefault(x => x.Id == apiProject.ProjectId);
+                if (name != null)
+                    apiNames.Add(name.Name);
+            }
+            var combineList = mannualNames.Concat(apiNames);
+            model.ProjectList = combineList.ToDictionary(x => x, x => x);
+            if (!String.IsNullOrEmpty(model.ProjectName))
+            {
+                var name = _projectService.GetAllMasterProjects().FirstOrDefault(x => x.Name == model.ProjectName);
+                experts = experts.Where(x => x.ExpertRequests.Select(y => y.ProjectName).Contains(model.ProjectName) || name.Name.Contains(model.ProjectName));
+            }
             int parsedId;
             int.TryParse(model.SearchString, out parsedId);
             if (!String.IsNullOrEmpty(model.SearchString))
@@ -60,9 +95,9 @@ namespace GAPS.TSC.Consillium.Controllers {
 
 
                 experts = experts.Where(x => x.Name.Contains(model.SearchString.ToLower())
-                                                       || x.Email.Contains(model.SearchString.ToLower())||x.GeographicId==parsedId||x.IndustryId==parsedId);
+                                                       || x.Email.Contains(model.SearchString.ToLower()) || x.GeographicId == parsedId || x.IndustryId == parsedId);
             }
-            if (model.GeographicId!= null)
+            if (model.GeographicId != null)
             {
                 experts = experts.Where(x => x.GeographicId == model.GeographicId);
             }
@@ -72,27 +107,31 @@ namespace GAPS.TSC.Consillium.Controllers {
             }
             if (model.ProjectId.HasValue)
             {
-              experts = experts.Where(x =>x.ExpertRequests.Select(y=>y.Id).Contains(model.ProjectId.Value));
+                experts = experts.Where(x => x.ExpertRequests.Select(y => y.Id).Contains(model.ProjectId.Value));
             }
 
             model.Experts = experts.Select((Mapper.Map<Expert, ExpertSingleViewModel>));
-             
+
             return View(model);
         }
 
-        public ActionResult AddNewLead(int? id) {
+        public ActionResult AddNewLead(int? id)
+        {
 
             var model = new AddLeadModel();
-            if (id.HasValue) {
+            if (id.HasValue)
+            {
                 var expert = _expertService.GetById(id.Value);
-                
-                if (expert != null) {
+
+                if (expert != null)
+                {
                     model = Mapper.Map<Expert, AddLeadModel>(expert);
                     var workexperience = _expertService.GetWorkExperiences(expert.Id);
-                    if (expert.ResumeId != null) {
+                    if (expert.ResumeId != null)
+                    {
                         var attachment = _attachmentService.GetById(expert.ResumeId.Value);
-                
-                        
+
+
                         model.FileName = attachment.ActualName;
                         model.FileGuidName = attachment.FileName;
                     }
@@ -112,29 +151,34 @@ namespace GAPS.TSC.Consillium.Controllers {
 
 
         [HttpPost]
-        public ActionResult AddNewLead(AddLeadModel model) {
-//            if (!ModelState.IsValid) return RedirectToAction("AddNewLead");
+        public ActionResult AddNewLead(AddLeadModel model)
+        {
+            //            if (!ModelState.IsValid) return RedirectToAction("AddNewLead");
 
             var expert = Mapper.Map<AddLeadModel, Expert>(model);
             expert.CreatedAt = DateTime.Now;
-            if (model.Id == 0) {
-                if (!model.IsLead) {
+            if (model.Id == 0)
+            {
+                if (!model.IsLead)
+                {
                     expert.JoiningDate = DateTime.Now;
                 }
             }
-            if (Request.Files["File"] != null && Request.Files["File"].ContentLength > 0) {
-//                                var file = UploadAndSave("File");
+            if (Request.Files["File"] != null && Request.Files["File"].ContentLength > 0)
+            {
+                //                                var file = UploadAndSave("File");
                 expert.ResumeId = 2;
             }
             var result = model.Id == 0 ? _expertService.Add(expert) : _expertService.Update(expert);
             if (result == null) return RedirectToAction("AddNewLead");
             SetMessage(MessageType.Success, MessageConstant.GetMessage(Messages.AddLeadSuccess));
             //                            return RedirectToAction("Index");
-            return RedirectToAction("AddNewLead", new {id = result.Id});
+            return RedirectToAction("AddNewLead", new { id = result.Id });
         }
 
 
-        public ActionResult ConvertLead(int id) {
+        public ActionResult ConvertLead(int id)
+        {
             var expert = _expertService.GetById(id);
             expert.JoiningDate = DateTime.Now;
             var result = _expertService.Update(expert);
@@ -143,7 +187,8 @@ namespace GAPS.TSC.Consillium.Controllers {
             return RedirectToAction("AddNewLead", new { id = result.Id });
         }
 
-        public ActionResult DeleteLead(int id) {
+        public ActionResult DeleteLead(int id)
+        {
             var expert = _expertService.GetById(id);
             expert.DeletedAt = DateTime.Now;
             var result = _expertService.Update(expert);
@@ -153,19 +198,22 @@ namespace GAPS.TSC.Consillium.Controllers {
         }
 
         [HttpPost]
-        public JsonResult LeadNameExist(string Name, int Id) {
+        public JsonResult LeadNameExist(string Name, int Id)
+        {
             var result = _expertService.LeadNameExist(Name, Id);
             return Json(result);
         }
 
         [HttpPost]
-        public JsonResult EmailExist(string Email, int Id) {
+        public JsonResult EmailExist(string Email, int Id)
+        {
             var result = _expertService.EmailExist(Email, Id);
             return Json(result);
         }
 
         [HttpPost]
-        public ActionResult AddExperience(AddLeadModel model) {
+        public ActionResult AddExperience(AddLeadModel model)
+        {
             //            var expert = _expertService.GetById(model.Id);
             var workExperience = Mapper.Map<AddLeadModel, WorkExperience>(model);
             var result = _expertService.AddExperience(model.Id, workExperience);
@@ -173,51 +221,61 @@ namespace GAPS.TSC.Consillium.Controllers {
             return RedirectToAction("AddNewLead", new { id = model.Id });
         }
 
-        public ActionResult DeleteWork(int id) {
+        public ActionResult DeleteWork(int id)
+        {
             var result = _expertService.DeleteWorkExperience(id);
             return RedirectToAction("AddNewLead", new { id = result });
         }
 
-        public ActionResult EditWork(int id) {
+        public ActionResult EditWork(int id)
+        {
             var experience = _expertService.GetWorkExperienceById(id);
             var model = Mapper.Map<WorkExperience, WorkExperienceModel>(experience);
             return PartialView("_EditWorkExperience", model);
         }
 
         [HttpPost]
-        public ActionResult UpdateWork(WorkExperienceModel model) {
+        public ActionResult UpdateWork(WorkExperienceModel model)
+        {
             var toUpdate = Mapper.Map<WorkExperienceModel, WorkExperience>(model);
             var result = _expertService.EditWorkExperience(toUpdate);
             return RedirectToAction("AddNewLead", new { id = result });
         }
 
 
-        public ActionResult LeadsDashboard() {
+        public ActionResult LeadsDashboard()
+        {
             return View();
         }
-        public ActionResult ExpertsDasboard() {
+        public ActionResult ExpertsDasboard()
+        {
 
             return View();
         }
-        public ActionResult ProfileView() {
+        public ActionResult ProfileView()
+        {
             return View();
         }
 
-        public ActionResult AddPls() {
+        public ActionResult AddPls()
+        {
             var model = new AddProjectLeadModel();
             model.ProjectLead = _userService.GetAllProjectLeads();
             return View(model);
         }
 
         [HttpPost]
-        public ActionResult AddPls(AddProjectLeadModel model) {
-            if (!ModelState.IsValid) {
+        public ActionResult AddPls(AddProjectLeadModel model)
+        {
+            if (!ModelState.IsValid)
+            {
                 return View(model);
             }
 
             IEnumerable<SpecialProjectLeadMap> projectLead = new List<SpecialProjectLeadMap>();
             projectLead = _userService.GetAllProjectLeads().Where(x => x.UserId == model.Id);
-            if (projectLead.Count() != 0) {
+            if (projectLead.Count() != 0)
+            {
                 SetMessage(MessageType.Info, MessageConstant.GetMessage(Messages.Duplicate));
                 return RedirectToAction("AddPls");
             }
@@ -232,26 +290,33 @@ namespace GAPS.TSC.Consillium.Controllers {
 
 
 
-        public ActionResult AddMembers() {
+        public ActionResult AddMembers()
+        {
             var model = new AddMembersToTeam();
             model.Employees = _userService.GetAllTeamMembers();
             return View(model);
         }
 
         [HttpPost]
-        public ActionResult AddMembers(TeamMember model) {
-            if (!ModelState.IsValid) {
+        public ActionResult AddMembers(TeamMember model)
+        {
+            if (!ModelState.IsValid)
+            {
                 return View(model);
             }
 
             TeamMember teamMember = null;
             IEnumerable<TeamMember> team = new List<TeamMember>();
-            if (model.TeamMemberType == TeamMemberType.Internal) {
+            if (model.TeamMemberType == TeamMemberType.Internal)
+            {
                 team = _userService.GetAllTeamMembers().Where(x => x.UserId == model.UserId);
-            } else {
+            }
+            else
+            {
                 team = _userService.GetAllTeamMembers().Where(x => x.Name == model.Name);
             }
-            if (team.Count() != 0) {
+            if (team.Count() != 0)
+            {
 
                 SetMessage(MessageType.Info, MessageConstant.GetMessage(Messages.Duplicate));
                 return RedirectToAction("AddMembers");
