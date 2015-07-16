@@ -73,7 +73,7 @@
             <div class="col-md-3">
                 <div class="form-group">
                     <label>From</label>
-                    @Html.TextBoxFor(x => x.StartDate, new { @class = "form-control date", Value = Model.StartDate.ToString() })
+                    @Html.TextBoxFor(x => x.StartDate, new { @class = "form-control date", Value = "" })
 
                 </div>
             </div>
@@ -82,7 +82,7 @@
                 <div class="form-group">
 
                     <label>To</label>
-                    @Html.TextBoxFor(x => x.EndDate, new { @class = "form-control date", Value = Model.EndDate.ToString() })
+                    @Html.TextBoxFor(x => x.EndDate, new { @class = "form-control date", Value = "" })
 
 
                 </div>
@@ -149,7 +149,7 @@
                          
                             <td>
 
-                                @experts.CreatedAt.ToString("dd/MM yyyy")
+                                @experts.CreatedAt.ToString("dd/MM/yyyy")
 
 
                             </td>

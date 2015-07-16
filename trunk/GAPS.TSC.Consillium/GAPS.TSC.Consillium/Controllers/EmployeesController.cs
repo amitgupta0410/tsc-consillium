@@ -44,8 +44,23 @@ namespace GAPS.TSC.Consillium.Controllers {
         // GET: /Employees/
         public ActionResult Index(ExpertDashboardViewModel model) {
             var experts = _expertService.Get(x => x.DeletedAt == null);
-            var expertRequests = experts.Select(x => x.ExpertRequests);
-
+//            model.ExpertRequestlist=new Dictionary<int, string>();
+            var expertRequest = _expertRequestService.GetAllExpertsProjects();
+            foreach (var request in expertRequest)
+            {
+                if (request.ProjectId != null)
+                {
+                    var name = _projectService.GetAllMasterProjects().FirstOrDefault(x => x.Id == request.ProjectId);
+                    if (name != null)
+                        model.ExpertRequestlist.Add(request.Id, name.Name);
+                }
+                else
+                {
+                    model.ExpertRequestlist.Add(request.Id,request.ProjectName);
+                   
+                }
+            }
+            
             model.IndustryList = _mainMastersService.GetAllIndustries().ToDictionary(x => x.Id, x => x.Name);
             model.GeographicList = _mainMastersService.GetAllGeographies().ToDictionary(x => x.Id, x => x.Name);
             //            model.ClientList = _clientService.GetAllClients().ToDictionary(x => x.Id, x => x.Name);
@@ -142,6 +157,17 @@ namespace GAPS.TSC.Consillium.Controllers {
             model.Experts = experts.Select((Mapper.Map<Expert, ExpertSingleViewModel>));
 
             return View(model);
+        }
+        [HttpPost]
+        public ActionResult AddExpertToRequest(ExpertDashboardViewModel model)
+        {
+            foreach (var expertId in model.Expert)
+            {
+                _expertRequestService.AddExpertToRequest(model.RequestId, expertId);
+            }
+
+            return RedirectToAction("Index");
+          
         }
 
         public ActionResult AddNewLead(int? id) {
