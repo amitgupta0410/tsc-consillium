@@ -181,24 +181,18 @@ namespace GAPS.TSC.Consillium.Controllers {
             return View(model);
         }
         [HttpPost]
-        public ActionResult AddExpertToRequest(ExpertDashboardViewModel model)
-        {
-            if (model.Expert != null)
-            {
-                if (!ModelState.IsValid)
-                {
+        public ActionResult AddExpertToRequest(ExpertDashboardViewModel model) {
+            if (model.Expert != null) {
+                if (!ModelState.IsValid) {
                     return View(model);
                 }
-                foreach (var expertId in model.Expert)
-                {
+                foreach (var expertId in model.Expert) {
                 _expertRequestService.AddExpertToRequest(model.RequestId, expertId);
             }
 
             return RedirectToAction("Index");
-            }
-            else
-            {
-                SetMessage(MessageType.Info,MessageConstant.GetMessage(Messages.Danger));
+            } else {
+                SetMessage(MessageType.Info, MessageConstant.GetMessage(Messages.Danger));
                 return RedirectToAction("Index");
             }
         }
@@ -366,7 +360,7 @@ namespace GAPS.TSC.Consillium.Controllers {
 
             for (int i = 0; i < calls.Count(); i++) {
                 var call = calls.FirstOrDefault(x => x.Id == callModels[i].Id);
-                if(call==null)continue;
+                if (call == null) continue;
                 if (call.ExpertRequest.ProjectId == null) {
                     callModels[i].ExpertRequestName = call.ExpertRequest.ProjectName;
                 } else {
@@ -444,23 +438,18 @@ namespace GAPS.TSC.Consillium.Controllers {
                 return View(model);
             }
 
-            TeamMember teamMember = null;
-            IEnumerable<TeamMember> team = new List<TeamMember>();
-            if (model.TeamMemberType == TeamMemberType.Internal) {
-                team = _userService.GetAllTeamMembers().Where(x => x.UserId == model.UserId);
-            } else {
-                team = _userService.GetAllTeamMembers().Where(x => x.Name == model.Name);
-            }
+           var team = model.TeamMemberType == TeamMemberType.Internal ? _userService.GetAllTeamMembers().Where(x => x.UserId == model.UserId) : _userService.GetAllTeamMembers().Where(x => x.Name == model.Name);
             if (team.Count() != 0) {
-
                 SetMessage(MessageType.Info, MessageConstant.GetMessage(Messages.Duplicate));
                 return RedirectToAction("AddMembers");
             }
-            teamMember = new TeamMember();
-            teamMember.UserId = model.UserId;
-            teamMember.TeamMemberType = model.TeamMemberType;
-            teamMember.Name = model.Name;
-            teamMember.IsActive = true;
+
+            var teamMember = new TeamMember {
+                UserId = model.UserId,
+                TeamMemberType = model.TeamMemberType,
+                Name = model.Name,
+                IsActive = true
+            };
 
             _userService.AddTeamMember(teamMember);
             SetMessage(MessageType.Success, MessageConstant.GetMessage(Messages.RequestSuccess));
