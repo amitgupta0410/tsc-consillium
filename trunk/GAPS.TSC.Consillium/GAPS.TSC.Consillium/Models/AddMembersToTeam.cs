@@ -14,9 +14,10 @@ namespace GAPS.TSC.Consillium.Models
         {
             Employees = new List<TeamMember>();
         }
+        [RegularExpression("([1-9][0-9]*)", ErrorMessage = "Id must be a natural number")]
         public int? UserId { get; set; }
 
-        [RegularExpression(@"^[a-zA-Z]+$", ErrorMessage = "Use letters only please")]
+        [RegularExpression(@"^[a-zA-Z]+$", ErrorMessage = "Please enter only alphabets")]
         public string Name { get; set; }
         public TeamMemberType TeamMemberType { get; set; }
         public bool IsActive { get; set; }
