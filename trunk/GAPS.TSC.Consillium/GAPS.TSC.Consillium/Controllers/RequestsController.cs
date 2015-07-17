@@ -179,7 +179,7 @@ namespace GAPS.TSC.Consillium.Controllers
           
             int parsedId;
             int.TryParse(model.SearchString, out parsedId);
-            if (!String.IsNullOrEmpty(model.SearchString.ToLower()))
+            if (model.SearchString!=null && !String.IsNullOrEmpty(model.SearchString.ToLower()))
             {
 
                 var project = _projectService.GetAllMasterProjects().FirstOrDefault(x => x.Name == model.SearchString);
