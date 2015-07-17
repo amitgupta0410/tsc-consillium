@@ -496,7 +496,16 @@ namespace GAPS.TSC.Consillium.Controllers
             }
 
             model.PaymentModeDictionary = _expertRequestService.GetAllPayments().ToDictionary(x => x.Id, x => x.Name);
-            model.TeamMembers = _expertRequestService.GetAllTeamMembers().ToDictionary(x => x.Id, x => x.Name);
+            var teamMembers = _userService.GetAllTeamMembers().ToList();
+            model.TeamMembers = teamMembers.Where(x => x.UserId == null).ToDictionary(x => x.Id, x => x.Name);
+            teamMembers = teamMembers.Where(x => x.UserId != null).ToList();
+            var apiUsers = _userService.GetAllUsers().ToList();
+            foreach (var teamMember in teamMembers)
+            {
+                var teamModel = apiUsers.FirstOrDefault(x => x.Id == teamMember.UserId);
+                if(teamModel!=null)
+                model.TeamMembers.Add(teamMember.Id,teamModel.FullName);
+            }
             model.CallTypeOptions = EnumHelper.GetEnumLabelValuess(typeof(CallType));
             model.CostSharingOptions = EnumHelper.GetEnumLabelValuess(typeof(CostSharingType));
             model.Geography = _masterService.GetAllGeographies().ToDictionary(x => x.Id, x => x.Name);
