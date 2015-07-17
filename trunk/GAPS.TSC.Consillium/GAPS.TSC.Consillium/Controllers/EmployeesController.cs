@@ -143,14 +143,26 @@ namespace GAPS.TSC.Consillium.Controllers {
                             (x.ExpertRequests.Select(y => y.ProjectId).Contains(projectId)));
             }
           
-//           
+          
             int parsedId;
             int.TryParse(model.SearchString, out parsedId);
-            if (!String.IsNullOrEmpty(model.SearchString)) {
+            if (!String.IsNullOrEmpty(model.SearchString))
+            {
 
+                var geographic = _mainMastersService.GetAllGeographies().FirstOrDefault(x => x.Name == model.SearchString);
+                var industry = _mainMastersService.GetAllIndustries().FirstOrDefault(x => x.Name == model.SearchString);
+                if (geographic != null)
+                {
+                    parsedId = geographic.Id;
 
+                }
+                if (industry != null)
+                {
+                    parsedId = industry.Id;
+
+                }
                 experts = experts.Where(x => x.Name.Contains(model.SearchString.ToLower())
-                                                       || x.Email.Contains(model.SearchString.ToLower()) || x.GeographicId == parsedId || x.IndustryId == parsedId || model.ToAddOrganisations.Contains(model.SearchString));
+                                                       || x.Email.Contains(model.SearchString.ToLower()) || x.GeographicId == parsedId || x.IndustryId == parsedId );
             }
 
          

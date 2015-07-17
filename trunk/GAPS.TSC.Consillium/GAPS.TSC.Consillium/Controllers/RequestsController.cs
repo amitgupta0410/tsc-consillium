@@ -84,7 +84,7 @@ namespace GAPS.TSC.Consillium.Controllers
             foreach (var apiProject in apiProjects)
             {
 
-                var name = _projectService.GetAllMasterProjects().FirstOrDefault(x => x.Id == apiProject.ProjectId);
+                var name = _projectService.GetAllMasterProjects().FirstOrDefault(x => apiProject != null && x.Id == apiProject.ProjectId);
                 if (name != null)
                     apiNames.Add(name.Name);
             }
