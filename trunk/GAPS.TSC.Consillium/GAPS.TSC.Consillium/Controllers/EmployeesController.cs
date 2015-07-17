@@ -428,7 +428,13 @@ namespace GAPS.TSC.Consillium.Controllers {
                 Employees = _userService.GetAllTeamMembers()
             };
             var users = _userService.GetAllUsers();
-            model.Employees.ForEach(x => x.Name = x.UserId != null ? users.FirstOrDefault(y => y.Id == x.UserId).FullName : x.Name);
+           
+            model.Employees.ForEach(x =>
+            {
+                var userModel = users.FirstOrDefault(y => y.Id == x.UserId);
+                if (userModel != null)
+                    x.Name = x.UserId != null ? userModel.FullName : x.Name;
+            });
             return View(model);
         }
 
