@@ -3,7 +3,6 @@
     ViewBag.Title = "Calls";
 }
 
-<h2>Calls</h2>
 <div class="row">
     <div class="col-md-12">
         <h3 class="page-title">
@@ -14,7 +13,7 @@
 @Html.Partial("_PartialMessage")
 <hr />
 <div class="row">
-    <div class="well" style="height: 386px">
+    <div class="well" style="height: 406px">
     <div class="col-md-12">
         @using (@Html.BeginForm("Calls", "Requests", FormMethod.Post))
         {
@@ -60,7 +59,6 @@
                     <label><b>Payment Mode</b></label>
                     @Html.DropDownListFor(x => x.PaymentModeId, new SelectList(Model.PaymentModeDictionary, "Key", "Value"), new { @class = "form-control", @data_placeholder = "Choose PaymentMode" })
                     @Html.ValidationMessageFor(x => x.PaymentModeId)
-                    @*@Html.DropDownListFor(x => x.PaymentModeId, new SelectList(new[] { new { Value = "1", Text = "Cash" }, new { Value = "2", Text = "Cheque" }, new { Value = "3", Text = "DD" } }, "Value", "Text", Model), "Select", new { @class = "form-control" })*@
                 </div>
             </div>
             <div class="clearfix"></div>

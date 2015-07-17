@@ -293,7 +293,6 @@ namespace GAPS.TSC.Consillium.Controllers {
 
             foreach (var expert in model.Experts) {
                 var name = _masterService.GetAllGeographies().FirstOrDefault(x => x.Id == expert.GeographicId);
-
                 if (name != null)
                     model.ToAddRegions.Add(name.Name);
                 var workExperience = _expertRequestService.GetAllDesignations(expert.Id).OrderByDescending(x => x.StartDate);
