@@ -67,7 +67,7 @@ namespace GAPS.TSC.Consillium.Controllers
                 var projectApi =
                    _projectService.GetAllMasterProjects().FirstOrDefault(x => x.Id == apiProject.ProjectId);
 
-                var name = _clientService.GetAllClients().FirstOrDefault(x => x.Id == projectApi.ClientId);
+                var name = _clientService.GetAllClients().FirstOrDefault(x =>projectApi != null && x.Id == projectApi.ClientId);
                 if (name != null)
                     apiClients.Add(name.Name);
             }
@@ -94,11 +94,33 @@ namespace GAPS.TSC.Consillium.Controllers
 
 
             var projects = _expertRequestService.GetAllExpertsProjects();
+
+            foreach (var expertRequest in projects)
+            {
+                if (expertRequest.ProjectId != null)
+                {
+                    var projectApi =
+                  _projectService.GetAllMasterProjects().FirstOrDefault(x => x.Id == expertRequest.ProjectId);
+                    if (projectApi != null)
+                    {
+                        expertRequest.ProjectName = projectApi.Name;
+                        var client = _clientService.GetAllClients().FirstOrDefault(x => x.Id == projectApi.ClientId);
+                        if (client != null)
+                            expertRequest.ClientName = client.Name;
+                    }
+                }
+                var team = _userService.GetAllTeamMembers().FirstOrDefault(x => x.Id == expertRequest.AssignedToId);
+                if (team != null)
+                    model.ToAddMembers.Add(team.Name);
+            }
+
+
+
             int parsedProjectId = 0;
             int.TryParse(model.SearchString, out parsedProjectId);
             if (!String.IsNullOrEmpty(model.ClientName))
             {
-                //                var projectId = 0;
+               
                 var client = _clientService.GetAllClients().FirstOrDefault(x => x.Name == model.ClientName);
                 if (client != null)
                 {
@@ -119,7 +141,7 @@ namespace GAPS.TSC.Consillium.Controllers
             if (!String.IsNullOrEmpty(model.ProjectName))
             {
                 var project = _projectService.GetAllMasterProjects().FirstOrDefault(x => x.Name == model.ProjectName);
-                //                var projectId = 0;
+
                 if (project != null)
                 {
                     parsedClientId = project.Id;
@@ -130,30 +152,9 @@ namespace GAPS.TSC.Consillium.Controllers
                           (x.ProjectName != null && x.ProjectName.Contains(model.ProjectName)) ||
                             (x.ProjectId.HasValue && x.ProjectId == parsedClientId));
             }
-            int parsedId;
-            int.TryParse(model.SearchString, out parsedId);
-            foreach (var expertRequest in projects)
-            {
-                if (expertRequest.ProjectId != null)
-                {
-                    var projectApi =
-                  _projectService.GetAllMasterProjects().FirstOrDefault(x => x.Id == expertRequest.ProjectId);
-                    if (projectApi != null)
-                    {
-                        expertRequest.ProjectName = projectApi.Name;
-                        var client = _clientService.GetAllClients().FirstOrDefault(x => x.Id == projectApi.ClientId);
-                        if (client != null)
-                            expertRequest.ClientName = client.Name;
-                    }
-                }
-                var team = _userService.GetAllTeamMembers().FirstOrDefault(x => x.Id == expertRequest.AssignedToId);
-                if (team != null)
-                    model.ToAddMembers.Add(team.Name);
-            }
-            //            if (model.ProjectLeadId != null)
-            //            {
-            //                projects = projects.Where(x => x.ProjectLeadId == model.ProjectLeadId);
-            //            }
+
+         
+
 
             if (model.Status != null)
             {
@@ -168,30 +169,52 @@ namespace GAPS.TSC.Consillium.Controllers
                 projects = projects.Where(x => x.EndDate == model.EndDate);
             }
 
-            //            if (model.ClientId > 0)
-            //            {
-            //                var projectids = _projectService.GetAllMasterProjects().Where(x => x.ClientId == model.ClientId).Select(x => x.Id);
-            //                projects = projects.Where(x => projectids.Contains(x.ProjectId.GetValueOrDefault())).ToList();
-            //                model.ProjectList =
-            //                    GetProjectsForClientForFilter(model.ClientId.GetValueOrDefault())
-            //                        .ToDictionary(x => x.Id, x => x.ProjectName);
-            //            }
+
             if (model.Assigned > 0)
             {
                 projects = projects.Where(x => x.AssignedToId == model.Assigned);
 
             }
-            if (model.ProjectId != null)
+            if (model.ProjectLeadId != null)
             {
-                projects = projects.Where(x => x.Id == model.ProjectId);
-            }
+                projects = projects.Where(x => x.ProjectLeadId == model.ProjectLeadId);
 
+            }
+          
+            int parsedId;
+            int.TryParse(model.SearchString, out parsedId);
             if (!String.IsNullOrEmpty(model.SearchString))
             {
 
+                var project = _projectService.GetAllMasterProjects().FirstOrDefault(x => x.Name == model.SearchString);
+                var projectLead = _userService.GetAllUsers().FirstOrDefault(x => x.FirstName == model.SearchString);
+                var client = _clientService.GetAllClients().FirstOrDefault(x => x.Name == model.SearchString);
+                if (project != null)
+                {
+                    parsedId = project.Id;
 
-                projects = projects.Where(x => x.ProjectName.Contains(model.SearchString.ToLower())
-                                                       || x.ClientName.Contains(model.SearchString.ToLower()) || x.ProjectLeadId == parsedId);
+                }
+                if (projectLead != null)
+                {
+                    parsedId = projectLead.Id;
+
+                }
+                if (client != null)
+                {
+                    
+                      var projectclient = _projectService.GetAllMasterProjects().FirstOrDefault(x => x.ClientId == client.Id);
+
+
+                    if (projectclient != null)
+                    {
+
+                        parsedProjectId = projectclient.Id;
+                    }
+
+                }
+              
+                projects = projects.Where(x => x.ProjectName != null && x.ProjectName.Contains(model.SearchString.ToLower())
+                                                       || (x.ClientName != null && x.ClientName.Contains(model.SearchString.ToLower())) || (x.ProjectId.HasValue && x.ProjectId == parsedId) || (x.ProjectLeadId.HasValue && x.ProjectLeadId == parsedId) );
             }
             model.ExpertRequests = projects.Select(Mapper.Map<ExpertRequest, ExpertRequestSingleViewModel>);
 

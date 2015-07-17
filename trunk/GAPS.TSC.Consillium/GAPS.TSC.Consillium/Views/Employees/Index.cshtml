@@ -13,7 +13,7 @@
 </div>
 
 <hr />
-<div class="row">
+<div class="row well">
     <div class="col-md-12">
         @using (@Html.BeginForm("Index", "Employees", FormMethod.Get))
         {
@@ -29,7 +29,7 @@
                     @Html.DropDownListFor(x => x.IndustryId, new SelectList(Model.IndustryList, "key", "value"), "All", new { @class = "form-control", @data_placeholder = "Choose Industry" })
                 </div>
             </div>
-            <div class="clearfix"></div>
+
             <div class="col-md-4">
                 <div class="form-group">
                     <label><b>Geographic</b></label><br>
@@ -42,7 +42,7 @@
                     @Html.DropDownListFor(x => x.ProjectName, new SelectList(Model.ProjectList, "key", "value"), "All", new { @class = "form-control", @data_placeholder = "choose Project" })
                 </div>
             </div>
-            <div class="clearfix"></div>
+
             <div class="col-md-4">
                 <div class="form-group">
                     <label>
@@ -53,17 +53,18 @@
                     @Html.DropDownListFor(x => x.ClientName, new SelectList(Model.ClientList, "key", "value"), "All", new { @class = "form-control", @data_placeholder = "choose Client" })
                 </div>
             </div>
-            <div class="clearfix"></div>
-            <div class="col-md-1">
+
+            <div class="col-md-1 filterExport">
                 <div class="form-group">
                     <input type="submit" value="Filter" class="btn btn-primary">
                 </div>
             </div>
-            <div class="col-md-2">
+            <div class="col-md-2 filterExport">
                 <div class="form-group">
                     <input type="submit" value="Export To Excel" class="btn btn-primary">
                 </div>
             </div>
+
         }
     </div>
 </div>
@@ -74,11 +75,12 @@
     {
         <div class="col-lg-12">
             <div class="col-md-9">
+                <h3>Experts </h3>
                 <div class="table-responsive table-bordered">
                     <table class="table">
                         <tbody>
                             <tr>
-                                <td>Select Expert</td>
+                                <th>Select Expert</th>
                                 <th><label>Name</label></th>
                                 <th><label>Current Company</label></th>
                                 <th><label>E-Mail-Id</label></th>
@@ -95,7 +97,7 @@
                                     <td>
                                         @*@Html.CheckBoxFor(m => m.Check, new { @checked = "checked", @class = "AllChecked", @value = expert.Id })*@
                                         <input type="checkbox" name="Expert[]" value="@expert.Id" />
-                                       
+
                                     </td>
 
 
@@ -129,19 +131,19 @@
 
             <div class="col-md-8">
 
-                <div class="col-md-2">
+                <div class="col-md-2 addtitle">
                     <div class="form-group">
-                        <label style="padding-top: 7px;"><b>Add To Project</b></label>
+                        <label><b>Add To Project</b></label>
 
                     </div>
                 </div>
-                <div class="row col-md-6">
+                <div class="row col-md-6 addProjectTitle">
                     <div class="form-group">
                         @Html.DropDownListFor(x => x.RequestId, new SelectList(Model.ExpertRequestlist, "key", "value"), "All", new { @class = "form-control", @data_placeholder = "Choose Expert Request" })
-                        @Html.ValidationMessageFor(x=>x.RequestId)
+                        @Html.ValidationMessageFor(x => x.RequestId)
                     </div>
                 </div>
-                <div class="col-md-1">
+                <div class="col-md-1 addProjectMap">
                     <div class="form-group">
                         <input type="submit" value="Save" class="btn btn-primary">
                     </div>
@@ -191,3 +193,22 @@
         });
     </script>
 }
+<style>
+    .addtitle {
+        margin-top: 44px;
+    }
+
+
+    .addProjectTitle {
+        margin-top: 38px;
+    }
+
+    .addProjectMap {
+        margin-top: 37px;
+        margin-left: 22px;
+    }
+
+    .filterExport {
+        margin-top: 24px;
+    }
+</style>
