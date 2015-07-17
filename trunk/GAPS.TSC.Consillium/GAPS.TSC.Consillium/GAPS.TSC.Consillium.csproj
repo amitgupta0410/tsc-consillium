@@ -220,7 +220,6 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LogInController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
-    <Compile Include="Controllers\ProjectsController.cs" />
     <Compile Include="Controllers\ReportsController.cs" />
     <Compile Include="Controllers\RequestsController.cs" />
     <Compile Include="Global.asax.cs">
@@ -371,7 +370,6 @@
     <Content Include="Views\Shared\_PartialHeader.cshtml" />
     <Content Include="Views\Shared\_PartialSideMenu.cshtml" />
     <Content Include="Views\Reports\Index.cshtml" />
-    <Content Include="Views\Projects\Projects.cshtml" />
     <Content Include="Views\Calls\CallDasboard.cshtml" />
     <Content Include="Views\Calls\PaidCallDetails.cshtml" />
     <Content Include="Views\Employees\LeadsDashboard.cshtml" />
@@ -395,6 +393,7 @@
     <Folder Include="App_Data\" />
     <Folder Include="Views\Attachments\" />
     <Folder Include="Views\Base\" />
+    <Folder Include="Views\Projects\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
