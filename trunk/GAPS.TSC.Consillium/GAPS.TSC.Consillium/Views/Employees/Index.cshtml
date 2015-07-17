@@ -11,6 +11,7 @@
         </h3>
     </div>
 </div>
+
 <hr />
 <div class="row">
     <div class="col-md-12">
@@ -68,81 +69,87 @@
 </div>
 <br />
 <div class="row">
+    @Html.Partial("_PartialMessage")
     @using (@Html.BeginForm("AddExpertToRequest", "Employees", FormMethod.Post))
     {
-    <div class="col-lg-12">
-        <div class="col-md-9">
-            <div class="table-responsive table-bordered">
-                <table class="table">
-                    <tbody>
-                        <tr>
-                            <td>@Html.CheckBoxFor(m => m.Check, new { @checked = "checked", id = "AllChecked" })</td>
-                            <th><label>Name</label></th>
-                            <th><label>Current Company</label></th>
-                            <th><label>E-Mail-Id</label></th>
-                            <th><label>Industry</label></th>
-                            <th><label>Geography</label></th>
-                            <th></th>
-                        </tr>
-                        @foreach (var expert in Model.Experts)
-                        {
+        <div class="col-lg-12">
+            <div class="col-md-9">
+                <div class="table-responsive table-bordered">
+                    <table class="table">
+                        <tbody>
                             <tr>
-                                <td>
-                                    @*@Html.CheckBoxFor(m => m.Check, new { @checked = "checked", @class = "AllChecked", @value = expert.Id })*@
-                                    <input type="checkbox" name="Expert[]" value="@expert.Id" />
-                                </td>
-
-
-                                <td>@expert.Name</td>
-                                <td>Current Company</td>
-                                <td>@expert.Email</td>
-                                <td>
-                                    @if (expert.IndustryId != null && Model.IndustryList.ContainsKey(expert.IndustryId.Value))
-                                    {
-                                        @Model.IndustryList[expert.IndustryId.Value]
-                                    }
-                                </td>
-                                <td>
-                                    @if (expert.GeographicId != null && Model.GeographicList.ContainsKey(expert.GeographicId.Value))
-                                    {
-                                        @Model.GeographicList[expert.GeographicId.Value]
-                                    }
-                                </td>
-
-                                <td><input type="submit" class="btn btn-default" value="View Details" /></td>
+                                <td>Select Expert</td>
+                                <th><label>Name</label></th>
+                                <th><label>Current Company</label></th>
+                                <th><label>E-Mail-Id</label></th>
+                                <th><label>Industry</label></th>
+                                <th><label>Geography</label></th>
+                                <th></th>
                             </tr>
-                        }
-                    </tbody>
-                </table>
+                            @{
+                                int i = 0;
+                            }
+                            @foreach (var expert in Model.Experts)
+                            {
+                                <tr>
+                                    <td>
+                                        @*@Html.CheckBoxFor(m => m.Check, new { @checked = "checked", @class = "AllChecked", @value = expert.Id })*@
+                                        <input type="checkbox" name="Expert[]" value="@expert.Id" />
+                                       
+                                    </td>
+
+
+                                    <td>@expert.Name</td>
+                                    <td>@Model.ToAddOrganisations.ElementAtOrDefault(i)</td>
+                                    <td>@expert.Email</td>
+                                    <td>
+                                        @if (expert.IndustryId != null && Model.IndustryList.ContainsKey(expert.IndustryId.Value))
+                                        {
+                                            @Model.IndustryList[expert.IndustryId.Value]
+                                        }
+                                    </td>
+                                    <td>
+                                        @if (expert.GeographicId != null && Model.GeographicList.ContainsKey(expert.GeographicId.Value))
+                                        {
+                                            @Model.GeographicList[expert.GeographicId.Value]
+                                        }
+                                    </td>
+
+                                    <td><input type="submit" class="btn btn-default" value="View Details" /></td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
-    </div>
 
-    <br />
-    <div class="row">
-       
-        <div class="col-md-8">
+        <br />
+        <div class="row">
 
-            <div class="col-md-2">
-                <div class="form-group">
-                    <label style="padding-top: 7px;"><b>Add To Project</b></label>
+            <div class="col-md-8">
 
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label style="padding-top: 7px;"><b>Add To Project</b></label>
+
+                    </div>
                 </div>
-            </div>
-            <div class="row col-md-2">
-                <div class="form-group">
-                    @Html.DropDownListFor(x => x.RequestId, new SelectList(Model.ExpertRequestlist, "key", "value"), "All", new { @class = "form-control", @data_placeholder = "Choose Expert Request" })
+                <div class="row col-md-6">
+                    <div class="form-group">
+                        @Html.DropDownListFor(x => x.RequestId, new SelectList(Model.ExpertRequestlist, "key", "value"), "All", new { @class = "form-control", @data_placeholder = "Choose Expert Request" })
+                        @Html.ValidationMessageFor(x=>x.RequestId)
+                    </div>
                 </div>
-            </div>
-            <div class="col-md-1">
-                <div class="form-group">
-                    <input type="submit" value="Save" class="btn btn-primary">
+                <div class="col-md-1">
+                    <div class="form-group">
+                        <input type="submit" value="Save" class="btn btn-primary">
+                    </div>
                 </div>
+
             </div>
 
         </div>
-       
-    </div>
     }
 </div>
 @section scripts
