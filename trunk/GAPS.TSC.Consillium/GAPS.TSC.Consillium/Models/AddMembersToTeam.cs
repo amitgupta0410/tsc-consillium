@@ -14,7 +14,7 @@ namespace GAPS.TSC.Consillium.Models
         {
             Employees = new List<TeamMember>();
         }
-        [RegularExpression("([1-9][0-9]*)", ErrorMessage = "Id must be a natural number")]
+        [Required(ErrorMessage = "Please Select User ")]
         public int? UserId { get; set; }
 
         public IDictionary<int,string> UserOptions { get; set; }

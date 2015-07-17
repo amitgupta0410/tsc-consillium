@@ -54,8 +54,8 @@ namespace GAPS.TSC.Consillium.Models
         public DateTime? EndDate { get; set; }
         [DisplayFormat(DataFormatString = "dd MM, yyyy")] 
         public DateTime? RestartDate { get; set; }
-        public int? AssignedToId { get; set; }
-        public TeamMember AssignedTo { get; set; }
+
+        public string AssignedToName { get; set; }
         
     }
 }

@@ -30,12 +30,14 @@ namespace GAPS.TSC.Consillium.Models {
         [Required(ErrorMessage = "Please fill call duration")]
         public decimal CallDuration { get; set; }
         [Required(ErrorMessage = "Please fill fees")]
+        [Range(1, int.MaxValue, ErrorMessage = "Amount must be greater than zero.")]
         public decimal FeesPerHour { get; set; }
         public IDictionary<int, string> CostSharingOptions { get; set; }
         public CostSharingType CostBorneBy { get; set; }
         public string Details { get; set; }
         public int? GeographicId { get; set; }
         [Required(ErrorMessage = "Please select Amount")]
+        [Range(1,int.MaxValue,ErrorMessage = "Amount must be greater than zero.")]
         public decimal Amount { get; set; }
         [Required(ErrorMessage = "Please select currency ")]
         public int AmountCurrencyId { get; set; }
