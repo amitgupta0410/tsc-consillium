@@ -42,6 +42,9 @@ namespace GAPS.TSC.Consillium.Utils
                 case Messages.AddNoteSuccess:
                     messagetext = "Note has been saved successfully.";
                     break;
+                case Messages.Danger:
+                    messagetext = "Please select atleast one Expert";
+                    break;
             }
             return messagetext;
         }

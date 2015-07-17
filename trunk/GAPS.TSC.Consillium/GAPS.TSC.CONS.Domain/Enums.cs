@@ -84,6 +84,7 @@ namespace GAPS.TSC.CONS.Domain {
         DeleteLead,
         AddCvSuccess,
         AddNoteSuccess,
+        Danger
     }
     public enum ProjectStaffType
     {

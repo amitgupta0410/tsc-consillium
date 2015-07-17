@@ -44,25 +44,16 @@
             <div class="col-md-3">
                 <div class="form-group">
                     <label><b>Client</b></label><br>
-                    @Html.DropDownListFor(x => x.ClientId, new SelectList(Model.ClientList, "Key", "Value"), "All", new { @class = "form-control" })
+                    @Html.DropDownListFor(x => x.ClientName, new SelectList(Model.ClientList, "Key", "Value"), "All", new { @class = "form-control" })
                 </div>
             </div>
             <div class="col-md-3">
                 <div class="form-group">
                     <label><b>Projects</b></label>
 
-                    @*                                        @Html.DropDownListFor(x => x.ProjectId, new SelectList(Model.ProjectList, "Key", "Value"), "All", new { @class = "form-control", @data_placeholder = "Choose Status" })*@
+                    @Html.DropDownListFor(x => x.ProjectName, new SelectList(Model.ProjectList, "Key", "Value"), "All", new { @class = "form-control", @data_placeholder = "Choose Status" })
 
-                    @if (Model.ProjectList.Any())
-                    {
-                        @Html.DropDownListFor(x => x.ProjectId, new SelectList(Model.ProjectList, "Key", "Value"), "All", new { @class = "form-control" })
 
-                    }
-                    else
-                    {
-                        @Html.DropDownListFor(x => x.ProjectId, new List<SelectListItem>(), "All", new { @class = "form-control" })
-
-                    }
 
 
 
@@ -89,13 +80,20 @@
             </div>
             <div class="col-md-3">
                 <div class="form-group">
-                    <label><b>Search</b></label>
-                    @Html.TextBoxFor(x => x.SearchString, new { @class = "form-control ", Value = "" })
-                </div>
+                    <div class="col-md-9">
+                        <label><b>Search</b></label>
+
+                        @Html.TextBoxFor(x => x.SearchString, new { @class = "form-control ", Value = "" })
+                    </div>
+                    <div class="col-md-2">
+                        <label><b>Filter</b></label>
+                        <input type="submit" class="btn btn-primary" value="Go" />
+                    </div>
+                    </div>
             </div>
             <div class="col-md-2">
                 <div class="form-group">
-                    <div style="padding-top: 9px"></div>
+                    <div></div>
                     <br />
                     <input type="submit" class="btn btn-primary" value="Go" />
                 </div>
@@ -142,11 +140,11 @@
 
                             <td> @experts.RequestStatus</td>
                             <td> <a href="">View</a></td>
-                           
+
                             <td>@Model.ToAddMembers.ElementAtOrDefault(i)</td>
-                                
-                           
-                         
+
+
+
                             <td>
 
                                 @experts.CreatedAt.ToString("dd/MM/yyyy")
@@ -170,7 +168,7 @@
 
 
                         </tr>
-                        i++;
+                                i++;
                     }
 
                 </tbody>
