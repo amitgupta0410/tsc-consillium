@@ -46,8 +46,7 @@ namespace GAPS.TSC.Consillium.Controllers
 
             model.StatusOptions = EnumHelper.GetEnumLabels(typeof(RequestStatus));
             model.AssignedList = _userService.GetAllTeamMembers().ToDictionary(x => x.Id, x => x.Name);
-            //            model.ClientList = _clientService.GetAllClients().ToDictionary(x => x.Id, x => x.Name);
-            //            model.ProjectList = _projectService.GetAllMasterProjects().ToDictionary(x => x.Id, x => x.Name);
+          
             var mannualProjects = _expertRequestService.GetAllExpertsProjects().Where(x => x.ProjectId == null)
                .ToDictionary(x => x.Id, x => x.ProjectName);
             var mannualProjectsclients = _expertRequestService.GetAllExpertsProjects().Where(x => x.ProjectId == null)
@@ -109,9 +108,6 @@ namespace GAPS.TSC.Consillium.Controllers
                             expertRequest.ClientName = client.Name;
                     }
                 }
-                var team = _userService.GetAllTeamMembers().FirstOrDefault(x => x.Id == expertRequest.AssignedToId);
-                if (team != null)
-                    model.ToAddMembers.Add(team.Name);
             }
 
 

@@ -109,9 +109,7 @@
                         <th><label>End Date</label></th>
                     </tr>
 
-                    @{
-                        int i = 0;
-                    }
+                    
                     @foreach (var experts in Model.ExpertRequests)
                     {
                         var isProjectId = string.Format("row-projectid-{0}", experts.ProjectId);
@@ -130,7 +128,7 @@
                             <td> @experts.RequestStatus</td>
                             <td> <a href="">View</a></td>
 
-                            <td>@Model.ToAddMembers.ElementAtOrDefault(i)</td>
+                            <td>@experts.AssignedToName</td>
 
 
 
@@ -157,7 +155,7 @@
 
 
                         </tr>
-                                i++;
+                             
                     }
 
                 </tbody>
