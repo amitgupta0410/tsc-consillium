@@ -49,7 +49,9 @@
                 <div class="form-group">
                     <table>
                         <tr class="tdUserId" id="tdUserId">
-                            <td>@Html.TextBoxFor(x => x.UserId, new { @class = "form-control", @Value = "" })</td>
+                            <td>@Html.TextBoxFor(x => x.UserId, new { @class = "form-control", @Value = "" })
+                            @Html.ValidationMessageFor(x=>x.UserId)
+                            </td>
                         </tr>
 
                         <tr class="tdName" id="tdName">
@@ -139,6 +141,6 @@
 <style>
     .membersBox {
         height: 135px;
-        width: 1296px;
+        width: 1330px;
     }
     </style >

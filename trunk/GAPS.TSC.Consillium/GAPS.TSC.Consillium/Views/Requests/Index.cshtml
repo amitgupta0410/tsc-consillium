@@ -13,7 +13,7 @@
     </div>
 </div>
 <hr />
-<div class="row">
+<div class="row well">
     <div class="col-md-12">
         @using (@Html.BeginForm("Index", "Requests", FormMethod.Get))
         {
@@ -53,11 +53,6 @@
 
                     @Html.DropDownListFor(x => x.ProjectName, new SelectList(Model.ProjectList, "Key", "Value"), "All", new { @class = "form-control", @data_placeholder = "Choose Status" })
 
-
-
-
-
-
                 </div>
             </div>
 
@@ -89,15 +84,9 @@
                         <label><b>Filter</b></label>
                         <input type="submit" class="btn btn-primary" value="Go" />
                     </div>
-                    </div>
-            </div>
-            <div class="col-md-2">
-                <div class="form-group">
-                    <div></div>
-                    <br />
-                    <input type="submit" class="btn btn-primary" value="Go" />
                 </div>
             </div>
+
         }
     </div>
 
