@@ -49,8 +49,9 @@
                 <div class="form-group">
                     <table>
                         <tr class="tdUserId" id="tdUserId">
-                            <td>@Html.TextBoxFor(x => x.UserId, new { @class = "form-control", @Value = "" })
-                            @Html.ValidationMessageFor(x=>x.UserId)
+                            <td>
+                                @Html.DropDownListFor(x => x.UserId, new SelectList(Model.UserOptions, "Key", "Value"), "Select User", new { @class = "form-control"  })
+                                @Html.ValidationMessageFor(x => x.UserId)
                             </td>
                         </tr>
 
@@ -81,7 +82,7 @@
 <br />
 
 <div class="row">
-    <div class="col-md-5">
+    <div class="col-md-8">
         <div class="table-responsive table-bordered">
             <table class="table">
                 <tbody>
@@ -130,7 +131,9 @@
                     if (value == "External") {
                         $('#lblEmployeeId').text("TSC Employee Name");
                         $('.tdName').show();
+                        $('#UserId')[0].selectedIndex = 0;
                         $('.tdUserId').hide();
+                        
                     }
                 }
             });

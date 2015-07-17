@@ -504,8 +504,10 @@ namespace GAPS.TSC.Consillium.Controllers
 
         public ActionResult Calls(int id)
         {
-            var model = new CallsViewModel();
-            model.ExpertList = _expertRequestService.GetExpertsForRequest(id).ToDictionary(x => x.Id, x => x.Name);
+            var model = new CallsViewModel
+            {
+                ExpertList = _expertRequestService.GetExpertsForRequest(id).ToDictionary(x => x.Id, x => x.Name)
+            };
             var expertRequest = _expertRequestService.GetAllExpertsProjects().FirstOrDefault(x => x.Id == id);
             if (expertRequest != null)
             {
