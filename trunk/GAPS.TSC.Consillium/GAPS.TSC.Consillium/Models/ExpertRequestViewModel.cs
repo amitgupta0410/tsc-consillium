@@ -51,7 +51,8 @@ namespace GAPS.TSC.Consillium.Models
         [Required(ErrorMessage = "Please Select Currency Field.")]
         public int BudgetCurrencyId { get; set; }
         public string Comments { get; set; }
-         [Required(ErrorMessage = "Please Select Amount Field.")]
+        [Required]
+        [Range(1, int.MaxValue, ErrorMessage = "Amount must be greater than zero.")]
         public decimal BudgetAmount { get; set; }
         public IDictionary<int, string> CostSharingOptions { get; set; }
         public CostSharingType CostSharingTypeValue { get; set; }
