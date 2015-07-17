@@ -19,5 +19,6 @@ namespace GAPS.TSC.CONS.Services
         IEnumerable<SpecialProjectLeadMap> GetAllProjectLeads();
         bool AddSpecialProjectLeads(SpecialProjectLeadMap projectLead);
 
+        TeamMember GetTeamMemberById(int id);
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
@@ -30,7 +31,10 @@ namespace GAPS.TSC.Consillium.Models {
         public string Geography { get; set; }
         public string Industry { get; set; }
         public string RecruiterName { get; set; }
+       [Required(ErrorMessage = "Please add some note.")]
         public string NoteToAdd { get; set; }
+        [Required(ErrorMessage = "PLease select a file.")]
+        public HttpPostedFileBase File { get; set; }
         public IEnumerable<ExpertNoteModel> ExpertNoteModels { get; set; }
         public IEnumerable<WorkExperienceModel> WorkExperienceModels { get; set; }
         public IEnumerable<ExpertCallsModel> ExpertCallsModels { get; set; }
