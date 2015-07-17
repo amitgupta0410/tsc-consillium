@@ -49,18 +49,18 @@ namespace GAPS.TSC.Consillium.Controllers {
             int.TryParse(model.SearchString, out parsedId);
             foreach (var expertRequest in projects) {
                 if (expertRequest.ProjectId != null) {
-                    var projectApi =
-                  _projectService.GetAllMasterProjects().FirstOrDefault(x => x.Id == expertRequest.ProjectId);
-                    if (projectApi != null) {
-                        expertRequest.ProjectName = projectApi.Name;
-                        var client = _clientService.GetAllClients().FirstOrDefault(x => x.Id == projectApi.ClientId);
-                        if (client != null)
-                            expertRequest.ClientName = client.Name;
-                    }
+                      var projectApi =
+                    _projectService.GetAllMasterProjects().FirstOrDefault(x => x.Id == expertRequest.ProjectId);
+                      if (projectApi != null) { 
+                    expertRequest.ProjectName = projectApi.Name;
+                    var client = _clientService.GetAllClients().FirstOrDefault(x => x.Id == projectApi.ClientId);
+                    if (client != null)
+                        expertRequest.ClientName = client.Name;
+                      }
                 }
                 var team = _userService.GetAllTeamMembers().FirstOrDefault(x => x.Id == expertRequest.AssignedToId);
                 if (team != null)
-                    model.ToAddMembers.Add(team.Name);
+                model.ToAddMembers.Add(team.Name);
             }
             if (model.ProjectLeadId != null) {
                 projects = projects.Where(x => x.ProjectLeadId == model.ProjectLeadId);
@@ -233,7 +233,7 @@ namespace GAPS.TSC.Consillium.Controllers {
 
             return Json(unit, JsonRequestBehavior.AllowGet);
         }
-
+       
         [HttpGet]
         public ActionResult ProjectDetail(int id) {
             var model = new ProjectDetailViewModel();
@@ -268,7 +268,7 @@ namespace GAPS.TSC.Consillium.Controllers {
                 model.RestartDate = projectMeta.RestartDate;
                 model.Description = projectMeta.Description;
                 model.Id = id;
-
+               
 
                 model.RequestedDate = projectMeta.CreatedAt;
                 var currency =
@@ -305,7 +305,7 @@ namespace GAPS.TSC.Consillium.Controllers {
 
 
                 }
-
+                
             }
 
             model.ExpertList = _expertService.Get(x => x.DeletedAt == null).ToDictionary(x => x.Id, x => x.Name);
@@ -325,14 +325,16 @@ namespace GAPS.TSC.Consillium.Controllers {
         }
 
         [HttpPost]
-        public ActionResult ProjectDetailButton(ProjectDetailViewModel model) {
-            foreach (var expertId in model.ExpertIds) {
-                _expertRequestService.AddExpertToRequest(model.Id, expertId);
+        public ActionResult ProjectDetailAddExpert(ProjectDetailViewModel model)
+        {
+            foreach (var expertId in model.ExpertIds)
+            {
+                _expertRequestService.AddExpertToRequest(model.Id, expertId); 
             }
 
-            return RedirectToAction("ProjectDetail", new { id = model.Id });
+            return RedirectToAction("ProjectDetail", new { id = model.Id }); 
         }
-
+       
         public ActionResult DeleteExpert(int requestId, int expertId) {
 
 
@@ -374,7 +376,7 @@ namespace GAPS.TSC.Consillium.Controllers {
             model.ExpertCalls = _expertRequestService.GetCallsForRequest(id).Select(Mapper.Map<Call, CallsExpertViewModel>);
             return View(model);
         }
-
+        
         [HttpPost]
         public ActionResult Calls(CallsViewModel model) {
             if (!ModelState.IsValid) {
@@ -394,7 +396,7 @@ namespace GAPS.TSC.Consillium.Controllers {
             var expert = _expertService.GetById(expertId);
             return Json(new { expert.Id, expert.FeesAmount, expert.FeesCurrencyId }, JsonRequestBehavior.AllowGet);
         }
-
+       
 
     }
 }

@@ -81,7 +81,9 @@ namespace GAPS.TSC.CONS.Domain {
         Update,
         AddLeadSuccess,
         ConvertLead,
-        DeleteLead
+        DeleteLead,
+        AddCvSuccess,
+        AddNoteSuccess,
     }
     public enum ProjectStaffType
     {

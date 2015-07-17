@@ -11,6 +11,7 @@ namespace GAPS.TSC.Consillium.Models {
         public ProfileViewModel() {
             ExpertNoteModels = new List<ExpertNoteModel>();
             WorkExperienceModels = new List<WorkExperienceModel>();
+            ExpertCallsModels = new List<ExpertCallsModel>();
         }
         public int Id { get; set; }
         public string Title { get; set; }
@@ -32,7 +33,7 @@ namespace GAPS.TSC.Consillium.Models {
         public string NoteToAdd { get; set; }
         public IEnumerable<ExpertNoteModel> ExpertNoteModels { get; set; }
         public IEnumerable<WorkExperienceModel> WorkExperienceModels { get; set; }
-
+        public IEnumerable<ExpertCallsModel> ExpertCallsModels { get; set; }
         public string JobHistory { get; set; }
         public string Source { get; set; }
         public string Notes { get; set; }
@@ -47,6 +48,21 @@ namespace GAPS.TSC.Consillium.Models {
         public string TeamMember { get; set; }
         public string Content { get; set; }
         public DateTime CreatedAt { get; set; }
+    }
+
+    public class ExpertCallsModel {
+        public int Id { get; set; }
+        public string ExpertRequestName { get; set; }
+        public CallType CallType { get; set; }
+        public DateTime InterviewDate { get; set; }
+        public decimal CallDuration { get; set; }
+        public decimal FeesPerHour { get; set; }
+        public int PaymentModeId { get; set; }
+        public string PaymentMode { get; set; }
+        public CostSharingType CostBorneBy { get; set; }
+        public int CallFacilitatedById { get; set; }
+        public string CallFacilitatedBy { get; set; }
+        public string Details { get; set; }
     }
 
 

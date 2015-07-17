@@ -36,6 +36,12 @@ namespace GAPS.TSC.Consillium.Utils
                 case Messages.DeleteLead:
                     messagetext = "Lead has been deleted successfully.";
                     break;
+                case Messages.AddCvSuccess:
+                    messagetext = "File has been uploaded successfully";
+                    break;
+                case Messages.AddNoteSuccess:
+                    messagetext = "Note has been saved successfully.";
+                    break;
             }
             return messagetext;
         }
