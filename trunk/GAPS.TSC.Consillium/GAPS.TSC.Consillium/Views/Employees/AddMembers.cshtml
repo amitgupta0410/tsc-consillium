@@ -17,61 +17,63 @@
 <hr />
 
 <div class="row">
-    <div class="col-md-12">
-        @using (@Html.BeginForm("AddMembers", "Employees", FormMethod.Post))
+    <div class="well membersBox">
+        <div class="col-md-12">
+            @using (@Html.BeginForm("AddMembers", "Employees", FormMethod.Post))
         {
 
-            <div class="col-md-8">
-                <div class="form-group">
-                    <div class="col-md-3">
-                        @Html.RadioButtonFor(x => x.TeamMemberType, "Internal", new { id = "Internal" })<b>Internal</b>
+        <div class="col-md-9">
+            <div class="form-group">
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label id="lblEmployeeMemberType"><b>Team Member Type</b></label>
                     </div>
-                    <div class="col-md-3">
-                        @Html.RadioButtonFor(x => x.TeamMemberType, "External", new { id = "External" })<b>External</b>
-                        </div>
-                    </div>
+                </div>
+                <div class="col-md-2">
+                    @Html.RadioButtonFor(x => x.TeamMemberType, "Internal", new { id = "Internal" })<b>Internal</b>
+                </div>
+                <div class="col-md-3">
+                    @Html.RadioButtonFor(x => x.TeamMemberType, "External", new { id = "External" })<b>External</b>
+                </div>
             </div>
-            <div class="clearfix"></div>
-            <br/>
-            <div class="col-md-8">
-                <div class="col-md-3">
-                    <div class="form-group">
-                            <label id ="lblEmployeeId"><b>TSC EmployeeId</b></label>
-                    </div>
-                   
-                </div>
-                <div class="col-md-3">
-                    <div class="form-group">
-                        <table>
-                            <tr class="tdUserId" id="tdUserId" >
-                                <td>@Html.TextBoxFor(x => x.UserId, new { @class = "form-control", @Value = "" })</td>
-                            </tr>
-                            
-                            <tr class="tdName" id="tdName">
-                                <td>@Html.TextBoxFor(x => x.Name, new { @class = "form-control", @Value = "" })
-                                @Html.ValidationMessageFor(model => model.Name)
-                                </td>
-                            </tr>
-                        </table>
-                       
-                    </div>
-                </div>
-                </div>
-            <div class="clearfix"></div>
-            @*<div class="col-md-2">
+        </div>
+        <div class="clearfix"></div>
+        <br />
+        <div class="col-md-9">
+            <div class="col-md-3">
                 <div class="form-group">
-                    <div class="checkbox">
-                        <label><input type="checkbox" value="">Admin Rights</label>
-                    </div>
+                    <label id="lblEmployeeId"><b>TSC EmployeeId</b></label>
                 </div>
-            </div>*@
-            <div class="clearfix"></div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <table>
+                        <tr class="tdUserId" id="tdUserId">
+                            <td>@Html.TextBoxFor(x => x.UserId, new { @class = "form-control", @Value = "" })</td>
+                        </tr>
+
+                        <tr class="tdName" id="tdName">
+                            <td>
+                                @Html.TextBoxFor(x => x.Name, new { @class = "form-control", @Value = "" })
+                                @Html.ValidationMessageFor(model => model.Name)
+                            </td>
+                        </tr>
+                    </table>
+
+                </div>
+            </div>
             <div class="col-md-3">
                 <div class="form-group">
                     <input type="submit" value="Save" class="btn btn-primary">
                 </div>
             </div>
+    </div>
+        <div class="clearfix"></div>
+        
+        
         }
+        </div>
+
     </div>
 </div>
 <br />
@@ -134,3 +136,9 @@
         $(".tdName").hide();
     </script>
 }
+<style>
+    .membersBox {
+        height: 135px;
+        width: 1296px;
+    }
+    </style >

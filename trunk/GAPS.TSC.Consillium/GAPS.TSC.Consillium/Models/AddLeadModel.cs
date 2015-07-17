@@ -50,11 +50,15 @@ namespace GAPS.TSC.Consillium.Models {
         public IDictionary<int, string> CurrencyOptions { get; set; }
         public IDictionary<int, string> RecruiterOptions { get; set; }
 
+        public IDictionary<int, string> GeographicOptions { get; set; }
+        public IDictionary<int, string> IndustryOptions { get; set; }
         public IEnumerable<WorkExperienceModel> WorkExperiences { get; set; }
         public LeadStatus LeadStatus { get; set; }
         public string LeadComments { get; set; }
         [Required(ErrorMessage = "The Recruiter field is required.")]
         public int RecruiterId { get; set; }
+        public int? GeographicId { get; set; }
+        public int? IndustryId { get; set; }
         public string JobHistory { get; set; }
         public string Source { get; set; }
         public string Notes { get; set; }

@@ -86,7 +86,7 @@
             <div class="col-md-3">
                 <div class="form-group">
                     <label><b>Contacted On*</b></label>
-                    @Html.TextBoxFor(x => x.ContactedOn, new { @class = "form-control date", Value = Model.ContactedOn.ToString("dd/MM/yyyy") })
+                    @Html.TextBoxFor(x => x.ContactedOn, new { @class = "form-control date", Value = Model.ContactedOn.ToString("dd MMM yyyy") })
                     @Html.ValidationMessageFor(x => x.ContactedOn)
                 </div>
             </div>
@@ -143,8 +143,21 @@
             <div class="col-md-3">
                 <div class="form-group">
                     <label><b>Recruiter*</b></label>
-                    @Html.DropDownListFor(x => x.RecruiterId, new SelectList(Model.RecruiterOptions, "Key", "Value"), "Select Recruiter", new { @class = "form-control" })
+                    @Html.DropDownListFor(x => x.RecruiterId, new SelectList(Model.RecruiterOptions, "Key", "Value"), "Select Recruiter", new {@class = "form-control"})
                     @Html.ValidationMessageFor(x => x.RecruiterId)
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label><b>Geography</b></label>
+                    @Html.DropDownListFor(x => x.GeographicId, new SelectList(Model.GeographicOptions, "Key", "Value"), "Select Geography", new {@class = "form-control"})
+                </div>
+            </div>
+            
+                <div class="col-md-3">
+                <div class="form-group">
+                    <label><b>Industry</b></label>
+                    @Html.DropDownListFor(x => x.IndustryId, new SelectList(Model.IndustryOptions, "Key", "Value"), "Select Industry", new { @class = "form-control" })
                 </div>
             </div>
 
@@ -233,14 +246,14 @@
                 <div class="col-md-2">
                     <div class="form-group">
                         <label><b>From*</b></label><br />
-                        @Html.TextBoxFor(x => x.StartDate, new { @class = "form-control date", Value = Model.StartDate.ToString("dd/MM/yyyy") })
+                        @Html.TextBoxFor(x => x.StartDate, new { @class = "form-control date", Value = Model.StartDate.ToString("dd MMM yyyy") })
                         @Html.ValidationMessageFor(x => x.StartDate)
                     </div>
                 </div>
                 <div class="col-md-2">
                     <div class="form-group">
                         <label><b>To</b></label><br />
-                        @Html.TextBoxFor(x => x.EndDate, new { @class = "form-control date", Value = Model.EndDate.HasValue ? Model.EndDate.Value.ToString("dd/MM/yyyy") : string.Empty })
+                        @Html.TextBoxFor(x => x.EndDate, new { @class = "form-control date", Value = Model.EndDate.HasValue ? Model.EndDate.Value.ToString("dd MMM yyyy") : string.Empty })
                         @Html.ValidationMessageFor(x => x.EndDate)
                     </div>
                 </div>
