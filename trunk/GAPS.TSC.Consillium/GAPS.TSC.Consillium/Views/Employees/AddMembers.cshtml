@@ -49,8 +49,10 @@
                 <div class="form-group">
                     <table>
                         <tr class="tdUserId" id="tdUserId">
-                            <td>@Html.TextBoxFor(x => x.UserId, new { @class = "form-control", @Value = "" })
-                            @Html.ValidationMessageFor(x=>x.UserId)
+                            <td>
+                                @Html.DropDownListFor(x => x.UserId, new SelectList(Model.UserOptions, "Key", "Value"), "Select User", new { @class = "form-control"  })
+@*                                @Html.TextBoxFor(x => x.UserId, new {@class = "form-control", @Value = ""})*@
+                                @Html.ValidationMessageFor(x => x.UserId)
                             </td>
                         </tr>
 
