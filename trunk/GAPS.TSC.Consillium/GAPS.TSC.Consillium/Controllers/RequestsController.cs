@@ -187,7 +187,7 @@ namespace GAPS.TSC.Consillium.Controllers
             {
 
                 var project = _projectService.GetAllMasterProjects().FirstOrDefault(x => x.Name == model.SearchString);
-                var projectLead = _userService.GetAllUsers().FirstOrDefault(x => x.FirstName == model.SearchString);
+                var projectLead = _userService.GetAllUsers().FirstOrDefault(x => x.FullName == model.SearchString);
                 var client = _clientService.GetAllClients().FirstOrDefault(x => x.Name == model.SearchString);
                 if (project != null)
                 {
@@ -208,7 +208,7 @@ namespace GAPS.TSC.Consillium.Controllers
                     if (projectclient != null)
                     {
 
-                        parsedProjectId = projectclient.Id;
+                        parsedId = projectclient.Id;
                     }
 
                 }
