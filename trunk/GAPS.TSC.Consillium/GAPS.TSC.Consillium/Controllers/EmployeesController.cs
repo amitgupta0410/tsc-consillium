@@ -184,12 +184,14 @@ namespace GAPS.TSC.Consillium.Controllers {
                 }
             }
 
-            var users = _userService.GetAllTeamMembers();
+            var users = _userService.GetAllTeamMembers().ToList();
             model.RecruiterOptions = users.Where(x => x.UserId == null).ToDictionary(x => x.Id, x => x.Name);
-            users = users.Where(x => x.UserId != null);
-            var apiUsers = _userService.GetAllUsers();
+            users = users.Where(x => x.UserId != null).ToList();
+            var apiUsers = _userService.GetAllUsers().ToList();
             foreach (var user in users) {
-                model.RecruiterOptions.Add(user.Id, apiUsers.FirstOrDefault(x => x.Id == user.UserId).FullName);
+                var userModel = apiUsers.FirstOrDefault(x => x.Id == user.UserId);
+                if (userModel != null)
+                    model.RecruiterOptions.Add(user.Id, userModel.FullName);
             }
 
             model.CountryOptions = _mainMastersService.GetAllCountries().ToDictionary(x => x.Id, x => x.Name);
@@ -318,13 +320,14 @@ namespace GAPS.TSC.Consillium.Controllers {
                 model.ExpertNoteModels = expert.ExpertNotes.Select(Mapper.Map<ExpertNote, ExpertNoteModel>);
             if (expert.WorkExperiences != null)
                 model.WorkExperienceModels = expert.WorkExperiences.Select(Mapper.Map<WorkExperience, WorkExperienceModel>);
-            var calls = _expertService.GetCallsForExperts(id);
-            if (calls == null) return View(model);
+            var calls = _expertService.GetCallsForExperts(id).ToList();
+            if (!calls.Any()) return View(model);
             var callModels = calls.Select(Mapper.Map<Call, ExpertCallsModel>).ToArray();
             var projects = _projectService.GetAllMasterProjects();
 
             for (int i = 0; i < calls.Count(); i++) {
                 var call = calls.FirstOrDefault(x => x.Id == callModels[i].Id);
+                if(call==null)continue;
                 if (call.ExpertRequest.ProjectId == null) {
                     callModels[i].ExpertRequestName = call.ExpertRequest.ProjectName;
                 } else {
