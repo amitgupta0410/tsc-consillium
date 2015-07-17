@@ -45,19 +45,19 @@ namespace GAPS.TSC.Consillium.Controllers {
         public ActionResult Index(ExpertDashboardViewModel model) {
             var experts = _expertService.Get(x => x.DeletedAt == null);
 
-//            foreach (var expert in experts)
-//            {
-//
-//                var workExperience = _expertRequestService.GetAllDesignations(expert.Id);
-//                foreach (var experience in workExperience)
-//                {
-//
-//                    string company = experience.Organisation;
-//                    model.ToAddOrganisations.Add(company);
-//
-//
-//                }
-//            }
+            foreach (var expert in experts)
+            {
+
+                var workExperience = _expertRequestService.GetAllDesignations(expert.Id);
+                foreach (var experience in workExperience)
+                {
+
+                    string company = experience.Organisation;
+                    model.ToAddOrganisations.Add(company);
+
+
+                }
+            }
 
 
 
@@ -143,18 +143,17 @@ namespace GAPS.TSC.Consillium.Controllers {
                             (x.ExpertRequests.Select(y => y.ProjectId).Contains(projectId)));
             }
           
-//            if (!String.IsNullOrEmpty(model.ProjectName)) {
-//                var name = _projectService.GetAllMasterProjects().FirstOrDefault(x => x.Name == model.ProjectName);
-//                experts = experts.Where(x => x.ExpertRequests.Select(y => y.ProjectName).Contains(model.ProjectName) || name.Name.Contains(model.ProjectName));
-//            }
+//           
             int parsedId;
             int.TryParse(model.SearchString, out parsedId);
             if (!String.IsNullOrEmpty(model.SearchString)) {
 
 
                 experts = experts.Where(x => x.Name.Contains(model.SearchString.ToLower())
-                                                       || x.Email.Contains(model.SearchString.ToLower()) || x.GeographicId == parsedId || x.IndustryId == parsedId);
+                                                       || x.Email.Contains(model.SearchString.ToLower()) || x.GeographicId == parsedId || x.IndustryId == parsedId || model.ToAddOrganisations.Contains(model.SearchString));
             }
+
+         
             if (model.GeographicId != null) {
                 experts = experts.Where(x => x.GeographicId == model.GeographicId);
             }
