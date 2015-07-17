@@ -44,23 +44,19 @@ namespace GAPS.TSC.Consillium.Controllers {
         // GET: /Employees/
         public ActionResult Index(ExpertDashboardViewModel model) {
             var experts = _expertService.Get(x => x.DeletedAt == null);
-//            model.ExpertRequestlist=new Dictionary<int, string>();
+            //            model.ExpertRequestlist=new Dictionary<int, string>();
             var expertRequest = _expertRequestService.GetAllExpertsProjects();
-            foreach (var request in expertRequest)
-            {
-                if (request.ProjectId != null)
-                {
+            foreach (var request in expertRequest) {
+                if (request.ProjectId != null) {
                     var name = _projectService.GetAllMasterProjects().FirstOrDefault(x => x.Id == request.ProjectId);
                     if (name != null)
                         model.ExpertRequestlist.Add(request.Id, name.Name);
-                }
-                else
-                {
-                    model.ExpertRequestlist.Add(request.Id,request.ProjectName);
-                   
+                } else {
+                    model.ExpertRequestlist.Add(request.Id, request.ProjectName);
+
                 }
             }
-            
+
             model.IndustryList = _mainMastersService.GetAllIndustries().ToDictionary(x => x.Id, x => x.Name);
             model.GeographicList = _mainMastersService.GetAllGeographies().ToDictionary(x => x.Id, x => x.Name);
             //            model.ClientList = _clientService.GetAllClients().ToDictionary(x => x.Id, x => x.Name);
@@ -159,15 +155,13 @@ namespace GAPS.TSC.Consillium.Controllers {
             return View(model);
         }
         [HttpPost]
-        public ActionResult AddExpertToRequest(ExpertDashboardViewModel model)
-        {
-            foreach (var expertId in model.Expert)
-            {
+        public ActionResult AddExpertToRequest(ExpertDashboardViewModel model) {
+            foreach (var expertId in model.Expert) {
                 _expertRequestService.AddExpertToRequest(model.RequestId, expertId);
             }
 
             return RedirectToAction("Index");
-          
+
         }
 
         public ActionResult AddNewLead(int? id) {
@@ -190,9 +184,16 @@ namespace GAPS.TSC.Consillium.Controllers {
                 }
             }
 
+            var users = _userService.GetAllTeamMembers();
+            model.RecruiterOptions = users.Where(x => x.UserId == null).ToDictionary(x => x.Id, x => x.Name);
+            users = users.Where(x => x.UserId != null);
+            var apiUsers = _userService.GetAllUsers();
+            foreach (var user in users) {
+                model.RecruiterOptions.Add(user.Id, apiUsers.FirstOrDefault(x => x.Id == user.UserId).FullName);
+            }
+
             model.CountryOptions = _mainMastersService.GetAllCountries().ToDictionary(x => x.Id, x => x.Name);
             model.CurrencyOptions = _mainMastersService.GetAllCurrencies().ToDictionary(x => x.CurrencyId, x => x.CurrencyCode);
-            model.RecruiterOptions = _userService.GetAllTeamMembers().ToDictionary(x => x.Id, x => x.Name);
             model.GeographicOptions = _mainMastersService.GetAllGeographies().ToDictionary(x => x.Id, x => x.Name);
             model.IndustryOptions = _mainMastersService.GetAllIndustries().ToDictionary(x => x.Id, x => x.Name);
             model.TitleOptions = EnumHelper.GetEnumLabels(typeof(TitleOptions));
@@ -298,7 +299,9 @@ namespace GAPS.TSC.Consillium.Controllers {
                 model.ActualFileName = expert.Resume.ActualName;
                 model.FileName = expert.Resume.FileName;
             }
-            model.RecruiterName = _userService.FindById(expert.RecruiterId).FullName;
+            var recruiter = _userService.GetTeamMemberById(expert.RecruiterId);
+            model.RecruiterName = recruiter.UserId.HasValue ? _userService.FindById(recruiter.UserId.Value).FullName : recruiter.Name;
+
             var currency = _mainMastersService.GetAllCurrencies().FirstOrDefault(x => x.CurrencyId == expert.FeesCurrencyId);
             if (currency != null)
                 model.FeesCurrency = currency.CurrencyCode;
@@ -337,7 +340,7 @@ namespace GAPS.TSC.Consillium.Controllers {
         [HttpPost]
         public ActionResult UploadCv(ProfileViewModel model) {
             var expert = _expertService.GetById(model.Id);
-            if (Request.Files["File"] != null && Request.Files["File"].ContentLength > 0) {
+            if (model.File != null && model.File.ContentLength > 0) {
                 var file = UploadAndSave("File");
                 expert.ResumeId = file.Id;
             }
