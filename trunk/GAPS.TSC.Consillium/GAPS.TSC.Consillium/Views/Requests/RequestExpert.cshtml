@@ -204,12 +204,11 @@
         <div id="FileBoxDiv1" class="col-md-6 form-group">
             <label>Upload Scoping Document*</label>
             <input id="ScopingDocumentFile1" name="ScopingDocumentFile1" class="form-control" type="file" value=""/>
-            @*@Html.TextBoxFor(x => x.ScopingDocumentFile, new { @class = "form-control", type = "file" })
-            @Html.ValidationMessageFor(x => x.ScopingDocumentFile)*@
+            
         </div>
-        <div class="col-md-6 form-group">
+        <div class="col-md-2 form-group">
             <br/>
-            <input type="button" value="Add" class="btn btn-primary" id="addButton">
+            <input type="button" value="Add" class="btn btn-primary form-control" id="addButton">
         </div>
         
     </div>
@@ -346,6 +345,7 @@
                 newFileBoxDiv.appendTo("#FileBoxesGroup");
                 counter++;
             });
+
 
         });
        

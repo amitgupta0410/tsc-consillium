@@ -224,7 +224,14 @@ namespace GAPS.TSC.Consillium.Controllers {
         [HttpPost]
         public ActionResult RequestExpert(ExpertRequestViewModel model) {
             var approveFile = UploadAndSave("ApprovalDocumentFile");
-            var scopingFile = UploadAndSave("ScopingDocumentFile");
+            for (int i = 1; i <= model.ScopingDocCount; i++)
+            {
+                var scopingFile = UploadAndSave("ScopingDocumentFile"+i);
+                    //Add code to insert into map
+            }
+
+            
+           
             var expertRequest = Mapper.Map<ExpertRequestViewModel, ExpertRequest>(model);
             expertRequest.ApprovalDocumentId = approveFile.Id;
             //expertRequest.ScopingDocumentId = scopingFile.Id;

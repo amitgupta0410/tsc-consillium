@@ -75,6 +75,7 @@ namespace GAPS.TSC.Consillium.Models
         public string ClientName { get; set; }
         [Required(ErrorMessage = "Please enter project name.")]
         public string ProjectName { get; set; }
+        public int ScopingDocCount { get; set; }
 
     }
 }
