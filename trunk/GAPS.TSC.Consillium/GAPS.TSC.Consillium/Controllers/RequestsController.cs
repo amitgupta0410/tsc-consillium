@@ -64,7 +64,7 @@ namespace GAPS.TSC.Consillium.Controllers
             foreach (var apiProject in apiProjects)
             {
                 var projectApi =
-                   _projectService.GetAllMasterProjects().FirstOrDefault(x => x.Id == apiProject.ProjectId);
+                   _projectService.GetAllMasterProjects().FirstOrDefault(x => apiProject != null && x.Id == apiProject.ProjectId);
 
                 var name = _clientService.GetAllClients().FirstOrDefault(x =>projectApi != null && x.Id == projectApi.ClientId);
                 if (name != null)
@@ -179,7 +179,7 @@ namespace GAPS.TSC.Consillium.Controllers
           
             int parsedId;
             int.TryParse(model.SearchString, out parsedId);
-            if (!String.IsNullOrEmpty(model.SearchString))
+            if (model.SearchString!=null && !String.IsNullOrEmpty(model.SearchString.ToLower()))
             {
 
                 var project = _projectService.GetAllMasterProjects().FirstOrDefault(x => x.Name == model.SearchString);
