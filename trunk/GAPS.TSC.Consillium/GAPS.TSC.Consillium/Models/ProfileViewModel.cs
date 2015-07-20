@@ -13,6 +13,7 @@ namespace GAPS.TSC.Consillium.Models {
             ExpertNoteModels = new List<ExpertNoteModel>();
             WorkExperienceModels = new List<WorkExperienceModel>();
             ExpertCallsModels = new List<ExpertCallsModel>();
+            ProjectList = new Dictionary<int, string>();
         }
         public int Id { get; set; }
         public string Title { get; set; }
@@ -38,6 +39,8 @@ namespace GAPS.TSC.Consillium.Models {
         public IEnumerable<ExpertNoteModel> ExpertNoteModels { get; set; }
         public IEnumerable<WorkExperienceModel> WorkExperienceModels { get; set; }
         public IEnumerable<ExpertCallsModel> ExpertCallsModels { get; set; }
+        public int ProjectAssignedId { get; set; }
+        public Dictionary<int, string> ProjectList { get; set; } 
         public string JobHistory { get; set; }
         public string Source { get; set; }
         public string Notes { get; set; }

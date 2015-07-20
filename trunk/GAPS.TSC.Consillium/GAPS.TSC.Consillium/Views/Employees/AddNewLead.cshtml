@@ -216,7 +216,7 @@
                 <div class="col-md-1">
                     <div class="form-group">
                         <div style="padding-top: 9px"></div><br />
-                        <a class="btn btn-primary" href="@Url.Action("ConvertLead", "Employees", new {id = @Model.Id})">Convert</a>&nbsp;
+                        <a class="btn btn-primary" onclick="convertExpert(@Model.Id)">Convert</a>&nbsp;
 
                     </div>
                 </div>
@@ -344,13 +344,13 @@
 
         }
 
-        function EditWork(workId) {
-            $.post('/Employees/EditWork', { id: workId },
+        function convertExpert(expertId) {
+            $.post('/Employees/ConvertToExpert', { id: expertId },
                 function (data) {
-                    $('#edit-work-modal').find('.modal-body').html(data);
+                    $('#convert-expert-modal').find('.modal-body').html(data);
                     $.validator.unobtrusive.parse(document);
                 });
-            $('#edit-work-modal').modal();
+            $('#convert-expert-modal').modal();
 
         }
 

@@ -42,7 +42,8 @@ namespace GAPS.TSC.Consillium.Controllers {
         }
         //
         // GET: /Employees/
-        public ActionResult Index(ExpertDashboardViewModel model) {
+        public ActionResult Index(ExpertDashboardViewModel model)
+        {
             var experts = _expertService.Get(x => x.DeletedAt == null);
 
             foreach (var expert in experts)
@@ -61,12 +62,16 @@ namespace GAPS.TSC.Consillium.Controllers {
             }
 
             var expertRequest = _expertRequestService.GetAllExpertsProjects();
-            foreach (var request in expertRequest) {
-                if (request.ProjectId != null) {
+            foreach (var request in expertRequest)
+            {
+                if (request.ProjectId != null)
+                {
                     var name = _projectService.GetAllMasterProjects().FirstOrDefault(x => x.Id == request.ProjectId);
                     if (name != null)
                         model.ExpertRequestlist.Add(request.Id, name.Name);
-                } else {
+                }
+                else
+                {
                     model.ExpertRequestlist.Add(request.Id, request.ProjectName);
                    
                 }
@@ -82,30 +87,36 @@ namespace GAPS.TSC.Consillium.Controllers {
             var apiProjects = _expertRequestService.GetAllExpertsProjects().Where(x => x.ProjectId != null);
 
             List<string> mannualClients = new List<string>();
-            foreach (var mannualProjectclient in mannualProjectsclients) {
+            foreach (var mannualProjectclient in mannualProjectsclients)
+            {
                 mannualClients.Add(mannualProjectclient.Value);
 
             }
             List<string> apiClients = new List<string>();
 
-            foreach (var apiProject in apiProjects) {
+            foreach (var apiProject in apiProjects)
+            {
                 var projectApi =
                    _projectService.GetAllMasterProjects().FirstOrDefault(x => x.Id == apiProject.ProjectId);
 
-                var name = _clientService.GetAllClients().FirstOrDefault(x => projectApi!=null && x.Id == projectApi.ClientId);
+                var name =
+                    _clientService.GetAllClients()
+                        .FirstOrDefault(x => projectApi != null && x.Id == projectApi.ClientId);
                 if (name != null)
                     apiClients.Add(name.Name);
             }
             var combineClientList = mannualClients.Concat(apiClients);
             model.ClientList = combineClientList.Distinct().ToDictionary(x => x, x => x);
             List<string> mannualNames = new List<string>();
-            foreach (var mannualProject in mannualProjects) {
+            foreach (var mannualProject in mannualProjects)
+            {
                 mannualNames.Add(mannualProject.Value);
 
             }
 
             List<string> apiNames = new List<string>();
-            foreach (var apiProject in apiProjects) {
+            foreach (var apiProject in apiProjects)
+            {
 
                 var name = _projectService.GetAllMasterProjects().FirstOrDefault(x => x.Id == apiProject.ProjectId);
                 if (name != null)
@@ -113,26 +124,35 @@ namespace GAPS.TSC.Consillium.Controllers {
             }
             var combineList = mannualNames.Concat(apiNames);
             model.ProjectList = combineList.Distinct().ToDictionary(x => x, x => x);
-            if (!String.IsNullOrEmpty(model.ClientName)) {
+            if (!String.IsNullOrEmpty(model.ClientName))
+            {
                 var projectId = 0;
                 var client = _clientService.GetAllClients().FirstOrDefault(x => x.Name == model.ClientName);
-                if (client != null) {
+                if (client != null)
+                {
                     var project = _projectService.GetAllMasterProjects().FirstOrDefault(x => x.ClientId == client.Id);
 
 
-                    if (project != null) {
+                    if (project != null)
+                    {
 
                         projectId = project.Id;
                     }
                 }
-                experts = experts.Where(x => x.ExpertRequests.Select(y => y.ClientName).Contains(model.ClientName) || (x.ExpertRequests.Select(y => y.ProjectId).Contains(projectId)));
+                experts =
+                    experts.Where(
+                        x =>
+                            x.ExpertRequests.Select(y => y.ClientName).Contains(model.ClientName) ||
+                            (x.ExpertRequests.Select(y => y.ProjectId).Contains(projectId)));
             }
 
 
-            if (!String.IsNullOrEmpty(model.ProjectName)) {
+            if (!String.IsNullOrEmpty(model.ProjectName))
+            {
                 var project = _projectService.GetAllMasterProjects().FirstOrDefault(x => x.Name == model.ProjectName);
                 var projectId = 0;
-                if (project != null) {
+                if (project != null)
+                {
                     projectId = project.Id;
                 }
                 experts =
@@ -149,19 +169,22 @@ namespace GAPS.TSC.Consillium.Controllers {
             {
 
                
-
-                foreach (var expert in experts) {
+                    foreach (var expert in experts)
+                    {
 
                     var workExperience = _expertRequestService.GetAllDesignations(expert.Id);
                     var experince = workExperience.FirstOrDefault(x => x.Organisation == model.SearchString);
-                    if (experince != null) {
+                        if (experince != null)
+                        {
                         parsedId = experince.Id;
                     }
                     break;
                 }
 
-                var geographic = _mainMastersService.GetAllGeographies().FirstOrDefault(x => x.Name == model.SearchString);
-                var industry = _mainMastersService.GetAllIndustries().FirstOrDefault(x => x.Name == model.SearchString);
+                    var geographic =
+                        _mainMastersService.GetAllGeographies().FirstOrDefault(x => x.Name == model.SearchString);
+                    var industry =
+                        _mainMastersService.GetAllIndustries().FirstOrDefault(x => x.Name == model.SearchString);
                 if (geographic != null)
                 {
                     parsedId = geographic.Id;
@@ -173,17 +196,22 @@ namespace GAPS.TSC.Consillium.Controllers {
 
                 }
                 experts = experts.Where(x => x.Name.Contains(model.SearchString.ToLower())
-                                                       || x.Email.Contains(model.SearchString.ToLower()) || x.GeographicId == parsedId || x.IndustryId == parsedId || x.WorkExperiences.Select(y => y.Id).Contains(parsedId));
+                                                 || x.Email.Contains(model.SearchString.ToLower()) ||
+                                                 x.GeographicId == parsedId || x.IndustryId == parsedId ||
+                                                 x.WorkExperiences.Select(y => y.Id).Contains(parsedId));
             }
 
          
-            if (model.GeographicId != null) {
+                if (model.GeographicId != null)
+                {
                 experts = experts.Where(x => x.GeographicId == model.GeographicId);
             }
-            if (model.IndustryId != null) {
+                if (model.IndustryId != null)
+                {
                 experts = experts.Where(x => x.IndustryId == model.IndustryId);
             }
-            if (model.ProjectId.HasValue) {
+                if (model.ProjectId.HasValue)
+                {
                 experts = experts.Where(x => x.ExpertRequests.Select(y => y.Id).Contains(model.ProjectId.Value));
             }
 
@@ -191,6 +219,8 @@ namespace GAPS.TSC.Consillium.Controllers {
 
             return View(model);
         }
+        
+
         [HttpPost]
         public ActionResult AddExpertToRequest(ExpertDashboardViewModel model) {
             if (model.Expert != null) {
@@ -272,11 +302,9 @@ namespace GAPS.TSC.Consillium.Controllers {
         [HttpPost]
         public ActionResult ConvertLead(AddLeadModel model) {
             var expert = _expertService.GetById(model.Id);
-            if (expert == null)
-
+            if (expert == null) return new HttpNotFoundResult();
                 expert.JoiningDate = model.JoiningDate;
-            expert.ExpertNotes.Add(new ExpertNote()
-        {
+            expert.ExpertNotes.Add(new ExpertNote() {
                 Content = model.JoiningNotes,
                 ExpertId = model.Id,
                 //todo: change it with logged in user
@@ -355,13 +383,19 @@ namespace GAPS.TSC.Consillium.Controllers {
             if (expert == null) return RedirectToAction("Index");
 
             var model = Mapper.Map<Expert, ProfileViewModel>(expert);
-            if (model.ResumeId.HasValue) {
-                model.ActualFileName = expert.Resume.ActualName;
-                model.FileName = expert.Resume.FileName;
+            var projects = _projectService.GetAllMasterProjects();
+            var projectList = _expertRequestService.GetAllExpertsProjects();
+            projectList.ForEach(x => {
+                if (!x.ProjectId.HasValue)
+                    model.ProjectList.Add(x.Id, x.ProjectName);
+                else {
+                    var project = projects.FirstOrDefault(y => y.Id == x.ProjectId);
+                    if (project != null)
+                        model.ProjectList.Add(x.Id, project.Name);
             }
+            });
             var recruiter = _userService.GetTeamMemberById(expert.RecruiterId);
             model.RecruiterName = recruiter.UserId.HasValue ? _userService.FindById(recruiter.UserId.Value).FullName : recruiter.Name;
-
             var currency = _mainMastersService.GetAllCurrencies().FirstOrDefault(x => x.CurrencyId == expert.FeesCurrencyId);
             if (currency != null)
                 model.FeesCurrency = currency.CurrencyCode;
@@ -381,7 +415,6 @@ namespace GAPS.TSC.Consillium.Controllers {
             var calls = _expertService.GetCallsForExperts(id).ToList();
             if (!calls.Any()) return View(model);
             var callModels = calls.Select(Mapper.Map<Call, ExpertCallsModel>).ToArray();
-            var projects = _projectService.GetAllMasterProjects();
 
             for (int i = 0; i < calls.Count(); i++) {
                 var call = calls.FirstOrDefault(x => x.Id == callModels[i].Id);
@@ -405,7 +438,19 @@ namespace GAPS.TSC.Consillium.Controllers {
                 var file = UploadAndSave("File");
                 expert.ResumeId = file.Id;
             }
+
             SetMessage(MessageType.Success, MessageConstant.GetMessage(Messages.AddCvSuccess));
+            return RedirectToAction("Profileview", new { id = expert.Id });
+        }
+
+        [HttpPost]
+        public ActionResult AssignProject(ProfileViewModel model) {
+            var expert = _expertService.GetById(model.Id);
+            if (expert == null) return HttpNotFound();
+            var request = _expertRequestService.GetById(model.ProjectAssignedId);
+            request.Experts.Add(expert);
+            var result = _expertRequestService.Update(request);
+            SetMessage(MessageType.Success, MessageConstant.GetMessage(Messages.ProjectAssigned));
             return RedirectToAction("Profileview", new { id = expert.Id });
         }
 
@@ -451,10 +496,8 @@ namespace GAPS.TSC.Consillium.Controllers {
 
 
 
-        public ActionResult AddMembers()
-        {
-            var model = new AddMembersToTeam
-            {
+        public ActionResult AddMembers() {
+            var model = new AddMembersToTeam {
                 UserOptions =
                     _userService.GetAllUsers().ToDictionary(x => x.Id, x => string.Format("{0}({1})", x.FullName, x.Id)),
                 Employees = _userService.GetAllTeamMembers()

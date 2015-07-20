@@ -45,6 +45,9 @@ namespace GAPS.TSC.Consillium.Utils
                 case Messages.Danger:
                     messagetext = "Please select atleast one Expert";
                     break;
+                case Messages.ProjectAssigned:
+                    messagetext = "Project assigned to expert";
+                    break;
             }
             return messagetext;
         }

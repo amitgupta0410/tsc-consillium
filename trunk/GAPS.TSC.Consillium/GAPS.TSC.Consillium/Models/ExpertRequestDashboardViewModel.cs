@@ -44,9 +44,11 @@ namespace GAPS.TSC.Consillium.Models
     }
 
     public class ExpertRequestSingleViewModel : BaseEntity{
+        public int Id { get; set; }
         public int? ProjectId { get; set; }
         public string ProjectName { get; set; }
         public string ClientName { get; set; }
+        public int CallCount { get; set; }
         public RequestStatus RequestStatus { get; set; }
         public int? ProjectLeadId { get; set; }
         [DisplayFormat(DataFormatString = "dd MM, yyyy")] 

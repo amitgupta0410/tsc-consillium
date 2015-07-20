@@ -11,505 +11,523 @@
         </h3>
     </div>
 </div>
-<hr/>
+<hr />
 @Html.Partial("_PartialMessage")
 <div class="row">
-<div class="col-md-12 jumbotron">
-<div class="col-md-4">
-    <div class="">
-        <div class="row">
-            <div class="col-md-12">
-                <div class="col-md-4">
-                    <div class="form-group">
-                        <label><b>Name: </b></label>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="form-group">
-                        @Model.Title @Model.Name
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-12">
-                <div class="col-md-4">
-                    <div class="form-group">
-                        <label><b>Industry: </b></label>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="form-group">
-                        @Model.Industry
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-12">
-                <div class="col-md-4">
-                    <div class="form-group">
-                        <label><b>Honorarium: </b></label>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="form-group">
-                        @Model.FeesAmount @Model.FeesCurrency
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-12">
-                <div class="col-md-4">
-                    <div class="form-group">
-                        <label><b>Status: </b></label>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="form-group">
-                        @Model.LeadStatus
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-12">
-                <div class="col-md-4">
-                    <div class="form-group">
-                        <label><b>Recruited By: </b></label>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="form-group">
-                        @Model.RecruiterName
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="col-md-4">
-    <div class="">
-        <div class="row">
-            <div class="col-md-12">
-                <div class="col-md-4">
-                    <div class="form-group">
-                        <label><b>Geography: </b></label>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="form-group">
-                        @Model.Geography
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-12">
-                <div class="col-md-4">
-                    <div class="form-group">
-                        <label><b>Country: </b></label>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="form-group">
-                        @Model.Country
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-12">
-                <div class="col-md-4">
-                    <div class="form-group">
-                        <label><b>DOJ: </b></label>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="form-group">
-                        @if (@Model.JoiningDate.HasValue)
-                        {
-                            @Model.JoiningDate.Value.ToString("dd/MM/yyyy")
-                        }
-                        else
-                        {
-                        }
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-12">
-                <div class="col-md-4">
-                    <div class="form-group">
-                        <label><b>City: </b></label>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="form-group">
-                        @Model.City
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-12">
-                <div class="col-md-4">
-                    <div class="form-group">
-                        <label><b>LinkedIn : </b></label>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <a href="@Model.LinkedInUrl">@Model.LinkedInUrl</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="col-md-4">
-    <div class="jumbotron" style="padding: 15px; height: 192px">
-        @using (Html.BeginForm("AddNote", "Employees", FormMethod.Post))
-        {@Html.HiddenFor(x => x.Id)
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="col-md-4">
-                        <div class="form-group">
-                            <label style="margin-top: 19px;"><b>Add Note: </b></label>
+    <div class="col-md-12 jumbotron">
+        <div class="col-md-4">
+            <div class="">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label><b>Name: </b></label>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                @Model.Title @Model.Name
+                            </div>
                         </div>
                     </div>
-                    <div class="col-md-8">
-                        <div class="form-group">
-                            @*<textarea class="form-control" rows="5" id="AddNote" style="width: 225px; height: 56px;"></textarea>*@
-                            @Html.TextAreaFor(x => x.NoteToAdd)
-                            @Html.ValidationMessageFor(x => x.NoteToAdd)
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label><b>Industry: </b></label>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                @Model.Industry
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label><b>Honorarium: </b></label>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                @Model.FeesAmount @Model.FeesCurrency
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label><b>Status: </b></label>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                @Model.LeadStatus
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label><b>Recruited By: </b></label>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                @Model.RecruiterName
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="col-md-4">
+        </div>
+        <div class="col-md-4">
+            <div class="">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label><b>Geography: </b></label>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                @Model.Geography
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label><b>Country: </b></label>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                @Model.Country
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label><b>DOJ: </b></label>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                @if (@Model.JoiningDate.HasValue) {
+                                    @Model.JoiningDate.Value.ToString("dd/MM/yyyy")
+                                } else {
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label><b>City: </b></label>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                @Model.City
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label><b>LinkedIn : </b></label>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <a href="@Model.LinkedInUrl">@Model.LinkedInUrl</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            @*            <div class="jumbotron" style="padding: 15px; height: 192px">*@
+            <div class="jumbotron">
+                @using (Html.BeginForm("AddNote", "Employees", FormMethod.Post)) {
+                    @Html.HiddenFor(x => x.Id)
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label style="margin-top: 19px;"><b>Add Note: </b></label>
+                                </div>
+                            </div>
+                            <div class="col-md-8">
+                                <div class="form-group">
+                                    @Html.TextAreaFor(x => x.NoteToAdd)
+                                    @Html.ValidationMessageFor(x => x.NoteToAdd)
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <input type="submit" class="btn btn-primary btn-sm" value="Save" style="margin-left: 128px; padding-top: 5px; width: 101px;" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+                @using (Html.BeginForm("AssignProject", "Employees", FormMethod.Post)) {
+                    @Html.HiddenFor(x => x.Id)
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label style="margin-top: 19px;"><b>Assigned Project: </b></label>
+                                </div>
+                            </div>
+                            <div class="col-md-8">
+                                <div class="form-group">
+                                    @Html.DropDownListFor(x=>x.ProjectAssignedId,new SelectList(Model.ProjectList,"Key","Value"),new{@class = "form-control"})
+                                    @Html.ValidationMessageFor(x => x.NoteToAdd)
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <input type="submit" class="btn btn-primary btn-sm" value="Assign" style="margin-left: 128px; padding-top: 5px; width: 101px;" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+        <div class="clearfix"></div>
+        <div class="col-md-4">
+            <div class="">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label><b>Email: </b></label>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                @Model.Email
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label><b>Phone: </b></label>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                @Model.PrimaryContact
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label><b>Secondary Phone: </b></label>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                @Model.SecondaryContact
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label><b>Industry : </b></label>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                @Model.Industry
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="jumbotron" style="padding: 15px; height: 132px">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label><b>Activity Logs:</b></label>
+                            </div>
+                            <div>
+                                @Model.Notes
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="clearfix"></div>
+        <div class="col-md-8">
+            <div class="jumbotron" style="">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-md-4">
+                            @*                            <div class="form-group">*@
+                            <b>Lead Comments: </b>
+                            @*                            </div>*@
+                        </div>
+                        <div class="col-md-8">
+
+                            @Model.LeadComments<br />
+                        </div>
+                        @*                        </div>*@
+                        <div class="col-md-4">
+                            @*                            <div class="form-group">*@
+                            <b>Job History: </b>
+                            @*                            </div>*@
+                        </div>
+                        <div class="col-md-8">
+                            @*                                <div class="form-group">*@
+                            @Model.JobHistory<br />
+                        </div>
+                        @*                            </div>*@
+                        <div class="col-md-4">
+                            @*                            <div class="form-group">*@
+                            <label><b>Source: </b></label>
+                            @*                            </div>*@
+                        </div>
+                        <div class="col-md-8">
+                            @*                                    <div class="form-group">*@
+                            @Model.Source
+                            @*                                    </div>*@
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="jumbotron" style="">
+                <div class="row">
+                    <div class="col-md-12">
+                        @if (Model.ExpertNoteModels.Any()) {
+
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label><b>Notes </b></label>
+                                </div>
+                            </div>
+                            foreach (var note in @Model.ExpertNoteModels) {
+                                <div>
+                                    <div>
+                                        <b> Note: </b> @note.Content
+                                    </div>
+                                    <div>
+                                        <b> Note By: </b>@note.TeamMember
+                                    </div>
+                                    <div>
+                                        <b> Date: </b>@note.CreatedAt.ToString("dd/MM/yyyy")
+                                    </div>
+                                </div>
+                            }
+                        }
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="clearfix"></div>
+        @if (Model.WorkExperienceModels.Any()) {
+            <div class="col-md-12">
+                <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                    <div class="panel panel-default">
+                        <div class="panel-heading" role="tab" id="headingOne">
+                            <h4 class="panel-title">
+                                <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                    Employment History
+                                </a>
+                            </h4>
+                        </div>
+                        <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+                            <div class="panel-body">
+                                @*                            Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.*@
+
+                                @foreach (var work in Model.WorkExperienceModels) {
+                                    <div class="col-md-3">
+                                        <b>Designation: </b>
+                                        @work.Designation
+                                    </div>
+                                    <div class="col-md-3">
+                                        <b>Organisation: </b>
+                                        @work.Organisation
+                                    </div>
+                                    <div class="col-md-3">
+                                        <b>Start Date: </b>
+                                        @work.StartDate.ToString("dd/MM/yyyy")
+                                    </div>
+                                    <div class="col-md-3">
+                                        @if (work.EndDate.HasValue) {
+                                            <b>End: </b>
+                                            @work.EndDate.Value.ToString("dd/MM/yyyy")
+                                        }
+                                    </div>
+                                }
+
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                @*  *@
+            </div>
+        }
+        <div class="clearfix"></div>
+        @if (Model.ExpertCallsModels.Any()) {
+            <div class="col-md-12">
+                @*  *@
+                <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                    <div class="panel panel-default">
+                        <div class="panel-heading" role="tab" id="headingOne">
+                            <h4 class="panel-title">
+                                <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
+                                    Payment Details
+                                </a>
+                            </h4>
+                        </div>
+                        <div id="collapseTwo" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+                            <div class="panel-body">
+                                @*                            Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.*@
+
+                                <div class="col-md-12">
+                                    <div class="table-responsive table-bordered">
+                                        <table class="table">
+                                            <tbody>
+                                                <tr>
+                                                    <th><label>S.No.</label></th>
+                                                    <th><label>Project Name</label></th>
+                                                    <th><label>Nature Of Interview</label></th>
+                                                    <th><label>Interview Date</label></th>
+                                                    <th><label>Call Duration</label></th>
+                                                    <th><label>Honorarium per Hour</label></th>
+                                                    <th><label>Payment Mode</label></th>
+                                                    <th><label>Cost Corne By</label></th>
+                                                    <th><label>Call Facilitated By</label></th>
+                                                    <th><label>Payment Details</label></th>
+
+                                                </tr>
+                                                @{ var count = (int)1; }
+                                                @foreach (var expert in Model.ExpertCallsModels) {
+                                                    <tr class="">
+                                                        <td>@count</td>
+                                                        <td>@expert.ExpertRequestName</td>
+                                                        <td>@expert.CallType</td>
+                                                        <td>@expert.InterviewDate.ToString("dd/MM/yyyy")</td>
+                                                        <td>@expert.CallDuration</td>
+                                                        <td>@expert.FeesPerHour</td>
+                                                        <td>
+                                                            @expert.PaymentMode
+                                                        </td>
+                                                        <td>@expert.CostBorneBy</td>
+                                                        <td>
+                                                            @expert.CallFacilitatedBy
+                                                        </td>
+                                                        <td>@expert.Details</td>
+                                                    </tr>
+                                                    count++;
+                                                }
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                @*  *@
+            </div>
+        }
+        <div class="clearfix"></div>
+        @using (Html.BeginForm("UploadCv", "Employees", FormMethod.Post, new { enctype = "multipart/form-data" })) {@Html.HiddenFor(x => x.Id)
+            <div class="col-md-12">
+                <div class="row">
+                    <div class="col-md-3">
                         <div class="form-group">
-                            <input type="submit" class="btn btn-primary btn-sm" value="Save" style="margin-left: 128px; padding-top: 5px; width: 101px;"/>
+                            <label>Upload Scoping Document*</label>
+                            @Html.TextBoxFor(x => x.File, new { @class = "form-control", type = "file" })
+                            @Html.ValidationMessageFor(x => x.File)
+
+                            @*   <input type="file" name="File" id="resumeFile" />*@
+
+                        </div>
+                    </div>
+                    <div class="col-md-1">
+                        <div class="form-group">
+                            <div style="padding-top: 9px"></div>
+                            <br>
+                            <input type="submit" value="Upload" class="btn btn-primary">
+                        </div>
+                    </div>
+                    @if (Model.ResumeId.HasValue) {
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <div style="padding-top: 25px"></div>
+                                <a class="btn btn-primary" href="~/Attachments/Index/@Model.ResumeId.Value">View</a>
+                            </div>
+                        </div>
+                    }
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <div style="padding-top: 25px"></div>
+                            <a class="btn btn-primary" href="~/Employees/AddNewLead/@Model.Id">Edit</a>
                         </div>
                     </div>
                 </div>
             </div>
         }
     </div>
-</div>
-<div class="clearfix"></div>
-<div class="col-md-4">
-    <div class="">
-        <div class="row">
-            <div class="col-md-12">
-                <div class="col-md-4">
-                    <div class="form-group">
-                        <label><b>Email: </b></label>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="form-group">
-                        @Model.Email
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-12">
-                <div class="col-md-4">
-                    <div class="form-group">
-                        <label><b>Phone: </b></label>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="form-group">
-                        @Model.PrimaryContact
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="col-md-4">
-    <div class="">
-        <div class="row">
-            <div class="col-md-12">
-                <div class="col-md-4">
-                    <div class="form-group">
-                        <label><b>Secondary Phone: </b></label>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="form-group">
-                        @Model.SecondaryContact
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-12">
-                <div class="col-md-4">
-                    <div class="form-group">
-                        <label><b>Industry : </b></label>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="form-group">
-                        @Model.Industry
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="col-md-4">
-    <div class="jumbotron" style="padding: 15px; height: 132px">
-        <div class="row">
-            <div class="col-md-12">
-                <div class="col-md-12">
-                    <div class="form-group">
-                        <label><b>Activity Logs:</b></label>
-                    </div>
-                    <div>
-                        @Model.Notes
-                    </div>
-                </div>
-            </div>
-        </div>
-
-    </div>
-</div>
-<div class="clearfix"></div>
-<div class="col-md-8">
-    <div class="jumbotron" style="padding: 15px; height: 132px">
-        <div class="row">
-            <div class="col-md-12">
-                <div class="col-md-4">
-                    @*                            <div class="form-group">*@
-                    <b>Lead Comments: </b>
-                    @*                            </div>*@
-                </div>
-                <div class="col-md-8">
-
-                    @Model.LeadComments<br/>
-                </div>
-                @*                        </div>*@
-                <div class="col-md-4">
-                    @*                            <div class="form-group">*@
-                    <b>Job History: </b>
-                    @*                            </div>*@
-                </div>
-                <div class="col-md-8">
-                    @*                                <div class="form-group">*@
-                    @Model.JobHistory<br/>
-                </div>
-                @*                            </div>*@
-                <div class="col-md-4">
-                    @*                            <div class="form-group">*@
-                    <label><b>Source: </b></label>
-                    @*                            </div>*@
-                </div>
-                <div class="col-md-8">
-                    @*                                    <div class="form-group">*@
-                    @Model.Source
-                    @*                                    </div>*@
-                </div>
-
-            </div>
-        </div>
-
-    </div>
-</div>
-<div class="col-md-4">
-    <div class="jumbotron" style="padding: 15px; height: 132px">
-        <div class="row">
-            <div class="col-md-12">
-                @if (Model.ExpertNoteModels.Any())
-                {
-
-                    <div class="col-md-12">
-                        <div class="form-group">
-                            <label><b>Notes </b></label>
-                        </div>
-                    </div>
-                    foreach (var note in @Model.ExpertNoteModels)
-                    {
-                        <div>
-                            <div>
-                                <b> Note: </b> @note.Content
-                            </div>
-                            <div>
-                                <b> Note By: </b>@note.TeamMember
-                            </div>
-                            <div>
-                                <b> Date: </b>@note.CreatedAt.ToString("dd/MM/yyyy")
-                            </div>
-                        </div>
-                    }
-                }
-            </div>
-        </div>
-
-    </div>
-</div>
-<div class="clearfix"></div>
-@if (Model.WorkExperienceModels.Any())
-{
-    <div class="col-md-12">
-        <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
-            <div class="panel panel-default">
-                <div class="panel-heading" role="tab" id="headingOne">
-                    <h4 class="panel-title">
-                        <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                            Employment History
-                        </a>
-                    </h4>
-                </div>
-                <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
-                    <div class="panel-body">
-                        @*                            Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.*@
-
-                        @foreach (var work in Model.WorkExperienceModels)
-                        {
-                            <div class="col-md-3">
-                                <b>Designation: </b>
-                                @work.Designation
-                            </div>
-                            <div class="col-md-3">
-                                <b>Organisation: </b>
-                                @work.Organisation
-                            </div>
-                            <div class="col-md-3">
-                                <b>Start Date: </b>
-                                @work.StartDate.ToString("dd/MM/yyyy")
-                            </div>
-                            <div class="col-md-3">
-                                @if (work.EndDate.HasValue)
-                                {
-                                    <b>End: </b>
-                                    @work.EndDate.Value.ToString("dd/MM/yyyy")
-                                }
-                            </div>
-                        }
-
-
-                    </div>
-                </div>
-            </div>
-        </div>
-        @*  *@
-    </div>
-}
-<div class="clearfix"></div>
-@if (Model.ExpertCallsModels.Any())
-{
-    <div class="col-md-12">
-        @*  *@
-        <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
-            <div class="panel panel-default">
-                <div class="panel-heading" role="tab" id="headingOne">
-                    <h4 class="panel-title">
-                        <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
-                            Payment Details
-                        </a>
-                    </h4>
-                </div>
-                <div id="collapseTwo" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
-                    <div class="panel-body">
-                        @*                            Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.*@
-
-                        <div class="col-md-12">
-                            <div class="table-responsive table-bordered">
-                                <table class="table">
-                                    <tbody>
-                                    <tr>
-                                        <th><label>S.No.</label></th>
-                                        <th><label>Project Name</label></th>
-                                        <th><label>Nature Of Interview</label></th>
-                                        <th><label>Interview Date</label></th>
-                                        <th><label>Call Duration</label></th>
-                                        <th><label>Honorarium per Hour</label></th>
-                                        <th><label>Payment Mode</label></th>
-                                        <th><label>Cost Corne By</label></th>
-                                        <th><label>Call Facilitated By</label></th>
-                                        <th><label>Payment Details</label></th>
-
-                                    </tr>
-                                    @{ var count = (int) 1; }
-                                    @foreach (var expert in Model.ExpertCallsModels)
-                                    {
-                                        <tr class="">
-                                            <td>@count</td>
-                                            <td>@expert.ExpertRequestName</td>
-                                            <td>@expert.CallType</td>
-                                            <td>@expert.InterviewDate.ToString("dd/MM/yyyy")</td>
-                                            <td>@expert.CallDuration</td>
-                                            <td>@expert.FeesPerHour</td>
-                                            <td>
-                                                @expert.PaymentMode
-                                            </td>
-                                            <td>@expert.CostBorneBy</td>
-                                            <td>
-                                                @expert.CallFacilitatedBy
-                                            </td>
-                                            <td>@expert.Details</td>
-                                        </tr>
-                                        count++;
-                                    }
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-
-
-                    </div>
-                </div>
-            </div>
-        </div>
-        @*  *@
-    </div>
-}
-<div class="clearfix"></div>
-@using (Html.BeginForm("UploadCv", "Employees", FormMethod.Post, new {enctype = "multipart/form-data"}))
-{@Html.HiddenFor(x => x.Id)
-    <div class="col-md-12">
-        <div class="row">
-            <div class="col-md-3">
-                <div class="form-group">
-                    <label>Upload Scoping Document*</label>
-                    @Html.TextBoxFor(x => x.File, new { @class = "form-control", type = "file" })
-                    @Html.ValidationMessageFor(x=>x.File)
-
-                    @*   <input type="file" name="File" id="resumeFile" />*@
-
-                </div>
-            </div>
-            <div class="col-md-1">
-                <div class="form-group">
-                    <div style="padding-top: 9px"></div>
-                    <br>
-                    <input type="submit" value="Upload" class="btn btn-primary">
-                </div>
-            </div>
-            <div class="col-md-2">
-                <div class="form-group">
-                    <div style="padding-top: 25px"></div>
-                    <a class="btn btn-primary" href="~/Attachments/Index/@Model.ResumeId.Value">View</a>
-                </div>
-            </div>
-            <div class="col-md-2">
-                <div class="form-group">
-                    <div style="padding-top: 25px"></div>
-                    <a class="btn btn-primary" href="~/Employees/AddNewLead/@Model.Id">Edit</a>
-                </div>
-            </div>
-        </div>
-    </div>
-}
-</div>
 </div>
 
