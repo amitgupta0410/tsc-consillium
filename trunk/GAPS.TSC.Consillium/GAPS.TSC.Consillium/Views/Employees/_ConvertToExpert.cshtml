@@ -4,16 +4,24 @@
     @Html.HiddenFor(x => x.Id)
     <div class="col-md-6">
         <div class="form-group">
-            <label><b>Joinging Date*</b></label><br />
-            @Html.TextBoxFor(x => x.JoiningDate, new { @class = "form-control date", Value = Model.JoiningDate.ToString("dd MMM yyyy") })
+            <label><b>Joinging Date*</b></label><br/>
+            @Html.TextBoxFor(x => x.JoiningDate, new {@class = "form-control date", Value = Model.JoiningDate.ToString("dd MMM yyyy")})
             @Html.ValidationMessageFor(x => x.JoiningDate)
         </div>
     </div>
-    <div class="col-md-6">
+    <div class="clearfix"></div>
+    <div class="col-md-12">
         <div class="form-group">
-            <label><b>Start Date*</b></label><br />
+            <label><b>Comments*</b></label><br />
             @Html.TextAreaFor(x => x.JoiningNotes)
         </div>
     </div>
+    <div class="col-md-2">
+        <div class="form-group">
+            <div style="padding-top: 9px"></div><br />
+            <input type="submit" class="btn btn-primary" value="Update" style="margin-left: 17px; padding-left: 22px; padding-right: 22px;">
+        </div>
+    </div>
 }
+@Html.Partial("_PartialScripts")
 
