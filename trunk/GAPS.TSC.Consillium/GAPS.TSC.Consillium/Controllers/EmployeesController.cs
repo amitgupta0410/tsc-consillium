@@ -58,8 +58,6 @@ namespace GAPS.TSC.Consillium.Controllers {
                 }
             }
 
-
-
             var expertRequest = _expertRequestService.GetAllExpertsProjects();
             foreach (var request in expertRequest) {
                 if (request.ProjectId != null) {
@@ -146,6 +144,9 @@ namespace GAPS.TSC.Consillium.Controllers {
             int parsedId;
             int.TryParse(model.SearchString, out parsedId);
             if (!String.IsNullOrEmpty(model.SearchString)) {
+
+                foreach (var expert in experts)
+                {
 
                 foreach (var expert in experts) {
 

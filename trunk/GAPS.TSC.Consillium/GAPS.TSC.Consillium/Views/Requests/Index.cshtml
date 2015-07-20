@@ -110,45 +110,45 @@
                     </tr>
 
                     
-                    @foreach (var experts in Model.ExpertRequests)
+                    @foreach (var expertRequest in Model.ExpertRequests)
                     {
-                        var isProjectId = string.Format("row-projectid-{0}", experts.ProjectId);
+                        var isProjectId = string.Format("row-projectid-{0}", expertRequest.ProjectId);
                         <tr class="@isProjectId">
-                            <td><a href="@Url.Action("ProjectDetail", new { id=experts.Id})"> @experts.ProjectName</a></td>
+                            <td><a href="@Url.Action("ProjectDetail", new { id=expertRequest.Id})"> @expertRequest.ProjectName</a></td>
 
-                            <td> @experts.ClientName</td>
+                            <td> @expertRequest.ClientName</td>
 
                             <td>
-                                @if (experts.ProjectLeadId != null && Model.ProjectLeadList.ContainsKey(experts.ProjectLeadId.Value))
+                                @if (expertRequest.ProjectLeadId != null && Model.ProjectLeadList.ContainsKey(expertRequest.ProjectLeadId.Value))
                                 {
-                                    @Model.ProjectLeadList[experts.ProjectLeadId.Value]
+                                    @Model.ProjectLeadList[expertRequest.ProjectLeadId.Value]
                                 }
                             </td>
 
-                            <td> @experts.RequestStatus</td>
-                            <td> <a href="">View</a></td>
+                            <td> @expertRequest.RequestStatus</td>
+                            <td> <a href=""></a></td>
 
-                            <td>@experts.AssignedToName</td>
+                            <td>@expertRequest.AssignedToName</td>
 
 
 
                             <td>
 
-                                @experts.CreatedAt.ToString("dd/MM/yyyy")
+                                @expertRequest.CreatedAt.ToString("dd/MM/yyyy")
 
 
                             </td>
                             <td>
-                                @if (experts.StartDate != null)
+                                @if (expertRequest.StartDate != null)
                                 {
-                                    @experts.StartDate.GetValueOrDefault().ToString("dd/MM/yyyy")
+                                    @expertRequest.StartDate.GetValueOrDefault().ToString("dd/MM/yyyy")
                                 }
 
                             </td>
                             <td>
-                                @if (experts.EndDate != null)
+                                @if (expertRequest.EndDate != null)
                                 {
-                                    @experts.EndDate.GetValueOrDefault().ToString("dd/MM/yyyy")
+                                    @expertRequest.EndDate.GetValueOrDefault().ToString("dd/MM/yyyy")
                                 }
 
                             </td>

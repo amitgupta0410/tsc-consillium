@@ -19,7 +19,7 @@ namespace GAPS.TSC.Consillium.Models
             ProjectList=new Dictionary<string, string>();
             ClientList = new Dictionary<string, string>();
             ToAddMembers=new List<string>();
-
+             CallList = new Dictionary<int, int>();
         }
         public string ProjectName { get; set; }
         public string ClientName { get; set; }
@@ -40,6 +40,7 @@ namespace GAPS.TSC.Consillium.Models
         public int? ProjectLeadId { get; set; }
         public string SearchString { get; set; }
         public List<string> ToAddMembers = new List<string>();
+        public Dictionary<int, int> CallList { get; set; }
     }
 
     public class ExpertRequestSingleViewModel : BaseEntity{
