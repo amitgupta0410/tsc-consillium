@@ -62,9 +62,8 @@ namespace GAPS.TSC.Consillium.Models
         [AssertThat("(CostSharingTypeValue == CostSharingType.TSC && ClientShare == 0 && TscShare== 100) || (CostSharingTypeValue == CostSharingType.Client && ClientShare == 100 && TscShare == 0) || (CostSharingTypeValue == CostSharingType.Both && ClientShare+TscShare== 100) || (CostSharingTypeValue == CostSharingType.ManDayBilling && ClientShare == 0 && TscShare == 0)", ErrorMessage = "Please select a valid share")]
       
         public decimal ClientShare { get; set; }
-
-          [Required(ErrorMessage = "Please upload a file.")]
-        public HttpPostedFileBase ScopingDocumentFile { get; set; }
+        //[Required(ErrorMessage = "Please upload a file.")]
+        //public HttpPostedFileBase ScopingDocumentFile { get; set; }
 
         [Required(ErrorMessage = "Please upload a file.")]
         public HttpPostedFileBase ApprovalDocumentFile { get; set; }

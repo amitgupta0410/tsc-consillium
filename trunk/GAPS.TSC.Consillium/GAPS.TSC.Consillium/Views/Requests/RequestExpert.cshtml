@@ -180,25 +180,7 @@
                     </div>
                 </div>
             </div>
-
-
-            <div class="col-md-3">
-                <div class="form-group">
-                    @*@if (Model.ScopingDocumentId == 0)
-                    {*@
-                        <label>Upload Scoping Document*</label>
-                     @Html.TextBoxFor(x => x.ScopingDocumentFile, new { @class = "form-control", type = "file" })
-                     @Html.ValidationMessageFor(x => x.ScopingDocumentFile)
-                    @*}
-                    else
-                    {
-                        <i class="fa fa-check" style="color: green;"></i>
-                        <label>Upload Scoping Document</label>
-                        @Html.TextBoxFor(x => x.ScopingDocumentFile, new { @class = "form-control", type = "file" })
-                    }*@
-                   
-                </div>
-            </div>
+         
             <div class="col-md-3">
                 <div class="form-group">
                     @if (Model.ApprovalDocumentId == 0)
@@ -218,7 +200,20 @@
                 </div>
             </div>
             <div class="clearfix"></div>
-
+    <div id="FileBoxesGroup" class="col-md-12">
+        <div id="FileBoxDiv1" class="col-md-6 form-group">
+            <label>Upload Scoping Document*</label>
+            <input type="file" id="ScopingDocumentFile1" name="ScopingDocumentFile1" class="form-control" />
+            @*@Html.TextBoxFor(x => x.ScopingDocumentFile, new { @class = "form-control", type = "file" })
+            @Html.ValidationMessageFor(x => x.ScopingDocumentFile)*@
+        </div>
+        <div class="col-md-6 form-group">
+            <br/>
+            <input type="button" value="Add" class="btn btn-primary" id="addButton">
+        </div>
+        
+    </div>
+            <div class="clearfix"></div>
             <div class="col-md-4">
                 <div class="form-group">
                     <label><b>Comments</b></label><br>
@@ -338,6 +333,18 @@
                     $("#TscShare").prop("readonly", true);
                 }
 
+            });
+
+            var counter = 2;
+
+            $("#addButton").click(function () {
+
+                var newFileBoxDiv = $(document.createElement('div'))
+                     .attr("id", 'FileBoxDiv' + counter);
+
+                newFileBoxDiv.after().html('<input type="file" name="ScopingDocumentFile' + counter + '" id="ScopingDocumentFile' + counter + '" value="" class="form-control" >');
+                newFileBoxDiv.appendTo("#FileBoxesGroup");
+                counter++;
             });
 
         });
