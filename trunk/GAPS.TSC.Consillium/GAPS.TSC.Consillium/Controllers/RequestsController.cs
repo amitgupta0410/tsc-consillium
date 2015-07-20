@@ -179,7 +179,7 @@ namespace GAPS.TSC.Consillium.Controllers
           
             int parsedId;
             int.TryParse(model.SearchString, out parsedId);
-            if (!String.IsNullOrEmpty(model.SearchString.ToLower()))
+            if (!String.IsNullOrEmpty(model.SearchString))
             {
 
                 var project = _projectService.GetAllMasterProjects().FirstOrDefault(x => x.Name == model.SearchString);
@@ -212,8 +212,15 @@ namespace GAPS.TSC.Consillium.Controllers
                 projects = projects.Where(x => x.ProjectName != null && x.ProjectName.Contains(model.SearchString.ToLower())
                                                        || (x.ClientName != null && x.ClientName.Contains(model.SearchString.ToLower())) || (x.ProjectId.HasValue && x.ProjectId == parsedId) || (x.ProjectLeadId.HasValue && x.ProjectLeadId == parsedId) );
             }
+          
+          
             model.ExpertRequests = projects.Select(Mapper.Map<ExpertRequest, ExpertRequestSingleViewModel>);
-
+       
+              foreach (var project in   model.ExpertRequests)
+              {
+                 var calls= _expertRequestService.GetCallsForRequest(project.Id).Count();
+                 model.CallList.Add(project.Id, calls);
+              }
 
             return View(model);
         }
