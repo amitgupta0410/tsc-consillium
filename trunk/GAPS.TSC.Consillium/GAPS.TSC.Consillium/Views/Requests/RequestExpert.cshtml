@@ -24,6 +24,7 @@
         @using (Html.BeginForm("RequestExpert", "Requests", FormMethod.Post, new { enctype = "multipart/form-data" }))
         {
             @Html.HiddenFor(x => x.Id)
+            @Html.HiddenFor(x=>x.ScopingDocCount)
             <div class="col-md-3">
                 <div class="form-group">
                     <label><b>Client*</b></label>
@@ -337,13 +338,17 @@
             var counter = 2;
 
             $("#addButton").click(function () {
-
+              
                 var newFileBoxDiv = $(document.createElement('div'))
                      .attr("id", 'FileBoxDiv' + counter);
 
                 newFileBoxDiv.after().html('<input name="ScopingDocumentFile' + counter + '" id="ScopingDocumentFile' + counter + '" type="file" value="" class="form-control" >');
                 newFileBoxDiv.appendTo("#FileBoxesGroup");
                 counter++;
+                var scopDocCount = $("#ScopingDocCount").val();
+                scopDocCount++;
+                $("#ScopingDocCount").val(scopDocCount);
+
             });
 
 
