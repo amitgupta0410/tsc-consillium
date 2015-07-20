@@ -69,6 +69,7 @@
     <Compile Include="Call.cs" />
     <Compile Include="Enums.cs" />
     <Compile Include="ExpertNote.cs" />
+    <Compile Include="ExpertRequestScopingDocumentMap.cs" />
     <Compile Include="Migrations\201507060648530_InitDatabase.cs" />
     <Compile Include="Migrations\201507060648530_InitDatabase.Designer.cs">
       <DependentUpon>201507060648530_InitDatabase.cs</DependentUpon>
@@ -92,6 +93,10 @@
     <Compile Include="Migrations\201507200641113_ScopingDocuments.cs" />
     <Compile Include="Migrations\201507200641113_ScopingDocuments.Designer.cs">
       <DependentUpon>201507200641113_ScopingDocuments.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201507201019526_ExpertRequestsScoping.cs" />
+    <Compile Include="Migrations\201507201019526_ExpertRequestsScoping.Designer.cs">
+      <DependentUpon>201507201019526_ExpertRequestsScoping.cs</DependentUpon>
     </Compile>
     <Compile Include="PaymentMode.cs" />
     <Compile Include="WorkExperience.cs" />
@@ -126,6 +131,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201507200641113_ScopingDocuments.resx">
       <DependentUpon>201507200641113_ScopingDocuments.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201507201019526_ExpertRequestsScoping.resx">
+      <DependentUpon>201507201019526_ExpertRequestsScoping.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

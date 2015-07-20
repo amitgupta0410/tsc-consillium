@@ -30,7 +30,7 @@ namespace GAPS.TSC.CONS.Domain {
         //        public int ApprovalDocumentId { get; set; }
         //   public virtual Attachment ApprovalDocument { get; set; }
 
-        public virtual ICollection<Attachment> ScopingDocuments { get; set; }
+        public virtual ICollection<ExpertRequestScopingDocumentMap> ScopingDocuments { get; set; }
         public virtual ICollection<Expert> Experts { get; set; }
 
         public int? BdLeadId { get; set; }
@@ -42,7 +42,6 @@ namespace GAPS.TSC.CONS.Domain {
         public DateTime? StartDate { get; set; }
         public DateTime? EndDate { get; set; }
         public DateTime? RestartDate { get; set; }
-
         [ForeignKey("AssignedTo")]
         public int? AssignedToId { get; set; }
         public virtual TeamMember AssignedTo { get; set; }

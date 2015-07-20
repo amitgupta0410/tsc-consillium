@@ -262,6 +262,7 @@ namespace GAPS.TSC.Consillium.Controllers
 
         public ActionResult UpdateRequest(int id)
         {
+           
             var expertRequest = _expertRequestService.GetAllExpertsProjects().Single(m => m.Id == id);
             var expertRequestModel = Mapper.Map<ExpertRequest, UpdateExpertRequest>(expertRequest);
             expertRequestModel.CostSharingOptions = EnumHelper.GetEnumLabelValuess(typeof(CostSharingType));

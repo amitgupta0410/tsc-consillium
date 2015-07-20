@@ -425,6 +425,7 @@ namespace GAPS.TSC.Consillium.Controllers {
         public ActionResult AddPls() {
             var model = new AddProjectLeadModel();
             model.ProjectLead = _userService.GetAllProjectLeads();
+            model.ApiUsers  = _userService.GetAllUsers().ToDictionary(x => x.Id, x => x.FullName);
             return View(model);
         }
 

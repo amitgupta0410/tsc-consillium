@@ -18,6 +18,7 @@ namespace GAPS.TSC.CONS.Domain{
         public DbSet<PaymentMode> PaymentModes { get; set; }
         public DbSet<WorkExperience> WorkExperiences { get; set; }
         public DbSet<Attachment> Attachments { get; set; }
+        public DbSet<ExpertRequestScopingDocumentMap> ExpertRequestScopingDocuments { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder) {
             /*      modelBuilder.Conventions.Remove<OneToManyCascadeDeleteConvention>();

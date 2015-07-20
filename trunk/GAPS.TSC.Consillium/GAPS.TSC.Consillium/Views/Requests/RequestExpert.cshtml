@@ -184,36 +184,36 @@
 
             <div class="col-md-3">
                 <div class="form-group">
-                    @if (Model.ScopingDocumentId == 0)
-                    {
+                    @*@if (Model.ScopingDocumentId == 0)
+                    {*@
                         <label>Upload Scoping Document*</label>
                      @Html.TextBoxFor(x => x.ScopingDocumentFile, new { @class = "form-control", type = "file" })
                      @Html.ValidationMessageFor(x => x.ScopingDocumentFile)
-                    }
+                    @*}
                     else
                     {
                         <i class="fa fa-check" style="color: green;"></i>
                         <label>Upload Scoping Document</label>
                         @Html.TextBoxFor(x => x.ScopingDocumentFile, new { @class = "form-control", type = "file" })
-                    }
+                    }*@
                    
                 </div>
             </div>
             <div class="col-md-3">
                 <div class="form-group">
-                    @if (Model.ApprovalDocumentId == 0)
-                    {
+                    @*@if (Model.ApprovalDocumentId == 0)
+                    {*@
                         <label>Upload Approval Document*</label>
                     @Html.TextBoxFor(x => x.ApprovalDocumentFile, new { @class = "form-control", type = "file" })
                     @Html.ValidationMessageFor(x => x.ApprovalDocumentFile)
-                    }
+                    @*}
                     else
                     {   
                          <label>Upload Approval Document</label>
                         <i class="fa fa-check" style="color: green;"></i>
                         @Html.TextBoxFor(x => x.ApprovalDocumentFile, new { @class = "form-control", type = "file" })
                         
-                    }
+                    }*@
                     
                 </div>
             </div>
