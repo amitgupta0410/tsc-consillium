@@ -22,15 +22,16 @@ namespace GAPS.TSC.CONS.Domain {
         public decimal TscShare { get; set; }
         public decimal ClientShare { get; set; }
 
-    //    [ForeignKey("ScopingDocument")]
-        public int ScopingDocumentId { get; set; }
-      //  public virtual Attachment ScopingDocument { get; set; }
+        //    [ForeignKey("ScopingDocument")]
+        //        public int ScopingDocumentId { get; set; }
+        //  public virtual Attachment ScopingDocument { get; set; }
 
-      //  [ForeignKey("ApprovalDocument")]
-        public int ApprovalDocumentId { get; set; }
-     //   public virtual Attachment ApprovalDocument { get; set; }
+        //  [ForeignKey("ApprovalDocument")]
+        //        public int ApprovalDocumentId { get; set; }
+        //   public virtual Attachment ApprovalDocument { get; set; }
 
-        public virtual ICollection<Expert> Experts { get; set; } 
+        public virtual ICollection<Attachment> ScopingDocuments { get; set; }
+        public virtual ICollection<Expert> Experts { get; set; }
 
         public int? BdLeadId { get; set; }
         public string BdLeadName { get; set; }

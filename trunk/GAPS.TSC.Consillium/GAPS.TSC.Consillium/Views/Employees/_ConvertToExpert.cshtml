@@ -1,0 +1,19 @@
+﻿@model GAPS.TSC.Consillium.Models.AddLeadModel
+
+@using (Html.BeginForm("ConvertLead", "Employees", FormMethod.Post)) {
+    @Html.HiddenFor(x => x.Id)
+    <div class="col-md-6">
+        <div class="form-group">
+            <label><b>Joinging Date*</b></label><br />
+            @Html.TextBoxFor(x => x.JoiningDate, new { @class = "form-control date", Value = Model.JoiningDate.ToString("dd MMM yyyy") })
+            @Html.ValidationMessageFor(x => x.JoiningDate)
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="form-group">
+            <label><b>Start Date*</b></label><br />
+            @Html.TextAreaFor(x => x.JoiningNotes)
+        </div>
+    </div>
+}
+

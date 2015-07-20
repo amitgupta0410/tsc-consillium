@@ -61,7 +61,9 @@ namespace GAPS.TSC.Consillium.Models {
         public int? IndustryId { get; set; }
         public string JobHistory { get; set; }
         public string Source { get; set; }
+        public DateTime JoiningDate { get; set; }
         public string Notes { get; set; }
+        public string JoiningNotes { get; set; }
         public ExpertType ExpertType { get; set; }
         public int? ResumeId { get; set; }
         public string FileName { get; set; }
