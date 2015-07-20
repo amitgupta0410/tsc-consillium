@@ -42,13 +42,16 @@ namespace GAPS.TSC.Consillium.Controllers {
         }
         //
         // GET: /Employees/
-        public ActionResult Index(ExpertDashboardViewModel model) {
+        public ActionResult Index(ExpertDashboardViewModel model)
+        {
             var experts = _expertService.Get(x => x.DeletedAt == null);
 
-            foreach (var expert in experts) {
+            foreach (var expert in experts)
+            {
 
                 var workExperience = _expertRequestService.GetAllDesignations(expert.Id);
-                foreach (var experience in workExperience) {
+                foreach (var experience in workExperience)
+                {
 
 
                     string company = experience.Organisation;
@@ -59,12 +62,16 @@ namespace GAPS.TSC.Consillium.Controllers {
             }
 
             var expertRequest = _expertRequestService.GetAllExpertsProjects();
-            foreach (var request in expertRequest) {
-                if (request.ProjectId != null) {
+            foreach (var request in expertRequest)
+            {
+                if (request.ProjectId != null)
+                {
                     var name = _projectService.GetAllMasterProjects().FirstOrDefault(x => x.Id == request.ProjectId);
                     if (name != null)
                         model.ExpertRequestlist.Add(request.Id, name.Name);
-                } else {
+                }
+                else
+                {
                     model.ExpertRequestlist.Add(request.Id, request.ProjectName);
 
                 }
@@ -76,34 +83,40 @@ namespace GAPS.TSC.Consillium.Controllers {
             var mannualProjects = _expertRequestService.GetAllExpertsProjects().Where(x => x.ProjectId == null)
                 .ToDictionary(x => x.Id, x => x.ProjectName);
             var mannualProjectsclients = _expertRequestService.GetAllExpertsProjects().Where(x => x.ProjectId == null)
-               .ToDictionary(x => x.Id, x => x.ClientName);
+                .ToDictionary(x => x.Id, x => x.ClientName);
             var apiProjects = _expertRequestService.GetAllExpertsProjects().Where(x => x.ProjectId != null);
 
             List<string> mannualClients = new List<string>();
-            foreach (var mannualProjectclient in mannualProjectsclients) {
+            foreach (var mannualProjectclient in mannualProjectsclients)
+            {
                 mannualClients.Add(mannualProjectclient.Value);
 
             }
             List<string> apiClients = new List<string>();
 
-            foreach (var apiProject in apiProjects) {
+            foreach (var apiProject in apiProjects)
+            {
                 var projectApi =
-                   _projectService.GetAllMasterProjects().FirstOrDefault(x => x.Id == apiProject.ProjectId);
+                    _projectService.GetAllMasterProjects().FirstOrDefault(x => x.Id == apiProject.ProjectId);
 
-                var name = _clientService.GetAllClients().FirstOrDefault(x => projectApi != null && x.Id == projectApi.ClientId);
+                var name =
+                    _clientService.GetAllClients()
+                        .FirstOrDefault(x => projectApi != null && x.Id == projectApi.ClientId);
                 if (name != null)
                     apiClients.Add(name.Name);
             }
             var combineClientList = mannualClients.Concat(apiClients);
             model.ClientList = combineClientList.Distinct().ToDictionary(x => x, x => x);
             List<string> mannualNames = new List<string>();
-            foreach (var mannualProject in mannualProjects) {
+            foreach (var mannualProject in mannualProjects)
+            {
                 mannualNames.Add(mannualProject.Value);
 
             }
 
             List<string> apiNames = new List<string>();
-            foreach (var apiProject in apiProjects) {
+            foreach (var apiProject in apiProjects)
+            {
 
                 var name = _projectService.GetAllMasterProjects().FirstOrDefault(x => x.Id == apiProject.ProjectId);
                 if (name != null)
@@ -111,26 +124,35 @@ namespace GAPS.TSC.Consillium.Controllers {
             }
             var combineList = mannualNames.Concat(apiNames);
             model.ProjectList = combineList.Distinct().ToDictionary(x => x, x => x);
-            if (!String.IsNullOrEmpty(model.ClientName)) {
+            if (!String.IsNullOrEmpty(model.ClientName))
+            {
                 var projectId = 0;
                 var client = _clientService.GetAllClients().FirstOrDefault(x => x.Name == model.ClientName);
-                if (client != null) {
+                if (client != null)
+                {
                     var project = _projectService.GetAllMasterProjects().FirstOrDefault(x => x.ClientId == client.Id);
 
 
-                    if (project != null) {
+                    if (project != null)
+                    {
 
                         projectId = project.Id;
                     }
                 }
-                experts = experts.Where(x => x.ExpertRequests.Select(y => y.ClientName).Contains(model.ClientName) || (x.ExpertRequests.Select(y => y.ProjectId).Contains(projectId)));
+                experts =
+                    experts.Where(
+                        x =>
+                            x.ExpertRequests.Select(y => y.ClientName).Contains(model.ClientName) ||
+                            (x.ExpertRequests.Select(y => y.ProjectId).Contains(projectId)));
             }
 
 
-            if (!String.IsNullOrEmpty(model.ProjectName)) {
+            if (!String.IsNullOrEmpty(model.ProjectName))
+            {
                 var project = _projectService.GetAllMasterProjects().FirstOrDefault(x => x.Name == model.ProjectName);
                 var projectId = 0;
-                if (project != null) {
+                if (project != null)
+                {
                     projectId = project.Id;
                 }
                 experts =
@@ -143,50 +165,62 @@ namespace GAPS.TSC.Consillium.Controllers {
 
             int parsedId;
             int.TryParse(model.SearchString, out parsedId);
-            if (!String.IsNullOrEmpty(model.SearchString)) {
+            if (!String.IsNullOrEmpty(model.SearchString))
+            {
 
-                foreach (var expert in experts)
-                {
+               
+                    foreach (var expert in experts)
+                    {
 
-                foreach (var expert in experts) {
-
-                    var workExperience = _expertRequestService.GetAllDesignations(expert.Id);
-                    var experince = workExperience.FirstOrDefault(x => x.Organisation == model.SearchString);
-                    if (experince != null) {
-                        parsedId = experince.Id;
+                        var workExperience = _expertRequestService.GetAllDesignations(expert.Id);
+                        var experince = workExperience.FirstOrDefault(x => x.Organisation == model.SearchString);
+                        if (experince != null)
+                        {
+                            parsedId = experince.Id;
+                        }
+                        break;
                     }
-                    break;
+
+                    var geographic =
+                        _mainMastersService.GetAllGeographies().FirstOrDefault(x => x.Name == model.SearchString);
+                    var industry =
+                        _mainMastersService.GetAllIndustries().FirstOrDefault(x => x.Name == model.SearchString);
+                    if (geographic != null)
+                    {
+                        parsedId = geographic.Id;
+
+                    }
+                    if (industry != null)
+                    {
+                        parsedId = industry.Id;
+
+                    }
+                    experts = experts.Where(x => x.Name.Contains(model.SearchString.ToLower())
+                                                 || x.Email.Contains(model.SearchString.ToLower()) ||
+                                                 x.GeographicId == parsedId || x.IndustryId == parsedId ||
+                                                 x.WorkExperiences.Select(y => y.Id).Contains(parsedId));
                 }
 
-                var geographic = _mainMastersService.GetAllGeographies().FirstOrDefault(x => x.Name == model.SearchString);
-                var industry = _mainMastersService.GetAllIndustries().FirstOrDefault(x => x.Name == model.SearchString);
-                if (geographic != null) {
-                    parsedId = geographic.Id;
 
+                if (model.GeographicId != null)
+                {
+                    experts = experts.Where(x => x.GeographicId == model.GeographicId);
                 }
-                if (industry != null) {
-                    parsedId = industry.Id;
-
+                if (model.IndustryId != null)
+                {
+                    experts = experts.Where(x => x.IndustryId == model.IndustryId);
                 }
-                experts = experts.Where(x => x.Name.Contains(model.SearchString.ToLower())
-                                                       || x.Email.Contains(model.SearchString.ToLower()) || x.GeographicId == parsedId || x.IndustryId == parsedId || x.WorkExperiences.Select(y => y.Id).Contains(parsedId));
-            }
+                if (model.ProjectId.HasValue)
+                {
+                    experts = experts.Where(x => x.ExpertRequests.Select(y => y.Id).Contains(model.ProjectId.Value));
+                }
 
+                model.Experts = experts.Select((Mapper.Map<Expert, ExpertSingleViewModel>));
 
-            if (model.GeographicId != null) {
-                experts = experts.Where(x => x.GeographicId == model.GeographicId);
+                return View(model);
             }
-            if (model.IndustryId != null) {
-                experts = experts.Where(x => x.IndustryId == model.IndustryId);
-            }
-            if (model.ProjectId.HasValue) {
-                experts = experts.Where(x => x.ExpertRequests.Select(y => y.Id).Contains(model.ProjectId.Value));
-            }
+        
 
-            model.Experts = experts.Select((Mapper.Map<Expert, ExpertSingleViewModel>));
-
-            return View(model);
-        }
         [HttpPost]
         public ActionResult AddExpertToRequest(ExpertDashboardViewModel model) {
             if (model.Expert != null) {
