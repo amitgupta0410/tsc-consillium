@@ -226,8 +226,8 @@ namespace GAPS.TSC.Consillium.Controllers {
             var approveFile = UploadAndSave("ApprovalDocumentFile");
             var scopingFile = UploadAndSave("ScopingDocumentFile");
             var expertRequest = Mapper.Map<ExpertRequestViewModel, ExpertRequest>(model);
-//            expertRequest.ApprovalDocumentId = approveFile.Id;
-//            expertRequest.ScopingDocumentId = scopingFile.Id;
+            expertRequest.ApprovalDocumentId = approveFile.Id;
+            //expertRequest.ScopingDocumentId = scopingFile.Id;
             expertRequest.CostSharingType = model.CostSharingTypeValue;
             _expertRequestService.Add(expertRequest);
             SetMessage(MessageType.Success, MessageConstant.GetMessage(Messages.RequestSuccess));

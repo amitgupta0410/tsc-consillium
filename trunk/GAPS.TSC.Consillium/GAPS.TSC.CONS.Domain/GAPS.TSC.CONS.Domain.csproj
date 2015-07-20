@@ -94,9 +94,9 @@
     <Compile Include="Migrations\201507200641113_ScopingDocuments.Designer.cs">
       <DependentUpon>201507200641113_ScopingDocuments.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201507201019526_ExpertRequestsScoping.cs" />
-    <Compile Include="Migrations\201507201019526_ExpertRequestsScoping.Designer.cs">
-      <DependentUpon>201507201019526_ExpertRequestsScoping.cs</DependentUpon>
+    <Compile Include="Migrations\201507201040366_ExpertRequestsScoping.cs" />
+    <Compile Include="Migrations\201507201040366_ExpertRequestsScoping.Designer.cs">
+      <DependentUpon>201507201040366_ExpertRequestsScoping.cs</DependentUpon>
     </Compile>
     <Compile Include="PaymentMode.cs" />
     <Compile Include="WorkExperience.cs" />
@@ -132,8 +132,8 @@
     <EmbeddedResource Include="Migrations\201507200641113_ScopingDocuments.resx">
       <DependentUpon>201507200641113_ScopingDocuments.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201507201019526_ExpertRequestsScoping.resx">
-      <DependentUpon>201507201019526_ExpertRequestsScoping.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201507201040366_ExpertRequestsScoping.resx">
+      <DependentUpon>201507201040366_ExpertRequestsScoping.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -9,7 +9,7 @@ namespace GAPS.TSC.CONS.Domain.Migrations
         {
             DropForeignKey("dbo.Attachments", "ExpertRequest_Id", "dbo.ExpertRequests");
             DropIndex("dbo.Attachments", new[] { "ExpertRequest_Id" });
-            RenameColumn(table: "dbo.ExpertRequestScopingDocumentMaps", name: "ExpertRequest_Id", newName: "ExpertRequestId");
+           // RenameColumn(table: "dbo.ExpertRequestScopingDocumentMaps", name: "ExpertRequest_Id", newName: "ExpertRequestId");
             CreateTable(
                 "dbo.ExpertRequestScopingDocumentMaps",
                 c => new
@@ -27,6 +27,7 @@ namespace GAPS.TSC.CONS.Domain.Migrations
                 .Index(t => t.ExpertRequestId)
                 .Index(t => t.AttachmentId);
             
+            AddColumn("dbo.ExpertRequests", "ApprovalDocumentId", c => c.Int(nullable: false));
             DropColumn("dbo.Attachments", "ExpertRequest_Id");
         }
         
@@ -37,6 +38,7 @@ namespace GAPS.TSC.CONS.Domain.Migrations
             DropForeignKey("dbo.ExpertRequestScopingDocumentMaps", "AttachmentId", "dbo.Attachments");
             DropIndex("dbo.ExpertRequestScopingDocumentMaps", new[] { "AttachmentId" });
             DropIndex("dbo.ExpertRequestScopingDocumentMaps", new[] { "ExpertRequestId" });
+            DropColumn("dbo.ExpertRequests", "ApprovalDocumentId");
             DropTable("dbo.ExpertRequestScopingDocumentMaps");
             RenameColumn(table: "dbo.ExpertRequestScopingDocumentMaps", name: "ExpertRequestId", newName: "ExpertRequest_Id");
             CreateIndex("dbo.Attachments", "ExpertRequest_Id");

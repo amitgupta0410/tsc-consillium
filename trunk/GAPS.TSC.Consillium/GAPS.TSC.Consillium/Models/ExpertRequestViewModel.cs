@@ -69,7 +69,7 @@ namespace GAPS.TSC.Consillium.Models
         [Required(ErrorMessage = "Please upload a file.")]
         public HttpPostedFileBase ApprovalDocumentFile { get; set; }
         //public int ScopingDocumentId { get; set; }
-        //public int ApprovalDocumentId { get; set; }
+        public int ApprovalDocumentId { get; set; }
         public bool IsRequestExpertManual { get; set; }
         public Dictionary<int, string> ProjectLeadList { get; set; }
         [Required(ErrorMessage = "Please enter client name.")]
