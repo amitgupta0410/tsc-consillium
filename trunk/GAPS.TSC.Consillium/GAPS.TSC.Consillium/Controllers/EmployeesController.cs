@@ -148,8 +148,7 @@ namespace GAPS.TSC.Consillium.Controllers {
             if (!String.IsNullOrEmpty(model.SearchString))
             {
 
-                foreach (var expert in experts)
-                {
+               
 
                 foreach (var expert in experts) {
 
