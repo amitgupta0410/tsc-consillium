@@ -184,7 +184,7 @@
                 <div class="form-group">
                     <label><b>Expert Type</b></label><br />
 
-                    @Html.DropDownListFor(x => x.ExpertType, new SelectList(Model.ExpertTypeOptions, "Key", "Value"), "Select Type", new { @class = "form-control" })
+                    @Html.DropDownListFor(x => x.ExpertType, new SelectList(Model.ExpertTypeOptions, "Key", "Value"), new { @class = "form-control" })
                     @Html.ValidationMessageFor(x => x.ExpertType)
                 </div>
             </div>
@@ -202,7 +202,7 @@
                 <div class="col-md-1">
                     <div class="form-group">
                         <div style="padding-top: 9px"></div><br />
-                        <a class="btn btn-primary" href="@Url.Action("DeleteLead", "Employees", new {id = @Model.Id})">Delete</a>
+                        <a class="btn btn-primary" onclick="askDeleteExpert(@Model.Id)">Delete</a>
                     </div>
                 </div>
             }
@@ -319,8 +319,31 @@
     </div><!-- /.modal-dialog -->
 </div>
 
+<div class="modal fade" id="convert-expert-modal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title">Convert Expert</h4>
+            </div>
+            <div class="modal-body">
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div>
+
 @section scripts{
     <script type="text/javascript">
+        function EditWork(workId) {
+            $.post('/Employees/EditWork', { id: workId },
+                function (data) {
+                    $('#edit-work-modal').find('.modal-body').html(data);
+                    $.validator.unobtrusive.parse(document);
+                });
+            $('#edit-work-modal').modal();
+
+        }
+
         function EditWork(workId) {
             $.post('/Employees/EditWork', { id: workId },
                 function (data) {
@@ -336,6 +359,15 @@
                 if (result) {
                     $.post('/Employees/Deletework', { id: workId }, function (data) {
                         $('#work-' + workId).remove();
+                    });
+                }
+            });
+        }
+
+        function askDeleteExpert(expertId) {
+            bootbox.confirm("Are you sure you want to delete the expert?", function (result) {
+                if (result) {
+                    $.post('/Employees/DeleteLead', { id: expertId }, function (data) {
                     });
                 }
             });
