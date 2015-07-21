@@ -1,0 +1,105 @@
+﻿@model GAPS.TSC.Consillium.Models.CallDashboardModel
+@{
+    ViewBag.Title = "CallDashboard";
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <h3 class="page-title">
+            Calls Dashboard
+        </h3>
+    </div>
+</div>
+<hr />
+<div class="well">
+    <div class="row">
+        @using (@Html.BeginForm("CallDashboard", "Calls", FormMethod.Get))
+        {
+            <div class="col-md-12">
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label><b>Client</b></label>
+                        @Html.DropDownListFor(x => x.Filter.Client, new SelectList(Model.Filter.ClientList, "Key", "Value"), "All Clients", new {@class = "form-control"})
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label><b>Date</b></label>
+                        @Html.TextBoxFor(x => x.Filter.Date, new {@class = "form-control date", Value = Model.Filter.Date.HasValue ? Model.Filter.Date.Value.ToString("dd MMM yyyy") : String.Empty})
+
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label><b>Project</b></label>
+                        @Html.DropDownListFor(x => x.Filter.Project, new SelectList(Model.Filter.ProjectList, "Key", "Value"), "All Projects", new {@class = "form-control"})
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <div style="padding-top: 9px"></div><br />
+                        <input type="submit" class="btn btn-primary btn-sm" value="Filter" style="width: 128px;" />
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <div class="table-responsive table-bordered">
+            <table class="table">
+                <tbody>
+                    <tr>
+                        <th><label>S.No.</label></th>
+                        <th><label>Expert Name</label></th>
+                        <th><label>Project Name</label></th>
+                        <th><label>Nature Of Interview</label></th>
+                        <th><label>Interview Date</label></th>
+                        <th><label>Call Duration (Mins)</label></th>
+                        <th><label>Honorarium per Hour</label></th>
+                        <th><label>Payment Mode</label></th>
+                        <th><label>Cost Borne By</label></th>
+                        <th><label>Call Facilitated By</label></th>
+                        <th><label>Payment Details</label></th>
+                    </tr>
+                  @if (Model.Calls.Any())
+                  {
+                      var i = 1;
+                      foreach (var call in Model.Calls)
+                      {
+                        <tr class="">
+                            <td>@i</td>
+                            <td>@call.Expert</td>
+                            <td>@call.ExpertRequest</td>
+                            <td>@call.CallType</td>
+                            <td>@call.InterviewDate</td>
+                            <td>@call.CallDuration</td>
+                            <td>@call.FeesPerHour</td>
+                            <td>@call.PaymentMode</td>
+                            <td>@call.CostBorneBy</td>
+                            <td>@call.CallFacilitatedBy</td>
+                            <td title="@call.Details">View</td>
+                        </tr>
+                          i++;
+                      }
+                  }
+                </tbody>
+            </table>
+        </div>
+        <br />
+        <div class="clearfix"></div>
+        <div class="col-md-6">
+            <div class="col-md-3">
+                <div class="form-group">
+                    <input type="submit" class="btn btn-primary btn-sm" value="Export To Excel" />
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <input type="submit" class="btn btn-primary btn-sm" value="Save" style="width:128px;" />
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

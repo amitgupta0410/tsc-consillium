@@ -40,6 +40,11 @@ namespace GAPS.TSC.Consillium.Models
         public string Geography { get; set; }
         public decimal AllocatedBudget { get; set; }
         public string Industry { get; set; }
+        //===new===//
+        public int ApprovalDocumentId { get; set; }
+        public string ApprovalDocumentName { get; set; }
+        public IEnumerable<ExpertRequestScopingDocumentMap> ScopingDocuments { get; set; } 
+        //===new===//
         public int PaidCalls { get; set; }
          [DisplayFormat(DataFormatString = "{0:MM-dd-yyyy}", ApplyFormatInEditMode = true)]
         public DateTime RequestedDate { get; set; }

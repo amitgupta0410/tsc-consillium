@@ -27,7 +27,7 @@
         {
             @Html.HiddenFor(x => x.Id)
             @Html.HiddenFor(x => x.ApprovalDocumentId)
-            @Html.HiddenFor(x => x.ScopingDocumentId)
+
             <div class="col-md-3">
                 <div class="form-group">
                     <label><b>Client*</b></label>
@@ -170,168 +170,168 @@
 
             <div class="col-md-3">
                 <div class="form-group">
-                    @if (Model.ScopingDocumentId == 0)
+                    @if (Model.ScopingDocuments == null)
                     {
                         <label>Upload Scoping Document*</label>
-                        @Html.TextBoxFor(x => x.ScopingDocumentFile, new { @class = "form-control", type = "file" })
-                     
+                        <input id="ScopingDocumentFile1" name="ScopingDocumentFile1" class="form-control" type="file" value="" />
+
                     }
                     else
                     {
-                        <i class="fa fa-check" style="color: green;"></i>
+
                         <label>Upload Scoping Document</label>
-                        @Html.TextBoxFor(x => x.ScopingDocumentFile, new { @class = "form-control", type = "file" })
-                    }
-
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div class="form-group">
-                    @if (Model.ApprovalDocumentId == 0)
-                    {
-                        <label>Upload Approval Document*</label>
-                        @Html.TextBoxFor(x => x.ApprovalDocumentFile, new { @class = "form-control", type = "file" })
-                    }
-                    else
-                    {
-                        <label>Upload Approval Document</label>
                         <i class="fa fa-check" style="color: green;"></i>
-                        @Html.TextBoxFor(x => x.ApprovalDocumentFile, new { @class = "form-control", type = "file" })
-
+                        <input id="ScopingDocumentFile1" name="ScopingDocumentFile1" class="form-control" type="file" value="" />
                     }
-
+                    </div>
                 </div>
-            </div>
-            <div class="clearfix"></div>
-
-            <div class="col-md-4">
-                <div class="form-group">
-                    <label><b>Comments</b></label><br>
-                    @Html.TextAreaFor(model => model.Comments, new { @class = "form-control", value = "" })
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="form-group">
-                    <label><b>Project Description</b></label>
-                    @Html.TextAreaFor(model => model.Description, new { @class = "form-control", value = "" })
-                </div>
-            </div>
-
-            <div class="clearfix"></div>
-            <div class="col-md-2">
-                <div class="form-group">
-                    <div style="padding-top: 9px"></div>
-                    <br>
-                    @if (Model == null)
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                @if (Model.ApprovalDocumentId == 0)
                     {
-                        <input type="submit" value="Send Request" class="btn btn-primary">
+                                    <label>Upload Approval Document*</label>
+                                    @Html.TextBoxFor(x => x.ApprovalDocumentFile, new { @class = "form-control", type = "file" })
                     }
                     else
                     {
-                        <input type="submit" value="Update Request" class="btn btn-primary">
+                                    <label>Upload Approval Document</label>
+                                    <i class="fa fa-check" style="color: green;"></i>
+                                    @Html.TextBoxFor(x => x.ApprovalDocumentFile, new { @class = "form-control", type = "file" })
+
                     }
+
+                            </div>
+                        </div>
+                        <div class="clearfix"></div>
+
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label><b>Comments</b></label><br>
+                                @Html.TextAreaFor(model => model.Comments, new { @class = "form-control", value = "" })
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label><b>Project Description</b></label>
+                                @Html.TextAreaFor(model => model.Description, new { @class = "form-control", value = "" })
+                            </div>
+                        </div>
+
+                        <div class="clearfix"></div>
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <div style="padding-top: 9px"></div>
+                                <br>
+                                @if (Model == null)
+                    {
+                                    <input type="submit" value="Send Request" class="btn btn-primary">
+                    }
+                    else
+                    {
+                                    <input type="submit" value="Update Request" class="btn btn-primary">
+                    }
+                            </div>
+                        </div>
+        }
                 </div>
             </div>
-        }
-    </div>
-</div>
 
-@section scripts{
+            @section scripts{
 
-    <script type="text/javascript">
-        $(function () {
+                <script type="text/javascript">
+                    $(function () {
 
-            $("#ClientId").change(function () {
-                var clientId = $("#ClientId").val();
-                if (clientId != "") {
-                    $.getJSON("/Requests/GetProjects/" + $("#ClientId").val(), function (data) {
-                        var items = "<option value=''>Select Project</option>";
-                        $.each(data, function (i, item) {
-                            items += "<option value='" + item.Id + "'>" + item.Name + "</option>";
-                        });
-                        $("#ProjectId").html(items);
-                    });
+                        $("#ClientId").change(function () {
+                            var clientId = $("#ClientId").val();
+                            if (clientId != "") {
+                                $.getJSON("/Requests/GetProjects/" + $("#ClientId").val(), function (data) {
+                                    var items = "<option value=''>Select Project</option>";
+                                    $.each(data, function (i, item) {
+                                        items += "<option value='" + item.Id + "'>" + item.Name + "</option>";
+                                    });
+                                    $("#ProjectId").html(items);
+                                });
 
-                    $.getJSON("/Requests/GetProjectsBd/" + $("#ClientId").val(), function (bdLead) {
-                        if (bdLead != null) {
-                            $("#BdLeadName").val(bdLead.FullName);
-                            $("#BdLeadId").val(bdLead.Id);
-                        }
-                    });
+                                $.getJSON("/Requests/GetProjectsBd/" + $("#ClientId").val(), function (bdLead) {
+                                    if (bdLead != null) {
+                                        $("#BdLeadName").val(bdLead.FullName);
+                                        $("#BdLeadId").val(bdLead.Id);
+                                    }
+                                });
 
-
-                } else {
-                    $("#ProjectId").html("<option value=''>Select Project </option>");
-                    $("#BdLeadName").val("");
-                    $("#BdLeadId").val("");
-                    $("#ProjectLeadName").val("");
-                    $("#ProjectLeadId").val("");
-                }
-            });
-
-
-            $("#ProjectId").change(function () {
-                var projectId = $("#ProjectId").val();
-                if (projectId != "") {
-
-                    $.getJSON("/Requests/GetProjectLeadList/" + $("#ProjectId").val(), function (data) {
-                        var items = "";
-                        $.each(data, function (i, item) {
-                            if (i == 0) {
-                                items += "<option selected='selected' value='" + item.EmployeeId + "'>" + item.FullName + "</option>";
 
                             } else {
-                                items += "<option value='" + item.EmployeeId + "'>" + item.FullName + "</option>";
+                                $("#ProjectId").html("<option value=''>Select Project </option>");
+                                $("#BdLeadName").val("");
+                                $("#BdLeadId").val("");
+                                $("#ProjectLeadName").val("");
+                                $("#ProjectLeadId").val("");
                             }
                         });
-                        $("#ProjectLeadId").html(items);
+
+
+                        $("#ProjectId").change(function () {
+                            var projectId = $("#ProjectId").val();
+                            if (projectId != "") {
+
+                                $.getJSON("/Requests/GetProjectLeadList/" + $("#ProjectId").val(), function (data) {
+                                    var items = "";
+                                    $.each(data, function (i, item) {
+                                        if (i == 0) {
+                                            items += "<option selected='selected' value='" + item.EmployeeId + "'>" + item.FullName + "</option>";
+
+                                        } else {
+                                            items += "<option value='" + item.EmployeeId + "'>" + item.FullName + "</option>";
+                                        }
+                                    });
+                                    $("#ProjectLeadId").html(items);
+                                });
+                                $.getJSON("/Requests/GetProjectUnit/" + $("#ProjectId").val(), function (unit) {
+
+                                    if (unit != null) {
+                                        $('#UnitId option')
+                                            .filter(function () { return $.trim($(this).val()) == unit.Id; })
+                                            .attr('selected', true);
+                                    }
+                                });
+                            } else {
+                                $("#ProjectLeadName").val("");
+                                $("#ProjectLeadId").val("");
+                                $("#UnitId").html("<option value=''>Select Unit</option>");
+                            }
+                        });
+
+
+                        $("#CostSharingTypeValue").change(function () {
+                            var str = "";
+                            $("#CostSharingTypeValue option:selected").each(function () {
+                                str = $(this).val();
+                            });
+                            if (str == 0) {
+                                $("#TscShare").val("100");
+                                $("#ClientShare").val("0");
+                                $("#TscShare").prop("readonly", true);
+                                $("#ClientShare").prop("readonly", true);
+                            } else if (str == 1) {
+                                $("#TscShare").val("0");
+                                $("#ClientShare").val("100");
+                                $("#ClientShare").prop("readonly", true);
+                                $("#TscShare").prop("readonly", true);
+                            } else if (str == 2) {
+                                $("#TscShare").val("50");
+                                $("#ClientShare").val("50");
+                                $("#ClientShare").prop("readonly", false);
+                                $("#TscShare").prop("readonly", false);
+                            } else if (str == 3) {
+                                $("#TscShare").val("0");
+                                $("#ClientShare").val("0");
+                                $("#ClientShare").prop("readonly", true);
+                                $("#TscShare").prop("readonly", true);
+                            }
+
+                        });
+
                     });
-                    $.getJSON("/Requests/GetProjectUnit/" + $("#ProjectId").val(), function (unit) {
 
-                        if (unit != null) {
-                            $('#UnitId option')
-                                .filter(function () { return $.trim($(this).val()) == unit.Id; })
-                                .attr('selected', true);
-                        }
-                    });
-                } else {
-                    $("#ProjectLeadName").val("");
-                    $("#ProjectLeadId").val("");
-                    $("#UnitId").html("<option value=''>Select Unit</option>");
-                }
-            });
-
-
-            $("#CostSharingTypeValue").change(function () {
-                var str = "";
-                $("#CostSharingTypeValue option:selected").each(function () {
-                    str = $(this).val();
-                });
-                if (str == 0) {
-                    $("#TscShare").val("100");
-                    $("#ClientShare").val("0");
-                    $("#TscShare").prop("readonly", true);
-                    $("#ClientShare").prop("readonly", true);
-                } else if (str == 1) {
-                    $("#TscShare").val("0");
-                    $("#ClientShare").val("100");
-                    $("#ClientShare").prop("readonly", true);
-                    $("#TscShare").prop("readonly", true);
-                } else if (str == 2) {
-                    $("#TscShare").val("50");
-                    $("#ClientShare").val("50");
-                    $("#ClientShare").prop("readonly", false);
-                    $("#TscShare").prop("readonly", false);
-                } else if (str == 3) {
-                    $("#TscShare").val("0");
-                    $("#ClientShare").val("0");
-                    $("#ClientShare").prop("readonly", true);
-                    $("#TscShare").prop("readonly", true);
-                }
-
-            });
-
-        });
-
-    </script>
-}
+                </script>
+            }

@@ -5,6 +5,7 @@ using System.Linq;
 using System.Web;
 using ExpressiveAnnotations.Attributes;
 using GAPS.TSC.CONS.Domain;
+using GAPS.TSC.CONS.Domain.Migrations;
 
 namespace GAPS.TSC.Consillium.Models
 {
@@ -61,14 +62,13 @@ namespace GAPS.TSC.Consillium.Models
         [AssertThat("(CostSharingTypeValue == CostSharingType.TSC && ClientShare == 0 && TscShare== 100) || (CostSharingTypeValue == CostSharingType.Client && ClientShare == 100 && TscShare == 0) || (CostSharingTypeValue == CostSharingType.Both && ClientShare+TscShare== 100) || (CostSharingTypeValue == CostSharingType.ManDayBilling && ClientShare == 0 && TscShare == 0)", ErrorMessage = "Please select a valid share")]
 
         public decimal ClientShare { get; set; }
-        public HttpPostedFileBase ScopingDocumentFile { get; set; }
         public HttpPostedFileBase ApprovalDocumentFile { get; set; }
-        public int ScopingDocumentId { get; set; }
         public int ApprovalDocumentId { get; set; }
         public bool IsRequestExpertManual { get; set; }
         public Dictionary<int, string> ProjectLeadList { get; set; }
         public string ClientName { get; set; }
         public string ProjectName { get; set; }
+        public IEnumerable<ExpertRequestScopingDocumentMap> ScopingDocuments { get; set; }
 
 
     }
