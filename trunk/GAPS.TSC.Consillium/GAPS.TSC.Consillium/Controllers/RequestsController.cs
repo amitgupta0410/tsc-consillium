@@ -284,7 +284,7 @@ namespace GAPS.TSC.Consillium.Controllers
 
         public ActionResult UpdateRequest(int id)
         {
-            id = 24;
+            
             var expertRequest = _expertRequestService.GetAllExpertsProjects().Single(m => m.Id == id);
             var expertRequestModel = Mapper.Map<ExpertRequest, UpdateExpertRequest>(expertRequest);
             expertRequestModel.CostSharingOptions = EnumHelper.GetEnumLabelValuess(typeof(CostSharingType));
@@ -510,10 +510,7 @@ namespace GAPS.TSC.Consillium.Controllers
 
         public ActionResult DeleteExpert(int requestId, int expertId)
         {
-
-
             _expertRequestService.RemoveExpertFromRequest(requestId, expertId);
-
 
             return RedirectToAction("ProjectDetail", new { id = requestId });
         }
