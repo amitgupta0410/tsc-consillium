@@ -16,10 +16,10 @@ namespace GAPS.TSC.Consillium.Models
         {
             ProjectLeadList = new Dictionary<int, string>();
             AssignedList = new Dictionary<int, string>();
-            ProjectList=new Dictionary<string, string>();
+            ProjectList = new Dictionary<string, string>();
             ClientList = new Dictionary<string, string>();
-            ToAddMembers=new List<string>();
-             CallList = new Dictionary<int, int>();
+            ToAddMembers = new List<string>();
+            CallList = new Dictionary<int, int>();
         }
         public string ProjectName { get; set; }
         public string ClientName { get; set; }
@@ -33,17 +33,20 @@ namespace GAPS.TSC.Consillium.Models
         public int? ProjectId { get; set; }
         public int? Assigned { get; set; }
         public RequestStatus? Status { get; set; }
-        [DisplayFormat(DataFormatString = "dd MM, yyyy")] 
+        [DisplayFormat(DataFormatString = "dd MM, yyyy")]
         public DateTime? StartDate { get; set; }
-        [DisplayFormat(DataFormatString = "dd MM, yyyy")] 
+        [DisplayFormat(DataFormatString = "dd MM, yyyy")]
         public DateTime? EndDate { get; set; }
         public int? ProjectLeadId { get; set; }
         public string SearchString { get; set; }
         public List<string> ToAddMembers = new List<string>();
         public Dictionary<int, int> CallList { get; set; }
+        public Dictionary<int, string> AssignDictionary { get; set; }
+       
     }
 
-    public class ExpertRequestSingleViewModel : BaseEntity{
+    public class ExpertRequestSingleViewModel
+    {
         public int Id { get; set; }
         public int? ProjectId { get; set; }
         public string ProjectName { get; set; }
@@ -51,14 +54,27 @@ namespace GAPS.TSC.Consillium.Models
         public int CallCount { get; set; }
         public RequestStatus RequestStatus { get; set; }
         public int? ProjectLeadId { get; set; }
-        [DisplayFormat(DataFormatString = "dd MM, yyyy")] 
+        [DisplayFormat(DataFormatString = "dd MM, yyyy")]
         public DateTime? StartDate { get; set; }
-        [DisplayFormat(DataFormatString = "dd MM, yyyy")] 
+        [DisplayFormat(DataFormatString = "dd MM, yyyy")]
         public DateTime? EndDate { get; set; }
-        [DisplayFormat(DataFormatString = "dd MM, yyyy")] 
+        [DisplayFormat(DataFormatString = "dd MM, yyyy")]
         public DateTime? RestartDate { get; set; }
+        public DateTime CreatedAt { get; set; }
+        public string AssignedNames { get; set; }
+     
+    }
 
-        public string AssignedToName { get; set; }
-        
+    public class AssignViewModel
+    {
+        public AssignViewModel()
+        {
+            AssignToList = new Dictionary<int, string>();
+        }
+        public int Id { get; set; }
+        public Dictionary<int, string> AssignToList { get; set; }
+        public IEnumerable<int> AssignedToIds { get; set; }
+        public DateTime? StartDate { get; set; }
+        public string Comments { get; set; }
     }
 }

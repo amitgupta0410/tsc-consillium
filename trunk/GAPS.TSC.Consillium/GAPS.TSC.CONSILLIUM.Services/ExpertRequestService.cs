@@ -14,7 +14,7 @@ namespace GAPS.TSC.CONS.Services {
         IEnumerable<WorkExperience> GetAllDesignations(int id);
         void AddExpertToRequest(int requestId, int expertId);
         void RemoveExpertFromRequest(int requestId, int expertId);
-
+       
         void AddCallsToRequest(int id, Call call);
         IEnumerable<TeamMember> GetAllTeamMembers();
         IEnumerable<PaymentMode> GetAllPayments();
@@ -81,6 +81,28 @@ namespace GAPS.TSC.CONS.Services {
 
 
         }
+//        public void AddAssignIdToRequest(int requestId, int assignId)
+//        {
+//            var req = Repository.Get(x => x.Id == requestId && x.DeletedAt == null, p => p.AssignedToIds).FirstOrDefault();
+//            if (null == req)
+//            {
+//                throw new Exception();
+//            }
+//            var exists = req.AssignedToIds.Any(x => x.Id == assignId);
+//            if (!exists)
+//            {
+//               
+//                var assign = _unitOfWork.ExpertRequestTeamMemberMaps.Get(x => x.AssignedToId == assignId).FirstOrDefault();
+//                if (null == assign)
+//                {
+//                    throw new Exception();
+//                }
+//                req.AssignedToIds.Add(assign);
+//                _unitOfWork.Save();
+//            }
+//
+//
+//        }
 
         public void RemoveExpertFromRequest(int requestId, int expertId) {
             var req = Repository.Get(x => x.Id == requestId && x.DeletedAt == null, p => p.Experts).FirstOrDefault();

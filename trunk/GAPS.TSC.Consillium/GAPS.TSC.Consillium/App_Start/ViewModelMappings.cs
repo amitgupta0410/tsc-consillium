@@ -7,9 +7,12 @@ using System.Web;
 using AutoMapper;
 using GAPS.TSC.Consillium.Models;
 using GAPS.TSC.CONS.Domain;
+using WebGrease.Css.Extensions;
 
-namespace GAPS.TSC.Consillium.App_Start {
-    public class ViewModelMappings {
+namespace GAPS.TSC.Consillium.App_Start
+{
+    public class ViewModelMappings
+    {
 
         public static void Init()
         {
@@ -20,7 +23,8 @@ namespace GAPS.TSC.Consillium.App_Start {
             Mapper.CreateMap<WorkExperienceModel, WorkExperience>();
             Mapper.CreateMap<ExpertRequestViewModel, ExpertRequest>();
             Mapper.CreateMap<ExpertRequest, ExpertRequestSingleViewModel>()
-                .ForMember(x=>x.AssignedToName,v=>v.MapFrom(u=>u.AssignedToId.HasValue?u.AssignedTo.Name: string.Empty));
+            .ForMember(x => x.AssignedNames, v => v.MapFrom(u => string.Join(",", u.AssignedToIds.Select(m => m.TeamMember.Name))));
+
             Mapper.CreateMap<Expert, ExpertSingleViewModel>();
             Mapper.CreateMap<Expert, ExpertViewModel>();
             Mapper.CreateMap<ExpertRequest, ExpertRequestViewModel>();
@@ -28,14 +32,16 @@ namespace GAPS.TSC.Consillium.App_Start {
             Mapper.CreateMap<UpdateExpertRequest, ExpertRequest>();
             Mapper.CreateMap<CallsViewModel, Call>();
             Mapper.CreateMap<Expert, ProfileViewModel>();
-            Mapper.CreateMap<ExpertNote, ExpertNoteModel>().ForMember(x=>x.TeamMember , v=>v.MapFrom(a=>a.TeamMember.Name));
+            Mapper.CreateMap<ExpertRequest, AssignViewModel>();
+
+            Mapper.CreateMap<ExpertNote, ExpertNoteModel>().ForMember(x => x.TeamMember, v => v.MapFrom(a => a.TeamMember.Name));
             Mapper.CreateMap<Call, CallsExpertViewModel>()
-                .ForMember(x=>x.CallFacilitatedBy , v=>v.MapFrom(u=>u.CallFacilitatedBy.Name))
-                .ForMember(x=>x.PaymentMode , v=>v.MapFrom(u=>u.PaymentMode.Name));
+                .ForMember(x => x.CallFacilitatedBy, v => v.MapFrom(u => u.CallFacilitatedBy.Name))
+                .ForMember(x => x.PaymentMode, v => v.MapFrom(u => u.PaymentMode.Name));
             Mapper.CreateMap<Call, ExpertCallsModel>()
                 .ForMember(x => x.CallFacilitatedBy, v => v.MapFrom(u => u.CallFacilitatedBy.Name))
                 .ForMember(x => x.PaymentMode, v => v.MapFrom(u => u.PaymentMode.Name));
         }
-    
+
     }
 }

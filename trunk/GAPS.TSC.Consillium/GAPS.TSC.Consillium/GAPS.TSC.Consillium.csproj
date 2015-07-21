@@ -225,6 +225,10 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201507210540361_ExpertRequestTeamMemberMap.cs" />
+    <Compile Include="Migrations\201507210540361_ExpertRequestTeamMemberMap.Designer.cs">
+      <DependentUpon>201507210540361_ExpertRequestTeamMemberMap.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\AddLeadModel.cs" />
@@ -389,6 +393,7 @@
     <Content Include="Views\Requests\Calls.cshtml" />
     <Content Include="Views\Shared\_PartialScripts.cshtml" />
     <Content Include="Views\Employees\_ConvertToExpert.cshtml" />
+    <Content Include="Views\Requests\_EditAssignTo.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -421,6 +426,11 @@
       <Project>{e365e76c-d34f-4594-b024-081fefb337f0}</Project>
       <Name>GAPS.TSC.CONS.Util</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201507210540361_ExpertRequestTeamMemberMap.resx">
+      <DependentUpon>201507210540361_ExpertRequestTeamMemberMap.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

@@ -13,6 +13,7 @@
     </div>
 </div>
 <hr />
+
 <div class="row well">
     <div class="col-md-12">
         @using (@Html.BeginForm("Index", "Requests", FormMethod.Get))
@@ -36,7 +37,7 @@
             <div class="col-md-3">
                 <div class="form-group">
                     <label><b>Assigned To</b></label>
-                    @Html.DropDownListFor(x => x.Assigned, new SelectList(Model.AssignedList, "Key", "Value"), "All", new { @class = "form-control", @data_placeholder = "Choose Assigned to" })
+                    @Html.DropDownListFor(x => x.Assigned, new SelectList(Model.AssignedList, "Key", "Value"), "All", new { @class = "form-control ", @data_placeholder = "Choose Assigned to" })
 
                 </div>
             </div>
@@ -109,7 +110,7 @@
                         <th><label>End Date</label></th>
                     </tr>
 
-                    
+
                     @foreach (var expertRequest in Model.ExpertRequests)
                     {
                         var isProjectId = string.Format("row-projectid-{0}", expertRequest.ProjectId);
@@ -126,9 +127,12 @@
                             </td>
 
                             <td> @expertRequest.RequestStatus</td>
-                            <td> <a href=""></a></td>
+                            <td> <a href="">@expertRequest.CallCount</a></td>
 
-                            <td>@expertRequest.AssignedToName</td>
+
+                            <td> <a onclick="EditAssignTo('@expertRequest.Id') " title="Edit" style="cursor: pointer; text-decoration: none"><i class="fa fa-pencil">@expertRequest.AssignedNames</i> </a></td>
+
+
 
 
 
@@ -155,7 +159,7 @@
 
 
                         </tr>
-                             
+
                     }
 
                 </tbody>
@@ -164,10 +168,36 @@
     </div>
 </div>
 
+
+
+
+<div class="modal fade" id="edit-assign-modal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title">Edit Assign To</h4>
+            </div>
+            <div class="modal-body">
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div>
 @section scripts
 {
+
+
     <script type="text/javascript">
 
+        function EditAssignTo(expertRequestId) {
+            $.post('/Requests/EditAssignTo', { id: expertRequestId },
+                function (data) {
+                    $('#edit-assign-modal').find('.modal-body').html(data);
+                    $.validator.unobtrusive.parse(document);
+                });
+            $('#edit-assign-modal').modal();
+
+        }
         $(document).ready(function () {
             $(".chosen-select").chosen();
             $("#ClientId").change(function () {
