@@ -24,7 +24,7 @@
         @using (Html.BeginForm("RequestExpert", "Requests", FormMethod.Post, new { enctype = "multipart/form-data" }))
         {
             @Html.HiddenFor(x => x.Id)
-            @Html.HiddenFor(x=>x.ScopingDocCount,new {htmlAttributes=new{@class="form-control",@Value="1"}})
+            @Html.HiddenFor(x=>x.ScopingDocCount,new {htmlAttributes=new{@class="form-control",@Value=1}})
             <div class="col-md-3">
                 <div class="form-group">
                     <label><b>Client*</b></label>
@@ -365,7 +365,12 @@
                 }
 
                 counter--;
-
+                var scopDocCount = $('#ScopingDocCount').val();
+                if (scopDocCount == 0) {
+                    scopDocCount = 1;
+                }
+                scopDocCount--;
+                $("#ScopingDocCount").val(scopDocCount);
                 $("#FileBoxDiv" + counter).remove();
 
             });
