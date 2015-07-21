@@ -43,7 +43,7 @@ namespace GAPS.TSC.Consillium.Controllers {
 
             model.StatusOptions = EnumHelper.GetEnumLabels(typeof(RequestStatus));
             model.AssignedList = _userService.GetAllTeamMembers().ToDictionary(x => x.Id, x => x.Name);
-
+          
             var mannualProjects = _expertRequestService.GetAllExpertsProjects().Where(x => x.ProjectId == null)
                .ToDictionary(x => x.Id, x => x.ProjectName);
             var mannualProjectsclients = _expertRequestService.GetAllExpertsProjects().Where(x => x.ProjectId == null)
@@ -105,7 +105,7 @@ namespace GAPS.TSC.Consillium.Controllers {
             int parsedProjectId = 0;
             int.TryParse(model.SearchString, out parsedProjectId);
             if (!String.IsNullOrEmpty(model.ClientName)) {
-
+               
                 var client = _clientService.GetAllClients().FirstOrDefault(x => x.Name == model.ClientName);
                 if (client != null) {
                     var project = _projectService.GetAllMasterProjects().FirstOrDefault(x => x.ClientId == client.Id);
@@ -134,7 +134,7 @@ namespace GAPS.TSC.Consillium.Controllers {
                             (x.ProjectId.HasValue && x.ProjectId == parsedClientId));
             }
 
-
+         
 
 
             if (model.Status != null) {
@@ -156,7 +156,7 @@ namespace GAPS.TSC.Consillium.Controllers {
                 projects = projects.Where(x => x.ProjectLeadId == model.ProjectLeadId);
 
             }
-
+          
             int parsedId;
             int.TryParse(model.SearchString, out parsedId);
             if (model.SearchString != null && !String.IsNullOrEmpty(model.SearchString.ToLower())) {
@@ -173,8 +173,8 @@ namespace GAPS.TSC.Consillium.Controllers {
 
                 }
                 if (client != null) {
-
-                    var projectclient = _projectService.GetAllMasterProjects().FirstOrDefault(x => x.ClientId == client.Id);
+                    
+                      var projectclient = _projectService.GetAllMasterProjects().FirstOrDefault(x => x.ClientId == client.Id);
 
 
                     if (projectclient != null) {
@@ -183,7 +183,7 @@ namespace GAPS.TSC.Consillium.Controllers {
                     }
 
                 }
-
+              
                 projects = projects.Where(x => x.ProjectName != null && x.ProjectName.Contains(model.SearchString.ToLower()) || (x.ClientName != null && x.ClientName.Contains(model.SearchString.ToLower())) || (x.ProjectId.HasValue && x.ProjectId == parsedId) || (x.ProjectLeadId.HasValue && x.ProjectLeadId == parsedId));
             }
 
@@ -222,17 +222,26 @@ namespace GAPS.TSC.Consillium.Controllers {
         [HttpPost]
         public ActionResult RequestExpert(ExpertRequestViewModel model) {
             var approveFile = UploadAndSave("ApprovalDocumentFile");
-            var scopingFile = UploadAndSave("ScopingDocumentFile");
+            for (int i = 1; i <= model.ScopingDocCount; i++)
+            {
+                var scopingFile = UploadAndSave("ScopingDocumentFile"+i);
+                    //Add code to insert into map
+            }
+
+            
+           
             var expertRequest = Mapper.Map<ExpertRequestViewModel, ExpertRequest>(model);
-            //            expertRequest.ApprovalDocumentId = approveFile.Id;
-            //            expertRequest.ScopingDocumentId = scopingFile.Id;
+            expertRequest.ApprovalDocumentId = approveFile.Id;
+            //expertRequest.ScopingDocumentId = scopingFile.Id;
             expertRequest.CostSharingType = model.CostSharingTypeValue;
             _expertRequestService.Add(expertRequest);
             SetMessage(MessageType.Success, MessageConstant.GetMessage(Messages.RequestSuccess));
             return RedirectToAction("RequestExpert");
         }
 
-        public ActionResult UpdateRequest(int id) {
+        public ActionResult UpdateRequest(int id)
+        {
+           
             var expertRequest = _expertRequestService.GetAllExpertsProjects().Single(m => m.Id == id);
             var expertRequestModel = Mapper.Map<ExpertRequest, UpdateExpertRequest>(expertRequest);
             expertRequestModel.CostSharingOptions = EnumHelper.GetEnumLabelValuess(typeof(CostSharingType));
@@ -274,8 +283,8 @@ namespace GAPS.TSC.Consillium.Controllers {
             var expertRequest = _expertRequestService.GetAllExpertsProjects().Single(m => m.Id == model.Id);
             expertRequest.ProjectId = model.ProjectId;
             expertRequest.ProjectLeadId = model.ProjectLeadId;
-            //            expertRequest.ScopingDocumentId = model.ScopingDocumentId;
-            //            expertRequest.ApprovalDocumentId = model.ApprovalDocumentId;
+//            expertRequest.ScopingDocumentId = model.ScopingDocumentId;
+//            expertRequest.ApprovalDocumentId = model.ApprovalDocumentId;
             expertRequest.IndustryId = model.IndustryId;
             expertRequest.GeographicId = model.GeographicId;
             expertRequest.CostSharingType = model.CostSharingTypeValue;

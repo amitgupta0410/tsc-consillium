@@ -147,51 +147,51 @@ namespace GAPS.TSC.Consillium.Controllers {
             int.TryParse(model.SearchString, out parsedId);
             if (!String.IsNullOrEmpty(model.SearchString)) {
 
-
+               
                 foreach (var expert in experts) {
 
-                    var workExperience = _expertRequestService.GetAllDesignations(expert.Id);
-                    var experince = workExperience.FirstOrDefault(x => x.Organisation == model.SearchString);
+                        var workExperience = _expertRequestService.GetAllDesignations(expert.Id);
+                        var experince = workExperience.FirstOrDefault(x => x.Organisation == model.SearchString);
                     if (experince != null) {
-                        parsedId = experince.Id;
+                            parsedId = experince.Id;
+                        }
+                        break;
                     }
-                    break;
-                }
 
-                var geographic =
-                    _mainMastersService.GetAllGeographies().FirstOrDefault(x => x.Name == model.SearchString);
-                var industry =
-                    _mainMastersService.GetAllIndustries().FirstOrDefault(x => x.Name == model.SearchString);
+                    var geographic =
+                        _mainMastersService.GetAllGeographies().FirstOrDefault(x => x.Name == model.SearchString);
+                    var industry =
+                        _mainMastersService.GetAllIndustries().FirstOrDefault(x => x.Name == model.SearchString);
                 if (geographic != null) {
-                    parsedId = geographic.Id;
+                        parsedId = geographic.Id;
 
-                }
+                    }
                 if (industry != null) {
-                    parsedId = industry.Id;
+                        parsedId = industry.Id;
 
+                    }
+                    experts = experts.Where(x => x.Name.Contains(model.SearchString.ToLower())
+                                                 || x.Email.Contains(model.SearchString.ToLower()) ||
+                                                 x.GeographicId == parsedId || x.IndustryId == parsedId ||
+                                                 x.WorkExperiences.Select(y => y.Id).Contains(parsedId));
                 }
-                experts = experts.Where(x => x.Name.Contains(model.SearchString.ToLower())
-                                             || x.Email.Contains(model.SearchString.ToLower()) ||
-                                             x.GeographicId == parsedId || x.IndustryId == parsedId ||
-                                             x.WorkExperiences.Select(y => y.Id).Contains(parsedId));
-            }
 
 
             if (model.GeographicId != null) {
-                experts = experts.Where(x => x.GeographicId == model.GeographicId);
-            }
+                    experts = experts.Where(x => x.GeographicId == model.GeographicId);
+                }
             if (model.IndustryId != null) {
-                experts = experts.Where(x => x.IndustryId == model.IndustryId);
-            }
+                    experts = experts.Where(x => x.IndustryId == model.IndustryId);
+                }
             if (model.ProjectId.HasValue) {
-                experts = experts.Where(x => x.ExpertRequests.Select(y => y.Id).Contains(model.ProjectId.Value));
+                    experts = experts.Where(x => x.ExpertRequests.Select(y => y.Id).Contains(model.ProjectId.Value));
+                }
+
+                model.Experts = experts.Select((Mapper.Map<Expert, ExpertSingleViewModel>));
+
+                return View(model);
             }
-
-            model.Experts = experts.Select((Mapper.Map<Expert, ExpertSingleViewModel>));
-
-            return View(model);
-        }
-
+        
 
         [HttpPost]
         public ActionResult AddExpertToRequest(ExpertDashboardViewModel model) {
@@ -442,6 +442,7 @@ namespace GAPS.TSC.Consillium.Controllers {
         public ActionResult AddPls() {
             var model = new AddProjectLeadModel();
             model.ProjectLead = _userService.GetAllProjectLeads();
+            model.ApiUsers  = _userService.GetAllUsers().ToDictionary(x => x.Id, x => x.FullName);
             return View(model);
         }
 

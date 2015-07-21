@@ -12,12 +12,14 @@ namespace GAPS.TSC.Consillium.Models
         public AddProjectLeadModel()
         {
             ProjectLead = new List<SpecialProjectLeadMap>();
+            ApiUsers = new Dictionary<int, string>();
         }
 
         public int Id { get; set; }
         public String Name { get; set; }
         public bool Status { get; set; }
         public IEnumerable<SpecialProjectLeadMap>ProjectLead { get; set; }
+        public Dictionary<int, string> ApiUsers { get; set; } 
     }
 
 }
