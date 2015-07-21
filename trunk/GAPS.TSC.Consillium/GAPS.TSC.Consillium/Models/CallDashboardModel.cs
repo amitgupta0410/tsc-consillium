@@ -22,6 +22,7 @@ namespace GAPS.TSC.Consillium.Models {
         public string ExpertRequest { get; set; }
 
         public string Expert { get; set; }
+        public int? ProjectId { get; set; }
 
         public string CallFacilitatedBy { get; set; }
 
@@ -35,6 +36,7 @@ namespace GAPS.TSC.Consillium.Models {
         public int AmountCurrencyId { get; set; }
         public string AmountCurrency { get; set; }
         public PaymentStatus PaymentStatus { get; set; }
+        public string PaymentMode { get; set; }
     }
 
     public class CallDashboardFilterModel {

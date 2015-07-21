@@ -26,6 +26,7 @@ namespace GAPS.TSC.Consillium.Controllers
         private readonly IExpertService _expertService;
         private readonly IExpertRequestService _expertRequestService;
         private readonly IClientService _clientService;
+        private readonly IAttachmentService _attachmentService;
 
         // GET: /Requests/
         public RequestsController(IAttachmentService attachmentService, IMainMastersService mastersService,
@@ -38,10 +39,14 @@ namespace GAPS.TSC.Consillium.Controllers
             _expertRequestService = expertRequestService;
             _clientService = clientService;
             _expertService = expertService;
+            _attachmentService = attachmentService;
+            
+
         }
         [HttpGet]
         public ActionResult Index(ExpertRequestDashboardViewModel model)
         {
+          
             var leadIds = _expertRequestService.GetProjectLeads().ToList();
 
             model.ProjectLeadList = _userService.GetAllUsers().ToList().Where(x => leadIds.Contains(x.Id)).ToDictionary(x => x.Id, x => x.FullName);
@@ -279,7 +284,7 @@ namespace GAPS.TSC.Consillium.Controllers
 
         public ActionResult UpdateRequest(int id)
         {
-            
+            id = 24;
             var expertRequest = _expertRequestService.GetAllExpertsProjects().Single(m => m.Id == id);
             var expertRequestModel = Mapper.Map<ExpertRequest, UpdateExpertRequest>(expertRequest);
             expertRequestModel.CostSharingOptions = EnumHelper.GetEnumLabelValuess(typeof(CostSharingType));
@@ -320,11 +325,11 @@ namespace GAPS.TSC.Consillium.Controllers
                 var approveFile = UploadAndSave("ApprovalDocumentFile");
                 model.ApprovalDocumentId = approveFile.Id;
             }
-            if (model.ScopingDocumentFile != null)
-            {
-                var scopingFile = UploadAndSave("ScopingDocumentFile");
-                model.ScopingDocumentId = scopingFile.Id;
-            }
+//            if (model.ScopingDocumentFile != null)
+//            {
+//                var scopingFile = UploadAndSave("ScopingDocumentFile");
+//                model.ScopingDocumentId = scopingFile.Id;
+//            }
             var expertRequest = _expertRequestService.GetAllExpertsProjects().Single(m => m.Id == model.Id);
             expertRequest.ProjectId = model.ProjectId;
             expertRequest.ProjectLeadId = model.ProjectLeadId;
@@ -425,8 +430,15 @@ namespace GAPS.TSC.Consillium.Controllers
                 model.RestartDate = projectMeta.RestartDate;
                 model.Description = projectMeta.Description;
                 model.Id = id;
+                //===new===//
+                 model.ApprovalDocumentId = projectMeta.ApprovalDocumentId;
+                 var attacment = _attachmentService.GetById(model.ApprovalDocumentId);
+                model.ApprovalDocumentName = attacment.ActualName;
+                model.ScopingDocuments = projectMeta.ScopingDocuments;
 
-
+                
+                //===new===//
+                
                 model.RequestedDate = projectMeta.CreatedAt;
                 var currency =
                     _masterService.GetAllCurrencies().FirstOrDefault(x => x.CurrencyId == projectMeta.BudgetCurrencyId);
@@ -505,6 +517,8 @@ namespace GAPS.TSC.Consillium.Controllers
 
             return RedirectToAction("ProjectDetail", new { id = requestId });
         }
+
+     
         public ActionResult RequestManual()
         {
             var model = new ExpertRequestViewModel();
