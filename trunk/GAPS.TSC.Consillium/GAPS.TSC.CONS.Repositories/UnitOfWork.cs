@@ -34,10 +34,8 @@ namespace GAPS.TSC.CONS.Repositories
             IRepository<PaymentMode> paymentModes,
             IRepository<WorkExperience> workExperiences,
             IRepository<SpecialProjectLeadMap> projectLeads,
-            IRepository<ExpertRequestScopingDocumentMap> expertRequestScopingDocuments)
-        {
-            IRepository<ExpertRequestTeamMemberMap> expertRequestTeamMemberMaps,
-            IRepository<SpecialProjectLeadMap> projectLeads)
+            IRepository<ExpertRequestScopingDocumentMap> expertRequestScopingDocuments,
+            IRepository<ExpertRequestTeamMemberMap> expertRequestTeamMemberMaps)
         {
             _context = context;
             _experts = experts;
@@ -65,11 +63,7 @@ namespace GAPS.TSC.CONS.Repositories
         public IRepository<WorkExperience> WorkExperiences { get { return _workExperiences; } }
         public IRepository<SpecialProjectLeadMap> ProjectLeads { get { return _projectLeads; } }
         public IRepository<ExpertRequestScopingDocumentMap> ExpertRequestScopingDocuments  { get  { return _expertRequestScopingDocuments;  } }
-
-        public IRepository<ExpertRequestTeamMemberMap> ExpertRequestTeamMemberMaps
-        {
-            get { return _expertRequestTeamMemberMaps; }
-        }
+        public IRepository<ExpertRequestTeamMemberMap> ExpertRequestTeamMemberMaps{get { return _expertRequestTeamMemberMaps; } }
 
 
         public int Save()
