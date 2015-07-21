@@ -15,6 +15,7 @@ namespace GAPS.TSC.CONS.Repositories
         IRepository<PaymentMode> PaymentModes { get; }
         IRepository<WorkExperience> WorkExperiences { get; }
         IRepository<SpecialProjectLeadMap> ProjectLeads { get;  }
+        IRepository<ExpertRequestScopingDocumentMap> ExpertRequestScopingDocuments { get; }
         IRepository<ExpertRequestTeamMemberMap> ExpertRequestTeamMemberMaps { get; }
     }
 }

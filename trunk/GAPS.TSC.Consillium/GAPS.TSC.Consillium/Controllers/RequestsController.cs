@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -219,9 +220,7 @@ namespace GAPS.TSC.Consillium.Controllers
 
 
             var calls = _expertRequestService.GetAllCalls();
-
             model.ExpertRequests.ForEach(x => x.CallCount = calls.Count(y => y.ExpertRequestId == x.Id));
-
             return View(model);
         }
 
@@ -304,18 +303,33 @@ namespace GAPS.TSC.Consillium.Controllers
         public ActionResult RequestExpert(ExpertRequestViewModel model)
         {
             var approveFile = UploadAndSave("ApprovalDocumentFile");
-            var scopingFile = UploadAndSave("ScopingDocumentFile");
             var expertRequest = Mapper.Map<ExpertRequestViewModel, ExpertRequest>(model);
-            //            expertRequest.ApprovalDocumentId = approveFile.Id;
-            //            expertRequest.ScopingDocumentId = scopingFile.Id;
+
+           
+            expertRequest.ApprovalDocumentId = approveFile.Id;
             expertRequest.CostSharingType = model.CostSharingTypeValue;
-            _expertRequestService.Add(expertRequest);
+           var expertAdded =  _expertRequestService.Add(expertRequest);
+           for (int i = 1; i <= model.ScopingDocCount; i++)
+           {
+               var scopingFile = UploadAndSave("ScopingDocumentFile" + i);
+               if (expertAdded.ScopingDocuments == null)
+               {
+                   expertAdded.ScopingDocuments=new Collection<ExpertRequestScopingDocumentMap>();
+               }
+               expertAdded.ScopingDocuments.Add(new ExpertRequestScopingDocumentMap()
+               {
+                   ExpertRequestId = expertAdded.Id,
+                   AttachmentId = scopingFile.Id
+               });
+           }
+            var result = _expertRequestService.Update(expertAdded);
             SetMessage(MessageType.Success, MessageConstant.GetMessage(Messages.RequestSuccess));
             return RedirectToAction("RequestExpert");
         }
 
         public ActionResult UpdateRequest(int id)
         {
+            
             var expertRequest = _expertRequestService.GetAllExpertsProjects().Single(m => m.Id == id);
             var expertRequestModel = Mapper.Map<ExpertRequest, UpdateExpertRequest>(expertRequest);
             expertRequestModel.CostSharingOptions = EnumHelper.GetEnumLabelValuess(typeof(CostSharingType));
@@ -364,8 +378,7 @@ namespace GAPS.TSC.Consillium.Controllers
             var expertRequest = _expertRequestService.GetAllExpertsProjects().Single(m => m.Id == model.Id);
             expertRequest.ProjectId = model.ProjectId;
             expertRequest.ProjectLeadId = model.ProjectLeadId;
-            //            expertRequest.ScopingDocumentId = model.ScopingDocumentId;
-            //            expertRequest.ApprovalDocumentId = model.ApprovalDocumentId;
+            expertRequest.ApprovalDocumentId = model.ApprovalDocumentId;
             expertRequest.IndustryId = model.IndustryId;
             expertRequest.GeographicId = model.GeographicId;
             expertRequest.CostSharingType = model.CostSharingTypeValue;

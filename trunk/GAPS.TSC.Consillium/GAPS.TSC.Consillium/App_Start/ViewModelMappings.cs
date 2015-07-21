@@ -14,8 +14,7 @@ namespace GAPS.TSC.Consillium.App_Start
     public class ViewModelMappings
     {
 
-        public static void Init()
-        {
+        public static void Init() {
             Mapper.CreateMap<AddLeadModel, Expert>();
             Mapper.CreateMap<Expert, AddLeadModel>();
             Mapper.CreateMap<AddLeadModel, WorkExperience>();
@@ -32,6 +31,7 @@ namespace GAPS.TSC.Consillium.App_Start
             Mapper.CreateMap<UpdateExpertRequest, ExpertRequest>();
             Mapper.CreateMap<CallsViewModel, Call>();
             Mapper.CreateMap<Expert, ProfileViewModel>();
+            Mapper.CreateMap<ExpertNote, ExpertNoteModel>().ForMember(x => x.TeamMember, v => v.MapFrom(a => a.TeamMember.Name));
             Mapper.CreateMap<ExpertRequest, AssignViewModel>();
 
             Mapper.CreateMap<ExpertNote, ExpertNoteModel>().ForMember(x => x.TeamMember, v => v.MapFrom(a => a.TeamMember.Name));
@@ -41,7 +41,12 @@ namespace GAPS.TSC.Consillium.App_Start
             Mapper.CreateMap<Call, ExpertCallsModel>()
                 .ForMember(x => x.CallFacilitatedBy, v => v.MapFrom(u => u.CallFacilitatedBy.Name))
                 .ForMember(x => x.PaymentMode, v => v.MapFrom(u => u.PaymentMode.Name));
-        }
 
+            Mapper.CreateMap<Call, CallSingleViewModel>()
+                .ForMember(x => x.Expert, v => v.MapFrom(a => a.Expert.Name))
+                .ForMember(x => x.ExpertRequest, v => v.MapFrom(a => a.ExpertRequest.ProjectName))
+                .ForMember(x => x.CallFacilitatedBy, v => v.MapFrom(a => a.CallFacilitatedBy.Name));
+        }
+    
     }
 }

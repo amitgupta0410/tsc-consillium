@@ -69,6 +69,7 @@
     <Compile Include="Call.cs" />
     <Compile Include="Enums.cs" />
     <Compile Include="ExpertNote.cs" />
+    <Compile Include="ExpertRequestScopingDocumentMap.cs" />
     <Compile Include="ExpertRequestTeamMemberMap.cs" />
     <Compile Include="Migrations\201507060648530_InitDatabase.cs" />
     <Compile Include="Migrations\201507060648530_InitDatabase.Designer.cs">
@@ -93,6 +94,10 @@
     <Compile Include="Migrations\201507200641113_ScopingDocuments.cs" />
     <Compile Include="Migrations\201507200641113_ScopingDocuments.Designer.cs">
       <DependentUpon>201507200641113_ScopingDocuments.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201507201040366_ExpertRequestsScoping.cs" />
+    <Compile Include="Migrations\201507201040366_ExpertRequestsScoping.Designer.cs">
+      <DependentUpon>201507201040366_ExpertRequestsScoping.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\201507210541207_ExpertRequestTeamMemberMap.cs" />
     <Compile Include="Migrations\201507210541207_ExpertRequestTeamMemberMap.Designer.cs">
@@ -131,6 +136,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201507200641113_ScopingDocuments.resx">
       <DependentUpon>201507200641113_ScopingDocuments.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201507201040366_ExpertRequestsScoping.resx">
+      <DependentUpon>201507201040366_ExpertRequestsScoping.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201507210541207_ExpertRequestTeamMemberMap.resx">
       <DependentUpon>201507210541207_ExpertRequestTeamMemberMap.cs</DependentUpon>

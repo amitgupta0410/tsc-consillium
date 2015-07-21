@@ -16,6 +16,7 @@ namespace GAPS.TSC.CONS.Domain {
         public string PrimaryContact { get; set; }
         public string SecondaryContact { get; set; }
         public string LinkedInUrl { get; set; }
+        
         public DateTime? ContactedOn { get; set; }
         public decimal FeesAmount { get; set; }
         public int FeesCurrencyId { get; set; }

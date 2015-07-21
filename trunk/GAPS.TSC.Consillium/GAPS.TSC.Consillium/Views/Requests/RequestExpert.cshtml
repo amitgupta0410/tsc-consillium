@@ -24,6 +24,7 @@
         @using (Html.BeginForm("RequestExpert", "Requests", FormMethod.Post, new { enctype = "multipart/form-data" }))
         {
             @Html.HiddenFor(x => x.Id)
+            @Html.HiddenFor(x=>x.ScopingDocCount,new {htmlAttributes=new{@class="form-control",@Value=1}})
             <div class="col-md-3">
                 <div class="form-group">
                     <label><b>Client*</b></label>
@@ -180,25 +181,7 @@
                     </div>
                 </div>
             </div>
-
-
-            <div class="col-md-3">
-                <div class="form-group">
-                    @if (Model.ScopingDocumentId == 0)
-                    {
-                        <label>Upload Scoping Document*</label>
-                     @Html.TextBoxFor(x => x.ScopingDocumentFile, new { @class = "form-control", type = "file" })
-                     @Html.ValidationMessageFor(x => x.ScopingDocumentFile)
-                    }
-                    else
-                    {
-                        <i class="fa fa-check" style="color: green;"></i>
-                        <label>Upload Scoping Document</label>
-                        @Html.TextBoxFor(x => x.ScopingDocumentFile, new { @class = "form-control", type = "file" })
-                    }
-                   
-                </div>
-            </div>
+         
             <div class="col-md-3">
                 <div class="form-group">
                     @if (Model.ApprovalDocumentId == 0)
@@ -218,7 +201,23 @@
                 </div>
             </div>
             <div class="clearfix"></div>
-
+    <div id="FileBoxesGroup" class="col-md-12 ">
+        <div id="FileBoxDiv1" class="col-md-6 form-group">
+            <label>Upload Scoping Document*</label>
+            <input id="ScopingDocumentFile1" name="ScopingDocumentFile1" class="form-control" type="file" value=""/>
+            
+        </div>
+        <div class="col-md-2 form-group">
+            <br/>
+            <input type="button" value="Add" class="btn btn-primary form-control" id="addButton">
+        </div>
+        <div class="col-md-2 form-group">
+            <br />
+            <input type="button" value="Remove" class="btn btn-primary form-control" id="removeButton">
+        </div>
+        
+    </div>
+            <div class="clearfix"></div>
             <div class="col-md-4">
                 <div class="form-group">
                     <label><b>Comments</b></label><br>
@@ -339,6 +338,43 @@
                 }
 
             });
+
+            var counter = 2;
+
+            $("#addButton").click(function () {
+              
+                var newFileBoxDiv = $(document.createElement('div'))
+                     .attr("id", 'FileBoxDiv' + counter);
+
+                newFileBoxDiv.after().html('<input name="ScopingDocumentFile' + counter + '" id="ScopingDocumentFile' + counter + '" type="file" value="" class="col-md-6 form-control" >');
+                newFileBoxDiv.appendTo("#FileBoxesGroup");
+                counter++;
+                var scopDocCount = $('#ScopingDocCount').val();
+                if (scopDocCount == 0) {
+                    scopDocCount = 1;
+                }
+                scopDocCount++;
+                $("#ScopingDocCount").val(scopDocCount);
+
+            });
+
+            $("#removeButton").click(function () {
+                if (counter == 2) {
+                    alert("No more textbox to remove");
+                    return false;
+                }
+
+                counter--;
+                var scopDocCount = $('#ScopingDocCount').val();
+                if (scopDocCount == 0) {
+                    scopDocCount = 1;
+                }
+                scopDocCount--;
+                $("#ScopingDocCount").val(scopDocCount);
+                $("#FileBoxDiv" + counter).remove();
+
+            });
+
 
         });
        

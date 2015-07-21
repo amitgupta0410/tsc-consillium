@@ -27,10 +27,10 @@ namespace GAPS.TSC.CONS.Domain {
         //  public virtual Attachment ScopingDocument { get; set; }
 
         //  [ForeignKey("ApprovalDocument")]
-        //        public int ApprovalDocumentId { get; set; }
+            public int ApprovalDocumentId { get; set; }
         //   public virtual Attachment ApprovalDocument { get; set; }
 
-        public virtual ICollection<Attachment> ScopingDocuments { get; set; }
+        public virtual ICollection<ExpertRequestScopingDocumentMap> ScopingDocuments { get; set; }
         public virtual ICollection<Expert> Experts { get; set; }
 
         public int? BdLeadId { get; set; }

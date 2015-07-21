@@ -44,6 +44,7 @@
                     <tbody>
                         <tr>
                             <th>Emp Id</th>
+                            <th><label>Name</label></th>
                             <th><label>Status</label></th>
                             @*<th><label>Department</label></th>
                                 <th><label>Designation</label></th>*@
@@ -55,6 +56,8 @@
                             {
                                 <tr>
                                     <td>@projectLead.UserId</td>
+                                    <td>@if (Model.ApiUsers.ContainsKey(projectLead.UserId)) {
+                      @Model.ApiUsers[projectLead.UserId]}</td>
                                     <td>@projectLead.IsActive</td>
                                 </tr>
                             }

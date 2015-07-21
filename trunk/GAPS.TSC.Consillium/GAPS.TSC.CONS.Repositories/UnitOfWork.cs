@@ -19,10 +19,11 @@ namespace GAPS.TSC.CONS.Repositories
         private readonly IRepository<Call> _calls;
         private readonly IRepository<PaymentMode> _paymentModes;
         private readonly IRepository<WorkExperience> _workExperiences;
-        private readonly IRepository<SpecialProjectLeadMap> _projectLeads;
+        private readonly IRepository<SpecialProjectLeadMap> _projectLeads; 
+        private readonly IRepository<ExpertRequestScopingDocumentMap> _expertRequestScopingDocuments;
         private readonly IRepository<ExpertRequestTeamMemberMap> _expertRequestTeamMemberMaps;
 
-
+       
         public UnitOfWork(AppCtx context,
             IRepository<Expert> experts,
             IRepository<ExpertNote> expertNotes,
@@ -32,6 +33,9 @@ namespace GAPS.TSC.CONS.Repositories
             IRepository<Call> calls,
             IRepository<PaymentMode> paymentModes,
             IRepository<WorkExperience> workExperiences,
+            IRepository<SpecialProjectLeadMap> projectLeads,
+            IRepository<ExpertRequestScopingDocumentMap> expertRequestScopingDocuments)
+        {
             IRepository<ExpertRequestTeamMemberMap> expertRequestTeamMemberMaps,
             IRepository<SpecialProjectLeadMap> projectLeads)
         {
@@ -45,9 +49,10 @@ namespace GAPS.TSC.CONS.Repositories
             _paymentModes = paymentModes;
             _workExperiences = workExperiences;
             _projectLeads = projectLeads;
+            _expertRequestScopingDocuments = expertRequestScopingDocuments;
             _expertRequestTeamMemberMaps = expertRequestTeamMemberMaps;
 
-        }
+    }
 
 
         public IRepository<Expert> Experts { get { return _experts; } }
@@ -59,6 +64,7 @@ namespace GAPS.TSC.CONS.Repositories
         public IRepository<PaymentMode> PaymentModes { get { return _paymentModes; } }
         public IRepository<WorkExperience> WorkExperiences { get { return _workExperiences; } }
         public IRepository<SpecialProjectLeadMap> ProjectLeads { get { return _projectLeads; } }
+        public IRepository<ExpertRequestScopingDocumentMap> ExpertRequestScopingDocuments  { get  { return _expertRequestScopingDocuments;  } }
 
         public IRepository<ExpertRequestTeamMemberMap> ExpertRequestTeamMemberMaps
         {
