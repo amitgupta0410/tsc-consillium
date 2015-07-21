@@ -1,4 +1,4 @@
-﻿
+﻿@model GAPS.TSC.Consillium.Models.CallDashboardModel
 @{
     ViewBag.Title = "CallDasboard";
 }
@@ -17,25 +17,20 @@
             <div class="col-md-3">
                 <div class="form-group">
                     <label><b>Client</b></label>
-                    <select class="form-control">
-                        <option>Mr X</option>
-                        <option>Mr Y</option>
-                    </select>
+                    @Html.DropDownListFor(x => x.Filter.Client, new SelectList(Model.Filter.ClientList, "Key", "Value"), "All Clients", new { @class = "form-control" })
                 </div>
             </div>
             <div class="col-md-3">
                 <div class="form-group">
                     <label><b>Date</b></label>
-                    <input type="text" class="form-control daterange" id="Date" placeholder="2/3 /2015">
+                    @Html.TextBoxFor(x => x.Filter.Date, new { @class = "form-control date", Value = Model.Filter.Date.HasValue ? Model.Filter.Date.Value.ToString("dd MMM yyyy") : String.Empty })
+
                 </div>
             </div>
             <div class="col-md-3">
                 <div class="form-group">
                     <label><b>Project</b></label>
-                    <select class="form-control">
-                        <option>XYZ</option>
-                        <option>YXZ</option>
-                    </select>
+                    @Html.DropDownListFor(x => x.Filter.Project, new SelectList(Model.Filter.ProjectList, "Key", "Value"), "All Projects", new { @class = "form-control" })
                 </div>
             </div>
             <div class="col-md-3">
@@ -66,54 +61,6 @@
                     </tr>
                     <tr class="">
                         <td>1</td>
-                        <td>Abc</td>
-                        <td>Dragos Hornoiu</td>
-                        <td>TSC Romania</td>
-                        <td>XYZ</td>
-                        <td>ABC</td>
-                        <td>XYZ</td>
-                        <td>XYZ</td>
-                        <td>22-Mar-2015</td>
-                        <td>22-Mar-2015</td>
-                    </tr>
-                    <tr class="info">
-                        <td>2</td>
-                        <td>Abc</td>
-                        <td>Dragos Hornoiu</td>
-                        <td>TSC Romania</td>
-                        <td>XYZ</td>
-                        <td>ABC</td>
-                        <td>XYZ</td>
-                        <td>XYZ</td>
-                        <td>22-Mar-2015</td>
-                        <td>22-Mar-2015</td>
-                    </tr>
-                    <tr class="success">
-                        <td>3</td>
-                        <td>Abc</td>
-                        <td>Dragos Hornoiu</td>
-                        <td>TSC Romania</td>
-                        <td>XYZ</td>
-                        <td>ABC</td>
-                        <td>XYZ</td>
-                        <td>XYZ</td>
-                        <td>22-Mar-2015</td>
-                        <td>22-Mar-2015</td>
-                    </tr>
-                    <tr class="warning">
-                        <td>4</td>
-                        <td>Abc</td>
-                        <td>Dragos Hornoiu</td>
-                        <td>TSC Romania</td>
-                        <td>XYZ</td>
-                        <td>ABC</td>
-                        <td>XYZ</td>
-                        <td>XYZ</td>
-                        <td>22-Mar-2015</td>
-                        <td>22-Mar-2015</td>
-                    </tr>
-                    <tr class="danger">
-                        <td>5</td>
                         <td>Abc</td>
                         <td>Dragos Hornoiu</td>
                         <td>TSC Romania</td>

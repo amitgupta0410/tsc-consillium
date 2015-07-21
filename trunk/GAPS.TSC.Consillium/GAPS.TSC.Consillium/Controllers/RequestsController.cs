@@ -190,9 +190,7 @@ namespace GAPS.TSC.Consillium.Controllers {
 
             model.ExpertRequests = projects.Select(Mapper.Map<ExpertRequest, ExpertRequestSingleViewModel>);
             var calls = _expertRequestService.GetAllCalls();
-
             model.ExpertRequests.ForEach(x => x.CallCount = calls.Count(y => y.ExpertRequestId == x.Id));
-
             return View(model);
         }
 
